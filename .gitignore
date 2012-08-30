@@ -8,5 +8,5 @@ bin/
 .flexProperties
 .settings/
 .project
-.as3proj
-.lxml
+*.as3proj
+*.lxml
