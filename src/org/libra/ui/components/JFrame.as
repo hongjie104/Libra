@@ -9,6 +9,7 @@ package org.libra.ui.components {
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.BitmapDataUtil;
 	import org.libra.ui.utils.GraphicsUtil;
+	
 	/**
 	 * <p>
 	 * Description
@@ -34,8 +35,8 @@ package org.libra.ui.components {
 		private var title:JLabel;
 		
 		public function JFrame(w:int, h:int, parent:Container = null, x:int = 0, y:int = 0, barHeight:int = 25) { 
-			super(w, h, parent, x, y);
 			this.barHeight = barHeight;
+			super(w, h, parent, x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -47,9 +48,14 @@ package org.libra.ui.components {
 			dragBounds.x = 40 - w;
 			dragBounds.y = 0;
 			var stage:Stage = UIManager.getInstance().getStage();
-			dragBounds.width = stage.stageWidth + w - 40;
-			dragBounds.height = stage.stageHeight - 20;
+			dragBounds.width = stage.stageWidth + w - 80;
+			dragBounds.height = stage.stageHeight - barHeight;
 		}
+		
+		override public function toString():String {
+			return 'JFrame';
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
@@ -60,14 +66,15 @@ package org.libra.ui.components {
 			GraphicsUtil.drawRect(bar.graphics, 0, 0, getWidth(), barHeight, 0, .0);
 			this.addChild(bar);
 			
-			closeBtn = new JButton('btnClose', '', getWidth() - 14 - 6, 6);
-			closeBtn.setSize(14, 13);
+			closeBtn = new JButton(0, 0, '', 'btnClose');
+			closeBtn.setSize(21, 19);
+			closeBtn.setLocation(getWidth() - closeBtn.getWidth() - 6, 6);
 			this.append(closeBtn);
 		}
 		
 		override protected function initBackground():void {
-			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(new FrameBg(), 
-				$width, $height, new Rectangle(16, 25, 36, 36))));
+			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(new frameBg(), 
+				$width, $height, new Rectangle(12, 60, 1, 1))));
 		}
 		
 		override protected function onAddToStage(e:Event):void {

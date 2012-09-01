@@ -1,23 +1,30 @@
-package org.libra.ui.components {
-	import org.libra.ui.base.BaseButton;
-	
+package org.libra.ui {
 	/**
 	 * <p>
-	 * 按钮类
+	 * 常量类
 	 * </p>
 	 *
-	 * @class JButton
+	 * @class Constants
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 08-31-2012
+	 * @date 09/01/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class JButton extends BaseButton {
+	public final class Constants {
 		
-		public function JButton(x:int = 0, y:int = 0, text:String = '', resName:String = 'btn') { 
-			super(x, y, text, resName);
-			this.setSize(43, 26);
+		/** 
+         * 水平
+         */
+        public static const HORIZONTAL:int = 0;
+		
+        /** 
+         * 垂直
+         */
+        public static const VERTICAL:int   = 1;
+		
+		public function Constants() {
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -27,15 +34,6 @@ package org.libra.ui.components {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		
-		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
-			setTextLocation(0, getHeight() - 21);
-		}
-		
-		override public function toString():String {
-			return 'JButton';
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

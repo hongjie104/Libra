@@ -2,6 +2,7 @@ package org.libra.ui.managers {
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import org.libra.ui.components.JPanel;
 	/**
 	 * <p>
 	 * Description
@@ -20,8 +21,10 @@ package org.libra.ui.managers {
 		
 		private var stage:Stage;
 		
+		private var panelList:Vector.<JPanel>;
+		
 		public function UIManager(singleton:Singleton) {
-			
+			panelList = new Vector.<JPanel>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -1,23 +1,20 @@
-package org.libra.ui.components {
-	import org.libra.ui.base.BaseButton;
-	
+package org.libra.ui.managers {
 	/**
 	 * <p>
-	 * 按钮类
+	 * Description
 	 * </p>
 	 *
-	 * @class JButton
+	 * @class ToolTipManager
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 08-31-2012
+	 * @date 09/01/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class JButton extends BaseButton {
+	public final class ToolTipManager {
 		
-		public function JButton(x:int = 0, y:int = 0, text:String = '', resName:String = 'btn') { 
-			super(x, y, text, resName);
-			this.setSize(43, 26);
+		public function ToolTipManager() {
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -27,15 +24,6 @@ package org.libra.ui.components {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		
-		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
-			setTextLocation(0, getHeight() - 21);
-		}
-		
-		override public function toString():String {
-			return 'JButton';
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

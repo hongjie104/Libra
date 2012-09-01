@@ -1,8 +1,8 @@
 package org.libra.ui.base {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import org.libra.ui.base.states.BaseButtonState;
-	import org.libra.ui.base.states.IState;
+	import org.libra.ui.base.stateus.BaseButtonStatus;
+	import org.libra.ui.base.stateus.interfaces.IButtonStatus;
 	
 	/**
 	 * <p>
@@ -18,19 +18,27 @@ package org.libra.ui.base {
 	 */
 	public class BaseButton extends BaseText {
 		
+		protected static const NORMAL:int = 0;
+		
+		protected static const MOUSE_OVER:int = 1;
+		
+		protected static const MOUSE_DOWN:int = 2;
+		
+		protected var curStatus:int;
+		
 		protected var resName:String;
 		
-		protected var state:IState;
+		protected var status:IButtonStatus;
 		
 		protected var textX:int;
 		
 		protected var textY:int;
 		
-		public function BaseButton(resName:String, text:String = '', x:Number = 0, y:Number = 0) {
+		public function BaseButton(x:int = 0, y:int = 0, text:String = '',  resName:String = 'btn') { 
+			curStatus = NORMAL;
 			this.resName = resName;
-			this.initState();
-			super(text, x, y);
-			this.setSize(58, 32);
+			this.initStatus();
+			super(x, y, text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -49,16 +57,18 @@ package org.libra.ui.base {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		private function initState():void {
-			this.state = new BaseButtonState();
-			this.state.setResName(resName);
-			this.addChild(this.state.getDisplayObject());
+		protected function initStatus():void {
+			this.status = new BaseButtonStatus();
+			this.status.setResName(resName);
+			this.addChild(this.status.getDisplayObject());
 		}
 		
 		override protected function render():void {
 			super.render();
-			this.state.setSize($width, $height);
-			this.state.toNormal();
+			this.status.setSize($width, $height);
+			if (this.curStatus == MOUSE_OVER) this.status.toMouseOver();
+			else if (this.curStatus == MOUSE_DOWN) this.status.toMouseDown();
+			else this.status.toNormal();
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -90,11 +100,13 @@ package org.libra.ui.base {
 		private function onMouseUpAndDown(e:MouseEvent):void {
 			if (enable) {
 				if (e.type == MouseEvent.MOUSE_DOWN) {
-					this.state.toMouseDown();
+					this.curStatus = MOUSE_DOWN;
+					this.status.toMouseDown();
 					this.textField.x = textX + 1;
 					this.textField.y = textY + 1;
 				}else {
-					this.state.toMouseUp();
+					curStatus = MOUSE_OVER;
+					this.status.toMouseOver();
 					this.textField.x = textX;
 					this.textField.y = textY;
 				}
@@ -104,9 +116,11 @@ package org.libra.ui.base {
 		private function onRollOverAndOut(e:MouseEvent):void {
 			if (enable) {
 				if (e.type == MouseEvent.ROLL_OVER) {
-					this.state.toMouseOver();
+					curStatus = MOUSE_OVER;
+					this.status.toMouseOver();
 				}else {
-					this.state.toNormal();
+					curStatus = NORMAL;
+					this.status.toNormal();
 					this.textField.x = textX;
 					this.textField.y = textY;
 				}

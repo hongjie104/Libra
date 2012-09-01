@@ -2,15 +2,10 @@ package org.libra.ui.utils {
 	import flash.utils.Dictionary;
 	/**
 	 * <p>
-	 * Description
+	 * 哈希表。从ASwing的源码里中copy过来的
 	 * </p>
 	 *
 	 * @class HashMap
-	 * @author Eddie
-	 * @qq 32968210
-	 * @date 08-31-2012
-	 * @version 1.0
-	 * @see
 	 */
 	public final class HashMap {
 		

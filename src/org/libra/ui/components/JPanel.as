@@ -1,8 +1,11 @@
 package org.libra.ui.components {
 	import flash.display.Bitmap;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.utils.BitmapDataUtil;
+	import org.libra.ui.utils.DepthUtil;
 	
 	/**
 	 * <p>
@@ -20,6 +23,8 @@ package org.libra.ui.components {
 		
 		protected var owner:Container;
 		protected var showing:Boolean;
+		
+		protected var defaultBtn:JButton;
 		
 		public function JPanel(w:int, h:int, owner:Container, x:int = 0, y:int = 0) { 
 			super(x, y);
@@ -53,6 +58,20 @@ package org.libra.ui.components {
 			}
 		}
 		
+		public function setDefaultBtn(btn:JButton):void {
+			if (btn) {
+				if (this.hasComponent(btn)) {
+					this.defaultBtn = btn;
+				}
+			}else {
+				this.defaultBtn = null;
+			}
+		}
+		
+		public function getDefaultBtn():JButton {
+			return this.defaultBtn;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
@@ -70,10 +89,27 @@ package org.libra.ui.components {
 				$width, $height, new Rectangle(3, 3, 11, 6))));
 		}
 		
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
+			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		}
+		
+		override protected function onRemoveFromStage(e:Event):void {
+			super.onRemoveFromStage(e);
+			this.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * 鼠标按钮按下时，将面板放置顶层
+		 * @param	e
+		 */
+		protected function onMouseDown(e:MouseEvent):void {
+			DepthUtil.bringToTop(this);
+		}
 	}
 
 }

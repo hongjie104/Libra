@@ -15,9 +15,8 @@ package org.libra.ui.style {
 		
 		//public static var TEXT_BACKGROUND:int = 0xFFFFFF;
 		public static var BACKGROUND:int = 0xCCCCCC;
-		public static var BUTTON_FACE:int = 0xFFFFFF;
-		public static var BUTTON_DOWN:int = 0xEEEEEE;
-		public static var INPUT_TEXT:int = 0xffffff;//0x333333;
+		public static var BUTTON_TEXT:int = 0xffb932;
+		public static var INPUT_TEXT:int = 0x333333;
 		public static var LABEL_TEXT:int = 0xffffff//0x666666;
 		public static var DROPSHADOW:int = 0x000000;
 		//public static var PANEL:int = 0xF3F3F3;

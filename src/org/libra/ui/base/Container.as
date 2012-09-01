@@ -20,7 +20,7 @@ package org.libra.ui.base {
 		
 		protected var numComponent:int;
 		
-		public function Container(x:Number = 0, y:Number = 0) { 
+		public function Container(x:int = 0, y:int = 0) { 
 			super(x, y);
 			componentList = new Vector.<Component>();
 			numComponent = 0;
@@ -29,6 +29,11 @@ package org.libra.ui.base {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public function hasComponent(child:Component):Boolean {
+			return this.componentList.indexOf(child) != -1;
+		}
+		
 		public function append(child:Component):Component {
 			if (this.componentList.indexOf(child) == -1) {
 				this.componentList[numComponent++] = child;
@@ -50,7 +55,8 @@ package org.libra.ui.base {
 			this.componentList.splice(index, 1);
 			numComponent--;
 			this.removeChild(child);
-			child.dispose();
+			if(dispose)
+				child.dispose();
 			return child;
 		}
 		

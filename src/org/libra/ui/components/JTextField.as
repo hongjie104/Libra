@@ -16,8 +16,8 @@ package org.libra.ui.components {
 	 */
 	public class JTextField extends JLabel {
 		
-		public function JTextField(text:String = '', x:Number = 0, y:Number = 0) { 
-			super(text, x, y);
+		public function JTextField(x:int = 0, y:int = 0, text:String = '') { 
+			super(x, y, text);
 			this.mouseChildren = this.mouseEnabled = true;
 		}
 		
@@ -33,14 +33,22 @@ package org.libra.ui.components {
 			this.textField.restrict = val;
 		}
 		
+		public function set displayAsPassword(val:Boolean):void {
+			this.textField.displayAsPassword = val;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
+			this.textAlign = 'left';
+			this.text = text;
 			textField.selectable = textField.mouseEnabled = true;
 			this.textField.type = TextFieldType.INPUT;
 			textField.textColor = Style.INPUT_TEXT;
+			textField.background = true;
+			textField.backgroundColor = Style.BACKGROUND;
 		}
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

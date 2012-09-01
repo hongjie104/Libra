@@ -23,7 +23,7 @@ package org.libra.ui.base {
 		 */
 		protected var textField:TextField;
 		
-		public function BaseText(text:String = '', x:Number = 0, y:Number = 0) { 
+		public function BaseText(x:int = 0, y:int = 0, text:String = '') { 
 			super(x, y);
 			this.initTextField(text);
 		}
@@ -137,6 +137,9 @@ package org.libra.ui.base {
 			}
 			textField.text = text;
 			textField.filters = Filter.BLACK;
+			textField.textColor = Style.BUTTON_TEXT;
+			this.textAlign = 'center';
+			this.text = text;
 			this.addChild(textField);
 		}
 		

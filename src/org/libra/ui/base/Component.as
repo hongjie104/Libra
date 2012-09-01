@@ -1,9 +1,12 @@
 package org.libra.ui.base {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import org.libra.ui.style.Filter;
+	import org.libra.ui.utils.GraphicsUtil;
 	
 	/**
 	 * <p>
@@ -43,7 +46,12 @@ package org.libra.ui.base {
 		 */
 		protected var background:DisplayObject;
 		
-		public function Component(x:Number = 0, y:Number = 0) { 
+		/**
+		 * 遮罩
+		 */
+		protected var $mask:Shape;
+		
+		public function Component(x:int = 0, y:int = 0) { 
 			super();
 			
 			//取消flash默认的焦点边框
@@ -87,13 +95,17 @@ package org.libra.ui.base {
 		
 		public function removeFromParent(dispose:Boolean = false):void { 
             if (parent) {
-				parent.removeChild(this);
-				if(dispose)
-					this.dispose();
+				if (parent is Container) {
+					(parent as Container).remove(this, dispose);
+				}else {
+					parent.removeChild(this);
+					if(dispose)
+						this.dispose();	
+				}
 			}
         }
 		
-		public function setLocation(x:Number, y:Number):void { 
+		public function setLocation(x:int, y:int):void { 
 			this.x = x;
 			this.y = y;
 		}
@@ -141,6 +153,18 @@ package org.libra.ui.base {
 			super.addChildAt(bg, 0);
 		}
 		
+		public function setMask(rect:Rectangle = null):void {
+			if (rect) {
+				if (!this.$mask) this.$mask = new Shape();
+				GraphicsUtil.drawRect($mask.graphics, rect.x, rect.y, rect.width, rect.height);
+				this.addChild($mask);
+				this.mask = $mask;
+			}else {
+				if ($mask.parent) $mask.parent.removeChild($mask);
+				this.mask = null;
+			}
+		}
+		
 		public function dispose():void {
 			if (this.hasEventListener(Event.ADDED_TO_STAGE)) {
 				this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
@@ -149,6 +173,13 @@ package org.libra.ui.base {
 		
 		override public function toString():String {
 			return 'Component';
+		}
+		
+		override public function dispatchEvent(event:Event):Boolean {
+			if (this.hasEventListener(event.type)) {
+				return super.dispatchEvent(event);	
+			}
+			return false;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

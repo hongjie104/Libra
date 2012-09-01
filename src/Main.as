@@ -5,6 +5,8 @@ package {
 	import flash.events.Event;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.components.JButton;
+	import org.libra.ui.components.JCheckBox;
+	import org.libra.ui.components.JCheckBoxGroup;
 	import org.libra.ui.components.JFrame;
 	import org.libra.ui.components.JLabel;
 	import org.libra.ui.components.JPanel;
@@ -32,16 +34,26 @@ package {
 			var uiContainer:Container = new Container();
 			this.addChild(uiContainer);
 			
-			var frame:JFrame = new JFrame(400, 300, uiContainer, 50, 300);
+			var frame:JFrame = new JFrame(400, 300, uiContainer, 200, 200);
 			frame.show();
 			
 			var panel:JPanel = new JPanel(300, 200, uiContainer, 50, 50);
 			panel.show();
-			panel.append(new JLabel('hello world!', 40, 32));
-			panel.append(new JTextField('input here', 40, 50));
+			var label:JLabel = new JLabel(40, 32, 'hello world!');
+			label.setSize(120, 20);
+			var tf:JTextField = new JTextField(40, 50, '输入框');
+			tf.setSize(120, 20);
+			var pw:JTextField = new JTextField(40, 80, '密码输入框');
+			pw.setSize(120, 20);
+			pw.displayAsPassword = true;
+			panel.appendAll(label, tf, pw);
 			
-			var btn:JButton = new JButton('btn', '按钮', 30, 30);
+			var btn:JButton = new JButton(30, 60, '按钮');
 			frame.append(btn);
+			
+			var checkBoxGroup:JCheckBoxGroup = new JCheckBoxGroup(30, 90, 1);
+			checkBoxGroup.appendAllCheckBox(new JCheckBox(0, 0, '按钮0'), new JCheckBox(30, 90, '按钮1'), new JCheckBox(30, 90, '按钮2'));
+			frame.append(checkBoxGroup);
 		}
 		
 	}
