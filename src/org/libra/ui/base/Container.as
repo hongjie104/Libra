@@ -1,6 +1,8 @@
 package org.libra.ui.base {
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
+	import org.libra.ui.interfaces.IDragable;
+	import org.libra.ui.interfaces.IDropable;
+	import org.libra.ui.utils.GraphicsUtil;
 	
 	/**
 	 * <p>
@@ -14,11 +16,13 @@ package org.libra.ui.base {
 	 * @version 1.0
 	 * @see
 	 */
-	public class Container extends Component {
+	public class Container extends Component implements IDropable {
 		
 		protected var componentList:Vector.<Component>;
 		
 		protected var numComponent:int;
+		
+		private var dropAcceptableList:Vector.<IDragable>;
 		
 		public function Container(x:int = 0, y:int = 0) { 
 			super(x, y);
@@ -106,6 +110,11 @@ package org.libra.ui.base {
 			}
 		}
 		
+		override public function setSize(w:int, h:int):void {
+			super.setSize(w, h);
+			GraphicsUtil.drawRect(this.graphics, 0, 0, w, h, 0xff0000, .0);
+		}
+		
 		override public function dispose():void {
 			super.dispose();
 			for (var i:* in this.componentList) {
@@ -117,6 +126,30 @@ package org.libra.ui.base {
 		
 		override public function toString():String {
 			return 'container';
+		}
+		
+		/* INTERFACE org.libra.ui.interfaces.IDropable */
+		
+		public function addDropAcceptable(dragable:IDragable):void {
+			if (!dropAcceptableList) dropAcceptableList = new Vector.<IDragable>();
+			if(this.dropAcceptableList.indexOf(dragable) == -1)
+				dropAcceptableList.push(dragable);
+		}
+		
+		public function removeDropAcceptable(dragable:IDragable):void {
+			if (this.dropAcceptableList) {
+				var index:int = this.dropAcceptableList.indexOf(dragable);
+				if (index != -1) this.dropAcceptableList.splice(index, 1);
+			}
+		}
+		
+		public function isDropAcceptable(dragable:IDragable):Boolean {
+			return this.dropAcceptableList ? this.dropAcceptableList.indexOf(dragable) != -1 : false;
+		}
+		
+		public function addDragable(dragable:IDragable):void {
+			dragable.removeFromParent();
+			this.append(dragable as Component);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

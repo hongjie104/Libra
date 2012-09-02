@@ -1,4 +1,5 @@
 package org.libra.ui.components {
+	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -22,15 +23,20 @@ package org.libra.ui.components {
 	public class JPanel extends Container {
 		
 		protected var owner:Container;
+		
 		protected var showing:Boolean;
 		
 		protected var defaultBtn:JButton;
+		
+		private var closeTween:TweenLite;
+		
+		private var closeTweening:Boolean;
 		
 		public function JPanel(w:int, h:int, owner:Container, x:int = 0, y:int = 0) { 
 			super(x, y);
 			this.setSize(w, h);
 			this.owner = owner;
-			showing = false;
+			closeTweening = showing = false;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -42,11 +48,24 @@ package org.libra.ui.components {
 			showing = true;
 		}
 		
-		public function close():void {
+		public function close(tween:Boolean = true):void {
 			if (showing) {
-				this.owner.remove(this);
-				showing = false;
+				if (tween) {
+					if (!closeTweening) {
+						if (closeTween) closeTween.restart();
+						else closeTween = TweenLite.to(this, .5, { alpha:.0, onStart:function():void { closeTweening = true; }, 
+							onComplete:function():void { closeTweening = false; close(false); } } );
+					}
+				}else {
+					this.owner.remove(this);
+					alpha = 1.0;
+					showing = false;
+				}
 			}
+		}
+		
+		public function showSwitch():void {
+			showing ? close() : show();
 		}
 		
 		override public function setSize(w:int, h:int):void {

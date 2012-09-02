@@ -54,6 +54,10 @@ package org.libra.ui.components {
 			this.group = group;
 		}
 		
+		override public function toString():String {
+			return 'JCheckBox';
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
@@ -61,6 +65,11 @@ package org.libra.ui.components {
 			this.status = new BaseCheckBoxStatus();
 			this.status.setResName(resName);
 			this.addChild(this.status.getDisplayObject());
+		}
+		
+		override public function setSize(w:int, h:int):void {
+			super.setSize(w, h);
+			setTextLocation(0, getHeight() - 18);
 		}
 		
 		override protected function render():void {

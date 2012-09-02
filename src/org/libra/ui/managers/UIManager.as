@@ -19,7 +19,7 @@ package org.libra.ui.managers {
 		
 		private static var instance:UIManager;
 		
-		private var stage:Stage;
+		internal var stage:Stage;
 		
 		private var panelList:Vector.<JPanel>;
 		

@@ -1,10 +1,16 @@
 package org.libra.ui.base {
-	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import org.libra.ui.components.JToolTip;
+	import org.libra.ui.interfaces.IComponent;
+	import org.libra.ui.interfaces.IDragable;
+	import org.libra.ui.managers.DragManager;
+	import org.libra.ui.managers.ToolTipManager;
 	import org.libra.ui.style.Filter;
 	import org.libra.ui.utils.GraphicsUtil;
 	
@@ -20,7 +26,7 @@ package org.libra.ui.base {
 	 * @version 1.0
 	 * @see
 	 */
-	public class Component extends Sprite {// implements IComponent {
+	public class Component extends Sprite implements IComponent, IDragable {
 		
 		/**
 		 * 宽度
@@ -50,6 +56,10 @@ package org.libra.ui.base {
 		 * 遮罩
 		 */
 		protected var $mask:Shape;
+		
+		private var dragable:Boolean;
+		
+		protected var toolTipText:String;
 		
 		public function Component(x:int = 0, y:int = 0) { 
 			super();
@@ -134,6 +144,14 @@ package org.libra.ui.base {
 			return this.$height;
 		}
 		
+		public function setBounds(x:int, y:int, w:int, h:int):void {
+			this.x = x;
+			this.y = y;
+			this.$width = w;
+			this.$height = h;
+			invalidate();
+		}
+		
 		public function setEnable(val:Boolean):void {
 			this.enable = val;
 			this.tabEnabled = this.mouseChildren = this.mouseEnabled = val;
@@ -141,6 +159,15 @@ package org.libra.ui.base {
 		
 		public function isEnable():Boolean {
 			return this.enable;
+		}
+		
+		public function setToolTipText(text:String):void {
+			this.toolTipText = text;
+			ToolTipManager.getInstance().setToolTip(this, text ? JToolTip.getInstance() : null);
+		}
+		
+		public function initToolTip():void {
+			JToolTip.getInstance().text = this.toolTipText;
 		}
 		
 		/**
@@ -169,6 +196,7 @@ package org.libra.ui.base {
 			if (this.hasEventListener(Event.ADDED_TO_STAGE)) {
 				this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			}
+			setDragable(false);
 		}
 		
 		override public function toString():String {
@@ -180,6 +208,22 @@ package org.libra.ui.base {
 				return super.dispatchEvent(event);	
 			}
 			return false;
+		}
+		
+		/* INTERFACE org.libra.ui.interfaces.IDragable */
+		
+		public function setDragable(val:Boolean):void {
+			if (this.dragable != val) {
+				this.dragable = val;
+				if (dragable) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+				else this.removeEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+			}
+		}
+		
+		public function getDragBmd():BitmapData {
+			var bmd:BitmapData = new BitmapData($width, $height, true, 0);
+			bmd.draw(this);
+			return bmd;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -230,6 +274,10 @@ package org.libra.ui.base {
 		protected function onRemoveFromStage(e:Event):void {
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+		}
+		
+		private function onStartDrag(e:MouseEvent):void {
+			DragManager.startDrag(this);
 		}
 	}
 
