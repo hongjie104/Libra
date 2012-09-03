@@ -1,6 +1,6 @@
 package org.libra.ui.base.stateus {
 	import org.libra.ui.base.stateus.BaseButtonStatus;
-	import org.libra.ui.base.stateus.interfaces.ICheckBoxStatus;
+	import org.libra.ui.base.stateus.interfaces.ISelectStatus;
 	
 	/**
 	 * <p>
@@ -14,7 +14,7 @@ package org.libra.ui.base.stateus {
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseCheckBoxStatus extends BaseButtonStatus implements ICheckBoxStatus {
+	public class BaseCheckBoxStatus extends BaseButtonStatus implements ISelectStatus {
 		
 		protected var selected:Boolean;
 		
@@ -30,7 +30,7 @@ package org.libra.ui.base.stateus {
 			selected ? toSelected() : super.toNormal();
 		}
 		
-		/* INTERFACE org.libra.ui.base.stateus.interfaces.ICheckBoxStatus */
+		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
 		
 		public function toSelected():void {
 			toMouseDown();

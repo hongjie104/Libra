@@ -26,8 +26,8 @@ package org.libra.ui.components {
 		/**
 		 * 滑动块
 		 */
-		protected var block:JButton;
-		//protected var block:Sprite;
+		//protected var block:JButton;
+		protected var block:Sprite;
 		
 		/**
 		 * 背景
@@ -57,16 +57,20 @@ package org.libra.ui.components {
 			this.min = min;
 			this.max = max;
 			this.value = value;
+			this.correctValue();
+			positionBlock();
 		}
 		
 		public function setBackClick(b:Boolean):void {
 			backClick = b;
 		}
 		
-		public function setValue(v:Number):void{
-			value = v;
-			correctValue();
-			positionHandle();
+		public function setValue(v:Number):void {
+			if (this.value != v) {
+				value = v;
+				correctValue();
+				positionBlock();
+			}
 		}
 		
 		public function getValue():Number {
@@ -76,17 +80,17 @@ package org.libra.ui.components {
 		public function setMax(m:Number):void {
 			max = m;
 			correctValue();
-			positionHandle();
+			positionBlock();
 		}
 		
-		public function getMaximum():Number{
+		public function getMax():Number{
 			return max;
 		}
 		
 		public function setMin(m:Number):void {
 			min = m;
 			correctValue();
-			positionHandle();
+			positionBlock();
 		}
 		
 		public function getMin():Number {
@@ -109,17 +113,37 @@ package org.libra.ui.components {
 		
 		override protected function draw():void {
 			super.draw();
-			
+			drawBack();
+			drawBlock();
+		}
+		
+		protected function drawBack():void {
 			this.back = new Sprite();
-			GraphicsUtil.drawRect(back.graphics, 0, 0, $width, $height, Style.BACKGROUND);
 			this.setBackground(back);
-			
-			this.block = new JButton(0, 0, '', 'sliderBtn');
-			block.setSize(16, 16);
+		}
+		
+		protected function drawBlock():void {
+			this.block = new Sprite();
 			this.block.buttonMode = true;
 			this.addChild(block);
-			
-			positionHandle();
+		}
+		
+		override protected function render():void {
+			super.render();
+			renderBack();
+			renderBlock();
+		}
+		
+		protected function renderBack():void {
+			GraphicsUtil.drawRect(back.graphics, 0, 0, $width, $height, Style.BACKGROUND);
+		}
+		
+		protected function renderBlock():void {
+			if (this.orientation == Constants.HORIZONTAL)
+				GraphicsUtil.drawRect(block.graphics, 1, 1, $height - 2, $height - 2, Style.BUTTON_FACE);
+			else 
+				GraphicsUtil.drawRect(block.graphics, 1, 1, $width - 2, $width - 2, Style.BUTTON_FACE);
+			positionBlock();
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -138,7 +162,7 @@ package org.libra.ui.components {
 		 * Adjusts position of handle when value, maximum or minimum have changed.
 		 * TODO: Should also be called when slider is resized.
 		 */
-		protected function positionHandle():void {
+		protected function positionBlock():void {
 			var range:Number;
 			if(orientation == Constants.HORIZONTAL) {
 				range = $width - $height;
@@ -170,8 +194,10 @@ package org.libra.ui.components {
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
 			if(orientation == Constants.HORIZONTAL) {
 				block.startDrag(false, new Rectangle(0, 0, $width - $height, 0));
+				//block.startDrag(false, new Rectangle(0, 0, $width - block.width, 0));
 			} else {
 				block.startDrag(false, new Rectangle(0, 0, 0, $height - $width));
+				//block.startDrag(false, new Rectangle(0, 0, 0, $height - block.height));
 			}
 		}
 		

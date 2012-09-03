@@ -69,7 +69,7 @@ package org.libra.ui.base {
 			this.enable = true;
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			setLocation(x, y);
-			invalidate();
+			//invalidate();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -256,18 +256,18 @@ package org.libra.ui.base {
 		}
 		
 		/**
-		 * 渲染组件
-		 */
-		protected function render():void {
-			//GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Style.BACKGROUND);
-		}
-		
-		/**
 		 * 添加到舞台上时，调用该方法
 		 */
 		protected function draw():void {
 			drawed = true;
 			this.filters = Filter.SHADOW_FILTER;
+		}
+		
+		/**
+		 * 渲染组件
+		 */
+		protected function render():void {
+			//GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Style.BACKGROUND);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -22,8 +22,9 @@ package org.libra.ui.utils {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public static function drawRect(g:Graphics, x:int, y:int, w:int, h:int, color:int = 0xff0000, alpha:Number = 1.0):void { 
-			g.clear();
+		public static function drawRect(g:Graphics, x:int, y:int, w:int, h:int, color:int = 0xff0000, alpha:Number = 1.0, clear:Boolean = true):void { 
+			if(clear)
+				g.clear();
 			g.beginFill(color, alpha);
 			g.drawRect(x, y, w, h);
 			g.endFill();

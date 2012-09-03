@@ -12,7 +12,7 @@ package org.libra.ui.base.stateus.interfaces {
 	 * @version 1.0
 	 * @see
 	 */
-	public interface ICheckBoxStatus extends IButtonStatus {
+	public interface ISelectStatus extends IButtonStatus {
 		
 		function setSelected(val:Boolean):void;
 		

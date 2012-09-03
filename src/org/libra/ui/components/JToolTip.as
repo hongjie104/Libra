@@ -48,15 +48,15 @@ package org.libra.ui.components {
 			this.setSize(textField.textWidth + 13, 29);
 		}
 		
+		/*-----------------------------------------------------------------------------------------
+		Private methods
+		-------------------------------------------------------------------------------------------*/
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
 			textField.textColor = Style.TOOLTIP_TEXT;
 			setTextLocation(5, 6);
 		}
 		
-		/*-----------------------------------------------------------------------------------------
-		Private methods
-		-------------------------------------------------------------------------------------------*/
 		override protected function render():void {
 			super.render();
 			if (this.background) {

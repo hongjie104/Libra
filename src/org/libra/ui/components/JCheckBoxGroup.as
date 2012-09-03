@@ -96,9 +96,21 @@ package org.libra.ui.components {
 			}
 		}
 		
+		override public function toString():String {
+			return 'JCheckBoxGroup';
+		}
+		
+		override public function dispose():void {
+			super.dispose();
+			for (var i:* in this.checkBoxList) {
+				checkBoxList[i].dispose();
+			}
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
+		
 		override protected function render():void {
 			super.render();
 			var preCheckBox:JCheckBox;
@@ -109,6 +121,7 @@ package org.libra.ui.components {
 			}
 			if(this.selectedBox) this.selectedBox.setSelected(true);
 		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/

@@ -3,7 +3,7 @@ package org.libra.ui.components {
 	import flash.events.MouseEvent;
 	import org.libra.ui.base.BaseButton;
 	import org.libra.ui.base.stateus.BaseCheckBoxStatus;
-	import org.libra.ui.base.stateus.interfaces.ICheckBoxStatus;
+	import org.libra.ui.base.stateus.interfaces.ISelectStatus;
 	import org.libra.ui.events.CheckBoxEvent;
 	
 	/**
@@ -40,7 +40,7 @@ package org.libra.ui.components {
 		public function setSelected(val:Boolean):void {
 			if (this.selected != val) {
 				this.selected = val;
-				(this.status as ICheckBoxStatus).setSelected(selected);
+				(this.status as ISelectStatus).setSelected(selected);
 				if (selected) {
 					if (this.group) this.group.setCheckBoxUnselected(this);
 					dispatchEvent(new CheckBoxEvent(CheckBoxEvent.SELECTED));
@@ -67,14 +67,14 @@ package org.libra.ui.components {
 			this.addChild(this.status.getDisplayObject());
 		}
 		
+		override protected function render():void {
+			super.render();
+			if (selected) (this.status as ISelectStatus).toSelected();
+		}
+		
 		override public function setSize(w:int, h:int):void {
 			super.setSize(w, h);
 			setTextLocation(0, h - 18);
-		}
-		
-		override protected function render():void {
-			super.render();
-			if (selected) (this.status as ICheckBoxStatus).toSelected();
 		}
 		
 		override protected function onAddToStage(e:Event):void {

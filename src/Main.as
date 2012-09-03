@@ -10,8 +10,11 @@ package {
 	import org.libra.ui.components.JCheckBoxGroup;
 	import org.libra.ui.components.JFrame;
 	import org.libra.ui.components.JLabel;
+	import org.libra.ui.components.JList;
 	import org.libra.ui.components.JPanel;
+	import org.libra.ui.components.JScrollBar;
 	import org.libra.ui.components.JSlider;
+	import org.libra.ui.components.JTextArea;
 	import org.libra.ui.components.JTextField;
 	import org.libra.ui.managers.UIManager;
 	
@@ -67,6 +70,19 @@ package {
 			
 			var slider:JSlider = new JSlider(0, 60, 200);
 			frame.append(slider);
+			
+			//var scrollBar:JScrollBar = new JScrollBar(1, 300, 200);
+			//frame.append(scrollBar);
+			
+			//var textArea:JTextArea = new JTextArea(0, 160, '凤飞飞');
+			//textArea.setSize(200, 200);
+			//frame.append(textArea);
+			var list:JList = new JList(0, 160);
+			frame.append(list);
+			var data:Vector.<Object> = new Vector.<Object>();
+			for (var i:int = 0; i < 100;i += 1)
+				data[i] = 'item' + i;
+			list.setDataList(data);
 		}
 		
 		private function onCliked(e:MouseEvent):void {

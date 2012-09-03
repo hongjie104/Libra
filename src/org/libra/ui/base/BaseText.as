@@ -1,4 +1,5 @@
 package org.libra.ui.base {
+	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import org.libra.ui.style.Filter;
@@ -143,10 +144,22 @@ package org.libra.ui.base {
 			this.addChild(textField);
 		}
 		
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
+			this.textField.addEventListener(Event.CHANGE, onTextChanged);
+		}
+		
+		override protected function onRemoveFromStage(e:Event):void {
+			super.onRemoveFromStage(e);
+			this.textField.removeEventListener(Event.CHANGE, onTextChanged);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		
+		protected function onTextChanged(e:Event):void {
+			this.dispatchEvent(e);
+		}
 	}
 
 }
