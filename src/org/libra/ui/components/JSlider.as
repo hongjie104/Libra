@@ -6,8 +6,8 @@ package org.libra.ui.components {
 	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
 	import org.libra.ui.style.Style;
-	import org.libra.ui.utils.GraphicsUtil;
-	import org.libra.ui.utils.MathUtil;
+	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.MathUtil;
 	
 	/**
 	 * <p>

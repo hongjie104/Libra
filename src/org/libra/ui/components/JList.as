@@ -3,7 +3,7 @@ package org.libra.ui.components {
 	import flash.events.MouseEvent;
 	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
-	import org.libra.ui.utils.MathUtil;
+	import org.libra.utils.MathUtil;
 	
 	/**
 	 * <p>

@@ -1,6 +1,7 @@
 package org.libra.ui.utils {
 	import flash.display.BitmapData;
 	import flash.utils.getDefinitionByName;
+	import org.libra.utils.HashMap;
 	/**
 	 * <p>
 	 * Description

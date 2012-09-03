@@ -5,8 +5,8 @@ package org.libra.ui.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.base.Container;
-	import org.libra.ui.utils.BitmapDataUtil;
-	import org.libra.ui.utils.DepthUtil;
+	import org.libra.utils.BitmapDataUtil;
+	import org.libra.utils.DepthUtil;
 	
 	/**
 	 * <p>

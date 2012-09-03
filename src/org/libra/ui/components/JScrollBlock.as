@@ -4,8 +4,8 @@ package org.libra.ui.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
-	import org.libra.ui.utils.BitmapDataUtil;
 	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.BitmapDataUtil;
 	
 	/**
 	 * <p>

@@ -3,7 +3,7 @@ package org.libra.ui.components {
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldAutoSize;
 	import org.libra.ui.style.Style;
-	import org.libra.ui.utils.BitmapDataUtil;
+	import org.libra.utils.BitmapDataUtil;
 	/**
 	 * <p>
 	 * Description

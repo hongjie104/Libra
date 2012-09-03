@@ -1,4 +1,4 @@
-package org.libra.ui.utils {
+package org.libra.utils {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;

@@ -2,7 +2,7 @@ package org.libra.ui.base {
 	import flash.display.DisplayObject;
 	import org.libra.ui.interfaces.IDragable;
 	import org.libra.ui.interfaces.IDropable;
-	import org.libra.ui.utils.GraphicsUtil;
+	import org.libra.utils.GraphicsUtil;
 	
 	/**
 	 * <p>

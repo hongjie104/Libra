@@ -138,7 +138,7 @@ package org.libra.ui.base {
 			}
 			textField.text = text;
 			textField.filters = Filter.BLACK;
-			textField.textColor = Style.BUTTON_TEXT;
+			textField.textColor = Style.LABEL_TEXT;
 			this.textAlign = 'center';
 			this.text = text;
 			this.addChild(textField);

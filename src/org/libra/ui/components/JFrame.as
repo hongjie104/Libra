@@ -7,8 +7,8 @@ package org.libra.ui.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.managers.UIManager;
-	import org.libra.ui.utils.BitmapDataUtil;
-	import org.libra.ui.utils.GraphicsUtil;
+	import org.libra.utils.BitmapDataUtil;
+	import org.libra.utils.GraphicsUtil;
 	
 	/**
 	 * <p>

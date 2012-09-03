@@ -3,8 +3,8 @@ package org.libra.ui.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.Constants;
-	import org.libra.ui.utils.GraphicsUtil;
-	import org.libra.ui.utils.MathUtil;
+	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.MathUtil;
 	/**
 	 * <p>
 	 * Description

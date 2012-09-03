@@ -1,4 +1,4 @@
-package org.libra.ui.utils {
+package org.libra.utils {
 	import flash.utils.Dictionary;
 	/**
 	 * <p>
