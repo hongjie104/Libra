@@ -31,12 +31,12 @@ package org.libra.ui.base {
 		/**
 		 * 宽度
 		 */
-		protected var $width:int;
+		protected var $width:Number;
 		
 		/**
 		 * 高度
 		 */
-		protected var $height:int;
+		protected var $height:Number;
 		
 		protected var enable:Boolean;
 		
@@ -126,23 +126,23 @@ package org.libra.ui.base {
 			invalidate();
 		}
 		
-		public function setWidth(val:int):void {
-			this.$width = val;
-			invalidate();
-		}
-		
-		public function getWidth():int {
-			return this.$width;
-		}
-		
-		public function setHeight(val:int):void {
-			this.$height = val;
-			invalidate();
-		}
-		
-		public function getHeight():int {
-			return this.$height;
-		}
+		//public function setWidth(val:int):void {
+			//this.$width = val;
+			//invalidate();
+		//}
+		//
+		//public function getWidth():int {
+			//return this.$width;
+		//}
+		//
+		//public function setHeight(val:int):void {
+			//this.$height = val;
+			//invalidate();
+		//}
+		//
+		//public function getHeight():int {
+			//return this.$height;
+		//}
 		
 		public function setBounds(x:int, y:int, w:int, h:int):void {
 			this.x = x;
@@ -224,6 +224,28 @@ package org.libra.ui.base {
 			var bmd:BitmapData = new BitmapData($width, $height, true, 0);
 			bmd.draw(this);
 			return bmd;
+		}
+		
+		/*-----------------------------------------------------------------------------------------
+		Getters and setters
+		-------------------------------------------------------------------------------------------*/
+		
+		override public function get width():Number {
+			return $width;
+		}
+		
+		override public function set width(value:Number):void {
+			this.$width = value;
+			invalidate();
+		}
+		
+		override public function get height():Number {
+			return $height;
+		}
+		
+		override public function set height(value:Number):void {
+			this.$height = value;
+			this.invalidate();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -63,12 +63,12 @@ package org.libra.ui.components {
 		override protected function draw():void {
 			super.draw();
 			bar = new Sprite();
-			GraphicsUtil.drawRect(bar.graphics, 0, 0, getWidth(), barHeight, 0, .0);
+			GraphicsUtil.drawRect(bar.graphics, 0, 0, $width, barHeight, 0, .0);
 			this.addChild(bar);
 			
 			closeBtn = new JButton(0, 0, '', 'btnClose');
 			closeBtn.setSize(21, 19);
-			closeBtn.setLocation(getWidth() - closeBtn.getWidth() - 6, 6);
+			closeBtn.setLocation($width - closeBtn.width - 6, 6);
 			this.append(closeBtn);
 		}
 		

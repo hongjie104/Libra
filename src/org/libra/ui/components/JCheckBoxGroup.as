@@ -103,8 +103,8 @@ package org.libra.ui.components {
 			super.render();
 			var preCheckBox:JCheckBox;
 			for (var i:* in this.checkBoxList) {
-				checkBoxList[i].setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.getWidth() + preCheckBox.x + gap : 0) : 0, 
-					orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.getHeight() + preCheckBox.y + gap : 0));
+				checkBoxList[i].setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + gap : 0) : 0, 
+					orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.height + preCheckBox.y + gap : 0));
 				preCheckBox = checkBoxList[i];
 			}
 			if(this.selectedBox) this.selectedBox.setSelected(true);

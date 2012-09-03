@@ -23,10 +23,6 @@ package org.libra.ui.interfaces {
 		
 		function initToolTip():void;
 		
-		function getWidth():int;
-		
-		function getHeight():int;
-		
 		function dispose():void;
 		
 		function get x():Number;
@@ -36,6 +32,14 @@ package org.libra.ui.interfaces {
 		function get y():Number;
 		
 		function set y(y:Number):void;
+		
+		function get width():Number;
+		
+		function set width(val:Number):void;
+		
+		function get height():Number;
+		
+		function set height(val:Number):void;
 		
 		function get parent():DisplayObjectContainer;
 	}

@@ -11,6 +11,7 @@ package {
 	import org.libra.ui.components.JFrame;
 	import org.libra.ui.components.JLabel;
 	import org.libra.ui.components.JPanel;
+	import org.libra.ui.components.JSlider;
 	import org.libra.ui.components.JTextField;
 	import org.libra.ui.managers.UIManager;
 	
@@ -63,6 +64,9 @@ package {
 			frame.append(checkBoxGroup);
 			
 			btn.setToolTipText('按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮');
+			
+			var slider:JSlider = new JSlider(0, 60, 200);
+			frame.append(slider);
 		}
 		
 		private function onCliked(e:MouseEvent):void {

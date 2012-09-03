@@ -178,11 +178,11 @@ package org.libra.ui.managers {
 			const stage:Stage = UIManager.getInstance().stage;
 			currentToolTip.x = stage.mouseX + 10;
 			currentToolTip.y = stage.mouseY;
-			if (currentToolTip.x + currentToolTip.getWidth() > stage.stageWidth - 10) {
-				currentToolTip.x = stage.stageWidth - currentToolTip.getWidth() - 10;
+			if (currentToolTip.x + currentToolTip.width > stage.stageWidth - 10) {
+				currentToolTip.x = stage.stageWidth - currentToolTip.width - 10;
 			}
-			if (currentToolTip.y + currentToolTip.getHeight() > stage.stageHeight - 10) {
-				currentToolTip.y = stage.stageHeight - currentToolTip.getHeight() - 10;
+			if (currentToolTip.y + currentToolTip.height > stage.stageHeight - 10) {
+				currentToolTip.y = stage.stageHeight - currentToolTip.height - 10;
 			}
 		}
 	}

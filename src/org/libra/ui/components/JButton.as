@@ -30,7 +30,7 @@ package org.libra.ui.components {
 		
 		override public function setSize(w:int, h:int):void {
 			super.setSize(w, h);
-			setTextLocation(0, getHeight() - 21);
+			setTextLocation(0, h - 21);
 		}
 		
 		override public function toString():String {
