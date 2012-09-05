@@ -1,32 +1,34 @@
-package org.libra.ui.components {
-	import flash.display.Bitmap;
-	import org.libra.ui.base.Container;
-	
+package org.libra.log {
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JCell
+	 * @class Logger
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 09/02/2012
+	 * @date 09/05/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class JCell extends Container {
+	public final class Logger {
 		
-		protected var selected:Boolean;
+		public static const INFO:int = 0;
+		public static const DEBUG:int = 1;
+		public static const WARN:int = 2;
+		public static const ERROR:int = 3;
 		
-		protected var border:Bitmap;
-		
-		public function JCell(x:int = 0, y:int = 0) { 
-			super(x, y);
+		public function Logger() {
+			throw new Error('Logger不能实例化!');
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public static function log(text:String, lv:int = 0):void {
+			trace(lv + ':' + text);
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

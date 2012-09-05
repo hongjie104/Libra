@@ -11,7 +11,6 @@ package org.libra.ui.base {
 	import org.libra.ui.interfaces.IDragable;
 	import org.libra.ui.managers.DragManager;
 	import org.libra.ui.managers.ToolTipManager;
-	import org.libra.ui.style.Filter;
 	import org.libra.utils.GraphicsUtil;
 	
 	/**
@@ -69,7 +68,6 @@ package org.libra.ui.base {
 			this.enable = true;
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			setLocation(x, y);
-			//invalidate();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -121,28 +119,12 @@ package org.libra.ui.base {
 		}
 		
 		public function setSize(w:int, h:int):void {
-			this.$width = w;
-			this.$height = h;
-			invalidate();
+			if ($width != w || $height != h) {
+				this.$width = w;
+				this.$height = h;
+				invalidate();
+			}
 		}
-		
-		//public function setWidth(val:int):void {
-			//this.$width = val;
-			//invalidate();
-		//}
-		//
-		//public function getWidth():int {
-			//return this.$width;
-		//}
-		//
-		//public function setHeight(val:int):void {
-			//this.$height = val;
-			//invalidate();
-		//}
-		//
-		//public function getHeight():int {
-			//return this.$height;
-		//}
 		
 		public function setBounds(x:int, y:int, w:int, h:int):void {
 			this.x = x;
@@ -258,18 +240,21 @@ package org.libra.ui.base {
 		
 		/**
 		 * 添加到舞台上时，调用该方法
+		 * 在这个方法中，将实例化一些可视对象变量。
+		 * 以免在添加到舞台之前，就大量实例化暂时没有用到的对象。
 		 */
 		protected function draw():void {
 			drawed = true;
-			this.filters = Filter.SHADOW_FILTER;
 			invalidate();
 		}
 		
 		/**
 		 * 渲染组件
+		 * 主要作用是重新布局。
+		 * 比如当宽度或者高度改变时，重新绘制下组件
 		 */
 		protected function render():void {
-			//GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Style.BACKGROUND);
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------

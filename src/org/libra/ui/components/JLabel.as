@@ -1,6 +1,5 @@
 package org.libra.ui.components {
 	import org.libra.ui.base.BaseText;
-	import org.libra.ui.style.Style;
 	
 	/**
 	 * <p>
@@ -28,7 +27,11 @@ package org.libra.ui.components {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		
+		override protected function initTextField(text:String = ''):void {
+			super.initTextField(text);
+			this.textAlign = 'left';
+			this.text = text;
+		}
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/

@@ -3,6 +3,7 @@ package org.libra.ui.base {
 	import flash.events.MouseEvent;
 	import org.libra.ui.base.stateus.BaseButtonStatus;
 	import org.libra.ui.base.stateus.interfaces.IButtonStatus;
+	import org.libra.ui.utils.JFont;
 	
 	/**
 	 * <p>
@@ -61,6 +62,13 @@ package org.libra.ui.base {
 			this.status = new BaseButtonStatus();
 			this.status.setResName(resName);
 			this.addChild(this.status.getDisplayObject());
+		}
+		
+		override protected function initTextField(text:String = ''):void {
+			super.initTextField(text);
+			setFont(JFont.FONT_BTN);
+			this.textAlign = 'center';
+			this.text = text;
 		}
 		
 		override protected function render():void {

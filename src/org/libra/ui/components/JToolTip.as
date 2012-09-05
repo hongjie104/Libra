@@ -2,7 +2,7 @@ package org.libra.ui.components {
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldAutoSize;
-	import org.libra.ui.style.Style;
+	import org.libra.ui.utils.JFont;
 	import org.libra.utils.BitmapDataUtil;
 	/**
 	 * <p>
@@ -53,7 +53,7 @@ package org.libra.ui.components {
 		-------------------------------------------------------------------------------------------*/
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
-			textField.textColor = Style.TOOLTIP_TEXT;
+			setFont(JFont.FONT_LABEL);
 			setTextLocation(5, 6);
 		}
 		

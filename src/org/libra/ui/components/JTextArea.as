@@ -5,6 +5,7 @@ package org.libra.ui.components {
 	import org.libra.ui.base.BaseText;
 	import org.libra.ui.Constants;
 	import org.libra.ui.style.Style;
+	import org.libra.ui.utils.JFont;
 	
 	/**
 	 * <p>
@@ -33,11 +34,10 @@ package org.libra.ui.components {
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
 			textField.wordWrap = textField.multiline = true;
-			this.textAlign = 'left';
+			this.setFont(JFont.FONT_INPUT);
 			this.text = text;
 			textField.selectable = textField.mouseEnabled = true;
 			this.textField.type = TextFieldType.INPUT;
-			textField.textColor = Style.INPUT_TEXT;
 			textField.background = true;
 			textField.backgroundColor = Style.BACKGROUND;
 		}

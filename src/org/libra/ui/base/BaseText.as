@@ -3,7 +3,7 @@ package org.libra.ui.base {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import org.libra.ui.style.Filter;
-	import org.libra.ui.style.Style;
+	import org.libra.ui.utils.JFont;
 	
 	/**
 	 * <p>
@@ -57,6 +57,17 @@ package org.libra.ui.base {
 		 */
 		public function setSelection(beginIndex:int, endIndex:int):void {
 			this.textField.setSelection(beginIndex, endIndex);
+		}
+		
+		/**
+		 * 设置文本字体，每次将Textfield的text重置时，Textfield都会将其TextFormat设置为默认的TextFormat，
+		 * 所以该方法修改的不仅仅是Textfield的TextFormat，还有defaultTextFormat
+		 * @param	font
+		 */
+		public function setFont(font:JFont):void {
+			var newTf:TextFormat = font.getTextFormat();
+			this.textField.setTextFormat(newTf);
+			this.textField.defaultTextFormat = newTf;
 		}
 		
 		/**
@@ -130,16 +141,11 @@ package org.libra.ui.base {
 		-------------------------------------------------------------------------------------------*/
 		
 		protected function initTextField(text:String = ''):void {
-			if (!textField) {
-				textField = new TextField();
-				textField.selectable = textField.tabEnabled = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
-				textField.multiline = false;
-				textField.defaultTextFormat = new TextFormat(Style.fontName, Style.fontSize, Style.LABEL_TEXT);
-			}
-			textField.text = text;
+			textField = new TextField();
+			textField.selectable = textField.tabEnabled = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
+			textField.multiline = false;
+			setFont(JFont.FONT_LABEL);
 			textField.filters = Filter.BLACK;
-			textField.textColor = Style.LABEL_TEXT;
-			this.textAlign = 'center';
 			this.text = text;
 			this.addChild(textField);
 		}

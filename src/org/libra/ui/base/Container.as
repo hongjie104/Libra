@@ -41,16 +41,25 @@ package org.libra.ui.base {
 		public function append(child:Component):Component {
 			if (this.componentList.indexOf(child) == -1) {
 				this.componentList[numComponent++] = child;
-				this.addChild(child);
+				super.addChild(child);
+				return child;
+			}
+			return null;
+		}
+		
+		public function appendAt(child:Component, index:int):Component {
+			if (append(child)) {
+				this.setChildIndex(child, index);
+				var tmp:Component = this.componentList[index];
+				this.componentList[index] = child;
+				this.componentList[numComponent - 1] = tmp;
 				return child;
 			}
 			return null;
 		}
 		
 		public function appendAll(...rest):void {
-			for (var i:* in rest) {
-				this.append(rest[i]);
-			}
+			for (var i:* in rest) this.append(rest[i]);
 		}
 		
 		public function remove(child:Component, dispose:Boolean = false):Component {
@@ -58,16 +67,18 @@ package org.libra.ui.base {
 			if (index == -1) return null;
 			this.componentList.splice(index, 1);
 			numComponent--;
-			this.removeChild(child);
+			super.removeChild(child);
 			if(dispose)
 				child.dispose();
 			return child;
 		}
 		
+		public function removeAt(index:int, dispose:Boolean = false):Component {
+			return index > -1 && index < numChildren ? this.remove(this.componentList[index], dispose) : null;
+		}
+		
 		public function removeAll(dispose:Boolean, ...rest):void { 
-			for (var i:* in rest) {
-				this.remove(rest[i], dispose);
-			}
+			for (var i:* in rest) this.remove(rest[i], dispose);
 		}
 		
 		public function clear(dispose:Boolean = false):void {
@@ -77,6 +88,33 @@ package org.libra.ui.base {
 			}
 			componentList.length = 0;
 			this.numComponent = 0;
+		}
+		
+		override public function addChild(child:DisplayObject):DisplayObject {
+			if (child is Component) throw new Error('组件不能使用addChild，请使用append');
+			return super.addChild(child);
+		}
+		
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject {
+			if (child is Component) throw new Error('组件不能使用addChildAt，请使用appendAt');
+			return super.addChildAt(child, index);
+		}
+		
+		override public function removeChild(child:DisplayObject):DisplayObject {
+			if (child is Component) throw new Error('组件不能使用removeChild，请使用remove');
+			return super.removeChild(child);
+		}
+		
+		override public function removeChildAt(index:int):DisplayObject {
+			var child:DisplayObject = super.removeChildAt(index);
+			if (child is Component) {
+				var index:int = this.componentList.indexOf(child);
+				if (index != -1) {
+					this.componentList.splice(index, 1);
+					numComponent--;
+				}
+			}
+			return child;
 		}
 		
 		public function getNumComponent():int {

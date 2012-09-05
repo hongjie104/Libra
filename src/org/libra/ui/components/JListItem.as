@@ -57,6 +57,10 @@ package org.libra.ui.components {
 			invalidate();
 		}
 		
+		public function getData():*{
+			return this.data;
+		}
+		
 		override public function toString():String {
 			return 'JListItem';
 		}
@@ -79,8 +83,10 @@ package org.libra.ui.components {
 		
 		override protected function render():void {
 			super.render();
-			
-			if (label) label.text = data;
+			if (label) {
+				label.text = data;
+				label.setSize($width, $height);
+			}
 		}
 		
 		override protected function onAddToStage(e:Event):void {

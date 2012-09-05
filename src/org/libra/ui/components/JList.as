@@ -21,6 +21,9 @@ package org.libra.ui.components {
 		
 		private var itemList:Vector.<JListItem>;
 		
+		/**
+		 * 数据源
+		 */
 		private var dataList:Vector.<Object>;
 		
 		private var scrollBar:JScrollBar;
@@ -36,12 +39,26 @@ package org.libra.ui.components {
 			itemList = new Vector.<JListItem>();
 			this.setSize(100, 300);
 			selectedIndex = -1;
-			initListItems();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		override public function setSize(w:int, h:int):void {
+			super.setSize(w, h);
+			initListItems();
+		}
+		
+		override public function setBounds(x:int, y:int, w:int, h:int):void {
+			super.setBounds(x, y, w, h);
+			initListItems();
+		}
+		
+		override public function set height(value:Number):void {
+			super.height = value;
+			initListItems();
+		}
 		
 		public function addItem(item:Object):void {
 			this.dataList[dataList.length] = item;
@@ -73,7 +90,6 @@ package org.libra.ui.components {
 		
 		public function setSelectedIndex(value:int):void {
 			this.selectedIndex = value >= 0 && value < itemList.length ? value : -1;
-			invalidate();
 			dispatchEvent(new Event(Event.SELECT));
 		}
 		
@@ -81,11 +97,11 @@ package org.libra.ui.components {
 			return selectedIndex;
 		}
 		
-		public function setSelectedItem(item:Object):void {
+		public function setSelectedItem(item:JListItem):void {
 			setSelectedIndex(this.itemList.indexOf(item));
 		}
 		
-		public function getSelectedItem():Object {
+		public function getSelectedItem():JListItem {
 			return selectedIndex >= 0 && selectedIndex < itemList.length ? itemList[selectedIndex] : null;
 		}
 		
@@ -154,11 +170,16 @@ package org.libra.ui.components {
 		}
 		
 		protected function initListItems():void {
+			for (var j:* in itemList) {
+				this.removeChild(itemList[j]);
+			}
+			var itemPool:Vector.<JListItem> = this.itemList.slice();
+			itemList.length = 0;
 			var item:JListItem;
             var numItems:int = Math.ceil($height / itemHeight);
 			for(var i:int = 0; i < numItems; i++) {
-				item = new JListItem(0, i * itemHeight);
-				item.setData('item' + i);
+				item = itemPool.length ? itemPool.shift() : new JListItem();
+				item.setLocation(0, i * itemHeight);
 				item.setSize(width, itemHeight);
 				this.itemList[i] = item;
 				this.addChild(item);
@@ -172,6 +193,7 @@ package org.libra.ui.components {
 			var numData:int = this.dataList.length;
             for(var i:int = 0; i < numItems; i++) {
                 item = itemList[i];
+				item.setSize($width, itemHeight);
 				item.setData(offset + i < numData ? this.dataList[offset + i] : '');
 				item.setSelected(offset + i == selectedIndex);
             }
@@ -215,7 +237,7 @@ package org.libra.ui.components {
 				itemList[i].setSelected(false);
 			}
 			target.setSelected(true);
-			dispatchEvent(new Event(Event.SELECT));
+			this.setSelectedItem(target);
 		}
 		
 	}
