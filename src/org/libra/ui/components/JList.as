@@ -45,7 +45,6 @@ package org.libra.ui.components {
 		
 		public function addItem(item:Object):void {
 			this.dataList[dataList.length] = item;
-            updateItems();
 			invalidate();
 		}
 		
@@ -53,8 +52,7 @@ package org.libra.ui.components {
 			index = MathUtil.max(0, index);
 			index = MathUtil.min(dataList.length, index);
 			dataList.splice(index, 0, item);
-            updateItems();
-			invalidate();
+            invalidate();
 		}
 		
 		public function removeItem(item:Object):void{
@@ -65,13 +63,11 @@ package org.libra.ui.components {
 		public function removeItemAt(index:int):void {
 			if(index < 0 || index >= itemList.length) return;
 			dataList.splice(index, 1);
-			updateItems();
 			invalidate();
 		}
 		
 		public function clear():void {
 			dataList.length = 0;
-			updateItems();
 			invalidate();
 		}
 		
@@ -86,10 +82,7 @@ package org.libra.ui.components {
 		}
 		
 		public function setSelectedItem(item:Object):void {
-			var index:int = this.itemList.indexOf(item);
-			selectedIndex = index;
-			invalidate();
-			dispatchEvent(new Event(Event.SELECT));
+			setSelectedIndex(this.itemList.indexOf(item));
 		}
 		
 		public function getSelectedItem():Object {
@@ -162,15 +155,7 @@ package org.libra.ui.components {
 		
 		protected function initListItems():void {
 			var item:JListItem;
-			//while(_itemHolder.numChildren > 0) {
-				//item = ListItem(_itemHolder.getChildAt(0));
-				//item.removeEventListener(MouseEvent.CLICK, onSelect);
-				//_itemHolder.removeChildAt(0);
-			//}
-			
             var numItems:int = Math.ceil($height / itemHeight);
-			//numItems = Math.min(numItems, dataList.length);
-            //numItems = Math.max(numItems, 1);
 			for(var i:int = 0; i < numItems; i++) {
 				item = new JListItem(0, i * itemHeight);
 				item.setData('item' + i);
@@ -188,14 +173,6 @@ package org.libra.ui.components {
             for(var i:int = 0; i < numItems; i++) {
                 item = itemList[i];
 				item.setData(offset + i < numData ? this.dataList[offset + i] : '');
-				//if(_alternateRows)
-				//{
-					//item.defaultColor = ((offset + i) % 2 == 0) ? _defaultColor : _alternateColor;
-				//}
-				//else
-				//{
-					//item.defaultColor = _defaultColor;
-				//}
 				item.setSelected(offset + i == selectedIndex);
             }
         }

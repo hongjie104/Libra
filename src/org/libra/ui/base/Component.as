@@ -252,7 +252,8 @@ package org.libra.ui.base {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		protected function invalidate():void {
-			addEventListener(Event.ENTER_FRAME, onInvalidate);
+			if(drawed)
+				addEventListener(Event.ENTER_FRAME, onInvalidate);
 		}
 		
 		/**
@@ -261,6 +262,7 @@ package org.libra.ui.base {
 		protected function draw():void {
 			drawed = true;
 			this.filters = Filter.SHADOW_FILTER;
+			invalidate();
 		}
 		
 		/**
