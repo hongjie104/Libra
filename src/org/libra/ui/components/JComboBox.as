@@ -3,6 +3,8 @@ package org.libra.ui.components {
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
 	import org.libra.utils.GraphicsUtil;
@@ -96,32 +98,38 @@ package org.libra.ui.components {
 		 * 展开
 		 */
 		private function toUnfold():void {
-			this.fold = false;
-			this.addChild(list);
-			this.addChild(listMask);
-			list.mask = listMask;
-			if (orientation == Constants.DOWN) {
-				//加1，让下拉菜单和文本之间留出1像素的空隙，仅仅是为了美观。
-				listMask.y = $height + 1;
-				list.setLocation(0, listMask.y - list.height);
-				
-			}else {
-				listMask.y = 0 - 1 - listMask.height;
-				list.setLocation(0, -1);
+			if (fold) {
+				this.fold = false;
+				this.addChild(list);
+				this.addChild(listMask);
+				list.mask = listMask;
+				if (orientation == Constants.DOWN) {
+					//加1，让下拉菜单和文本之间留出1像素的空隙，仅仅是为了美观。
+					listMask.y = $height + 1;
+					list.setLocation(0, listMask.y - list.height);
+					
+				}else {
+					listMask.y = 0 - 1 - listMask.height;
+					list.setLocation(0, -1);
+				}
+				stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+				var t:TweenLite = TweenLite.to(list, .2, { y:listMask.y, onComplete:function():void { t.kill(); }} );
 			}
-			var t:TweenLite = TweenLite.to(list, .2, { y:listMask.y, onComplete:function():void { t.kill(); }} );
 		}
 		
 		/**
 		 * 折叠
 		 */
 		private function toFold():void {
-			this.fold = true;
-			var t:TweenLite = TweenLite.to(list, .2, { y:orientation == Constants.DOWN ? $height + 1 - list.height : -1, onComplete:function():void { 
-					t.kill(); 
-					removeChild(list);
-					removeChild(listMask);
-				}} );
+			if (!fold) {
+				this.fold = true;
+				stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+				var t:TweenLite = TweenLite.to(list, .2, { y:orientation == Constants.DOWN ? $height + 1 - list.height : -1, onComplete:function():void { 
+						t.kill(); 
+						removeChild(list);
+						removeChild(listMask);
+					}} );
+			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -152,6 +160,17 @@ package org.libra.ui.components {
 			var selectedItem:JListItem = list.getSelectedItem();
 			this.content.text = selectedItem.getData();
 			onPressClicked(null);
+		}
+		
+		/**
+		 * 展开时，侦听舞台鼠标抬起事件，收缩下拉框
+		 * @param	e
+		 */
+		private function onStageMouseUp(e:MouseEvent):void {
+			if (e.target == pressBtn) return;
+			var p:Point = localToGlobal(new Point(list.x, list.y));
+			if(new Rectangle(p.x, p.y, list.width, list.height).contains(e.stageX, e.stageY)) return;
+			this.toFold();
 		}
 		
 	}

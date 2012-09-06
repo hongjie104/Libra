@@ -1,10 +1,10 @@
 package {
+	import com.greensock.loading.SWFLoader;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import org.libra.log.Logger;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.components.JButton;
 	import org.libra.ui.components.JCheckBox;
@@ -14,11 +14,11 @@ package {
 	import org.libra.ui.components.JLabel;
 	import org.libra.ui.components.JList;
 	import org.libra.ui.components.JPanel;
-	import org.libra.ui.components.JScrollBar;
 	import org.libra.ui.components.JSlider;
 	import org.libra.ui.components.JTextArea;
 	import org.libra.ui.components.JTextField;
 	import org.libra.ui.managers.UIManager;
+	import org.libra.ui.utils.ResManager;
 	
 	/**
 	 * ...
@@ -39,7 +39,23 @@ package {
             stage.scaleMode = StageScaleMode.NO_SCALE;
 			// entry point
 			
+			//开始加载ui资源
+			var swfLoader:SWFLoader = new SWFLoader('../asset/UI.swf', { name:'UI', onComplete:onLoadUIComplete } );
+			swfLoader.load();
+		}
+		
+		/**
+		 * UI资源加载完成
+		 * @param	evt
+		 */
+		private function onLoadUIComplete(evt:Event):void {
+			//初始化UI
+			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
+			test();
+		}
+		
+		private function test():void {
 			var uiContainer:Container = new Container();
 			this.addChild(uiContainer);
 			
@@ -91,11 +107,6 @@ package {
 			var comboBox:JComboBox = new JComboBox(4, '下拉框', 50, 100);
 			panel.append(comboBox);
 			comboBox.setDataList(data);
-			
-			Logger.log('trtrtert', Logger.DEBUG);
-			Logger.log('trtrtert', Logger.ERROR);
-			Logger.log('trtrtert', Logger.INFO);
-			Logger.log('trtrtert', Logger.WARN);
 		}
 		
 		private function onCliked(e:MouseEvent):void {

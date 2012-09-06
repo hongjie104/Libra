@@ -1,10 +1,13 @@
 package org.libra.ui.components {
 	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.base.Container;
+	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
 	
@@ -104,7 +107,7 @@ package org.libra.ui.components {
 			if (this.background) {
 				if (this.background is Bitmap) (background as Bitmap).bitmapData.dispose();
 			}
-			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(new PanelBg(), 
+			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('PanelBg'), 
 				$width, $height, new Rectangle(3, 3, 11, 6))));
 		}
 		

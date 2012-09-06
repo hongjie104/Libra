@@ -1,6 +1,7 @@
 package org.libra.ui.utils {
+	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.SWFLoader;
 	import flash.display.BitmapData;
-	import flash.utils.getDefinitionByName;
 	import org.libra.utils.HashMap;
 	/**
 	 * <p>
@@ -20,6 +21,8 @@ package org.libra.ui.utils {
 		
 		private var resMap:HashMap;
 		
+		private var uiLoader:SWFLoader;
+		
 		public function ResManager(singleton:Singleton) {
 			resMap = new HashMap();
 		}
@@ -27,10 +30,15 @@ package org.libra.ui.utils {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public function init():void {
+			this.uiLoader = LoaderMax.getLoader('UI');
+		}
+		
 		public function getBitmapData(bmdName:String):BitmapData {
 			var bmd:BitmapData = resMap.get(bmdName);
 			if (bmd) return bmd;
-			var c:Class = getDefinitionByName(bmdName) as Class;
+			var c:Class = uiLoader.getClass(bmdName);
 			bmd = c ? new c() : null;
 			resMap.put(bmdName, bmd);
 			return bmd;

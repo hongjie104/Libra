@@ -3,6 +3,7 @@ package org.libra.ui.components {
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldAutoSize;
 	import org.libra.ui.utils.JFont;
+	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	/**
 	 * <p>
@@ -63,7 +64,7 @@ package org.libra.ui.components {
 				if (this.background is Bitmap) (background as Bitmap).bitmapData.dispose();
 			}
 			if($width > 0 && $height > 0)
-				this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(new toolTipBg(), 
+				this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('toolTipBg'), 
 					$width, $height, new Rectangle(5, 4, 1, 20))));
 		}
 		

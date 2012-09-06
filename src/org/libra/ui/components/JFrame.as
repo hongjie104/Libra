@@ -7,6 +7,7 @@ package org.libra.ui.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.managers.UIManager;
+	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.GraphicsUtil;
 	
@@ -73,7 +74,7 @@ package org.libra.ui.components {
 		}
 		
 		override protected function initBackground():void {
-			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(new frameBg(), 
+			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('frameBg'), 
 				$width, $height, new Rectangle(12, 60, 1, 1))));
 		}
 		
