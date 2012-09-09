@@ -1,6 +1,5 @@
 package org.libra.tick {
 	import flash.events.TimerEvent;
-	import org.jpixel.interfaces.ITimerable;
 	
 	/**
 	 * ...
@@ -9,46 +8,46 @@ package org.libra.tick {
 	public final class MultiTimer {
 		
 		private static var instance:MultiTimer;
-		private var timerableList:Vector.<ITimerable>;
+		private var timerEnabledList:Vector.<ITimerEnabled>;
 		private var pause:Boolean;
 		private var sleepTimer:SleepTimer;
 		
 		public function MultiTimer(singleton:Singleton) { 
-			timerableList = new Vector.<ITimerable>();
+			timerEnabledList = new Vector.<ITimerEnabled>();
 			pause = true;
 			sleepTimer = new SleepTimer(100);
 			sleepTimer.addEventListener(TimerEvent.TIMER, onTimerHandler);
 		}
 		
 		private function onTimerHandler(e:TimerEvent):void {
-			for each(var b:ITimerable in timerableList) {
+			for each(var b:ITimerEnabled in timerEnabledList) {
 				b.doAction();
 			}
 		}
 		
-		public function addItem(timerable:ITimerable):void {
-			if (!hasItem(timerable)) {
-				this.timerableList[timerableList.length] = timerable;
+		public function addItem(timerEnabled:ITimerEnabled):void {
+			if (!hasItem(timerEnabled)) {
+				this.timerEnabledList[timerEnabledList.length] = timerEnabled;
 				this.setPause(false);
 			}
 		}
 		
-		public function removeItem(timerable:ITimerable):void {
-			var index:int = timerableList.indexOf(timerable);
+		public function removeItem(timerEnabled:ITimerEnabled):void {
+			var index:int = timerEnabledList.indexOf(timerEnabled);
 			if (index != -1) {
-				timerableList.splice(index, 1);
+				timerEnabledList.splice(index, 1);
 			}
-			if (this.timerableList.length == 0) {
+			if (this.timerEnabledList.length == 0) {
 				this.setPause(true);
 			}
 		}
 		
 		public function clearItem():void {
-			this.timerableList.length = 0;
+			this.timerEnabledList.length = 0;
 		}
 		
-		public function hasItem(timerable:ITimerable):Boolean {
-			return this.timerableList.indexOf(timerable) != -1;
+		public function hasItem(timerEnabled:ITimerEnabled):Boolean {
+			return this.timerEnabledList.indexOf(timerEnabled) != -1;
 		}
 		
 		public function setPause(value:Boolean):void {

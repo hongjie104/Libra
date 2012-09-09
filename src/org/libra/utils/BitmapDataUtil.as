@@ -1,7 +1,9 @@
 package org.libra.utils {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.ByteArray;
 	/**
 	 * <p>
 	 * Description
@@ -16,8 +18,10 @@ package org.libra.utils {
 	 */
 	public final class BitmapDataUtil {
 		
+		static private const ZORE_POINT:Point = new Point();
+		
 		public function BitmapDataUtil() {
-			
+			throw new Error('BitmapDataUtil无法实例化!');
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -101,9 +105,103 @@ package org.libra.utils {
 			return bmpData;
 		}
 		
+		/**
+		 * 切分位图为一组较小的位图
+		 * @param source
+		 * @param width
+		 * @param height
+		 * @return 
+		 */
+		public static function separateBitmapData(width:int, height:int, source:BitmapData):Vector.<Vector.<BitmapData>> { 
+			var result:Vector.<Vector.<BitmapData>> = new Vector.<Vector.<BitmapData>>();
+			var row:int = int(source.height / height);
+			var col:int = int(source.width / width);
+			var bitmapData:BitmapData;
+			var rect:Rectangle = new Rectangle(0, 0, width, height);
+			for (var j:int = 0; j < row; j += 1) { 
+				rect.y = j * height;
+				result[j] = new Vector.<BitmapData>(col);
+				for (var i:int = 0; i < col; i += 1) { 
+					rect.x = i * width;
+					result[j][i] = getBitmapData(width, height, rect, source);
+				}
+			}
+			source.dispose();
+			source = null;
+			return result;
+		}
+		
+		/**
+		 * 将bitmapData垂直翻转
+		 * @param	bitmapData
+		 * @return
+		 */
+		public static function flipVertical(bitmapData:BitmapData):BitmapData {
+			var height:int = bitmapData.height;
+			var width:int = bitmapData.width;
+			var bmd:BitmapData = new BitmapData(width, height, true, 0x00000000);
+            for (var xx:int = 0; xx < width; xx += 1) { 
+                for (var yy:int = 0; yy < height; yy += 1) { 
+                    bmd.setPixel32(xx, height - yy - 1, bitmapData.getPixel32(xx, yy));
+                }
+            }
+            return bmd;
+		}
+		
+		/**
+		 * 将bitmapData水平翻转
+		 * @param	bitmapData
+		 * @return
+		 */
+		public static function flipHorizontal(bitmapData:BitmapData):BitmapData {
+			var height:int = bitmapData.height;
+			var width:int = bitmapData.width;
+			var bmd:BitmapData = new BitmapData(width, height, true, 0x00000000);
+            for (var yy:int = 0; yy < height; yy += 1) { 
+                for (var xx:int = 0; xx < width; xx += 1) {
+                    bmd.setPixel32(width - xx - 1, yy, bitmapData.getPixel32(xx, yy));
+                }
+            }
+            return bmd;
+		}
+		
+		/**
+		 * 将图片中白色变成透明
+		 * @param	source
+		 */
+		public static function changeTransparent(source:BitmapData):void {
+			var ba:ByteArray = source.getPixels(source.rect);
+			ba.position = 0;
+			var l:int = ba.length;
+			for (var i:int; i < l; i = i + 4) { 
+				if (ba.bytesAvailable) { 
+				   //此处做白色颜色改为透明处理
+				    if (ba[i + 3] == 255 && ba[i + 1] == 255 && ba[i + 2] == 255) { 
+						ba[i] = 0;
+				    }
+				}
+			}
+			ba.position = 0;
+			source.setPixels(source.rect, ba)
+		}
+		
+		static public function flipHorizontalList(list:Vector.<BitmapData>):Vector.<BitmapData> {
+			var result:Vector.<BitmapData> = new Vector.<BitmapData>(list.length);
+			for (var i:* in list) {
+				result[i] = flipHorizontal(list[i]);
+			}
+			return result;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
+		
+		private static function getBitmapData(w:int, h:int, rect:Rectangle, source:BitmapData):BitmapData { 
+			var bitmapData:BitmapData = new BitmapData(w, h, true, 0);
+			bitmapData.copyPixels(source, rect, ZORE_POINT, null, null, true);
+			return bitmapData;
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

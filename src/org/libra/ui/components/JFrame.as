@@ -5,7 +5,7 @@ package org.libra.ui.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	import org.libra.ui.base.Container;
+	import org.libra.ui.interfaces.IContainer;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
@@ -35,9 +35,15 @@ package org.libra.ui.components {
 		
 		private var title:JLabel;
 		
-		public function JFrame(w:int, h:int, parent:Container = null, x:int = 0, y:int = 0, barHeight:int = 25) { 
+		private var closeEnabled:Boolean;
+		
+		private var dragBarEnabled:Boolean;
+		
+		public function JFrame(parent:IContainer, w:int = 300, h:int = 200, x:int = 0, y:int = 0, barHeight:int = 25) { 
 			this.barHeight = barHeight;
-			super(w, h, parent, x, y);
+			super(parent, w, h, x, y);
+			closeEnabled = true;
+			dragBarEnabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -51,10 +57,44 @@ package org.libra.ui.components {
 			var stage:Stage = UIManager.getInstance().getStage();
 			dragBounds.width = stage.stageWidth + w - 80;
 			dragBounds.height = stage.stageHeight - barHeight;
+			
+			renderTitle();
+		}
+		
+		public function setCloseEnabled(bool:Boolean):void {
+			if (this.closeEnabled != bool) {
+				this.closeEnabled = bool;
+				invalidate();
+			}
+		}
+		
+		public function setDragBarEnabled(bool:Boolean):void {
+			if (this.dragBarEnabled != bool) {
+				this.dragBarEnabled = bool;
+				invalidate();
+			}
+		}
+		
+		public function setTitle(val:String):void {
+			this.title.text = val;
 		}
 		
 		override public function toString():String {
 			return 'JFrame';
+		}
+		
+		override public function dispose():void {
+			super.dispose();
+			removeBarDragListeners();
+		}
+		
+		/*-----------------------------------------------------------------------------------------
+		Getters and setter
+		-------------------------------------------------------------------------------------------*/
+		
+		override public function set width(value:Number):void {
+			super.width = value;
+			renderTitle();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -70,7 +110,21 @@ package org.libra.ui.components {
 			closeBtn = new JButton(0, 0, '', 'btnClose');
 			closeBtn.setSize(21, 19);
 			closeBtn.setLocation($width - closeBtn.width - 6, 6);
-			this.append(closeBtn);
+			if(closeEnabled)
+				this.append(closeBtn);
+			
+			//面板的标题，默认距离顶部4个像素
+			title = new JLabel(0, 4, 'JFrame Title');
+			title.setSize($width, 20);
+			title.textAlign = 'center';
+			this.append(title);
+		}
+		
+		override protected function render():void {
+			super.render();
+			closeBtn.setLocation($width - closeBtn.width - 6, 6);
+			closeEnabled ? append(closeBtn) : remove(closeBtn);
+			dragBarEnabled ? addBarDragListeners() : removeBarDragListeners();
 		}
 		
 		override protected function initBackground():void {
@@ -80,16 +134,31 @@ package org.libra.ui.components {
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			this.bar.addEventListener(MouseEvent.MOUSE_DOWN, onBarMouseDown);
-			this.bar.addEventListener(MouseEvent.MOUSE_UP, onBarMouseUp);
+			if (dragBarEnabled) addBarDragListeners();
 			this.closeBtn.addEventListener(MouseEvent.CLICK, onCloseBtnClikced);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
+			if (dragBarEnabled) removeBarDragListeners();
+			this.closeBtn.removeEventListener(MouseEvent.CLICK, onCloseBtnClikced);
+		}
+		
+		private function addBarDragListeners():void {
+			this.bar.addEventListener(MouseEvent.MOUSE_DOWN, onBarMouseDown);
+			this.bar.addEventListener(MouseEvent.MOUSE_UP, onBarMouseUp);
+		}
+		
+		private function removeBarDragListeners():void {
 			this.bar.removeEventListener(MouseEvent.MOUSE_DOWN, onBarMouseDown);
 			this.bar.removeEventListener(MouseEvent.MOUSE_UP, onBarMouseUp);
-			this.closeBtn.removeEventListener(MouseEvent.CLICK, onCloseBtnClikced);
+		}
+		
+		private function renderTitle():void {
+			if (drawed) {
+				title.width = $width;
+				title.textAlign = 'center';
+			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------

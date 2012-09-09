@@ -106,7 +106,7 @@ package org.libra.ui.base {
 		-------------------------------------------------------------------------------------------*/
 		
 		private function onMouseUpAndDown(e:MouseEvent):void {
-			if (enable) {
+			if (enabled) {
 				if (e.type == MouseEvent.MOUSE_DOWN) {
 					this.curStatus = MOUSE_DOWN;
 					this.status.toMouseDown();
@@ -122,7 +122,7 @@ package org.libra.ui.base {
 		}
 		
 		private function onRollOverAndOut(e:MouseEvent):void {
-			if (enable) {
+			if (enabled) {
 				if (e.type == MouseEvent.ROLL_OVER) {
 					curStatus = MOUSE_OVER;
 					this.status.toMouseOver();

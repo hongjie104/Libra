@@ -2,13 +2,13 @@ package org.libra.ui.base {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import org.libra.displayObject.JSprite;
 	import org.libra.ui.components.JToolTip;
 	import org.libra.ui.interfaces.IComponent;
-	import org.libra.ui.interfaces.IDragable;
+	import org.libra.ui.interfaces.IDragEnabled;
 	import org.libra.ui.managers.DragManager;
 	import org.libra.ui.managers.ToolTipManager;
 	import org.libra.utils.GraphicsUtil;
@@ -25,7 +25,7 @@ package org.libra.ui.base {
 	 * @version 1.0
 	 * @see
 	 */
-	public class Component extends Sprite implements IComponent, IDragable {
+	public class Component extends JSprite implements IComponent, IDragEnabled {
 		
 		/**
 		 * 宽度
@@ -37,7 +37,7 @@ package org.libra.ui.base {
 		 */
 		protected var $height:Number;
 		
-		protected var enable:Boolean;
+		protected var enabled:Boolean;
 		
 		/**
 		 * 是否已经绘制过了。
@@ -56,7 +56,7 @@ package org.libra.ui.base {
 		 */
 		protected var $mask:Shape;
 		
-		private var dragable:Boolean;
+		private var dragEnabled:Boolean;
 		
 		protected var toolTipText:String;
 		
@@ -65,7 +65,7 @@ package org.libra.ui.base {
 			
 			//取消flash默认的焦点边框
 			this.focusRect = false;
-			this.enable = true;
+			this.enabled = true;
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			setLocation(x, y);
 		}
@@ -101,7 +101,7 @@ package org.libra.ui.base {
 			return super.addChildAt(child, index);
 		}
 		
-		public function removeFromParent(dispose:Boolean = false):void { 
+		override public function removeFromParent(dispose:Boolean = false):void { 
             if (parent) {
 				if (parent is Container) {
 					(parent as Container).remove(this, dispose);
@@ -134,13 +134,13 @@ package org.libra.ui.base {
 			invalidate();
 		}
 		
-		public function setEnable(val:Boolean):void {
-			this.enable = val;
+		public function setEnabled(val:Boolean):void {
+			this.enabled = val;
 			this.tabEnabled = this.mouseChildren = this.mouseEnabled = val;
 		}
 		
-		public function isEnable():Boolean {
-			return this.enable;
+		public function isEnabled():Boolean {
+			return this.enabled;
 		}
 		
 		public function setToolTipText(text:String):void {
@@ -174,11 +174,11 @@ package org.libra.ui.base {
 			}
 		}
 		
-		public function dispose():void {
+		override public function dispose():void {
 			if (this.hasEventListener(Event.ADDED_TO_STAGE)) {
 				this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			}
-			setDragable(false);
+			setDragEnabled(false);
 		}
 		
 		override public function toString():String {
@@ -192,12 +192,12 @@ package org.libra.ui.base {
 			return false;
 		}
 		
-		/* INTERFACE org.libra.ui.interfaces.IDragable */
+		/* INTERFACE org.libra.ui.interfaces.IDragEnabled */
 		
-		public function setDragable(val:Boolean):void {
-			if (this.dragable != val) {
-				this.dragable = val;
-				if (dragable) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+		public function setDragEnabled(val:Boolean):void {
+			if (this.dragEnabled != val) {
+				this.dragEnabled = val;
+				if (dragEnabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 				else this.removeEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 			}
 		}

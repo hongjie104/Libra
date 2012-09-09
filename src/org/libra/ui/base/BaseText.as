@@ -129,11 +129,23 @@ package org.libra.ui.base {
 		public function set textAlign(val:String):void {
 			var tf:TextFormat = this.textField.defaultTextFormat;
 			tf.align = val;
+			this.textField.setTextFormat(tf);
 			this.textField.defaultTextFormat = tf;
+			this.textField.text = this.textField.text;
 		}
 		
 		public function set maxChars(val:int):void {
 			this.textField.maxChars = val;
+		}
+		
+		override public function set width(value:Number):void {
+			super.width = value;
+			this.textField.width = value - textField.x;
+		}
+		
+		override public function set height(value:Number):void {
+			super.height = value;
+			this.textField.height = value - textField.y;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

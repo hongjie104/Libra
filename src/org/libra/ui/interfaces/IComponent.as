@@ -1,5 +1,6 @@
 package org.libra.ui.interfaces {
 	import flash.display.DisplayObjectContainer;
+	import org.libra.displayObject.interfaces.ISprite;
 	
 	/**
 	 * <p>
@@ -13,17 +14,13 @@ package org.libra.ui.interfaces {
 	 * @version 1.0
 	 * @see
 	 */
-	public interface IComponent {
-		
-		function removeFromParent(dispose:Boolean = false):void
+	public interface IComponent extends ISprite {
 		
 		function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void;
 		
 		function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void;
 		
 		function initToolTip():void;
-		
-		function dispose():void;
 		
 		function get x():Number;
 		

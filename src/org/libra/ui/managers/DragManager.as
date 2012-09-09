@@ -6,8 +6,8 @@ package org.libra.ui.managers {
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import org.libra.ui.interfaces.IDragable;
-	import org.libra.ui.interfaces.IDropable;
+	import org.libra.ui.interfaces.IDragEnabled;
+	import org.libra.ui.interfaces.IDropEnabled;
 	/**
 	 * <p>
 	 * 拖放管理类
@@ -36,9 +36,9 @@ package org.libra.ui.managers {
 		/**
 		 * 被拖放的组件
 		 */
-		private static var dragComponent:IDragable;
+		private static var dragComponent:IDragEnabled;
 		
-		static private var dropComponent:IDropable;
+		static private var dropComponent:IDropEnabled;
 		
 		/**
 		 * 开始拖动组件时的坐标
@@ -53,7 +53,7 @@ package org.libra.ui.managers {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public static function startDrag(dragComponent:IDragable):void {
+		public static function startDrag(dragComponent:IDragEnabled):void {
 			if (!dragBitmap) {
 				dragBitmap = new Bitmap();
 				dragSprite = new Sprite();
@@ -85,16 +85,16 @@ package org.libra.ui.managers {
 		 * @param	pos 当前鼠标坐标
 		 * @return 容器
 		 */
-		private static function getAcceptContainer(pos:Point):IDropable {
+		private static function getAcceptContainer(pos:Point):IDropEnabled {
 			const targets:Array = UIManager.getInstance().stage.getObjectsUnderPoint(pos);
 			var l:int = targets.length;
-			var con:IDropable;
+			var con:IDropEnabled;
 			while (--l > -1) {
-				if (targets[l] is IDropable) {
-					con = targets[l] as IDropable;
+				if (targets[l] is IDropEnabled) {
+					con = targets[l] as IDropEnabled;
 					//先判断一下，鼠标点是否点击到了容器上。
 					//if (con.isMouseHitMe(pos)) {
-						if (con.isDropAcceptable(dragComponent)) {
+						if (con.isDropAcceptEnabled(dragComponent)) {
 							return con;
 						}
 					//}
@@ -122,7 +122,7 @@ package org.libra.ui.managers {
 				//dragInitiator.dragSuccess();
 				//如果成功拖放了，就直接移除拖放图案的托
 				dragSprite.parent.removeChild(dragSprite);
-				dropComponent.addDragable(dragComponent);
+				dropComponent.addDragEnabled(dragComponent);
 			}else {
 				//拖拽失败
 				//dragInitiator.dragFail();

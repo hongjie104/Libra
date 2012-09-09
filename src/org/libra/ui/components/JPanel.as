@@ -1,12 +1,11 @@
 package org.libra.ui.components {
 	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.base.Container;
+	import org.libra.ui.interfaces.IContainer;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
@@ -25,7 +24,7 @@ package org.libra.ui.components {
 	 */
 	public class JPanel extends Container {
 		
-		protected var owner:Container;
+		protected var owner:IContainer;
 		
 		protected var showing:Boolean;
 		
@@ -35,11 +34,17 @@ package org.libra.ui.components {
 		
 		private var closeTweening:Boolean;
 		
-		public function JPanel(w:int, h:int, owner:Container, x:int = 0, y:int = 0) { 
+		/**
+		 * 鼠标按下时，是否自动放到显示层的最上层
+		 */
+		private var autoUp:Boolean;
+		
+		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, x:int = 0, y:int = 0) { 
 			super(x, y);
 			this.setSize(w, h);
 			this.owner = owner;
 			closeTweening = showing = false;
+			autoUp = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -69,6 +74,10 @@ package org.libra.ui.components {
 		
 		public function showSwitch():void {
 			showing ? close() : show();
+		}
+		
+		public function setAutoUp(bool:Boolean):void {
+			this.autoUp = bool;
 		}
 		
 		override public function setSize(w:int, h:int):void {
@@ -130,7 +139,7 @@ package org.libra.ui.components {
 		 * @param	e
 		 */
 		protected function onMouseDown(e:MouseEvent):void {
-			DepthUtil.bringToTop(this);
+			if(autoUp) DepthUtil.bringToTop(this);
 		}
 	}
 

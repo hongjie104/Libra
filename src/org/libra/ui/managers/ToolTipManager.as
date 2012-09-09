@@ -59,23 +59,23 @@ package org.libra.ui.managers {
 		
 		/**
 		 * 设置组件的提示组件
-		 * @param	toolTipable 组件
+		 * @param	toolTipEnabled 组件
 		 * @param	toolTip 提示组件，若为null，则删除组件的提示组件
 		 */
-		public function setToolTip(toolTipable:IComponent, toolTip:IComponent):void { 
+		public function setToolTip(toolTipEnabled:IComponent, toolTip:IComponent):void { 
 			if (toolTip) {
-				if (!tiggerToolTipMap[toolTipable]) {
-					toolTipable.addEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler, false, 0, true);
-					toolTipable.addEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler, false, 0, true);
-					toolTipable.addEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler, false, 0, true);
+				if (!tiggerToolTipMap[toolTipEnabled]) {
+					toolTipEnabled.addEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler, false, 0, true);
+					toolTipEnabled.addEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler, false, 0, true);
+					toolTipEnabled.addEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler, false, 0, true);
 				}
-				tiggerToolTipMap[toolTipable] = toolTip;
+				tiggerToolTipMap[toolTipEnabled] = toolTip;
 			}else {
-				if (tiggerToolTipMap[toolTipable]) {
-					toolTipable.removeEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler);
-					toolTipable.removeEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler);
-					toolTipable.removeEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler);
-					tiggerToolTipMap[toolTipable] = null;
+				if (tiggerToolTipMap[toolTipEnabled]) {
+					toolTipEnabled.removeEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler);
+					toolTipEnabled.removeEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler);
+					toolTipEnabled.removeEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler);
+					tiggerToolTipMap[toolTipEnabled] = null;
 				}
 			}
 		}

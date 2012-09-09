@@ -5,14 +5,14 @@ package org.libra.tick {
 	 * Description
 	 * </p>
 	 *
-	 * @class ITimerable
+	 * @class ITimerEnabled
 	 * @author Eddie
 	 * @qq 32968210
 	 * @date 09/06/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public interface ITimerable {
+	public interface ITimerEnabled {
 		
 		function doAction():void;
 	}

@@ -28,9 +28,9 @@ package org.libra.tick {
 		private var pause:Boolean;
 		
 		/**
-		 * 需要注册EnterFrame事件的ITickable的集合
+		 * 需要注册EnterFrame事件的ITickEnabled的集合
 		 */
-		private var tickableList:Vector.<ITickable>;
+		private var tickEnabledList:Vector.<ITickEnabled>;
 		
 		/**
 		 * 最大两帧间隔（防止待机后返回卡死） 
@@ -52,37 +52,37 @@ package org.libra.tick {
 		 */
 		public function Tick(shape:Shape, singleton:Singleton) { 
 			this.shape = shape;
-			tickableList = new Vector.<ITickable>();
+			tickEnabledList = new Vector.<ITickEnabled>();
 			instance = this;
 			pause = true;
 			setPause(false);
 		}
 		
 		/**
-		 * 增加一个需要注册EnterFrame事件的ITickable
-		 * @param	r ITickable
+		 * 增加一个需要注册EnterFrame事件的ITickEnabled
+		 * @param	r ITickEnabled
 		 */
-		public function addItem(item:ITickable):Boolean {
+		public function addItem(item:ITickEnabled):Boolean {
 			if (hasItem(item)) return false;
-			this.tickableList[this.tickableList.length] = item;
+			this.tickEnabledList[this.tickEnabledList.length] = item;
 			return true;
 		}
 		
 		/**
-		 * 移除一个需要注册EnterFrame事件的ITickable
-		 * @param	r ITickable
+		 * 移除一个需要注册EnterFrame事件的ITickEnabled
+		 * @param	r ITickEnabled
 		 */
-		public function removeItem(item:ITickable):Boolean {
-			var index:int = this.tickableList.indexOf(item);
+		public function removeItem(item:ITickEnabled):Boolean {
+			var index:int = this.tickEnabledList.indexOf(item);
 			if (index != -1) {
-				this.tickableList.splice(index, 1);
+				this.tickEnabledList.splice(index, 1);
 				return true;
 			}
 			return false;
 		}
 		
 		public function clearItem():void {
-			this.tickableList.length = 0;
+			this.tickEnabledList.length = 0;
 		}
 		
 		/**
@@ -94,12 +94,12 @@ package org.libra.tick {
 		}
 		
 		/**
-		 * 判断该ITickable是否已经存在
-		 * @param	i 被判断的ITickable
+		 * 判断该ITickEnabled是否已经存在
+		 * @param	i 被判断的ITickEnabled
 		 * @return Boolean
 		 */
-		public function hasItem(i:ITickable):Boolean {
-			return this.tickableList.indexOf(i) != -1;
+		public function hasItem(i:ITickEnabled):Boolean {
+			return this.tickEnabledList.indexOf(i) != -1;
 		}
 		
 		/**
@@ -141,7 +141,7 @@ package org.libra.tick {
 					//e.interval = interval * speed;
 					//dispatchEvent(e);
 					interval *= speed;
-					for each(var r:ITickable in tickableList) {
+					for each(var r:ITickEnabled in tickEnabledList) {
 						r.tick(interval);
 					}
 				}

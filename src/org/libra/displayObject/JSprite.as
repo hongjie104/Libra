@@ -1,44 +1,44 @@
-package org.libra.ui.components {
-	import org.libra.ui.base.BaseText;
-	import org.libra.ui.utils.JFont;
-	
+package org.libra.displayObject {
+	import flash.display.Sprite;
+	import org.libra.displayObject.interfaces.ISprite;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JLabel
+	 * @class JSprite
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 08-31-2012
+	 * @date 09/09/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class JLabel extends BaseText {
+	public class JSprite extends Sprite implements ISprite {
 		
-		public function JLabel(x:int = 0, y:int = 0, text:String = '') { 
-			super(x, y, text);
-			this.mouseChildren = this.mouseEnabled = false;
-			this.setSize(60,20);
+		public function JSprite() {
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override public function toString():String {
-			return 'JLabel';
+		/* INTERFACE org.libra.displayObject.interfaces.ISprite */
+		
+		public function removeFromParent(dispose:Boolean = false):void {
+			if (this.parent) {
+				this.parent.removeChild(this);
+				if (dispose) this.dispose();
+			}
+		}
+		
+		public function dispose():void {
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		
-		override protected function initTextField(text:String = ''):void {
-			super.initTextField(text);
-			this.textAlign = 'left';
-			this.text = text;
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

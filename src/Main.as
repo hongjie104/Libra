@@ -1,10 +1,19 @@
 package {
 	import com.greensock.loading.SWFLoader;
+	import com.sociodox.theminer.TheMiner;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import org.libra.bmpEngine.JBitmap;
+	import org.libra.bmpEngine.JMultiBitmap;
+	import org.libra.bmpEngine.RenderItem;
+	import org.libra.bmpEngine.RenderLayer;
+	import org.libra.bmpEngine.utils.JBitmapUtil;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.components.JButton;
 	import org.libra.ui.components.JCheckBox;
@@ -19,6 +28,7 @@ package {
 	import org.libra.ui.components.JTextField;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.BitmapDataUtil;
 	
 	/**
 	 * ...
@@ -27,6 +37,9 @@ package {
 	public class Main extends Sprite {
 		
 		private var frame:JFrame;
+		
+		[Embed(source="../asset/smap.png")]
+		private var BMP:Class;
 		
 		public function Main():void {
 			if (stage) init();
@@ -38,6 +51,7 @@ package {
 			stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
 			// entry point
+			this.addChild(new TheMiner(true));
 			
 			//开始加载ui资源
 			var swfLoader:SWFLoader = new SWFLoader('../asset/UI.swf', { name:'UI', onComplete:onLoadUIComplete } );
@@ -52,17 +66,51 @@ package {
 			//初始化UI
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
-			test();
+			//testUI();
+			testBmpEngine();
 		}
 		
-		private function test():void {
+		private function testBmpEngine():void {
+			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
+			//for (var i:int = 0; i < 1; i += 1 ) {
+				//var bmp:JBitmap = JBitmapUtil.createFromBitmap(100, source, 10, true);
+				//this.addChild(bmp);
+				//bmp.x = Math.random() * stage.stageWidth;
+				//bmp.y = Math.random() * stage.stageHeight;
+			//}
+			
+			//var source:MovieClip = new TestRole();
+			//for (var i:int = 0; i < 100; i += 1 ) {
+				//var bmp:JBitmap = JBitmapUtil.createFromMC(source);
+				//this.addChild(bmp);
+				//bmp.x = Math.random() * stage.stageWidth + 100;
+				//bmp.y = Math.random() * stage.stageHeight + 100;
+			//}
+			
+			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(100, 130, source)[0];
+			var bitmap:JMultiBitmap = new JMultiBitmap(100, 130);
+			var render:RenderLayer = new RenderLayer();
+			var renderItem:RenderItem = new RenderItem(null, render);
+			bitmap.addLayer(render);
+			this.addChild(bitmap);
+			renderItem.setBmd(bmdList[0]);
+			var count:int = 0;
+			this.addEventListener(Event.ENTER_FRAME, function(evt:Event):void { 
+					if (count++ == 7) count = 0;
+					renderItem.setBmd(bmdList[count]);
+				} );
+		}
+		
+		private function testUI():void {
 			var uiContainer:Container = new Container();
 			this.addChild(uiContainer);
 			
-			frame = new JFrame(400, 300, uiContainer, 350, 50);
+			frame = new JFrame(uiContainer, 400, 300, 350, 50);
+			frame.setCloseEnabled(false);
+			frame.setDragBarEnabled(false);
 			frame.show();
 			
-			var panel:JPanel = new JPanel(300, 200, uiContainer, 50, 50);
+			var panel:JPanel = new JPanel(uiContainer, 300, 200, 50, 50);
 			panel.show();
 			
 			var label:JLabel = new JLabel(40, 32, 'hello world!');
