@@ -53,7 +53,7 @@ package org.libra.bmpEngine.utils {
 			var frameList:Vector.<BitmapFrame> = JBitmapUtil.getInstance().getBitmapFrameList(source);
 			if (!frameList) {
 				frameList = new Vector.<BitmapFrame>();
-				var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(width, 130, source)[0];
+				var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(width, source.height, source)[0];
 				for (var i:* in bmdList) {
 					frameList[i] = new BitmapFrame(i, bmdList[i]);
 				}
