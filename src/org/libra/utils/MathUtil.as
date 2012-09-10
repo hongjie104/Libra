@@ -20,6 +20,7 @@ package org.libra.utils {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
 		public static function min(a:Number, b:Number):Number {
 			return a > b ? b : a;
 		}
@@ -27,6 +28,21 @@ package org.libra.utils {
 		public static function max(a:Number, b:Number):Number {
 			return a > b ? a : b;
 		}
+		
+		public function confine(value:Number, min:Number, max:Number):Number { 
+			return value < min ? min : (value > max ? max : value);
+		}
+		
+		/**
+		 * Returns a random int number within a given range
+		 * @param	min
+		 * @param	max
+		 * @return
+		 */
+		public function randomRangeInt(min:Number, max:Number):Number {
+			return Math.floor(Math.random() * (max - min + 1) + min);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

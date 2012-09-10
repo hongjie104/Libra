@@ -3,16 +3,12 @@ package {
 	import com.sociodox.theminer.TheMiner;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.libra.bmpEngine.JBitmap;
-	import org.libra.bmpEngine.JMultiBitmap;
-	import org.libra.bmpEngine.RenderItem;
-	import org.libra.bmpEngine.RenderLayer;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.components.JButton;
@@ -28,7 +24,6 @@ package {
 	import org.libra.ui.components.JTextField;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.BitmapDataUtil;
 	
 	/**
 	 * ...
@@ -38,7 +33,7 @@ package {
 		
 		private var frame:JFrame;
 		
-		[Embed(source="../asset/test.png")]
+		[Embed(source="../asset/walk.png")]
 		private var BMP:Class;
 		
 		public function Main():void {
@@ -73,7 +68,8 @@ package {
 		private function testBmpEngine():void {
 			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
 			for (var i:int = 0; i < 1; i += 1 ) {
-				var bmp:JBitmap = JBitmapUtil.createFromBitmap(67, source, 10, true);
+				//var bmp:JBitmap = JBitmapUtil.createFromBitmap(67, source, 10, true);
+				var bmp:JBitmap = JBitmapUtil.createFromBitmap(8, 64, source, 10, true);
 				this.addChild(bmp);
 				bmp.x = Math.random() * stage.stageWidth;
 				bmp.y = Math.random() * stage.stageHeight;

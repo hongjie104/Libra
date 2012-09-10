@@ -1,5 +1,6 @@
 package org.libra.bmpEngine {
 	import flash.display.BitmapData;
+	import flash.geom.Point;
 	/**
 	 * <p>
 	 * Description
@@ -14,24 +15,48 @@ package org.libra.bmpEngine {
 	 */
 	public class BitmapFrame {
 		
-		private var bmd:BitmapData;
+		/**
+		 * 公共静态常量：原点，x和y都是0的点。
+		 */
+		//private static const ZERO_POINT:Point = new Point();
 		
-		private var index:int;
+		protected var bmd:BitmapData;
 		
-		private var label:String;
+		protected var index:int;
 		
-		private var funList:Vector.<FrameFun>;
+		protected var label:String;
 		
-		private var $x:Number;
+		protected var funList:Vector.<FrameFun>;
 		
-		private var $y:Number;
+		protected var $x:Number;
+		
+		protected var $y:Number;
+		
+		//private var $width:int;
+		//
+		//private var $height:int;
+		//
+		//protected var renderLayerList:Vector.<RenderLayer>;
+		//
+		//private var needRender:Boolean;
 		
 		public function BitmapFrame(index:int, bmd:BitmapData, x:Number = 0, y:Number = 0, label:String = null) { 
 			this.index = index;
 			this.bmd = bmd;
+			//if (bmd) {
+				//$width = bmd.width;
+				//$height = bmd.height;
+			//}
 			this.$x = x;
 			this.$y = y;
 			this.label = label;
+			//needRender = false;
+			
+			//renderLayerList = new Vector.<RenderLayer>();
+			//var layer:RenderLayer = new RenderLayer();
+			//renderLayerList[0] = layer; 
+			//layer.addItem(new RenderItem(bmd));
+			//layer.setBitmapFrame(this);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -43,6 +68,20 @@ package org.libra.bmpEngine {
 		}
 		
 		public function getBmd():BitmapData {
+			//if (needRender) {
+				//this.bmd.fillRect(this.bmd.rect, 0x00000000);
+				//var layer:RenderLayer;
+				//for (var i:* in renderLayerList) {
+					//layer = renderLayerList[i];
+					//layer.render();
+					//if (layer.visible) {
+						//var bmd:BitmapData = layer.getBmd();
+						//if(bmd)
+							//this.bmd.copyPixels(bmd, bmd.rect, ZERO_POINT, null, null, true);
+					//}
+				//}
+				//needRender = false;
+			//}
 			return this.bmd;
 		}
 		
@@ -86,6 +125,52 @@ package org.libra.bmpEngine {
 		}
 		
 		/**
+		 * 增加层
+		 * @param	l 将要被增加的层
+		 */
+		//public function addLayer(l:RenderLayer):void {
+			//addLayerAt(l);
+		//}
+		//
+		//public function addLayerAt(l:RenderLayer, index:int = -1):void {
+			//if (this.renderLayerList.indexOf(l) == -1) {
+				//index = index < 0 ? this.renderLayerList.length : (index > renderLayerList.length ? renderLayerList.length : index);
+				//this.renderLayerList.splice(index, 0, l);
+				//l.setBitmapFrame(this);
+				//l.setSize($width, $height);
+				//needRender = true;
+			//}
+		//}
+		
+		/**
+		 * 移除层
+		 * @param	l 将要被移除的层
+		 */
+		//public function removeLayer(l:RenderLayer):void {
+			//removeLayerAt(this.renderLayerList.indexOf(l));
+		//}
+		//
+		//public function removeLayerAt(index:int):void {
+			//if (index < 0 || index >= this.renderLayerList.length) return;
+			//this.renderLayerList.splice(index, 1);
+			//needRender = true;
+		//}
+		
+		//public function setSize(w:int, h:int):void {
+			//if (this.bmd) bmd.dispose();
+			//$width = w;
+			//$height = h;
+			//bmd = new BitmapData(w, h, true, 0);
+			//for each(var l:RenderLayer in renderLayerList) {
+				//l.setSize(w, h);	
+			//}
+		//}
+		//
+		//public function setNeedRender(boolean:Boolean):void {
+			//this.needRender = boolean;
+		//}
+		
+		/**
 		 * 释放
 		 * @param gcBmd是否释放本帧对应的位图数据,默认不释放 false
 		 */
@@ -101,7 +186,7 @@ package org.libra.bmpEngine {
 		}
 		
 		/*-----------------------------------------------------------------------------------------
-		Gettsers ans setters
+		Getters ans setters
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get x():Number { 

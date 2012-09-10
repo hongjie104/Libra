@@ -60,6 +60,11 @@ package org.libra.bmpEngine {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		public function hitTest(point:Point):Boolean { 
+			var bmd:BitmapData = baseBitmap.bitmapData;
+			return bmd ? bmd.hitTest(new Point(this.x + baseBitmap.x, this.y + baseBitmap.y), 255, point) : false;
+		}
+		
 		/**
 		 * 增加层
 		 * @param	l 将要被增加的层
