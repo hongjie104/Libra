@@ -44,7 +44,7 @@ package org.libra.aStar {
 		public function AStarTest() {
 			super();
 			player = new Sprite();
-			player.graphics.beginFill(0xffff00);
+			player.graphics.beginFill(0xff0000);
 			player.graphics.drawCircle(0, 0, 5);
 			player.graphics.endFill();
 			this.addChild(player);
@@ -127,10 +127,12 @@ package org.libra.aStar {
 			var startPosX:int = int(player.x / cellSize);
 			var startPosY:int = int(player.y / cellSize);
 			var startNode:Node = grid.getNode(startPosX, startPosY);
+			if (!startNode) return;
 			
 			var endPosX:int = int(e.localX / cellSize);
 			var endPosY:int = int(e.localY / cellSize);
 			var endNode:Node = grid.getNode(endPosX, endPosY);
+			if (!endNode) return;
 			
 			if(!endNode.walkable) {
 				var replacer:Node = grid.findReplacer(startNode, endNode);
@@ -159,6 +161,10 @@ package org.libra.aStar {
 		}
 		
 		private function onEnterFrame(e:Event):void {
+			if (!path.length) {
+				removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				return;
+			}
 			var targetX:Number = path[step].x * cellSize + (cellSize >> 1);//根据节点列号求得屏幕坐标
 			var targetY:Number = path[step].y * cellSize + (cellSize >> 1);//根据节点行号求得屏幕坐标
 			var dx:Number = targetX - player.x;

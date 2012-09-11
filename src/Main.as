@@ -69,7 +69,7 @@ package {
 		
 		private function testAStar():void {
 			var map:AStarTest = new AStarTest();
-			map.x = 60; map.y = 80;
+			//map.x = 60; map.y = 80;
 			this.addChild(map);
 		}
 		

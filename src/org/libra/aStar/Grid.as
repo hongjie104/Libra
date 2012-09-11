@@ -55,6 +55,8 @@ package org.libra.aStar {
 		 * @param y The y coord.
 		 */
 		public function getNode(x:int, y:int):Node {
+			if (x < 0 || x >= _nodes.length) return null;
+			if (y < 0 || y >= _nodes[x].length) return null;
 			return _nodes[x][y];
 		}
 		
