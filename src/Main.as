@@ -75,14 +75,10 @@ package {
 		
 		private function testBmpEngine():void {
 			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
-<<<<<<< HEAD
-			for (var i:int = 0; i < 600; i += 1 ) {
-				var bmp:JBitmap = JBitmapUtil.createFromBitmap(100, source, 10, true);
-=======
+			
 			for (var i:int = 0; i < 1; i += 1 ) {
 				//var bmp:JBitmap = JBitmapUtil.createFromBitmap(67, source, 10, true);
 				var bmp:JBitmap = JBitmapUtil.createFromBitmap(8, 64, source, 10, true);
->>>>>>> ed5baf1e191ad70caab4003d7ef58043d2d3a383
 				this.addChild(bmp);
 				bmp.x = Math.random() * stage.stageWidth;
 				bmp.y = Math.random() * stage.stageHeight;
