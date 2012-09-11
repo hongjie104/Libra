@@ -8,6 +8,7 @@ package {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
 	import org.libra.ui.base.Container;
@@ -62,7 +63,14 @@ package {
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
 			//testUI();
-			testBmpEngine();
+			//testBmpEngine();
+			testAStar();
+		}
+		
+		private function testAStar():void {
+			var map:AStarTest = new AStarTest();
+			map.x = 60; map.y = 80;
+			this.addChild(map);
 		}
 		
 		private function testBmpEngine():void {

@@ -144,7 +144,7 @@ package org.libra.ui.components {
 			scrollBar.x = $width - scrollBar.width;
 			var contentHeight:int = dataList.length * itemHeight;
 			scrollBar.setThumbPercent($height / contentHeight); 
-			var pageSize:Number = Math.floor($height / itemHeight);
+			var pageSize:Number = MathUtil.floor($height / itemHeight);
             scrollBar.setMax(MathUtil.max(0, dataList.length - pageSize));
 			scrollBar.setPageSize(pageSize);
 			scrollBar.height = $height;

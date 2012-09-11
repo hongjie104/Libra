@@ -18,7 +18,7 @@ package org.libra.ui.components {
 	 *	//可见范围高度除以要滚动的对象高度，势必是小于1的
 	 *	scrollBar.setThumbPercent(scrollBar.height / contentHeight); 
 	 *	//可见范围高度除以滚动对象中每一行的高度，得到可见范围内的行数
-	 *	var pageSize:Number = Math.floor(scrollBar.height / 20);
+	 *	var pageSize:Number = MathUtil.floor(scrollBar.height / 20);
 	 *	scrollBar.setPageSize(pageSize);
 	 *	//item的个数减去pageSize，得到不可见范围内的行数，既需要滚动的数量
 	 *	scrollBar.setMax(Math.max(0, 50 - pageSize));
