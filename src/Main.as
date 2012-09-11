@@ -72,12 +72,12 @@ package {
 		
 		private function testBmpEngine():void {
 			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
-			//for (var i:int = 0; i < 1; i += 1 ) {
-				//var bmp:JBitmap = JBitmapUtil.createFromBitmap(100, source, 10, true);
-				//this.addChild(bmp);
-				//bmp.x = Math.random() * stage.stageWidth;
-				//bmp.y = Math.random() * stage.stageHeight;
-			//}
+			for (var i:int = 0; i < 600; i += 1 ) {
+				var bmp:JBitmap = JBitmapUtil.createFromBitmap(100, source, 10, true);
+				this.addChild(bmp);
+				bmp.x = Math.random() * stage.stageWidth;
+				bmp.y = Math.random() * stage.stageHeight;
+			}
 			
 			//var source:MovieClip = new TestRole();
 			//for (var i:int = 0; i < 100; i += 1 ) {
@@ -87,18 +87,18 @@ package {
 				//bmp.y = Math.random() * stage.stageHeight + 100;
 			//}
 			
-			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(100, 130, source)[0];
-			var bitmap:JMultiBitmap = new JMultiBitmap(100, 130);
-			var render:RenderLayer = new RenderLayer();
-			var renderItem:RenderItem = new RenderItem(null, render);
-			bitmap.addLayer(render);
-			this.addChild(bitmap);
-			renderItem.setBmd(bmdList[0]);
-			var count:int = 0;
-			this.addEventListener(Event.ENTER_FRAME, function(evt:Event):void { 
-					if (count++ == 7) count = 0;
-					renderItem.setBmd(bmdList[count]);
-				} );
+			//var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(100, 130, source)[0];
+			//var bitmap:JMultiBitmap = new JMultiBitmap(100, 130);
+			//var render:RenderLayer = new RenderLayer();
+			//var renderItem:RenderItem = new RenderItem(null, render);
+			//bitmap.addLayer(render);
+			//this.addChild(bitmap);
+			//renderItem.setBmd(bmdList[0]);
+			//var count:int = 0;
+			//this.addEventListener(Event.ENTER_FRAME, function(evt:Event):void { 
+					//if (count++ == 7) count = 0;
+					//renderItem.setBmd(bmdList[count]);
+				//} );
 		}
 		
 		private function testUI():void {
