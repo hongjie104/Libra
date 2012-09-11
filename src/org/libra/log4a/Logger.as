@@ -1,4 +1,4 @@
-package org.libra.log {
+package org.libra.log4a {
 	/**
 	 * <p>
 	 * Description
@@ -28,6 +28,7 @@ package org.libra.log {
 		
 		public static function log(text:String, lv:int = 0):void {
 			trace(lv + ':' + text);
+			ExternalLogger.traceToBrowserConsole(text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-package org.libra.log {
+package org.libra.log4a {
 	/**
 	 * <p>
 	 * Description

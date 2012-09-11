@@ -17,11 +17,6 @@ package org.libra.bmpEngine {
 		private var bmd:BitmapData;
 		
 		/**
-		 * 是否需要渲染
-		 */
-		private var needRender:Boolean;
-		
-		/**
 		 * 所在的渲染层
 		 */
 		private var renderLayer:RenderLayer;
@@ -37,8 +32,8 @@ package org.libra.bmpEngine {
 		
 		public function RenderItem(bmd:BitmapData, renderLayer:RenderLayer = null) { 
 			this.bmd = bmd;
-			renderLayer.addItem(this);
-			needRender = visible = true;
+			if(renderLayer) renderLayer.addItem(this);
+			visible = true;
 			$x = $y = 0;
 		}
 		
@@ -59,17 +54,15 @@ package org.libra.bmpEngine {
 			return this.bmd;
 		}
 		
-		public function isNeedRender():Boolean {
-			return this.needRender;
-		}
-		
 		public function setRenderLayer(renderLayer:RenderLayer):void {
 			this.renderLayer = renderLayer;
 		}
 		
 		public function setNeedRender(val:Boolean):void {
-			this.needRender = val;
-			if (needRender) this.renderLayer.setNeedRender(true);
+			if (val) {
+				if(this.renderLayer)
+					this.renderLayer.setNeedRender(true);
+			}
 		}
 		
 		public function dispose():void {

@@ -33,7 +33,7 @@ package org.libra.bmpEngine {
 		
 		private var $visible:Boolean;
 		
-		private var multiBitmap:JMultiBitmap;
+		private var bitmapFrame:BitmapFrame;
 		
 		public function RenderLayer() {
 			renderItemList = new Vector.<RenderItem>();
@@ -62,7 +62,7 @@ package org.libra.bmpEngine {
 		public function setNeedRender(boolean:Boolean):void {
 			this.needRender = boolean;
 			if (needRender) {
-				if (multiBitmap) this.multiBitmap.setNeedRender(true);
+				if (bitmapFrame) this.bitmapFrame.setNeedRender(true);
 			}
 		}
 		
@@ -121,6 +121,7 @@ package org.libra.bmpEngine {
 						item.setNeedRender(false);
 					}
 				}
+				needRender = false;
 			}
 		}
 		
@@ -132,8 +133,8 @@ package org.libra.bmpEngine {
 			return this.bmd;
 		}
 		
-		public function setMultiBitmap(jMultiBitmap:JMultiBitmap):void {
-			this.multiBitmap = jMultiBitmap;
+		public function setBitmapFrame(bitmapFrame:BitmapFrame):void {
+			this.bitmapFrame = bitmapFrame;
 		}
 		
 		public function dispose():void {

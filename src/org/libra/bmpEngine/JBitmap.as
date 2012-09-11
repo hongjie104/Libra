@@ -1,6 +1,8 @@
 package org.libra.bmpEngine {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import org.libra.displayObject.JSprite;
 	import org.libra.tick.ITickEnabled;
 	import org.libra.tick.Tick;
@@ -80,6 +82,11 @@ package org.libra.bmpEngine {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		public function hitTest(point:Point):Boolean { 
+			var bmd:BitmapData = baseBitmap.bitmapData;
+			return bmd ? bmd.hitTest(new Point(this.x + baseBitmap.x, this.y + baseBitmap.y), 255, point) : false;
+		}
+		
 		/**
 		 * 设置帧率
 		 * @param	frameRate
@@ -124,7 +131,6 @@ package org.libra.bmpEngine {
 			frame = MathUtil.max(0, MathUtil.min(frame, numFrame - 1));
 			var bitmapFrame:BitmapFrame = this.frameList[frame];
 			bitmapFrame.addFun(fun, args, disposableEnable);
-			return;
 		}
 		
 		/**
@@ -142,8 +148,8 @@ package org.libra.bmpEngine {
 		/* INTERFACE org.libra.tick.ITickEnabled */
 		
 		/**
-		 * 在Tick中调用次函数，进行渲染
-		 * @param	interval
+		 * 在Tick中调用此函数，进行渲染
+		 * @param	interval 两次调用该函数之间的时间间隔，以毫秒为单位
 		 */
 		public function tick(interval:int):void {
 			if (playing) {

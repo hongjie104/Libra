@@ -43,22 +43,26 @@ package org.libra.bmpEngine.utils {
 		
 		/**
 		 * 从序列图创建
-		 * @param	width 一帧图片的宽度
+		 * @param	cols 列数
+		 * @param   frame 帧数
 		 * @param	source 图片源
 		 * @param	autoPlay 是否自动播放
 		 * @return JBitmap
 		 */
-		public static function createFromBitmap(width:int, source:BitmapData, frameRate:int = 10, autoPlay:Boolean = true):JBitmap { 
+		public static function createFromBitmap(cols:int, frame:int, source:BitmapData, frameRate:int = 10, autoPlay:Boolean = true):JBitmap { 
 			var bitmap:JBitmap = new JBitmap(frameRate);
 			var frameList:Vector.<BitmapFrame> = JBitmapUtil.getInstance().getBitmapFrameList(source);
 			if (!frameList) {
 				frameList = new Vector.<BitmapFrame>();
-				var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(width, 130, source)[0];
+				var rows:int = Math.ceil(frame / cols);
+				var bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width / cols, source.height / rows, source);
+				var count:int = 0;
 				for (var i:* in bmdList) {
-					frameList[i] = new BitmapFrame(i, bmdList[i]);
+					var bmdList1:Vector.<BitmapData> = bmdList[i];
+					for(var j:* in bmdList1)
+					frameList[count] = new BitmapFrame(count++, bmdList1[j]);
 				}
 				JBitmapUtil.getInstance().putBitmapFrameList(source, frameList);
-				trace('createFromBitmap');
 			}
 			bitmap.setFrameList(frameList);
 			if (autoPlay) bitmap.play();
