@@ -12,34 +12,41 @@ package org.libra.log4a {
 		/**
 		 * 所有层级
 		 */
-		public static var ALL : Level = new Level(0, "ALL");
+		public static var ALL:Level = new Level(0, "ALL");
+		
 		/**
 		 * 调试层级
 		 */
-		public static var DEBUG : Level = new Level(1, "DEBUG");
+		public static var DEBUG:Level = new Level(1, "DEBUG");
+		
 		/**
 		 * 信息层级
 		 */
-		public static var INFO : Level = new Level(2, "INFO");
+		public static var INFO:Level = new Level(2, "INFO");
+		
 		/**
 		 * 警告层级
 		 */
-		public static var WARN : Level = new Level(3, "WARN");
+		public static var WARN:Level = new Level(3, "WARN");
+		
 		/**
 		 * 错误层级
 		 */
-		public static var ERROR : Level = new Level(4, "ERROR");
+		public static var ERROR:Level = new Level(4, "ERROR");
+		
 		/**
 		 * 失败层级
 		 */
-		public static var FATAL : Level = new Level(5, "FATAL");
+		public static var FATAL:Level = new Level(5, "FATAL");
+		
 		/**
 		 * 关闭层级
 		 */
-		public static var OFF : Level = new Level(6, "OFF");
+		public static var OFF:Level = new Level(6, "OFF");
 		
-		private var _value : int;
-		private var _name : String;
+		private var $value:int;
+		
+		private var $name:String;
 		
 		/**
 		 * 构造函数
@@ -47,21 +54,30 @@ package org.libra.log4a {
 		 * @param value 层级变量 @default 1
 		 * @param name 层级名称 @default "DEBUG"
 		 */
-		public function Level(value : int = 1, name : String = "DEBUG") {
-			_value = value;
-			_name = name;
+		public function Level(value:int = 1, name:String = "DEBUG") {
+			$value = value;
+			$name = name;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public function compareTo(level:Level):Boolean {
+			return $value > level.value;
+		}
+		
+		/*-----------------------------------------------------------------------------------------
+		Getters ans setters
+		-------------------------------------------------------------------------------------------*/
+		
 		/**
 		 * 获得层级变量
 		 * 
 		 * @return 
 		 */
 		public function get value():int {
-			return _value;
+			return $value;
 		}
 
 		/**
@@ -70,12 +86,9 @@ package org.libra.log4a {
 		 * @return 层级
 		 */
 		public function get name():String {
-			return _name;
+			return $name;
 		}
-
-		public function compareTo(level : Level):Boolean {
-			return _value < level.value;
-		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

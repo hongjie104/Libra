@@ -9,6 +9,7 @@ package org.libra.tick {
 	 *
 	 */
 	public class SleepCheck {
+		
 		static public var onSleep:Function;
 		static public var onWake:Function;
 		static public var isSleep:Boolean;

@@ -8,6 +8,7 @@ package org.libra.tick {
 	public final class MultiTimer {
 		
 		private static var instance:MultiTimer;
+		
 		private var timerEnabledList:Vector.<ITimerEnabled>;
 		private var pause:Boolean;
 		private var sleepTimer:SleepTimer;

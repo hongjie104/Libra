@@ -117,7 +117,7 @@ package org.libra.aStar {
 				}
 				_closed[_closed.length] = node;
 				if (!_open.length) {
-					Logger.log('AStar找不到路', Logger.WARN);
+					Logger.warn('AStar找不到路');
 					return false
 				}
 				node = _open.shift() as Node;

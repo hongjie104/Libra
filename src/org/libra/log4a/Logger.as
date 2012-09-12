@@ -13,10 +13,7 @@ package org.libra.log4a {
 	 */
 	public final class Logger {
 		
-		public static const INFO:int = 0;
-		public static const DEBUG:int = 1;
-		public static const WARN:int = 2;
-		public static const ERROR:int = 3;
+		public static var level:Level = new Level( -1, 'ALL');
 		
 		public function Logger() {
 			throw new Error('Logger不能实例化!');
@@ -26,9 +23,46 @@ package org.libra.log4a {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public static function log(text:String, lv:int = 0):void {
-			trace(lv + ':' + text);
-			ExternalLogger.traceToBrowserConsole(text);
+		public static function debug(msg:String):void {
+			if (Level.DEBUG.compareTo(level)) {
+				trace('1:[' + Level.DEBUG.name + ']' + msg);
+				ExternalLogger.traceToBrowserConsole('console.debug', msg);
+			}
+		}
+		
+		public static function info(msg:String):void {
+			if (Level.INFO.compareTo(level)) {
+				trace('0:[' + Level.INFO.name + ']' + msg);
+				ExternalLogger.traceToBrowserConsole('console.info', msg);
+			}
+		}
+		
+		public static function warn(msg:String):void {
+			if (Level.WARN.compareTo(level)) {
+				trace('2:[' + Level.WARN.name + ']' + msg);
+				ExternalLogger.traceToBrowserConsole('console.warn', msg);
+			}
+		}
+		
+		public static function error(msg:String):void {
+			if (Level.ERROR.compareTo(level)) {
+				trace('3:[' + Level.ERROR.name + ']' + msg);
+				ExternalLogger.traceToBrowserConsole('console.error', msg);
+			}
+		}
+		
+		public static function fatal(msg:String):void {
+			if (Level.FATAL.compareTo(level)) {
+				trace('4:[' + Level.FATAL.name + ']' + msg);
+				ExternalLogger.traceToBrowserConsole('console.error', msg);
+			}
+		}
+		
+		public static function off(msg:String):void {
+			if (Level.OFF.compareTo(level)) {
+				trace('5:[' + Level.OFF.name + ']' + msg);
+				ExternalLogger.traceToBrowserConsole('console.log', msg);
+			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------

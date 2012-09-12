@@ -74,10 +74,7 @@ package {
 		}
 		
 		private function testDiamond():void {
-			var s:Shape = new Shape();
-			var point:Vector.<Point> = new Vector.<Point>();
-			point[0] = new Point()
-			GraphicsUtil.drawDiamond(s.graphics,)
+			
 		}
 		
 		private function testAStar():void {

@@ -54,9 +54,9 @@ package org.libra.log4a {
 		 * 输出该行代码被执行的次数，参数 title 将在输出时作为输出结果的前缀使用。
 		 * console.clear()
 		 */ 
-		public static function traceToBrowserConsole(...args):void { 
+		public static function traceToBrowserConsole(functionName:String, ...args):void { 
 			if(ExternalInterface.available)
-				ExternalInterface.call('console.log', args);
+				ExternalInterface.call(functionName ? functionName : 'console.log', args);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
