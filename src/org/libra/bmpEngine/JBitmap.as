@@ -96,7 +96,7 @@ package org.libra.bmpEngine {
 			this.rateTimer = 1000 / frameRate;
 		}
 		
-		public function gotoAnsPlay(target:*):void {
+		public function gotoAndPlay(target:*):void {
 			gotoFrame(target);
 			play();
 		}
