@@ -23,6 +23,10 @@ package org.libra.displayObject {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		public function clearChildren():void {
+			while (this.numChildren > 0) this.removeChildAt(0);
+		}
+		
 		/* INTERFACE org.libra.displayObject.interfaces.ISprite */
 		
 		public function removeFromParent(dispose:Boolean = false):void {

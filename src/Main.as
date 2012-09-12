@@ -1,13 +1,16 @@
 package {
+	import adobe.utils.CustomActions;
 	import com.greensock.loading.SWFLoader;
 	import com.sociodox.theminer.TheMiner;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
@@ -25,6 +28,7 @@ package {
 	import org.libra.ui.components.JTextField;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.GraphicsUtil;
 	
 	/**
 	 * ...
@@ -64,7 +68,16 @@ package {
 			UIManager.getInstance().init(this.stage);
 			//testUI();
 			//testBmpEngine();
-			testAStar();
+			//testAStar();
+			//测试绘制菱形
+			testDiamond();
+		}
+		
+		private function testDiamond():void {
+			var s:Shape = new Shape();
+			var point:Vector.<Point> = new Vector.<Point>();
+			point[0] = new Point()
+			GraphicsUtil.drawDiamond(s.graphics,)
 		}
 		
 		private function testAStar():void {

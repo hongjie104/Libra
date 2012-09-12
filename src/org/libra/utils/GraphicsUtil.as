@@ -1,5 +1,6 @@
 package org.libra.utils {
 	import flash.display.Graphics;
+	import flash.geom.Point;
 	/**
 	 * <p>
 	 * Description
@@ -29,6 +30,32 @@ package org.libra.utils {
 			g.drawRect(x, y, w, h);
 			g.endFill();
 		}
+		
+		/**
+		 * 绘制菱形
+		 * @param	g
+		 * @param	pointList
+		 * @param	thickness
+		 * @param	color
+		 * @param	alpha
+		 */
+		public static function drawDiamond(g:Graphics, pointList:Vector.<Point>, thickness:Number = null, color:uint = 0, alpha:Number = 1):void { 
+			//var _loc_2:* = this.buildingBaseVO.gridType * Constants.CELL_WIDTH;
+            //var _loc_3:* = this.buildingBaseVO.gridType * Constants.CELL_HEIGHT;
+            //var _loc_4:* = new Vector.<Point>(4, true);
+            //new Vector.<Point>(4, true)[0] = new Point(_loc_2 >> 1, 0);
+            //_loc_4[1] = new Point(0, _loc_3 >> 1);
+            //_loc_4[2] = new Point(_loc_2 >> 1, _loc_3);
+            //_loc_4[3] = new Point(_loc_2, _loc_3 >> 1);
+			g.clear();
+			g.lineStyle(thickness, color, alpha);
+			g.moveTo(pointList[0].x, pointList[0].y);
+			var l:int = pointList.length;
+			for (var i:int = 1; i < l; i += 1) {
+				g.lineTo(pointList[i].x, pointList[i].y);
+			}
+			g.lineTo(pointList[0].x, pointList[0].y);
+        }
 		
 		/**
 		 * 使用绘制圆角的半径大小来绘制圆角矩形。
