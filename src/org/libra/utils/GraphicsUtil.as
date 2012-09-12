@@ -23,6 +23,17 @@ package org.libra.utils {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * 绘制矩形
+		 * @param	g
+		 * @param	x
+		 * @param	y
+		 * @param	w
+		 * @param	h
+		 * @param	color
+		 * @param	alpha
+		 * @param	clear
+		 */
 		public static function drawRect(g:Graphics, x:int, y:int, w:int, h:int, color:int = 0xff0000, alpha:Number = 1.0, clear:Boolean = true):void { 
 			if(clear)
 				g.clear();
@@ -39,7 +50,7 @@ package org.libra.utils {
 		 * @param	color
 		 * @param	alpha
 		 */
-		public static function drawDiamond(g:Graphics, pointList:Vector.<Point>, thickness:Number = null, color:uint = 0, alpha:Number = 1):void { 
+		/*public static function drawDiamond(g:Graphics, pointList:Vector.<Point>, thickness:Number = null, color:uint = 0, alpha:Number = 1):void { 
 			//var _loc_2:* = this.buildingBaseVO.gridType * Constants.CELL_WIDTH;
             //var _loc_3:* = this.buildingBaseVO.gridType * Constants.CELL_HEIGHT;
             //var _loc_4:* = new Vector.<Point>(4, true);
@@ -55,7 +66,7 @@ package org.libra.utils {
 				g.lineTo(pointList[i].x, pointList[i].y);
 			}
 			g.lineTo(pointList[0].x, pointList[0].y);
-        }
+        }*/
 		
 		/**
 		 * 使用绘制圆角的半径大小来绘制圆角矩形。
