@@ -8,6 +8,7 @@ package {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
@@ -29,6 +30,7 @@ package {
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
+	import org.libra.utils.GraphicsUtil;
 	
 	/**
 	 * ...
@@ -74,7 +76,7 @@ package {
 		}
 		
 		private function testDiamond():void {
-			
+			GraphicsUtil.drawDiamondNet(this.graphics, new Point(300), 20, 40);
 		}
 		
 		private function testAStar():void {
