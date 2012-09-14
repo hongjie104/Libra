@@ -28,9 +28,9 @@ package org.libra.tick {
 		private var pause:Boolean;
 		
 		/**
-		 * 需要注册EnterFrame事件的ITickEnabled的集合
+		 * 需要注册EnterFrame事件的ITickable的集合
 		 */
-		private var tickEnabledList:Vector.<ITickEnabled>;
+		private var tickEnabledList:Vector.<ITickable>;
 		
 		/**
 		 * 最大两帧间隔（防止待机后返回卡死） 
@@ -52,27 +52,27 @@ package org.libra.tick {
 		 */
 		public function Tick(shape:Shape, singleton:Singleton) { 
 			this.shape = shape;
-			tickEnabledList = new Vector.<ITickEnabled>();
+			tickEnabledList = new Vector.<ITickable>();
 			instance = this;
 			pause = true;
 			setPause(false);
 		}
 		
 		/**
-		 * 增加一个需要注册EnterFrame事件的ITickEnabled
-		 * @param	r ITickEnabled
+		 * 增加一个需要注册EnterFrame事件的ITickable
+		 * @param	r ITickable
 		 */
-		public function addItem(item:ITickEnabled):Boolean {
+		public function addItem(item:ITickable):Boolean {
 			if (hasItem(item)) return false;
 			this.tickEnabledList[this.tickEnabledList.length] = item;
 			return true;
 		}
 		
 		/**
-		 * 移除一个需要注册EnterFrame事件的ITickEnabled
-		 * @param	r ITickEnabled
+		 * 移除一个需要注册EnterFrame事件的ITickable
+		 * @param	r ITickable
 		 */
-		public function removeItem(item:ITickEnabled):Boolean {
+		public function removeItem(item:ITickable):Boolean {
 			var index:int = this.tickEnabledList.indexOf(item);
 			if (index != -1) {
 				this.tickEnabledList.splice(index, 1);
@@ -94,11 +94,11 @@ package org.libra.tick {
 		}
 		
 		/**
-		 * 判断该ITickEnabled是否已经存在
-		 * @param	i 被判断的ITickEnabled
+		 * 判断该ITickable是否已经存在
+		 * @param	i 被判断的ITickable
 		 * @return Boolean
 		 */
-		public function hasItem(i:ITickEnabled):Boolean {
+		public function hasItem(i:ITickable):Boolean {
 			return this.tickEnabledList.indexOf(i) != -1;
 		}
 		
@@ -141,7 +141,7 @@ package org.libra.tick {
 					//e.interval = interval * speed;
 					//dispatchEvent(e);
 					interval *= speed;
-					for each(var r:ITickEnabled in tickEnabledList) {
+					for each(var r:ITickable in tickEnabledList) {
 						r.tick(interval);
 					}
 				}

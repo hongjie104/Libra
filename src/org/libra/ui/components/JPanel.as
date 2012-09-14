@@ -68,6 +68,7 @@ package org.libra.ui.components {
 					this.owner.remove(this);
 					alpha = 1.0;
 					showing = false;
+					removeAllEventListener();
 				}
 			}
 		}

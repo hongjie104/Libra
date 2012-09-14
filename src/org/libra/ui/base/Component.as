@@ -8,7 +8,7 @@ package org.libra.ui.base {
 	import org.libra.displayObject.JSprite;
 	import org.libra.ui.components.JToolTip;
 	import org.libra.ui.interfaces.IComponent;
-	import org.libra.ui.interfaces.IDragEnabled;
+	import org.libra.ui.interfaces.IDragable;
 	import org.libra.ui.managers.DragManager;
 	import org.libra.ui.managers.ToolTipManager;
 	import org.libra.utils.GraphicsUtil;
@@ -25,7 +25,7 @@ package org.libra.ui.base {
 	 * @version 1.0
 	 * @see
 	 */
-	public class Component extends JSprite implements IComponent, IDragEnabled {
+	public class Component extends JSprite implements IComponent, IDragable {
 		
 		/**
 		 * 宽度
@@ -66,7 +66,6 @@ package org.libra.ui.base {
 			//取消flash默认的焦点边框
 			this.focusRect = false;
 			this.enabled = true;
-			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			setLocation(x, y);
 		}
 		
@@ -175,9 +174,7 @@ package org.libra.ui.base {
 		}
 		
 		override public function dispose():void {
-			if (this.hasEventListener(Event.ADDED_TO_STAGE)) {
-				this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			}
+			removeAllEventListener();
 			setDragEnabled(false);
 		}
 		
@@ -192,7 +189,7 @@ package org.libra.ui.base {
 			return false;
 		}
 		
-		/* INTERFACE org.libra.ui.interfaces.IDragEnabled */
+		/* INTERFACE org.libra.ui.interfaces.IDragable */
 		
 		public function setDragEnabled(val:Boolean):void {
 			if (this.dragEnabled != val) {
@@ -270,19 +267,9 @@ package org.libra.ui.base {
 		 * 添加到舞台事件
 		 * @param	e
 		 */
-		protected function onAddToStage(e:Event):void {
-			removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
 			if (!drawed) draw();
-		}
-		
-		/**
-		 * 从舞台上移除事件
-		 * @param	e
-		 */
-		protected function onRemoveFromStage(e:Event):void {
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
-			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
 		private function onStartDrag(e:MouseEvent):void {

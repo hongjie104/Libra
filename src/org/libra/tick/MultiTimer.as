@@ -9,31 +9,31 @@ package org.libra.tick {
 		
 		private static var instance:MultiTimer;
 		
-		private var timerEnabledList:Vector.<ITimerEnabled>;
+		private var timerEnabledList:Vector.<ITimerable>;
 		private var pause:Boolean;
 		private var sleepTimer:SleepTimer;
 		
 		public function MultiTimer(singleton:Singleton) { 
-			timerEnabledList = new Vector.<ITimerEnabled>();
+			timerEnabledList = new Vector.<ITimerable>();
 			pause = true;
 			sleepTimer = new SleepTimer(100);
 			sleepTimer.addEventListener(TimerEvent.TIMER, onTimerHandler);
 		}
 		
 		private function onTimerHandler(e:TimerEvent):void {
-			for each(var b:ITimerEnabled in timerEnabledList) {
+			for each(var b:ITimerable in timerEnabledList) {
 				b.doAction();
 			}
 		}
 		
-		public function addItem(timerEnabled:ITimerEnabled):void {
+		public function addItem(timerEnabled:ITimerable):void {
 			if (!hasItem(timerEnabled)) {
 				this.timerEnabledList[timerEnabledList.length] = timerEnabled;
 				this.setPause(false);
 			}
 		}
 		
-		public function removeItem(timerEnabled:ITimerEnabled):void {
+		public function removeItem(timerEnabled:ITimerable):void {
 			var index:int = timerEnabledList.indexOf(timerEnabled);
 			if (index != -1) {
 				timerEnabledList.splice(index, 1);
@@ -47,7 +47,7 @@ package org.libra.tick {
 			this.timerEnabledList.length = 0;
 		}
 		
-		public function hasItem(timerEnabled:ITimerEnabled):Boolean {
+		public function hasItem(timerEnabled:ITimerable):Boolean {
 			return this.timerEnabledList.indexOf(timerEnabled) != -1;
 		}
 		

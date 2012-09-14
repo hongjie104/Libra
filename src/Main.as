@@ -1,19 +1,19 @@
 package {
-	import adobe.utils.CustomActions;
 	import com.greensock.loading.SWFLoader;
 	import com.sociodox.theminer.TheMiner;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.Point;
 	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
+	import org.libra.game.components.animatable.BitmapAnimatable;
+	import org.libra.game.components.animatable.BitmapFrame;
+	import org.libra.game.objects.Avatar;
 	import org.libra.ui.base.Container;
 	import org.libra.ui.components.JButton;
 	import org.libra.ui.components.JCheckBox;
@@ -28,7 +28,7 @@ package {
 	import org.libra.ui.components.JTextField;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.BitmapDataUtil;
 	
 	/**
 	 * ...
@@ -67,10 +67,10 @@ package {
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
 			//testUI();
-			//testBmpEngine();
+			testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
-			testDiamond();
+			//testDiamond();
 		}
 		
 		private function testDiamond():void {
@@ -85,6 +85,27 @@ package {
 		
 		private function testBmpEngine():void {
 			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
+			
+			var frameList:Vector.<BitmapFrame> = new Vector.<BitmapFrame>();
+			var rows:int = Math.ceil(64 / 8);
+			var bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width / 8, source.height / rows, source);
+			var count:int = 0;
+			for (var k:* in bmdList) {
+				var bmdList1:Vector.<BitmapData> = bmdList[k];
+				for(var j:* in bmdList1)
+				frameList[count] = new BitmapFrame(count++, bmdList1[j]);
+			}
+			for (i = 0; i < 500; i += 1 ) {
+				var avatar:Avatar = new Avatar();
+				var animatable:BitmapAnimatable = new BitmapAnimatable(avatar.getBitmap());
+				animatable.setFrameList(frameList);
+				avatar.setAnimatable(animatable);
+				this.addChild(avatar);
+				avatar.x = Math.random() * stage.stageWidth;
+				avatar.y = Math.random() * stage.stageHeight;
+			}
+			
+			return;
 			
 			for (var i:int = 0; i < 1; i += 1 ) {
 				//var bmp:JBitmap = JBitmapUtil.createFromBitmap(67, source, 10, true);

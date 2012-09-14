@@ -1,8 +1,8 @@
 package org.libra.ui.base {
 	import flash.display.DisplayObject;
 	import org.libra.ui.interfaces.IContainer;
-	import org.libra.ui.interfaces.IDragEnabled;
-	import org.libra.ui.interfaces.IDropEnabled;
+	import org.libra.ui.interfaces.IDragable;
+	import org.libra.ui.interfaces.IDropable;
 	import org.libra.utils.GraphicsUtil;
 	
 	/**
@@ -17,13 +17,13 @@ package org.libra.ui.base {
 	 * @version 1.0
 	 * @see
 	 */
-	public class Container extends Component implements IDropEnabled, IContainer {
+	public class Container extends Component implements IDropable, IContainer {
 		
 		protected var componentList:Vector.<Component>;
 		
 		protected var numComponent:int;
 		
-		private var dropAcceptableList:Vector.<IDragEnabled>;
+		private var dropAcceptableList:Vector.<IDragable>;
 		
 		public function Container(x:int = 0, y:int = 0) { 
 			super(x, y);
@@ -167,26 +167,26 @@ package org.libra.ui.base {
 			return 'container';
 		}
 		
-		/* INTERFACE org.libra.ui.interfaces.IDropEnabled */
+		/* INTERFACE org.libra.ui.interfaces.IDropable */
 		
-		public function addDropAcceptEnabled(dragable:IDragEnabled):void {
-			if (!dropAcceptableList) dropAcceptableList = new Vector.<IDragEnabled>();
+		public function addDropAcceptEnabled(dragable:IDragable):void {
+			if (!dropAcceptableList) dropAcceptableList = new Vector.<IDragable>();
 			if(this.dropAcceptableList.indexOf(dragable) == -1)
 				dropAcceptableList.push(dragable);
 		}
 		
-		public function removeDropAcceptEnabled(dragEnabled:IDragEnabled):void {
+		public function removeDropAcceptEnabled(dragEnabled:IDragable):void {
 			if (this.dropAcceptableList) {
 				var index:int = this.dropAcceptableList.indexOf(dragEnabled);
 				if (index != -1) this.dropAcceptableList.splice(index, 1);
 			}
 		}
 		
-		public function isDropAcceptEnabled(dragEnabled:IDragEnabled):Boolean {
+		public function isDropAcceptEnabled(dragEnabled:IDragable):Boolean {
 			return this.dropAcceptableList ? this.dropAcceptableList.indexOf(dragEnabled) != -1 : false;
 		}
 		
-		public function addDragEnabled(dragEnabled:IDragEnabled):void {
+		public function addDragEnabled(dragEnabled:IDragable):void {
 			dragEnabled.removeFromParent();
 			this.append(dragEnabled as Component);
 		}

@@ -1,24 +1,22 @@
-package org.libra.bmpEngine {
+package org.libra.game.components.animatable {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.events.Event;
 	import flash.geom.Point;
-	import org.libra.displayObject.JSprite;
-	import org.libra.tick.ITickable;
-	import org.libra.tick.Tick;
+	import org.libra.game.interfaces.IAnimatable;
+	
 	/**
 	 * <p>
-	 * 有很多层的可视对象
+	 * Description
 	 * </p>
 	 *
-	 * @class JMultiBitmap
+	 * @class MultiBitmapAnimatable
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 09/09/2012
+	 * @date 09/13/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class JMultiBitmap extends JSprite implements ITickable {
+	public class MultiBitmapAnimatable implements IAnimatable {
 		
 		/**
 		 * 公共静态常量：原点，x和y都是0的点。
@@ -33,37 +31,28 @@ package org.libra.bmpEngine {
 		/**
 		 * 图片的宽度
 		 */
-		private var $width:int;
+		private var width:int;
 		
 		/**
 		 * 图片的高度
 		 */
-		private var $height:int;
+		private var height:int;
 		
 		private var needRender:Boolean;
 		
-		private var baseBitmap:Bitmap;
+		private var bitmap:Bitmap;
 		
-		public function JMultiBitmap(width:int, height:int) { 
-			super();
-			this.$width = width;
-			this.$height = height;
-			baseBitmap = new Bitmap(new BitmapData($width, $height, true, 0))
-			this.addChild(baseBitmap);
+		public function MultiBitmapAnimatable(bitmap:Bitmap) {
+			this.bitmap = bitmap;
+			this.width = bitmap.width;
+			this.height = bitmap.height;
 			layerList = new Vector.<RenderLayer>();
 			needRender = true;
-			
-			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		public function hitTest(point:Point):Boolean { 
-			var bmd:BitmapData = baseBitmap.bitmapData;
-			return bmd ? bmd.hitTest(new Point(this.x + baseBitmap.x, this.y + baseBitmap.y), 255, point) : false;
-		}
 		
 		/**
 		 * 增加层
@@ -102,21 +91,20 @@ package org.libra.bmpEngine {
 		}
 		
 		public function setSize(w:int, h:int):void {
-			if (this.baseBitmap.bitmapData) baseBitmap.bitmapData.dispose();
-			$width = w;
-			$height = h;
-			baseBitmap.bitmapData = new BitmapData(w, h, true, 0);
+			if (this.bitmap.bitmapData) bitmap.bitmapData.dispose();
+			width = w;
+			height = h;
+			bitmap.bitmapData = new BitmapData(w, h, true, 0);
 			for each(var l:RenderLayer in layerList) {
 				l.setSize(w, h);	
 			}
 		}
 		
-		/**
-		 * 渲染
-		 */
-		public function tick(interval:int):void {
+		/* INTERFACE org.libra.game.interfaces.IAnimatable */
+		
+		public function update(interval:int):void {
 			if (needRender) {
-				this.baseBitmap.bitmapData.fillRect(baseBitmap.bitmapData.rect, 0x00000000);
+				this.bitmap.bitmapData.fillRect(bitmap.bitmapData.rect, 0x00000000);
 				var layer:RenderLayer;
 				for (var i:* in layerList) {
 					layer = layerList[i];
@@ -124,7 +112,7 @@ package org.libra.bmpEngine {
 					if (layer.visible) {
 						var bmd:BitmapData = layer.getBmd();
 						if(bmd)
-							baseBitmap.bitmapData.copyPixels(bmd, bmd.rect, ZERO_POINT, null, null, true);
+							bitmap.bitmapData.copyPixels(bmd, bmd.rect, ZERO_POINT, null, null, true);
 					}
 					layer.setNeedRender(false);
 				}
@@ -132,8 +120,8 @@ package org.libra.bmpEngine {
 			}
 		}
 		
-		override public function dispose():void {
-			this.baseBitmap.bitmapData.dispose();
+		public function dispose():void {
+			this.bitmap.bitmapData.dispose();
 			for (var i:* in this.layerList) {
 				layerList[i].dispose();
 			}
@@ -146,17 +134,7 @@ package org.libra.bmpEngine {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		private function onAddToStage(e:Event):void {
-			removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
-			Tick.getInstance().addItem(this);
-		}
 		
-		private function onRemoveFromStage(e:Event):void {
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
-			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			Tick.getInstance().removeItem(this);
-		}
 	}
 
 }

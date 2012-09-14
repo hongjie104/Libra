@@ -16,7 +16,7 @@ package org.libra.ui.interfaces {
 	 */
 	public interface IDragable {
 		
-		function setDragable(val:Boolean):void;
+		function setDragEnabled(val:Boolean):void;
 		
 		function getDragBmd():BitmapData;
 		

@@ -5,14 +5,14 @@ package org.libra.tick {
 	 * Description
 	 * </p>
 	 *
-	 * @class ITickEnabled
+	 * @class ITickable
 	 * @author Eddie
 	 * @qq 32968210
 	 * @date 09/06/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public interface ITickEnabled {
+	public interface ITickable {
 		
 		function tick(interval:int):void;
 		

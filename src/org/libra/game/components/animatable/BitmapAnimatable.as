@@ -1,11 +1,7 @@
-package org.libra.bmpEngine {
+package org.libra.game.components.animatable {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.events.Event;
-	import flash.geom.Point;
-	import org.libra.displayObject.JSprite;
-	import org.libra.tick.ITickable;
-	import org.libra.tick.Tick;
+	import org.libra.game.interfaces.IAnimatable;
 	import org.libra.utils.MathUtil;
 	
 	/**
@@ -13,16 +9,18 @@ package org.libra.bmpEngine {
 	 * Description
 	 * </p>
 	 *
-	 * @class JBitmap
+	 * @class BitmapAnimatable
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 09/06/2012
+	 * @date 09/13/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class JBitmap extends JSprite implements ITickable {
+	public class BitmapAnimatable implements IAnimatable {
 		
 		protected var frameList:Vector.<BitmapFrame>;
+		
+		private var bitmap:Bitmap;
 		
 		/**
 		 * 循环次数，默认是-1，无限循环
@@ -61,30 +59,18 @@ package org.libra.bmpEngine {
 		 */
 		protected var playing:Boolean;
 		
-		/**
-		 * 真正的Bitmap，存放BitmapData
-		 */
-		protected var baseBitmap:Bitmap;
-		
-		public function JBitmap(frameRate:int = 10) {
-			super();
-			mouseChildren = mouseEnabled = false;
+		public function BitmapAnimatable(bitmap:Bitmap, frameRate:int = 10) {
+			this.bitmap = bitmap;
+			
 			this.setFrameRate(frameRate);
 			loops = -1;
 			numFrame = curFrame = frameTimer = 0;
-			baseBitmap = new Bitmap();
-			this.addChild(baseBitmap);
-			playing = false;
+			playing = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		public function hitTest(point:Point):Boolean { 
-			var bmd:BitmapData = baseBitmap.bitmapData;
-			return bmd ? bmd.hitTest(new Point(this.x + baseBitmap.x, this.y + baseBitmap.y), 255, point) : false;
-		}
 		
 		/**
 		 * 设置帧率
@@ -144,13 +130,19 @@ package org.libra.bmpEngine {
 			bitmapFrame.removeFun(fun);
  		}
 		
-		/* INTERFACE org.libra.tick.ITickable */
+		public function setFrameList(frameList:Vector.<BitmapFrame>):void {
+			this.frameList = frameList;
+			this.numFrame = this.frameList.length;
+			setCurFrame(0);
+		}
 		
-		/**
-		 * 在Tick中调用此函数，进行渲染
-		 * @param	interval 两次调用该函数之间的时间间隔，以毫秒为单位
-		 */
-		public function tick(interval:int):void {
+		public function setLoops(val:int):void {
+			this.loops = val;
+		}
+		
+		/* INTERFACE org.libra.game.interfaces.IAnimatable */
+		
+		public function update(interval:int):void {
 			if (playing) {
 				if (loops == 0) return;
 				frameTimer -= interval;
@@ -159,7 +151,7 @@ package org.libra.bmpEngine {
 						if (loops > 0) loops--;
 						if (loops == 0) {
 							this.frameTimer = 0;
-							dispatchEvent(new Event(Event.COMPLETE));
+							//dispatchEvent(new Event(Event.COMPLETE));
 							return;
 						}else {
 							this.setCurFrame(0);
@@ -172,45 +164,11 @@ package org.libra.bmpEngine {
 			}
 		}
 		
-		override public function dispatchEvent(event:Event):Boolean {
-			if(this.hasEventListener(event.type))
-				return super.dispatchEvent(event);
-			return false;
-		}
-		
-		/**
-		 * 拷贝本对象
-		 * @return BmpMC
-		 */
-		public function clone(autoPlay:Boolean = true):JBitmap { 
-			var bitmap:JBitmap = new JBitmap();
-			bitmap.setFrameRate(this.frameRate);
-			var frameList:Vector.<BitmapFrame> = new Vector.<BitmapFrame>(this.frameList.length);
-			for (var i:* in this.frameList) frameList[i] = this.frameList[i].clone();
-			bitmap.setFrameList(frameList);
-			if (autoPlay) bitmap.play();
-			return bitmap;
-		}
-		
-		override public function dispose():void {
-			this.baseBitmap.bitmapData = null;
+		public function dispose():void {
+			this.bitmap.bitmapData = null;
 			for (var i:* in this.frameList) {
 				frameList[i].dispose();
 			}
-		}
-		
-		override public function toString():String {
-			return 'JBitmap';
-		}
-		
-		public function setFrameList(frameList:Vector.<BitmapFrame>):void {
-			this.frameList = frameList;
-			this.numFrame = this.frameList.length;
-			setCurFrame(0);
-		}
-		
-		public function setLoops(val:int):void {
-			this.loops = val;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -221,9 +179,9 @@ package org.libra.bmpEngine {
 			this.curFrame = MathUtil.max(0, MathUtil.min(curFrame, numFrame - 1));
 			var frame:BitmapFrame = this.frameList[curFrame];
 			frame.doFun();
-			this.baseBitmap.bitmapData = frame.getBmd();
-			this.baseBitmap.x = frame.x;
-			this.baseBitmap.y = frame.y;
+			this.bitmap.bitmapData = frame.getBmd();
+			this.bitmap.x = frame.x;
+			this.bitmap.y = frame.y;
 		}
 		
 		/**
@@ -257,15 +215,6 @@ package org.libra.bmpEngine {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		override protected function onAddToStage(e:Event):void {
-			super.onAddToStage(e);
-			Tick.getInstance().addItem(this);
-		}
-		
-		override protected function onRemoveFromStage(e:Event):void {
-			super.onRemoveFromStage(e);
-			Tick.getInstance().removeItem(this);
-		}
 		
 	}
 
