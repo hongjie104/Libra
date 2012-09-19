@@ -1,5 +1,6 @@
 package org.libra.game.objects {
 	import org.libra.game.interfaces.IAnimatable;
+	import org.libra.game.interfaces.IMoveable;
 	
 	/**
 	 * <p>

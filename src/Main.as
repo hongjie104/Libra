@@ -68,8 +68,8 @@ package {
 			//初始化UI
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
-			//testUI();
-			testBmpEngine();
+			testUI();
+			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
@@ -97,7 +97,7 @@ package {
 				for(var j:* in bmdList1)
 				frameList[count] = new BitmapFrame(count++, bmdList1[j]);
 			}
-			for (i = 0; i < 500; i += 1 ) {
+			for (i = 0; i < 5; i += 1 ) {
 				var avatar:Avatar = new Avatar();
 				var animatable:BitmapAnimatable = new BitmapAnimatable(avatar.getBitmap());
 				animatable.setFrameList(frameList);
@@ -144,8 +144,8 @@ package {
 			this.addChild(uiContainer);
 			
 			frame = new JFrame(uiContainer, 400, 300, 350, 50);
-			frame.setCloseEnabled(false);
-			frame.setDragBarEnabled(false);
+			//frame.setCloseEnabled(false);
+			//frame.setDragBarEnabled(false);
 			frame.show();
 			
 			var panel:JPanel = new JPanel(uiContainer, 300, 200, 50, 50);
