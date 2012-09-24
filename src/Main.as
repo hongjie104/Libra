@@ -67,8 +67,8 @@ package {
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
 			//testUI();
-			testBmpEngine();
-			//testAStar();
+			//testBmpEngine();
+			testAStar();
 			//测试绘制菱形
 			//testDiamond();
 		}

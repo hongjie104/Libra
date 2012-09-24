@@ -74,6 +74,7 @@ package org.libra.aStar {
 			player.y = cellSize >> 1;
 			
 			AStar.getInstance().setSize(cols, rows);
+			AStar.getInstance().setDir(4);
 			handler = AStar.getInstance().getGrid().setWalkable;
 			//随机生成200个障碍点
 			for (var i:int = 0; i < 200; i++) { 
