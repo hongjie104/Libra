@@ -43,6 +43,32 @@ package org.libra.utils {
 		}
 		
 		/**
+		 * 绘制菱形网格
+		 * @param	g
+		 * @param	topPoint 菱形最上方的点的坐标，这个点控制着整个菱形绘制的坐标
+		 * @param	size 多少行多少列。
+		 * @param	tileWidth 小菱形的宽度
+		 * @param	color
+		 */
+		public static function drawDiamondNet(g:Graphics, topPoint:Point, size:int = 10, tileWidth:int = 30, color:int = 0xff0000):void { 
+			var tileHeight:int = tileWidth >> 1;
+			var p:Point = new Point();
+			g.clear();
+			g.lineStyle(1, color);
+			for (var i:int = 0; i < size; i++ ) {
+				p.x = topPoint.x - tileWidth / 2 * i;
+				p.y = topPoint.y + tileHeight / 2 * i;
+				g.moveTo(p.x, p.y);
+				g.lineTo(size * tileWidth / 2 + p.x, size * tileHeight / 2 + p.y);
+				
+				p.x = topPoint.x + tileWidth / 2 * i;
+				p.y = topPoint.y + tileHeight / 2 * i;
+				g.moveTo(p.x, p.y);
+				g.lineTo(p.x - (size * tileWidth / 2), p.y + (size * tileHeight / 2));
+			}
+		}
+		
+		/**
 		 * 绘制菱形
 		 * @param	g
 		 * @param	pointList

@@ -8,6 +8,7 @@ package {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
@@ -29,6 +30,7 @@ package {
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
+	import org.libra.utils.GraphicsUtil;
 	
 	/**
 	 * ...
@@ -66,15 +68,21 @@ package {
 			//初始化UI
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
+<<<<<<< HEAD
 			//testUI();
 			//testBmpEngine();
 			testAStar();
+=======
+			testUI();
+			//testBmpEngine();
+			//testAStar();
+>>>>>>> 05ae7d9f699c3a31fdba262ff1be10c48cf61a82
 			//测试绘制菱形
 			//testDiamond();
 		}
 		
 		private function testDiamond():void {
-			
+			GraphicsUtil.drawDiamondNet(this.graphics, new Point(300), 20, 40);
 		}
 		
 		private function testAStar():void {
@@ -95,7 +103,7 @@ package {
 				for(var j:* in bmdList1)
 				frameList[count] = new BitmapFrame(count++, bmdList1[j]);
 			}
-			for (i = 0; i < 500; i += 1 ) {
+			for (i = 0; i < 5; i += 1 ) {
 				var avatar:Avatar = new Avatar();
 				var animatable:BitmapAnimatable = new BitmapAnimatable(avatar.getBitmap());
 				animatable.setFrameList(frameList);
@@ -142,8 +150,8 @@ package {
 			this.addChild(uiContainer);
 			
 			frame = new JFrame(uiContainer, 400, 300, 350, 50);
-			frame.setCloseEnabled(false);
-			frame.setDragBarEnabled(false);
+			//frame.setCloseEnabled(false);
+			//frame.setDragBarEnabled(false);
 			frame.show();
 			
 			var panel:JPanel = new JPanel(uiContainer, 300, 200, 50, 50);
