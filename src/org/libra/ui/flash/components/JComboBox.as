@@ -5,8 +5,8 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.utils.GraphicsUtil;
 	
 	/**
@@ -40,6 +40,10 @@ package org.libra.ui.flash.components {
 		 */
 		private var fold:Boolean;
 		
+		private var unfoldTweenLite:TweenLite;
+		
+		private var foldTweenLite:TweenLite;
+		
 		/**
 		 * 构造函数
 		 * @param	orientation 下拉框方向。默认是4，向下，其他值：向上
@@ -71,26 +75,24 @@ package org.libra.ui.flash.components {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			
 			content = new JLabel(0, 0, defaultText);
 			pressBtn = new JButton(0, 0, '', 'vScrollDownBtn');
 			pressBtn.setSize(16, 16);
+			this.addChildAll(content, pressBtn);
 			
 			list = new JList();
 			listMask = new Shape();
 			GraphicsUtil.drawRect(listMask.graphics, 0, 0, 1, 1, 0, 0);
 		}
 		
-		override protected function render():void {
-			content.setSize($width, $height);
-			this.addChild(content);
-			
-			pressBtn.setLocation($width - pressBtn.width - 2, ($height - pressBtn.height) >> 1);
-			this.addChild(pressBtn);
-			list.setSize($width, 160);
-			listMask.width = $width;
+		override protected function resize():void {
+			content.setSize(actualWidth, actualHeight);
+			pressBtn.setLocation(actualWidth - pressBtn.width - 2, (actualHeight - pressBtn.height) >> 1);
+			list.setSize(actualWidth, 160);
+			listMask.width = actualWidth;
 			listMask.height = list.height;
 		}
 		
@@ -105,7 +107,7 @@ package org.libra.ui.flash.components {
 				list.mask = listMask;
 				if (orientation == Constants.DOWN) {
 					//加1，让下拉菜单和文本之间留出1像素的空隙，仅仅是为了美观。
-					listMask.y = $height + 1;
+					listMask.y = actualHeight + 1;
 					list.setLocation(0, listMask.y - list.height);
 					
 				}else {
@@ -113,7 +115,8 @@ package org.libra.ui.flash.components {
 					list.setLocation(0, -1);
 				}
 				stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-				var t:TweenLite = TweenLite.to(list, .2, { y:listMask.y, onComplete:function():void { t.kill(); }} );
+				if (unfoldTweenLite) unfoldTweenLite.restart();
+				else unfoldTweenLite = TweenLite.to(list, .2, { y:listMask.y } );
 			}
 		}
 		
@@ -124,8 +127,8 @@ package org.libra.ui.flash.components {
 			if (!fold) {
 				this.fold = true;
 				stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-				var t:TweenLite = TweenLite.to(list, .2, { y:orientation == Constants.DOWN ? $height + 1 - list.height : -1, onComplete:function():void { 
-						t.kill(); 
+				if (foldTweenLite) foldTweenLite.restart();
+				else foldTweenLite = TweenLite.to(list, .2, { y:orientation == Constants.DOWN ? actualHeight + 1 - list.height : -1, onComplete:function():void { 
 						removeChild(list);
 						removeChild(listMask);
 					}} );

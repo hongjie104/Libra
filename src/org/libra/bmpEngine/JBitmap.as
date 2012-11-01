@@ -192,15 +192,11 @@ package org.libra.bmpEngine {
 			return bitmap;
 		}
 		
-		override public function dispose():void {
+		override public function destroy():void {
 			this.baseBitmap.bitmapData = null;
 			for (var i:* in this.frameList) {
 				frameList[i].dispose();
 			}
-		}
-		
-		override public function toString():String {
-			return 'JBitmap';
 		}
 		
 		public function setFrameList(frameList:Vector.<BitmapFrame>):void {

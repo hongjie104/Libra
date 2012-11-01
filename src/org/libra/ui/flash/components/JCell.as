@@ -1,6 +1,6 @@
 package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
-	import org.libra.ui.base.Container;
+	import org.libra.ui.flash.core.Container;
 	
 	/**
 	 * <p>

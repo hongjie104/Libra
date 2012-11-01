@@ -5,12 +5,14 @@ package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.utils.getQualifiedClassName;
 	import org.libra.displayObject.JSprite;
-	import org.libra.ui.components.JToolTip;
-	import org.libra.ui.interfaces.IComponent;
-	import org.libra.ui.interfaces.IDragable;
-	import org.libra.ui.managers.DragManager;
-	import org.libra.ui.managers.ToolTipManager;
+	import org.libra.ui.flash.components.JToolTip;
+	import org.libra.ui.flash.interfaces.IComponent;
+	import org.libra.ui.flash.interfaces.IDragable;
+	import org.libra.ui.flash.managers.DragManager;
+	import org.libra.ui.flash.managers.ToolTipManager;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.GraphicsUtil;
 	
 	/**
@@ -30,12 +32,12 @@ package org.libra.ui.flash.core {
 		/**
 		 * 宽度
 		 */
-		protected var $width:Number;
+		protected var actualWidth:Number;
 		
 		/**
 		 * 高度
 		 */
-		protected var $height:Number;
+		protected var actualHeight:Number;
 		
 		protected var enabled:Boolean;
 		
@@ -44,7 +46,7 @@ package org.libra.ui.flash.core {
 		 * 绘制方法只调用一次
 		 * 在每次被添加到舞台上调用。
 		 */
-		protected var drawed:Boolean;
+		protected var inited:Boolean;
 		
 		/**
 		 * 背景，永远在最底层
@@ -60,6 +62,8 @@ package org.libra.ui.flash.core {
 		
 		protected var toolTipText:String;
 		
+		private var invalidationFlag:InvalidationFlag;
+		
 		public function Component(x:int = 0, y:int = 0) { 
 			super();
 			
@@ -67,6 +71,8 @@ package org.libra.ui.flash.core {
 			this.focusRect = false;
 			this.enabled = true;
 			setLocation(x, y);
+			
+			invalidationFlag = new InvalidationFlag();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -100,14 +106,14 @@ package org.libra.ui.flash.core {
 			return super.addChildAt(child, index);
 		}
 		
-		override public function removeFromParent(dispose:Boolean = false):void { 
+		override public function removeFromParent(destroy:Boolean = false):void { 
             if (parent) {
 				if (parent is Container) {
-					(parent as Container).remove(this, dispose);
+					(parent as Container).remove(this, destroy);
 				}else {
 					parent.removeChild(this);
-					if(dispose)
-						this.dispose();	
+					if(destroy)
+						this.destroy();	
 				}
 			}
         }
@@ -118,24 +124,23 @@ package org.libra.ui.flash.core {
 		}
 		
 		public function setSize(w:int, h:int):void {
-			if ($width != w || $height != h) {
-				this.$width = w;
-				this.$height = h;
-				invalidate();
+			if (actualWidth != w || actualHeight != h) {
+				this.actualWidth = w;
+				this.actualHeight = h;
+				invalidate(InvalidationFlag.SIZE);
 			}
 		}
 		
 		public function setBounds(x:int, y:int, w:int, h:int):void {
 			this.x = x;
 			this.y = y;
-			this.$width = w;
-			this.$height = h;
-			invalidate();
+			setSize(w, h);
 		}
 		
 		public function setEnabled(val:Boolean):void {
 			this.enabled = val;
 			this.tabEnabled = this.mouseChildren = this.mouseEnabled = val;
+			invalidate(InvalidationFlag.STATE);
 		}
 		
 		public function isEnabled():Boolean {
@@ -173,13 +178,13 @@ package org.libra.ui.flash.core {
 			}
 		}
 		
-		override public function dispose():void {
+		override public function destroy():void {
 			removeAllEventListener();
 			setDragEnabled(false);
 		}
 		
 		override public function toString():String {
-			return 'Component';
+			return getQualifiedClassName(this);
 		}
 		
 		override public function dispatchEvent(event:Event):Boolean {
@@ -200,9 +205,13 @@ package org.libra.ui.flash.core {
 		}
 		
 		public function getDragBmd():BitmapData {
-			var bmd:BitmapData = new BitmapData($width, $height, true, 0);
+			var bmd:BitmapData = new BitmapData(actualWidth, actualHeight, true, 0);
 			bmd.draw(this);
 			return bmd;
+		}
+		
+		public function addChildAll(...rest):void {
+			for (var i:* in rest) this.addChild(rest[i]);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -210,28 +219,27 @@ package org.libra.ui.flash.core {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function get width():Number {
-			return $width;
+			return actualWidth;
 		}
 		
 		override public function set width(value:Number):void {
-			this.$width = value;
-			invalidate();
+			setSize(value, actualHeight);
 		}
 		
 		override public function get height():Number {
-			return $height;
+			return actualHeight;
 		}
 		
 		override public function set height(value:Number):void {
-			this.$height = value;
-			this.invalidate();
+			setSize(actualWidth, value);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		protected function invalidate():void {
-			if(drawed)
+		protected function invalidate(flag:int = -1):void {
+			this.invalidationFlag.setInvalid(flag);
+			if(inited)
 				addEventListener(Event.ENTER_FRAME, onInvalidate);
 		}
 		
@@ -240,9 +248,9 @@ package org.libra.ui.flash.core {
 		 * 在这个方法中，将实例化一些可视对象变量。
 		 * 以免在添加到舞台之前，就大量实例化暂时没有用到的对象。
 		 */
-		protected function draw():void {
-			drawed = true;
-			invalidate();
+		protected function init():void {
+			inited = true;
+			this.invalidate();
 		}
 		
 		/**
@@ -250,7 +258,36 @@ package org.libra.ui.flash.core {
 		 * 主要作用是重新布局。
 		 * 比如当宽度或者高度改变时，重新绘制下组件
 		 */
-		protected function render():void {
+		protected function draw():void {
+			if (this.invalidationFlag.isSizeInvalid())
+				resize();
+			if (this.invalidationFlag.isDataInvalid())
+				refreshData();
+			if (this.invalidationFlag.isStateInvalid())
+				refreshState();
+			if (this.invalidationFlag.isStyleInvalid())
+				refreshStyle();
+			if (this.invalidationFlag.isTextInvalid())
+				refreshText();
+		}
+		
+		protected function refreshText():void {
+			
+		}
+		
+		protected function refreshStyle():void {
+			
+		}
+		
+		protected function refreshState():void {
+			
+		}
+		
+		protected function refreshData():void {
+			
+		}
+		
+		protected function resize():void {
 			
 		}
 		
@@ -260,7 +297,8 @@ package org.libra.ui.flash.core {
 		
 		private function onInvalidate(e:Event):void {
 			removeEventListener(Event.ENTER_FRAME, onInvalidate);
-			render();
+			draw();
+			this.invalidationFlag.reset();
 		}
 		
 		/**
@@ -269,7 +307,7 @@ package org.libra.ui.flash.core {
 		 */
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			if (!drawed) draw();
+			if (!inited) init();
 		}
 		
 		private function onStartDrag(e:MouseEvent):void {

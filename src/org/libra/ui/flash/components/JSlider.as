@@ -3,8 +3,8 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.style.Style;
 	import org.libra.utils.GraphicsUtil;
 	import org.libra.utils.MathUtil;
@@ -97,22 +97,18 @@ package org.libra.ui.flash.components {
 			return min;
 		}
 		
-		override public function dispose():void {
-			super.dispose();
+		override public function destroy():void {
+			super.destroy();
 			if (this.back.hasEventListener(MouseEvent.MOUSE_DOWN))
 				this.back.removeEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
-		}
-		
-		override public function toString():String {
-			return 'JSlider';
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			drawBack();
 			drawBlock();
 		}
@@ -128,21 +124,20 @@ package org.libra.ui.flash.components {
 			this.addChild(block);
 		}
 		
-		override protected function render():void {
-			super.render();
+		override protected function resize():void {
 			renderBack();
 			renderBlock();
 		}
 		
 		protected function renderBack():void {
-			GraphicsUtil.drawRect(back.graphics, 0, 0, $width, $height, Style.BACKGROUND);
+			GraphicsUtil.drawRect(back.graphics, 0, 0, actualWidth, actualHeight, Style.BACKGROUND);
 		}
 		
 		protected function renderBlock():void {
 			if (this.orientation == Constants.HORIZONTAL)
-				GraphicsUtil.drawRect(block.graphics, 1, 1, $height - 2, $height - 2, Style.BUTTON_FACE);
+				GraphicsUtil.drawRect(block.graphics, 1, 1, actualHeight - 2, actualHeight - 2, Style.BUTTON_FACE);
 			else 
-				GraphicsUtil.drawRect(block.graphics, 1, 1, $width - 2, $width - 2, Style.BUTTON_FACE);
+				GraphicsUtil.drawRect(block.graphics, 1, 1, actualWidth - 2, actualWidth - 2, Style.BUTTON_FACE);
 			positionBlock();
 		}
 		
@@ -165,11 +160,11 @@ package org.libra.ui.flash.components {
 		protected function positionBlock():void {
 			var range:Number;
 			if(orientation == Constants.HORIZONTAL) {
-				range = $width - $height;
+				range = actualWidth - actualHeight;
 				block.x = (value - min) / (max - min) * range;
 			} else {
-				range = $height - $width;
-				block.y = $height - $width - (value - min) / (max - min) * range;
+				range = actualHeight - actualWidth;
+				block.y = actualHeight - actualWidth - (value - min) / (max - min) * range;
 			}
 		}
 		
@@ -193,11 +188,11 @@ package org.libra.ui.flash.components {
 			stage.addEventListener(MouseEvent.MOUSE_UP, onDrop);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
 			if(orientation == Constants.HORIZONTAL) {
-				block.startDrag(false, new Rectangle(0, 0, $width - $height, 0));
-				//block.startDrag(false, new Rectangle(0, 0, $width - block.width, 0));
+				block.startDrag(false, new Rectangle(0, 0, actualWidth - actualHeight, 0));
+				//block.startDrag(false, new Rectangle(0, 0, actualWidth - block.width, 0));
 			} else {
-				block.startDrag(false, new Rectangle(0, 0, 0, $height - $width));
-				//block.startDrag(false, new Rectangle(0, 0, 0, $height - block.height));
+				block.startDrag(false, new Rectangle(0, 0, 0, actualHeight - actualWidth));
+				//block.startDrag(false, new Rectangle(0, 0, 0, actualHeight - block.height));
 			}
 		}
 		
@@ -214,9 +209,9 @@ package org.libra.ui.flash.components {
 		protected function onSlide(event:MouseEvent):void {
 			var oldValue:Number = value;
 			if(orientation == Constants.HORIZONTAL) {
-				value = block.x / ($width - $height) * (max - min) + min;
+				value = block.x / (actualWidth - actualHeight) * (max - min) + min;
 			} else {
-				value = ($height - $width - block.y) / (height - $width) * (max - min) + min;
+				value = (actualHeight - actualWidth - block.y) / (height - actualWidth) * (max - min) + min;
 			}
 			if(value != oldValue) {
 				dispatchEvent(new Event(Event.CHANGE));
@@ -225,15 +220,15 @@ package org.libra.ui.flash.components {
 		
 		protected function onBackClicked(e:MouseEvent):void {
 			if(orientation == Constants.HORIZONTAL) {
-				block.x = mouseX - $height / 2;
+				block.x = mouseX - actualHeight / 2;
 				block.x = MathUtil.max(block.x, 0);
-				block.x = MathUtil.min(block.x, $width - $height);
-				value = block.x / (width - $height) * (max - min) + min;
+				block.x = MathUtil.min(block.x, actualWidth - actualHeight);
+				value = block.x / (width - actualHeight) * (max - min) + min;
 			} else {
-				block.y = mouseY - $width / 2;
+				block.y = mouseY - actualWidth / 2;
 				block.y = MathUtil.max(block.y, 0);
-				block.y = MathUtil.min(block.y, $height - $width);
-				value = ($height - $width - block.y) / (height - $width) * (min - min) + min;
+				block.y = MathUtil.min(block.y, actualHeight - actualWidth);
+				value = (actualHeight - actualWidth - block.y) / (height - actualWidth) * (min - min) + min;
 			}
 			dispatchEvent(new Event(Event.CHANGE));
 		}

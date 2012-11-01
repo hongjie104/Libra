@@ -1,41 +1,45 @@
-package org.libra.ui.starling.manager {
-	import starling.display.Sprite;
+package org.libra.ui.flash.core.state {
+	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class UIManager
+	 * @class BaseCheckBoxState
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 10/27/2012
+	 * @date 09/01/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public final class UIManager {
+	public class BaseCheckBoxState extends BaseButtonState implements ISelectState {
 		
-		private static var instance:UIManager;
+		protected var selected:Boolean;
 		
-		private var root:Sprite;
-		
-		public function UIManager(singleton:Singleton) {
-			
+		public function BaseCheckBoxState() {
+			super();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function init(root:Sprite):void {
-			this.root = root;
+		override public function toNormal():void {
+			selected ? toSelected() : super.toNormal();
 		}
 		
-		public function getRoot():Sprite {
-			return this.root;
+		override public function toMouseOver():void {
+			selected ? toSelected() : super.toMouseOver();
 		}
 		
-		public static function getInstance():UIManager {
-			return instance ||= new UIManager(new Singleton());
+		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
+		
+		public function toSelected():void {
+			toMouseDown();
+		}
+		
+		public function setSelected(val:Boolean):void {
+			selected = val;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -49,4 +53,3 @@ package org.libra.ui.starling.manager {
 	}
 
 }
-class Singleton{}

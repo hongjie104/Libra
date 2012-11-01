@@ -1,43 +1,41 @@
-package org.libra.ui.flash.core.stateus {
-	import org.libra.ui.base.stateus.BaseButtonStatus;
-	import org.libra.ui.base.stateus.interfaces.ISelectStatus;
-	
+package org.libra.ui.starling.managers {
+	import starling.display.Sprite;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class BaseCheckBoxStatus
+	 * @class UIManager
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 09/01/2012
+	 * @date 10/27/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseCheckBoxStatus extends BaseButtonStatus implements ISelectStatus {
+	public final class UIManager {
 		
-		protected var selected:Boolean;
+		private static var instance:UIManager;
 		
-		public function BaseCheckBoxStatus() {
-			super();
+		private var root:Sprite;
+		
+		public function UIManager(singleton:Singleton) {
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override public function toNormal():void {
-			selected ? toSelected() : super.toNormal();
+		public function init(root:Sprite):void {
+			this.root = root;
 		}
 		
-		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
-		
-		public function toSelected():void {
-			toMouseDown();
+		public function getRoot():Sprite {
+			return this.root;
 		}
 		
-		public function setSelected(val:Boolean):void {
-			selected = val;
+		public static function getInstance():UIManager {
+			return instance ||= new UIManager(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -51,3 +49,4 @@ package org.libra.ui.flash.core.stateus {
 	}
 
 }
+class Singleton{}

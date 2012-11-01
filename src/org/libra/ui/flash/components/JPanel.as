@@ -4,8 +4,8 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	import org.libra.ui.base.Container;
-	import org.libra.ui.interfaces.IContainer;
+	import org.libra.ui.flash.core.Container;
+	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
@@ -68,7 +68,6 @@ package org.libra.ui.flash.components {
 					this.owner.remove(this);
 					alpha = 1.0;
 					showing = false;
-					removeAllEventListener();
 				}
 			}
 		}
@@ -82,8 +81,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		override public function setSize(w:int, h:int):void {
-			const OLD_W:int = $width;
-			const OLD_H:int = $height;
+			const OLD_W:int = actualWidth;
+			const OLD_H:int = actualHeight;
 			super.setSize(w, h);
 			if (OLD_W != 0 && OLD_H != 0) {
 				initBackground();	
@@ -108,8 +107,8 @@ package org.libra.ui.flash.components {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			initBackground();
 		}
 		
@@ -118,7 +117,7 @@ package org.libra.ui.flash.components {
 				if (this.background is Bitmap) (background as Bitmap).bitmapData.dispose();
 			}
 			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('PanelBg'), 
-				$width, $height, new Rectangle(3, 3, 11, 6))));
+				actualWidth, actualHeight, new Rectangle(3, 3, 11, 6))));
 		}
 		
 		override protected function onAddToStage(e:Event):void {

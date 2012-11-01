@@ -5,7 +5,7 @@ package org.libra.ui.flash.managers {
 	import flash.events.TimerEvent;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
-	import org.libra.ui.interfaces.IComponent;
+	import org.libra.ui.flash.interfaces.IComponent;
 	/**
 	 * <p>
 	 * Description

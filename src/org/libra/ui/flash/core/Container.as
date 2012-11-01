@@ -1,8 +1,8 @@
 package org.libra.ui.flash.core {
 	import flash.display.DisplayObject;
-	import org.libra.ui.interfaces.IContainer;
-	import org.libra.ui.interfaces.IDragable;
-	import org.libra.ui.interfaces.IDropable;
+	import org.libra.ui.flash.interfaces.IContainer;
+	import org.libra.ui.flash.interfaces.IDragable;
+	import org.libra.ui.flash.interfaces.IDropable;
 	import org.libra.utils.GraphicsUtil;
 	
 	/**
@@ -63,28 +63,28 @@ package org.libra.ui.flash.core {
 			for (var i:* in rest) this.append(rest[i]);
 		}
 		
-		public function remove(child:Component, dispose:Boolean = false):Component {
+		public function remove(child:Component, destroy:Boolean = false):Component {
 			var index:int = this.componentList.indexOf(child);
 			if (index == -1) return null;
 			this.componentList.splice(index, 1);
 			numComponent--;
 			super.removeChild(child);
-			if(dispose)
-				child.dispose();
+			if(destroy)
+				child.destroy();
 			return child;
 		}
 		
-		public function removeAt(index:int, dispose:Boolean = false):Component {
-			return index > -1 && index < numChildren ? this.remove(this.componentList[index], dispose) : null;
+		public function removeAt(index:int, destroy:Boolean = false):Component {
+			return index > -1 && index < numChildren ? this.remove(this.componentList[index], destroy) : null;
 		}
 		
-		public function removeAll(dispose:Boolean, ...rest):void { 
-			for (var i:* in rest) this.remove(rest[i], dispose);
+		public function removeAll(destroy:Boolean, ...rest):void { 
+			for (var i:* in rest) this.remove(rest[i], destroy);
 		}
 		
-		public function clear(dispose:Boolean = false):void {
+		public function clear(destroy:Boolean = false):void {
 			for (var i:* in this.componentList) {
-				if (dispose) componentList[i].dispose();
+				if (destroy) componentList[i].destroy();
 				this.removeChild(componentList[i]);
 			}
 			componentList.length = 0;
@@ -154,17 +154,13 @@ package org.libra.ui.flash.core {
 			GraphicsUtil.drawRect(this.graphics, 0, 0, w, h, 0xff0000, .0);
 		}
 		
-		override public function dispose():void {
-			super.dispose();
+		override public function destroy():void {
+			super.destroy();
 			for (var i:* in this.componentList) {
-				this.componentList[i].dispose();
+				this.componentList[i].destroy();
 			}
 			this.componentList = null;
 			numComponent = 0;
-		}
-		
-		override public function toString():String {
-			return 'container';
 		}
 		
 		/* INTERFACE org.libra.ui.interfaces.IDropable */

@@ -75,14 +75,14 @@ package org.libra.displayObject {
 		
 		/* INTERFACE org.libra.displayObject.interfaces.ISprite */
 		
-		public function removeFromParent(dispose:Boolean = false):void {
+		public function removeFromParent(destroy:Boolean = false):void {
 			if (this.parent) {
 				this.parent.removeChild(this);
-				if (dispose) this.dispose();
+				if (destroy) this.destroy();
 			}
 		}
 		
-		public function dispose():void {
+		public function destroy():void {
 			
 		}
 		

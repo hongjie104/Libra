@@ -3,8 +3,9 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
 	 * <p>
@@ -105,7 +106,7 @@ package org.libra.ui.flash.components {
 		
 		public function setAutoHide(value:Boolean):void {
             autoHide = value;
-            invalidate();
+            invalidate(InvalidationFlag.STATE);
         }
 		
 		public function setValue(v:Number):void {
@@ -153,8 +154,8 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			
 			//滑动条
 			this.scrollSlider = new JScrollSlider(this.orientation, 0, 16);
@@ -185,25 +186,27 @@ package org.libra.ui.flash.components {
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
-		override protected function render():void {
-			super.render();
-			
+		override protected function resize():void {
 			if(orientation == Constants.VERTICAL) {
 				scrollSlider.x = 0;
 				scrollSlider.y = upBtn.height;
-				scrollSlider.width = $width;
-				scrollSlider.height = $height - (upBtn.height << 1);
+				scrollSlider.width = actualWidth;
+				scrollSlider.height = actualHeight - (upBtn.height << 1);
 				downBtn.x = 0;
-				downBtn.y = $height - downBtn.height;
+				downBtn.y = actualHeight - downBtn.height;
 			} else {
 				scrollSlider.x = downBtn.width;
 				scrollSlider.y = 0;
-				scrollSlider.width = $width - (downBtn.width << 1);
-				scrollSlider.height = $height;
-				downBtn.x = $width - downBtn.width;
+				scrollSlider.width = actualWidth - (downBtn.width << 1);
+				scrollSlider.height = actualHeight;
+				downBtn.x = actualWidth - downBtn.width;
 				downBtn.y = 0;
 			}
-            if(autoHide) {
+			refreshState();
+		}
+		
+		override protected function refreshState():void {
+			 if(autoHide) {
                 visible = scrollSlider.getThumbPercent() < 1.0;
             } else {
                 visible = true;

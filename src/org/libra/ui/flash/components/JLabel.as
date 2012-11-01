@@ -1,6 +1,5 @@
 package org.libra.ui.flash.components {
-	import org.libra.ui.base.BaseText;
-	import org.libra.ui.utils.JFont;
+	import org.libra.ui.flash.core.BaseText;
 	
 	/**
 	 * <p>
@@ -25,10 +24,6 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		override public function toString():String {
-			return 'JLabel';
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

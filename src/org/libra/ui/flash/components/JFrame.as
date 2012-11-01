@@ -5,8 +5,9 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	import org.libra.ui.interfaces.IContainer;
-	import org.libra.ui.managers.UIManager;
+	import org.libra.ui.flash.interfaces.IContainer;
+	import org.libra.ui.flash.managers.UIManager;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.GraphicsUtil;
@@ -43,6 +44,7 @@ package org.libra.ui.flash.components {
 			this.barHeight = barHeight;
 			super(parent, w, h, x, y);
 			closeEnabled = true;
+			closeEnabled = true;
 			dragBarEnabled = true;
 		}
 		
@@ -54,7 +56,7 @@ package org.libra.ui.flash.components {
 			if (!this.dragBounds) this.dragBounds = new Rectangle();
 			dragBounds.x = 40 - w;
 			dragBounds.y = 0;
-			var stage:Stage = UIManager.getInstance().getStage();
+			const stage:Stage = UIManager.getInstance().getStage();
 			dragBounds.width = stage.stageWidth + w - 80;
 			dragBounds.height = stage.stageHeight - barHeight;
 			
@@ -64,14 +66,14 @@ package org.libra.ui.flash.components {
 		public function setCloseEnabled(bool:Boolean):void {
 			if (this.closeEnabled != bool) {
 				this.closeEnabled = bool;
-				invalidate();
+				invalidate(InvalidationFlag.STATE);
 			}
 		}
 		
 		public function setDragBarEnabled(bool:Boolean):void {
 			if (this.dragBarEnabled != bool) {
 				this.dragBarEnabled = bool;
-				invalidate();
+				invalidate(InvalidationFlag.STATE);
 			}
 		}
 		
@@ -79,12 +81,8 @@ package org.libra.ui.flash.components {
 			this.title.text = val;
 		}
 		
-		override public function toString():String {
-			return 'JFrame';
-		}
-		
-		override public function dispose():void {
-			super.dispose();
+		override public function destroy():void {
+			super.destroy();
 			removeBarDragListeners();
 		}
 		
@@ -101,35 +99,38 @@ package org.libra.ui.flash.components {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			bar = new Sprite();
-			GraphicsUtil.drawRect(bar.graphics, 0, 0, $width, barHeight, 0, .0);
+			GraphicsUtil.drawRect(bar.graphics, 0, 0, actualWidth, barHeight, 0, .0);
 			this.addChild(bar);
 			
 			closeBtn = new JButton(0, 0, '', 'btnClose');
 			closeBtn.setSize(21, 19);
-			closeBtn.setLocation($width - closeBtn.width - 6, 6);
+			closeBtn.setLocation(actualWidth - closeBtn.width - 6, 6);
 			if(closeEnabled)
 				this.append(closeBtn);
 			
 			//面板的标题，默认距离顶部4个像素
 			title = new JLabel(0, 4, 'JFrame Title');
-			title.setSize($width, 20);
+			title.setSize(actualWidth, 20);
 			title.textAlign = 'center';
 			this.append(title);
 		}
 		
-		override protected function render():void {
-			super.render();
-			closeBtn.setLocation($width - closeBtn.width - 6, 6);
+		override protected function resize():void {
+			super.resize();
+			closeBtn.setLocation(actualWidth - closeBtn.width - 6, 6);
+		}
+		
+		override protected function refreshState():void {
 			closeEnabled ? append(closeBtn) : remove(closeBtn);
 			dragBarEnabled ? addBarDragListeners() : removeBarDragListeners();
 		}
 		
 		override protected function initBackground():void {
 			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('frameBg'), 
-				$width, $height, new Rectangle(12, 60, 1, 1))));
+				actualWidth, actualHeight, new Rectangle(12, 60, 1, 1))));
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -155,8 +156,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		private function renderTitle():void {
-			if (drawed) {
-				title.width = $width;
+			if (inited) {
+				title.width = actualWidth;
 				title.textAlign = 'center';
 			}
 		}

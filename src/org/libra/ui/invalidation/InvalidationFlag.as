@@ -1,4 +1,4 @@
-package org.libra.ui.starling.core {
+package org.libra.ui.invalidation {
 	/**
 	 * <p>
 	 * Description

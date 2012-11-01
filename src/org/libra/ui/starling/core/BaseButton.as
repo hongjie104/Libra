@@ -1,8 +1,9 @@
 package org.libra.ui.starling.core {
 	import flash.geom.Point;
-	import org.libra.starling.ui.core.state.BaseButtonState;
-	import org.libra.starling.ui.core.state.IButtonState;
-	import org.libra.starling.ui.manager.ScrollRectManager;
+	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.starling.core.state.BaseButtonState;
+	import org.libra.ui.starling.core.state.IButtonState;
+	import org.libra.ui.starling.managers.ScrollRectManager;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -44,6 +45,7 @@ package org.libra.ui.starling.core {
 		
 		public function BaseButton(x:int, y:int, widht:int, height:int, text:String = '') { 
 			super(x, y, widht, height, text);
+			this.textAlign = 'center';
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -83,15 +85,27 @@ package org.libra.ui.starling.core {
 			switch(this.curState) {
 				case NORMAL:
 					state.toNormal();
+					if (textImage) {
+						textImage.x = textX;
+						textImage.y = textY;
+					}
 					break;
 				case MOUSE_UP:
 					state.toMouseUp();
+					if (textImage) {
+						textImage.x = textX;
+						textImage.y = textY;
+					}
 					break;
 				case MOUSE_OVER:
 					state.toMouseOver();
 					break;
 				case MOUSE_DOWN:
 					state.toMouseDown();
+					if (textImage) {
+						textImage.x = textX + 1;
+						textImage.y = textY + 1;
+					}
 					break;
 			}
 		}

@@ -1,4 +1,4 @@
-package org.libra.ui.flash.core.stateus {
+package org.libra.ui.flash.core.state {
 	import flash.display.DisplayObject;
 	
 	/**
@@ -13,7 +13,7 @@ package org.libra.ui.flash.core.stateus {
 	 * @version 1.0
 	 * @see
 	 */
-	public interface IButtonStatus {
+	public interface IButtonState {
 		
 		function setSize(w:int, h:int):void;
 		

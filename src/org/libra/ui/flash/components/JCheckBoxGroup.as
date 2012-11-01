@@ -1,6 +1,7 @@
 package org.libra.ui.flash.components {
-	import org.libra.ui.base.Container;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.Container;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
 	 * <p>
@@ -58,7 +59,7 @@ package org.libra.ui.flash.components {
 				checkBox.setCheckBoxGroup(this);
 				this.append(checkBox);
 				if (checkBox.isSelected()) this.setSelectedCheckBox(checkBox);
-				this.invalidate();
+				this.invalidate(InvalidationFlag.SIZE);
 			}
 		}
 		
@@ -73,7 +74,7 @@ package org.libra.ui.flash.components {
 				this.checkBoxList.splice(index, 1);
 				this.remove(checkBox);
 				if (selectedBox == checkBox) this.setSelectedCheckBox(checkBoxList.length ? checkBoxList[0] : null);
-				this.invalidate();
+				this.invalidate(InvalidationFlag.SIZE);
 			}
 		}
 		
@@ -87,6 +88,7 @@ package org.libra.ui.flash.components {
 		
 		public function setSelectedCheckBox(checkBox:JCheckBox):void {
 			this.selectedBox = checkBox;
+			invalidate(InvalidationFlag.STATE);
 		}
 		
 		public function setCheckBoxUnselected(except:JCheckBox):void {
@@ -96,14 +98,15 @@ package org.libra.ui.flash.components {
 			}
 		}
 		
-		override public function toString():String {
-			return 'JCheckBoxGroup';
+		public function setGap(val:int):void {
+			this.gap = val;
+			this.invalidate(InvalidationFlag.SIZE);
 		}
 		
-		override public function dispose():void {
-			super.dispose();
+		override public function destroy():void {
+			super.destroy();
 			for (var i:* in this.checkBoxList) {
-				checkBoxList[i].dispose();
+				checkBoxList[i].destroy();
 			}
 		}
 		
@@ -111,14 +114,16 @@ package org.libra.ui.flash.components {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override protected function render():void {
-			super.render();
+		override protected function resize():void {
 			var preCheckBox:JCheckBox;
 			for (var i:* in this.checkBoxList) {
 				checkBoxList[i].setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + gap : 0) : 0, 
 					orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.height + preCheckBox.y + gap : 0));
 				preCheckBox = checkBoxList[i];
 			}
+		}
+		
+		override protected function refreshState():void {
 			if(this.selectedBox) this.selectedBox.setSelected(true);
 		}
 		

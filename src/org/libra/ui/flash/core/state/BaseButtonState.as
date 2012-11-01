@@ -1,7 +1,6 @@
-package org.libra.ui.flash.core.stateus {
+package org.libra.ui.flash.core.state {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
-	import org.libra.ui.base.stateus.interfaces.IButtonStatus;
 	import org.libra.ui.utils.ResManager;
 	
 	/**
@@ -16,13 +15,13 @@ package org.libra.ui.flash.core.stateus {
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseButtonStatus extends Bitmap implements IButtonStatus {
+	public class BaseButtonState extends Bitmap implements IButtonState {
 		
 		protected var getBmd:Function;
 		
 		protected var resName:String;
 		
-		public function BaseButtonStatus() {
+		public function BaseButtonState() {
 			super();
 			getBmd = ResManager.getInstance().getBitmapData;
 		}

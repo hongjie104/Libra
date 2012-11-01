@@ -1,10 +1,11 @@
 package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import org.libra.ui.base.BaseButton;
-	import org.libra.ui.base.stateus.BaseCheckBoxStatus;
-	import org.libra.ui.base.stateus.interfaces.ISelectStatus;
-	import org.libra.ui.events.CheckBoxEvent;
+	import org.libra.ui.flash.core.BaseButton;
+	import org.libra.ui.flash.core.state.BaseCheckBoxState;
+	import org.libra.ui.flash.core.state.ISelectState;
+	import org.libra.ui.flash.events.CheckBoxEvent;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
 	 * <p>
@@ -40,12 +41,7 @@ package org.libra.ui.flash.components {
 		public function setSelected(val:Boolean):void {
 			if (this.selected != val) {
 				this.selected = val;
-				(this.status as ISelectStatus).setSelected(selected);
-				if (selected) {
-					if (this.group) this.group.setCheckBoxUnselected(this);
-					dispatchEvent(new CheckBoxEvent(CheckBoxEvent.SELECTED));
-				}
-				this.invalidate();
+				this.invalidate(InvalidationFlag.STATE);
 			}
 		}
 		
@@ -53,23 +49,22 @@ package org.libra.ui.flash.components {
 			if (this.group && this.group != group) this.group.removeCheckBox(this);
 			this.group = group;
 		}
-		
-		override public function toString():String {
-			return 'JCheckBox';
-		}
-		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		override protected function initStatus():void {
-			this.status = new BaseCheckBoxStatus();
-			this.status.setResName(resName);
-			this.addChild(this.status.getDisplayObject());
+		override protected function initState():void {
+			this.state = new BaseCheckBoxState();
+			this.state.setResName(resName);
+			this.addChild(this.state.getDisplayObject());
 		}
 		
-		override protected function render():void {
-			super.render();
-			if (selected) (this.status as ISelectStatus).toSelected();
+		override protected function refreshState():void {
+			(this.state as ISelectState).setSelected(selected);
+			super.refreshState();
+			if (selected) {
+				if (this.group) this.group.setCheckBoxUnselected(this);
+				dispatchEvent(new CheckBoxEvent(CheckBoxEvent.SELECTED));
+			}
 		}
 		
 		override public function setSize(w:int, h:int):void {

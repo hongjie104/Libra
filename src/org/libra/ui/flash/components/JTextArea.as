@@ -2,10 +2,10 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextFieldType;
-	import org.libra.ui.base.BaseText;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.BaseText;
 	import org.libra.ui.style.Style;
-	import org.libra.ui.utils.JFont;
+	import org.libra.ui.text.JFont;
 	
 	/**
 	 * <p>
@@ -61,19 +61,18 @@ package org.libra.ui.flash.components {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			
 			scrollBar = new JScrollBar(Constants.VERTICAL);
 			scrollBar.setAutoHide(true);
 			this.addChild(scrollBar);
 		}
 		
-		override protected function render():void {
-			super.render();
-			textField.width = $width - scrollBar.width - 4;
-			scrollBar.x = $width - scrollBar.width;
-			scrollBar.height = $height;
+		override protected function resize():void {
+			textField.width = actualWidth - scrollBar.width - 4;
+			scrollBar.x = actualWidth - scrollBar.width;
+			scrollBar.height = actualHeight;
 			updateScrollBar();
 		}
 		

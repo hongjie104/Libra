@@ -1,5 +1,5 @@
 package org.libra.ui.starling.component {
-	import org.libra.starling.ui.core.BaseButton;
+	import org.libra.ui.starling.core.BaseButton;
 	
 	/**
 	 * <p>

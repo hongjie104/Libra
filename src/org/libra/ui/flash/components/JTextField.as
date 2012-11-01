@@ -1,7 +1,7 @@
 package org.libra.ui.flash.components {
 	import flash.text.TextFieldType;
 	import org.libra.ui.style.Style;
-	import org.libra.ui.utils.JFont;
+	import org.libra.ui.text.JFont;
 	
 	/**
 	 * <p>

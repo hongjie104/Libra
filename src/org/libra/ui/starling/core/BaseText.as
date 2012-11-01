@@ -3,7 +3,8 @@ package org.libra.ui.starling.core {
 	import flash.geom.Matrix;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import org.libra.starling.ui.text.JFont;
+	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.text.JFont;
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.textures.Texture;
@@ -21,25 +22,25 @@ package org.libra.ui.starling.core {
 	 */
 	public class BaseText extends Component {
 		
-		private static var helpTextField:TextField = new TextField();
+		protected static var helpTextField:TextField = new TextField();
 		
-		private var text:String;
+		protected var text:String;
 		
-		private var htmlText:String;
+		protected var htmlText:String;
 		
-		private var wordWrap:Boolean;
+		protected var wordWrap:Boolean;
 		
-		private var textFilter:Array;
+		protected var textFilter:Array;
 		
-		private var textAlign:String;
+		protected var textAlign:String;
 		
-		private var textX:int;
+		protected var textX:int;
 		
-		private var textY:int;
+		protected var textY:int;
 		
-		private var textImage:Image;
+		protected var textImage:Image;
 		
-		private var textBmd:BitmapData;
+		protected var textBmd:BitmapData;
 		
 		public function BaseText(x:int, y:int, widht:int, height:int, text:String = '') { 
 			super(x, y, widht, height);

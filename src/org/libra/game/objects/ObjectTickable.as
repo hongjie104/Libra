@@ -41,8 +41,8 @@ package org.libra.game.objects {
 			
 		}
 		
-		override public function dispose():void {
-			super.dispose();
+		override public function destroy():void {
+			super.destroy();
 			onRemoveFromStage(null);
 		}
 		

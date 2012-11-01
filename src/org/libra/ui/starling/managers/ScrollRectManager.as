@@ -1,4 +1,4 @@
-package org.libra.ui.starling.manager {
+package org.libra.ui.starling.managers {
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;

@@ -1,7 +1,6 @@
-package org.libra.ui.flash.core.stateus {
+package org.libra.ui.flash.core.state {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import org.libra.ui.base.stateus.interfaces.ISelectStatus;
 	import org.libra.ui.style.Style;
 	import org.libra.utils.GraphicsUtil;
 	
@@ -10,20 +9,20 @@ package org.libra.ui.flash.core.stateus {
 	 * Description
 	 * </p>
 	 *
-	 * @class BaseListItemStatus
+	 * @class BaseListItemState
 	 * @author Eddie
 	 * @qq 32968210
 	 * @date 09-03-2012
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseListItemStatus extends Shape implements ISelectStatus {
+	public class BaseListItemState extends Shape implements ISelectState {
 		
 		private var selected:Boolean;
 		private var $width:int;
 		private var $height:int;
 		
-		public function BaseListItemStatus() {
+		public function BaseListItemState() {
 			super();
 		}
 		

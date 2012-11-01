@@ -2,8 +2,8 @@ package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
-	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	
@@ -44,35 +44,31 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		public function updateBack():void {
-			if (back.bitmapData) back.bitmapData.dispose();
-			if (orientation == Constants.HORIZONTAL) {
-				var source:BitmapData = ResManager.getInstance().getBitmapData('hScrollBtnBg');
-				back.bitmapData = BitmapDataUtil.getScaledBitmapData(source, $width, $height, new Rectangle(2, 2, 1, 11));
-			}else {
-				source = ResManager.getInstance().getBitmapData('vScrollBtnBg');
-				back.bitmapData = BitmapDataUtil.getScaledBitmapData(source, $width, $height, new Rectangle(2, 2, 11, 1));
-			}
-			fore.x = ($width - fore.width) >> 1;
-			fore.y = ($height - fore.height) >> 1;
-		}
-		
-		override public function setBounds(x:int, y:int, w:int, h:int):void {
-			super.setBounds(x, y, w, h);
-			updateBack();
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			
 			back = new Bitmap();
 			this.addChild(back);
 			fore = new Bitmap(ResManager.getInstance().getBitmapData(orientation == Constants.HORIZONTAL ? 'hScrollThumb' : 'vScrollThumb'));
 			this.addChild(fore);
+		}
+		
+		override protected function resize():void {
+			if (back.bitmapData) back.bitmapData.dispose();
+			if (orientation == Constants.HORIZONTAL) {
+				var source:BitmapData = ResManager.getInstance().getBitmapData('hScrollBtnBg');
+				back.bitmapData = BitmapDataUtil.getScaledBitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 1, 11));
+			}else {
+				source = ResManager.getInstance().getBitmapData('vScrollBtnBg');
+				back.bitmapData = BitmapDataUtil.getScaledBitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 11, 1));
+			}
+			fore.x = (actualWidth - fore.width) >> 1;
+			fore.y = (actualHeight - fore.height) >> 1;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

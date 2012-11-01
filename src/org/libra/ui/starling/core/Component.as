@@ -4,7 +4,8 @@ package org.libra.ui.starling.core {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getQualifiedClassName;
-	import org.libra.starling.ui.manager.ScrollRectManager;
+	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.starling.managers.ScrollRectManager;
 	import org.libra.utils.MathUtil;
 	import starling.core.RenderSupport;
 	import starling.core.Starling;
@@ -80,10 +81,7 @@ package org.libra.ui.starling.core {
 		}
 		
 		override public function set width(value:Number):void {
-			if (actualWidth != value) {
-				actualWidth = value;
-				this.invalidate(InvalidationFlag.SIZE);
-			}
+			setSize(value, actualHeight);
 		}
 		
 		override public function get height():Number {
@@ -91,10 +89,7 @@ package org.libra.ui.starling.core {
 		}
 		
 		override public function set height(value:Number):void {
-			if (actualHeight != value) {
-				actualHeight = value;
-				this.invalidate(InvalidationFlag.SIZE);
-			}
+			setSize(actualWidth, value);
 		}
 		
 		public function setLocation(x:int, y:int):void {

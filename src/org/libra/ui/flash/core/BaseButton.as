@@ -1,9 +1,10 @@
 package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import org.libra.ui.base.stateus.BaseButtonStatus;
-	import org.libra.ui.base.stateus.interfaces.IButtonStatus;
-	import org.libra.ui.utils.JFont;
+	import org.libra.ui.flash.core.state.BaseButtonState;
+	import org.libra.ui.flash.core.state.IButtonState;
+	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.text.JFont;
 	
 	/**
 	 * <p>
@@ -25,20 +26,20 @@ package org.libra.ui.flash.core {
 		
 		protected static const MOUSE_DOWN:int = 2;
 		
-		protected var curStatus:int;
+		protected var curState:int;
 		
 		protected var resName:String;
 		
-		protected var status:IButtonStatus;
+		protected var state:IButtonState;
 		
 		protected var textX:int;
 		
 		protected var textY:int;
 		
 		public function BaseButton(x:int = 0, y:int = 0, text:String = '',  resName:String = 'btn') { 
-			curStatus = NORMAL;
+			curState = NORMAL;
 			this.resName = resName;
-			this.initStatus();
+			this.initState();
 			super(x, y, text);
 		}
 		
@@ -50,18 +51,14 @@ package org.libra.ui.flash.core {
 			dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 		}
 		
-		override public function toString():String {
-			return 'BaseButton';
-		}
-		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		protected function initStatus():void {
-			this.status = new BaseButtonStatus();
-			this.status.setResName(resName);
-			this.addChild(this.status.getDisplayObject());
+		protected function initState():void {
+			this.state = new BaseButtonState();
+			this.state.setResName(resName);
+			this.addChild(this.state.getDisplayObject());
 		}
 		
 		override protected function initTextField(text:String = ''):void {
@@ -71,12 +68,24 @@ package org.libra.ui.flash.core {
 			this.text = text;
 		}
 		
-		override protected function render():void {
-			super.render();
-			this.status.setSize($width, $height);
-			if (this.curStatus == MOUSE_OVER) this.status.toMouseOver();
-			else if (this.curStatus == MOUSE_DOWN) this.status.toMouseDown();
-			else this.status.toNormal();
+		override protected function resize():void {
+			this.state.setSize(actualWidth, actualHeight);
+		}
+		
+		override protected function refreshState():void {
+			if (this.curState == MOUSE_OVER) {
+				this.state.toMouseOver();
+				this.textField.x = textX;
+				this.textField.y = textY;
+			}else if (this.curState == MOUSE_DOWN) {
+				this.state.toMouseDown();
+				this.textField.x = textX + 1;
+				this.textField.y = textY + 1;
+			}else {
+				this.state.toNormal();
+				this.textField.x = textX;
+				this.textField.y = textY;
+			}
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -101,37 +110,26 @@ package org.libra.ui.flash.core {
 			this.textY = y;
 		}
 		
+		protected function setCurState(state:int):void {
+			if (curState != state) {
+				this.curState = state;
+				this.invalidate(InvalidationFlag.STATE);
+			}
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
 		
 		private function onMouseUpAndDown(e:MouseEvent):void {
 			if (enabled) {
-				if (e.type == MouseEvent.MOUSE_DOWN) {
-					this.curStatus = MOUSE_DOWN;
-					this.status.toMouseDown();
-					this.textField.x = textX + 1;
-					this.textField.y = textY + 1;
-				}else {
-					curStatus = MOUSE_OVER;
-					this.status.toMouseOver();
-					this.textField.x = textX;
-					this.textField.y = textY;
-				}
+				setCurState(e.type == MouseEvent.MOUSE_DOWN ? MOUSE_DOWN : MOUSE_OVER);
 			}
 		}
 		
 		private function onRollOverAndOut(e:MouseEvent):void {
 			if (enabled) {
-				if (e.type == MouseEvent.ROLL_OVER) {
-					curStatus = MOUSE_OVER;
-					this.status.toMouseOver();
-				}else {
-					curStatus = NORMAL;
-					this.status.toNormal();
-					this.textField.x = textX;
-					this.textField.y = textY;
-				}
+				setCurState(e.type == MouseEvent.ROLL_OVER ? MOUSE_OVER : NORMAL);
 			}
 		}
 	}

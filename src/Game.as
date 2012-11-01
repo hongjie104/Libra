@@ -1,4 +1,5 @@
 package  {
+	import org.libra.ui.starling.component.JButton;
 	import starling.display.Sprite;
 	
 	/**
@@ -18,6 +19,8 @@ package  {
 		public function Game() {
 			super();
 			
+			var btn:JButton = new JButton(60, 20, 50, 50, 'btn');
+			this.addChild(btn);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

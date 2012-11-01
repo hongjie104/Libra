@@ -15,19 +15,20 @@ package {
 	import org.libra.game.components.animatable.BitmapAnimatable;
 	import org.libra.game.components.animatable.BitmapFrame;
 	import org.libra.game.objects.Avatar;
-	import org.libra.ui.base.Container;
-	import org.libra.ui.components.JButton;
-	import org.libra.ui.components.JCheckBox;
-	import org.libra.ui.components.JCheckBoxGroup;
-	import org.libra.ui.components.JComboBox;
-	import org.libra.ui.components.JFrame;
-	import org.libra.ui.components.JLabel;
-	import org.libra.ui.components.JList;
-	import org.libra.ui.components.JPanel;
-	import org.libra.ui.components.JSlider;
-	import org.libra.ui.components.JTextArea;
-	import org.libra.ui.components.JTextField;
-	import org.libra.ui.managers.UIManager;
+	import org.libra.ui.flash.components.JButton;
+	import org.libra.ui.flash.components.JCheckBox;
+	import org.libra.ui.flash.components.JCheckBoxGroup;
+	import org.libra.ui.flash.components.JComboBox;
+	import org.libra.ui.flash.components.JFrame;
+	import org.libra.ui.flash.components.JLabel;
+	import org.libra.ui.flash.components.JList;
+	import org.libra.ui.flash.components.JPanel;
+	import org.libra.ui.flash.components.JSlider;
+	import org.libra.ui.flash.components.JTextArea;
+	import org.libra.ui.flash.components.JTextField;
+	import org.libra.ui.flash.core.Container;
+	import org.libra.ui.flash.managers.UIManager;
+	import org.libra.ui.starling.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.GraphicsUtil;
@@ -56,7 +57,7 @@ package {
 			stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
 			// entry point
-			this.addChild(new TheMiner(true));
+			//this.addChild(new TheMiner(true));
 			
 			//开始加载ui资源
 			var swfLoader:SWFLoader = new SWFLoader('../asset/UI.swf', { name:'UI', onComplete:onLoadUIComplete } );
@@ -70,16 +71,17 @@ package {
 		private function onLoadUIComplete(evt:Event):void {
 			//初始化UI
 			ResManager.getInstance().init();
-			UIManager.getInstance().init(this.stage);
-			//testUI();
+			org.libra.ui.flash.managers.UIManager.getInstance().init(this.stage);
+			testUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
-			testStarlingUI();
+			//testStarlingUI();
 		}
 		
 		private function testStarlingUI():void {
+			//org.libra.ui.starling.managers.UIManager.getInstance().init(stage)
 			starling = new starling.core.Starling(Game, stage);
 			starling.start();
 			starling.showStats = true;

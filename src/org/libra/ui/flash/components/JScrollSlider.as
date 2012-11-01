@@ -3,6 +3,7 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.Constants;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.GraphicsUtil;
 	import org.libra.utils.MathUtil;
 	/**
@@ -46,7 +47,7 @@ package org.libra.ui.flash.components {
 		public function setThumbPercent(value:Number):void {
 			//if (this.thumbPercent != value) {
 			thumbPercent = MathUtil.min(value, 1.0);
-			invalidate();
+			invalidate(InvalidationFlag.SIZE);
 			//}
 		}
 		
@@ -67,6 +68,9 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function drawBlock():void {
+			if (block) {
+				this.removeChild(block);
+			}
 			this.block = new JScrollBlock(this.orientation);
 			this.block.buttonMode = true;
 			this.addChild(block);
@@ -75,15 +79,15 @@ package org.libra.ui.flash.components {
 		override protected function renderBlock():void {
 			var size:Number;
 			if(orientation == Constants.HORIZONTAL) {
-				size = MathUtil.max($height, Math.round($width * thumbPercent));
-				GraphicsUtil.drawRect(block.graphics, 0, 0, size, $height, 0, 0);
-				//GraphicsUtil.drawRect(block.graphics, 1, 1, size - 2, $height - 2, Style.BUTTON_FACE, 1.0, false);
-				(block as JScrollBlock).setBounds(1, 1, size - 2, $height - 2);
+				size = MathUtil.max(actualHeight, Math.round(actualWidth * thumbPercent));
+				GraphicsUtil.drawRect(block.graphics, 0, 0, size, actualHeight, 0, 0);
+				//GraphicsUtil.drawRect(block.graphics, 1, 1, size - 2, actualHeight - 2, Style.BUTTON_FACE, 1.0, false);
+				(block as JScrollBlock).setBounds(1, 1, size - 2, actualHeight - 2);
 			} else {
-				size = MathUtil.max($width, Math.round($height * thumbPercent));
-				GraphicsUtil.drawRect(block.graphics, 0, 0, $width  - 2, size, 0, 0);
-				//GraphicsUtil.drawRect(block.graphics, 1, 1, $width - 2, size - 2, Style.BUTTON_FACE, 1.0, false);
-				(block as JScrollBlock).setBounds(1, 1, $width - 2, size - 2);
+				size = MathUtil.max(actualWidth, Math.round(actualHeight * thumbPercent));
+				GraphicsUtil.drawRect(block.graphics, 0, 0, actualWidth  - 2, size, 0, 0);
+				//GraphicsUtil.drawRect(block.graphics, 1, 1, actualWidth - 2, size - 2, Style.BUTTON_FACE, 1.0, false);
+				(block as JScrollBlock).setBounds(1, 1, actualWidth - 2, size - 2);
 			}
 			
 			positionBlock();
@@ -92,10 +96,10 @@ package org.libra.ui.flash.components {
 		protected override function positionBlock():void {
 			var range:Number;
 			if(orientation == Constants.HORIZONTAL) {
-				range = $width - block.width;
+				range = actualWidth - block.width;
 				block.x = (value - min) / (max - min) * range;
 			} else {
-				range = $height - block.height;
+				range = actualHeight - block.height;
 				block.y = (value - min) / (max - min) * range;
 			}
 		}
@@ -106,19 +110,15 @@ package org.libra.ui.flash.components {
 		protected override function onDragBlock(event:MouseEvent):void {
 			stage.addEventListener(MouseEvent.MOUSE_UP, onDrop);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
-			if(orientation == Constants.HORIZONTAL) {
-				block.startDrag(false, new Rectangle(0, 1, $width - block.width, 0));
-			} else {
-				block.startDrag(false, new Rectangle(1, 0, 0, $height - block.height));
-			}
+			block.startDrag(false, orientation == Constants.HORIZONTAL ? new Rectangle(0, 1, actualWidth - block.width, 0) : new Rectangle(1, 0, 0, actualHeight - block.height));
 		}
 		
 		protected override function onSlide(event:MouseEvent):void {
 			var oldValue:Number = value;
 			if(orientation == Constants.HORIZONTAL) {
-				value = $width == block.width ? min : block.x / ($width - block.width) * (max - min) + min;
+				value = actualWidth == block.width ? min : block.x / (actualWidth - block.width) * (max - min) + min;
 			} else {
-				value = $height == block.height ? min : block.y / ($height - block.height) * (max - min) + min;
+				value = actualHeight == block.height ? min : block.y / (actualHeight - block.height) * (max - min) + min;
 			}
 			if(value != oldValue) {
 				dispatchEvent(new Event(Event.CHANGE));

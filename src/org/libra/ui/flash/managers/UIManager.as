@@ -2,7 +2,7 @@ package org.libra.ui.flash.managers {
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	import org.libra.ui.components.JPanel;
+	import org.libra.ui.flash.components.JPanel;
 	/**
 	 * <p>
 	 * Description

@@ -3,7 +3,7 @@ package org.libra.ui.flash.core {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import org.libra.ui.style.Filter;
-	import org.libra.ui.utils.JFont;
+	import org.libra.ui.text.JFont;
 	
 	/**
 	 * <p>
@@ -46,8 +46,8 @@ package org.libra.ui.flash.core {
 		public function setTextLocation(x:int, y:int):void {
 			this.textField.x = x;
 			this.textField.y = y;
-			this.textField.width = $width - x;
-			this.textField.height = $height - y;
+			this.textField.width = actualWidth - x;
+			this.textField.height = actualHeight - y;
 		}
 		
 		/**
@@ -86,10 +86,6 @@ package org.libra.ui.flash.core {
 			//this.textField.setTextFormat(newTf);
 			//this.textField.defaultTextFormat = newTf;
 		//}
-		
-		override public function toString():String {
-			return 'BaseText';
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Getters and setter

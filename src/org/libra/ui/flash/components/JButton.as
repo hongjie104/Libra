@@ -1,5 +1,5 @@
 package org.libra.ui.flash.components {
-	import org.libra.ui.base.BaseButton;
+	import org.libra.ui.flash.core.BaseButton;
 	
 	/**
 	 * <p>
@@ -31,10 +31,6 @@ package org.libra.ui.flash.components {
 		override public function setSize(w:int, h:int):void {
 			super.setSize(w, h);
 			setTextLocation(0, h - 21);
-		}
-		
-		override public function toString():String {
-			return 'JButton';
 		}
 		
 		/*-----------------------------------------------------------------------------------------

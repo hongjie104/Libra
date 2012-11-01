@@ -1,6 +1,6 @@
 package org.libra.ui.flash.interfaces {
 	import flash.display.DisplayObject;
-	import org.libra.ui.base.Component;
+	import org.libra.ui.flash.core.Component;
 	
 	/**
 	 * <p>

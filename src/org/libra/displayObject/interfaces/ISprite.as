@@ -14,9 +14,9 @@ package org.libra.displayObject.interfaces {
 	 */
 	public interface ISprite {
 		
-		function removeFromParent(dispose:Boolean = false):void;
+		function removeFromParent(destroy:Boolean = false):void;
 		
-		function dispose():void;
+		function destroy():void;
 	}
 	
 }

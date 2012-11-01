@@ -6,8 +6,8 @@ package org.libra.ui.flash.managers {
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import org.libra.ui.interfaces.IDragable;
-	import org.libra.ui.interfaces.IDropable;
+	import org.libra.ui.flash.interfaces.IDragable;
+	import org.libra.ui.flash.interfaces.IDropable;
 	/**
 	 * <p>
 	 * 拖放管理类

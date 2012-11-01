@@ -2,7 +2,8 @@ package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldAutoSize;
-	import org.libra.ui.utils.JFont;
+	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.text.JFont;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	/**
@@ -30,9 +31,9 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function setSize(w:int, h:int):void {
-			this.$width = w;
-			this.$height = h;
-			invalidate();
+			this.actualWidth = w;
+			this.actualHeight = h;
+			invalidate(InvalidationFlag.SIZE);
 		}
 		
 		public static function getInstance():JLabel {
@@ -58,14 +59,13 @@ package org.libra.ui.flash.components {
 			setTextLocation(5, 6);
 		}
 		
-		override protected function render():void {
-			super.render();
+		override protected function resize():void {
 			if (this.background) {
 				if (this.background is Bitmap) (background as Bitmap).bitmapData.dispose();
 			}
-			if($width > 0 && $height > 0)
+			if(actualWidth > 0 && actualHeight > 0)
 				this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('toolTipBg'), 
-					$width, $height, new Rectangle(5, 4, 1, 20))));
+					actualWidth, actualHeight, new Rectangle(5, 4, 1, 20))));
 		}
 		
 		/*-----------------------------------------------------------------------------------------

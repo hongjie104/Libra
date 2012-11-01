@@ -1,18 +1,18 @@
-package org.libra.ui.flash.core.stateus {
+package org.libra.ui.flash.core.state {
 	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class ICheckBoxStatus
+	 * @class ISelectState
 	 * @author Eddie
 	 * @qq 32968210
 	 * @date 09/01/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public interface ISelectStatus extends IButtonStatus {
+	public interface ISelectState extends IButtonState {
 		
 		function setSelected(val:Boolean):void;
 		

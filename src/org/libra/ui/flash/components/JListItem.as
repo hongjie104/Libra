@@ -1,9 +1,10 @@
 package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import org.libra.ui.base.Container;
-	import org.libra.ui.base.stateus.BaseListItemStatus;
-	import org.libra.ui.base.stateus.interfaces.ISelectStatus;
+	import org.libra.ui.flash.core.Container;
+	import org.libra.ui.flash.core.state.BaseListItemState;
+	import org.libra.ui.flash.core.state.ISelectState;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	/**
 	 * <p>
 	 * Description
@@ -18,13 +19,19 @@ package org.libra.ui.flash.components {
 	 */
 	public class JListItem extends Container {
 		
+		private static const NORMAL:int = 0;
+		
+		private static const MOUSE_OVER:int = 1;
+		
 		private var data:*;
 		
 		private var selected:Boolean;
 		
-		private var status:ISelectStatus;
+		private var state:ISelectState;
 		
 		private var label:JLabel;
+		
+		private var curState:int;
 		
 		public function JListItem(x:int = 0, y:int = 0) { 
 			super(x, y);
@@ -32,20 +39,16 @@ package org.libra.ui.flash.components {
 			initStatue();
 			this.setSize(100, 20);
 			selected = false;
+			curState = NORMAL;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
-			this.status.setSize(w, h);
-		}
-		
 		public function setSelected(val:Boolean):void {
 			this.selected = val;
-			this.status.setSelected(val);
+			this.invalidate(InvalidationFlag.STATE);
 		}
 		
 		public function isSelected():Boolean {
@@ -54,39 +57,40 @@ package org.libra.ui.flash.components {
 		
 		public function setData(data:*):void {
 			this.data = data;
-			invalidate();
+			invalidate(InvalidationFlag.DATA);
 		}
 		
 		public function getData():*{
 			return this.data;
 		}
 		
-		override public function toString():String {
-			return 'JListItem';
-		}
-		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		private function initStatue():void {
-			status = new BaseListItemStatus();
-			this.addChild(status.getDisplayObject());
+		protected function initStatue():void {
+			state = new BaseListItemState();
+			this.addChild(state.getDisplayObject());
 		}
 		
-		override protected function draw():void {
-			super.draw();
-			
+		override protected function init():void {
+			super.init();
 			label = new JLabel();
 			this.append(label);
 		}
 		
-		override protected function render():void {
-			super.render();
-			if (label) {
-				label.text = data;
-				label.setSize($width, $height);
-			}
+		override protected function refreshData():void {
+			label.text = data;
+		}
+		
+		override protected function resize():void {
+			this.state.setSize(actualWidth, actualHeight);
+			label.setSize(actualWidth, actualHeight);
+		}
+		
+		override protected function refreshState():void {
+			this.state.setSelected(this.selected);
+			curState == NORMAL ? state.toNormal() : state.toMouseOver();
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -101,12 +105,20 @@ package org.libra.ui.flash.components {
 			this.removeEventListener(MouseEvent.ROLL_OUT, onMouseRoll);
 		}
 		
+		private function setCurState(state:int):void {
+			if (curState != state) {
+				curState = state;
+				invalidate(InvalidationFlag.STATE);
+			}
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
 		private function onMouseRoll(e:MouseEvent):void {
-			e.type == MouseEvent.ROLL_OVER ? this.status.toMouseOver() : this.status.toNormal();
+			setCurState(e.type == MouseEvent.ROLL_OVER ? MOUSE_OVER : NORMAL);
 		}
+		
 	}
 
 }

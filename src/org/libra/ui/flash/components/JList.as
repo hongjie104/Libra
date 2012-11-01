@@ -1,8 +1,9 @@
 package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import org.libra.ui.base.Component;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.MathUtil;
 	
 	/**
@@ -45,31 +46,16 @@ package org.libra.ui.flash.components {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
-			initListItems();
-		}
-		
-		override public function setBounds(x:int, y:int, w:int, h:int):void {
-			super.setBounds(x, y, w, h);
-			initListItems();
-		}
-		
-		override public function set height(value:Number):void {
-			super.height = value;
-			initListItems();
-		}
-		
 		public function addItem(item:Object):void {
 			this.dataList[dataList.length] = item;
-			invalidate();
+			invalidate(InvalidationFlag.DATA);
 		}
 		
 		public function addItemAt(item:Object, index:int):void{
 			index = MathUtil.max(0, index);
 			index = MathUtil.min(dataList.length, index);
 			dataList.splice(index, 0, item);
-            invalidate();
+			invalidate(InvalidationFlag.DATA);
 		}
 		
 		public function removeItem(item:Object):void{
@@ -80,16 +66,17 @@ package org.libra.ui.flash.components {
 		public function removeItemAt(index:int):void {
 			if(index < 0 || index >= itemList.length) return;
 			dataList.splice(index, 1);
-			invalidate();
+			invalidate(InvalidationFlag.DATA);
 		}
 		
 		public function clear():void {
 			dataList.length = 0;
-			invalidate();
+			invalidate(InvalidationFlag.DATA);
 		}
 		
 		public function setSelectedIndex(value:int):void {
 			this.selectedIndex = value >= 0 && value < itemList.length ? value : -1;
+			invalidate(InvalidationFlag.DATA);
 			dispatchEvent(new Event(Event.SELECT));
 		}
 		
@@ -117,7 +104,7 @@ package org.libra.ui.flash.components {
 		
 		public function setDataList(value:Vector.<Object>):void {
 			this.dataList = value;
-			invalidate();
+			invalidate(InvalidationFlag.DATA);
 		}
 		
 		public function getDataList():Vector.<Object> {
@@ -131,24 +118,40 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		override protected function draw():void {
-			super.draw();
+		override protected function init():void {
+			super.init();
 			
 			scrollBar = new JScrollBar(Constants.VERTICAL);
 			this.addChild(scrollBar);
 		}
 		
-		override protected function render():void {
-			super.render();
-			
-			scrollBar.x = $width - scrollBar.width;
+		override protected function refreshData():void {
 			var contentHeight:int = dataList.length * itemHeight;
-			scrollBar.setThumbPercent($height / contentHeight); 
-			var pageSize:Number = MathUtil.floor($height / itemHeight);
+			scrollBar.setThumbPercent(actualHeight / contentHeight); 
+			var pageSize:Number = MathUtil.floor(actualHeight / itemHeight);
             scrollBar.setMax(MathUtil.max(0, dataList.length - pageSize));
 			scrollBar.setPageSize(pageSize);
-			scrollBar.height = $height;
+			scrollBar.height = actualHeight;
             scrollToSelection();
+		}
+		
+		override protected function resize():void {
+			scrollBar.x = actualWidth - scrollBar.width;
+			for (var j:* in itemList) {
+				this.removeChild(itemList[j]);
+			}
+			var itemPool:Vector.<JListItem> = this.itemList.slice();
+			itemList.length = 0;
+			var item:JListItem;
+            var numItems:int = Math.ceil(actualHeight / itemHeight);
+			for(var i:int = 0; i < numItems; i++) {
+				item = itemPool.length ? itemPool.shift() : new JListItem();
+				item.setLocation(0, i * itemHeight);
+				item.setSize(width, itemHeight);
+				this.itemList[i] = item;
+				item.addEventListener(MouseEvent.CLICK, onSelect);
+				this.addChild(item);
+			}
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -169,23 +172,6 @@ package org.libra.ui.flash.components {
 			}
 		}
 		
-		protected function initListItems():void {
-			for (var j:* in itemList) {
-				this.removeChild(itemList[j]);
-			}
-			var itemPool:Vector.<JListItem> = this.itemList.slice();
-			itemList.length = 0;
-			var item:JListItem;
-            var numItems:int = Math.ceil($height / itemHeight);
-			for(var i:int = 0; i < numItems; i++) {
-				item = itemPool.length ? itemPool.shift() : new JListItem();
-				item.setLocation(0, i * itemHeight);
-				item.setSize(width, itemHeight);
-				this.itemList[i] = item;
-				this.addChild(item);
-			}
-		}
-		
 		protected function updateItems():void {
             var offset:int = this.scrollBar.getValue();
             var numItems:int = this.itemList.length;
@@ -193,7 +179,7 @@ package org.libra.ui.flash.components {
 			var numData:int = this.dataList.length;
             for(var i:int = 0; i < numItems; i++) {
                 item = itemList[i];
-				item.setSize($width, itemHeight);
+				item.setSize(actualWidth, itemHeight);
 				item.setData(offset + i < numData ? this.dataList[offset + i] : '');
 				item.setSelected(offset + i == selectedIndex);
             }
