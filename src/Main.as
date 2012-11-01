@@ -31,6 +31,7 @@ package {
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.GraphicsUtil;
+	import starling.core.Starling;
 	
 	/**
 	 * ...
@@ -42,6 +43,8 @@ package {
 		
 		[Embed(source="../asset/walk.png")]
 		private var BMP:Class;
+		
+		private var starling:Starling;
 		
 		public function Main():void {
 			if (stage) init();
@@ -68,17 +71,18 @@ package {
 			//初始化UI
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
-<<<<<<< HEAD
 			//testUI();
 			//testBmpEngine();
-			testAStar();
-=======
-			testUI();
-			//testBmpEngine();
 			//testAStar();
->>>>>>> 05ae7d9f699c3a31fdba262ff1be10c48cf61a82
 			//测试绘制菱形
 			//testDiamond();
+			testStarlingUI();
+		}
+		
+		private function testStarlingUI():void {
+			starling = new starling.core.Starling(Game, stage);
+			starling.start();
+			starling.showStats = true;
 		}
 		
 		private function testDiamond():void {
