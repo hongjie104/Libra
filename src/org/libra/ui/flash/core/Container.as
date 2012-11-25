@@ -23,7 +23,7 @@ package org.libra.ui.flash.core {
 		
 		protected var numComponent:int;
 		
-		private var dropAcceptableList:Vector.<IDragable>;
+		private var dropAcceptList:Vector.<IDragable>;
 		
 		public function Container(x:int = 0, y:int = 0) { 
 			super(x, y);
@@ -165,24 +165,24 @@ package org.libra.ui.flash.core {
 		
 		/* INTERFACE org.libra.ui.interfaces.IDropable */
 		
-		public function addDropAcceptEnabled(dragable:IDragable):void {
-			if (!dropAcceptableList) dropAcceptableList = new Vector.<IDragable>();
-			if(this.dropAcceptableList.indexOf(dragable) == -1)
-				dropAcceptableList.push(dragable);
+		public function addDropAccept(dragable:IDragable):void {
+			if (!dropAcceptList) dropAcceptList = new Vector.<IDragable>();
+			if(this.dropAcceptList.indexOf(dragable) == -1)
+				dropAcceptList.push(dragable);
 		}
 		
-		public function removeDropAcceptEnabled(dragEnabled:IDragable):void {
-			if (this.dropAcceptableList) {
-				var index:int = this.dropAcceptableList.indexOf(dragEnabled);
-				if (index != -1) this.dropAcceptableList.splice(index, 1);
+		public function removeDropAccept(dragEnabled:IDragable):void {
+			if (this.dropAcceptList) {
+				var index:int = this.dropAcceptList.indexOf(dragEnabled);
+				if (index != -1) this.dropAcceptList.splice(index, 1);
 			}
 		}
 		
-		public function isDropAcceptEnabled(dragEnabled:IDragable):Boolean {
-			return this.dropAcceptableList ? this.dropAcceptableList.indexOf(dragEnabled) != -1 : false;
+		public function isDropAccept(dragEnabled:IDragable):Boolean {
+			return this.dropAcceptList ? this.dropAcceptList.indexOf(dragEnabled) != -1 : false;
 		}
 		
-		public function addDragEnabled(dragEnabled:IDragable):void {
+		public function addDragComponent(dragEnabled:IDragable):void {
 			dragEnabled.removeFromParent();
 			this.append(dragEnabled as Component);
 		}

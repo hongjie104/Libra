@@ -1,9 +1,10 @@
 package org.libra.ui.starling.component {
 	import org.libra.ui.starling.core.BaseButton;
+	import org.libra.ui.starling.theme.ButtonTheme;
 	
 	/**
 	 * <p>
-	 * Description
+	 * 按钮类
 	 * </p>
 	 *
 	 * @class JButton
@@ -15,8 +16,18 @@ package org.libra.ui.starling.component {
 	 */
 	public class JButton extends BaseButton {
 		
-		public function JButton(widht:int, height:int, x:int = 0, y:int = 0, text:String = '') { 
-			super(widht, height, x, y, text);
+		/**
+		 * 构造函数
+		 * @private
+		 * @param	theme
+		 * @param	widht
+		 * @param	height
+		 * @param	x
+		 * @param	y
+		 * @param	text
+		 */
+		public function JButton(theme:ButtonTheme, widht:int, height:int, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme, widht, height, x, y, text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

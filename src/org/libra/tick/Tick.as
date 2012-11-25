@@ -13,41 +13,57 @@ package org.libra.tick {
 		
 		/**
 		 * 单例模式
+		 * @private
 		 */
 		private static var instance:Tick;
 		
 		/**
 		 * 事件的载体。可以是主类Main，也可以是一个shape。
 		 * 只要是EventDispatcher的子类即可。
+		 * @private
 		 */
 		private var shape:Shape;
 		
 		/**
 		 * 是否暂停。默认不暂停。
+		 * @private
+		 * @default false
 		 */
 		private var pause:Boolean;
 		
 		/**
 		 * 需要注册EnterFrame事件的ITickable的集合
+		 * @private
 		 */
 		private var tickEnabledList:Vector.<ITickable>;
 		
 		/**
 		 * 最大两帧间隔（防止待机后返回卡死） 
+		 * @private
 		 */
 		static public const MAX_INTERVAL:int = 3000;
+		
+		/**
+		 * @private
+		 */
 		static public const MIN_INTERVAL:int = 0;
 		
 		/**
 		 * 速度系数
 		 * 可由此实现慢速播放
+		 * @private
 		 */		
 		public var speed:Number = 1.0;
 		
-		private var prevTime:int;//上次记录的时间
+		/**
+		 * 上次记录的时间
+		 * @private
+		 */
+		private var prevTime:int;
 		
 		/**
-		 * 构造函数，
+		 * 构造函数
+		 * @private
 		 * @param	shape，事件的载体。EventDispatcher的子类
 		 */
 		public function Tick(shape:Shape, singleton:Singleton) { 
@@ -81,13 +97,15 @@ package org.libra.tick {
 			return false;
 		}
 		
+		/**
+		 * 清除对象
+		 */
 		public function clearItem():void {
 			this.tickEnabledList.length = 0;
 		}
 		
 		/**
 		 * 清除掉积累的时间（在暂停之后）
-		 * 
 		 */
 		public function clear():void {
 			this.prevTime = 0;
@@ -128,6 +146,7 @@ package org.libra.tick {
 		
 		/**
 		 * EnterFrame事件循环。
+		 * @private
 		 * @param	e
 		 */
 		private function onEnterFrameHandler(e:Event):void {
@@ -152,7 +171,8 @@ package org.libra.tick {
 		
 		/**
 		 * 获取当前实例。
-		 * @return
+		 * @private
+		 * @return Tick
 		 */
 		public static function getInstance():Tick {
 			return instance ||= new Tick(new Shape(), new Singleton());
@@ -161,4 +181,9 @@ package org.libra.tick {
 	}
 
 }
-class Singleton{}
+
+/**
+ * 单例模式
+ * @private
+ */
+final class Singleton{}

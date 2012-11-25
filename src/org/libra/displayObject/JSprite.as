@@ -71,6 +71,7 @@ package org.libra.displayObject {
 					removeEventListener(event, listener);
 				}
 			}
+			eventListeners = new Dictionary();
 		}
 		
 		/* INTERFACE org.libra.displayObject.interfaces.ISprite */
@@ -83,7 +84,7 @@ package org.libra.displayObject {
 		}
 		
 		public function destroy():void {
-			
+			removeAllEventListener();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

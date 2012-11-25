@@ -1,34 +1,31 @@
-package  {
-	import flash.display.DisplayObjectContainer;
-	import org.robotlegs.base.ContextEvent;
-	import org.robotlegs.mvcs.Context;
+package org.libra.ui.starling.theme {
+	import flash.geom.Rectangle;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class MainContext
+	 * @class PanelTheme
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 09/12/2012
+	 * @date 11/03/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public final class MainContext extends Context {
+	public class PanelTheme {
 		
-		public function MainContext(contextView:DisplayObjectContainer) {
-			super(contextView);
+		public var name:String;
+		
+		public var scale9Grid:Rectangle;
+		
+		public function PanelTheme(name:String, scale9Grid:Rectangle) {
+			this.name = name;
+			this.scale9Grid = scale9Grid;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		override public function startup():void { 
-			//commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateModelsCommand, ContextEvent, true);
-			//commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateMediatorsCommand, ContextEvent, true);
-			super.startup();
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

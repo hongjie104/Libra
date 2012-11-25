@@ -48,6 +48,7 @@ package org.libra.ui.flash.components {
 		public function setCheckBoxGroup(group:JCheckBoxGroup):void {
 			if (this.group && this.group != group) this.group.removeCheckBox(this);
 			this.group = group;
+			this.group.append(this);
 		}
 		/*-----------------------------------------------------------------------------------------
 		Private methods

@@ -1,6 +1,8 @@
 package org.libra.ui.starling.core.state {
+	import org.libra.ui.starling.theme.ButtonTheme;
+	import org.libra.ui.starling.theme.DefaultTheme;
 	import starling.display.DisplayObject;
-	import starling.display.Quad;
+	import starling.display.Image;
 	/**
 	 * <p>
 	 * Description
@@ -15,10 +17,16 @@ package org.libra.ui.starling.core.state {
 	 */
 	public class BaseButtonState implements IButtonState {
 		
-		private var quad:Quad;
+		protected var image:Image;
 		
-		public function BaseButtonState() {
-			quad = new Quad(1, 1, 0xff0000);
+		protected var getTexture:Function;
+		
+		protected var theme:ButtonTheme;
+		
+		public function BaseButtonState(theme:ButtonTheme) {
+			this.theme = theme;
+			getTexture = DefaultTheme.getInstance().getTexture;
+			image = new Image(getTexture(theme.normal));
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -28,28 +36,28 @@ package org.libra.ui.starling.core.state {
 		/* INTERFACE org.libra.starling.ui.core.state.IButtonState */
 		
 		public function toNormal():void {
-			quad.color = 0xff0000;
+			image.texture = getTexture(theme.normal);
 		}
 		
 		public function toMouseDown():void {
-			quad.color = 0x00ff00;
+			image.texture = getTexture(theme.down);
 		}
 		
 		public function toMouseUp():void {
-			quad.color = 0x0000ff;
+			image.texture = getTexture(theme.over);
 		}
 		
 		public function toMouseOver():void {
-			quad.color = 0x0000ff;
+			image.texture = getTexture(theme.over);
 		}
 		
 		public function getDisplayObject():DisplayObject {
-			return quad;
+			return image;
 		}
 		
 		public function setSize(width:int, height:int):void {
-			quad.width = width;
-			quad.height = height;
+			image.width = width;
+			image.height = height;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

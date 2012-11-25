@@ -21,6 +21,8 @@ package org.libra.ui.text {
 		
 		public static const FONT_BTN:JFont = new JFont('simsun', 12, 0xffb932);
 		
+		public static const FONT_TOOL_TIP:JFont = new JFont('simsun', 12, 0xcccccc);
+		
 		private var name:String;
 		
 		private var size:int;

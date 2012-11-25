@@ -1,9 +1,9 @@
 package org.libra.ui.starling.component {
-	import org.libra.starling.ui.core.BaseText;
+	import org.libra.ui.starling.core.BaseText;
 	
 	/**
 	 * <p>
-	 * Description
+	 * 标签
 	 * </p>
 	 *
 	 * @class JLabel
@@ -15,7 +15,16 @@ package org.libra.ui.starling.component {
 	 */
 	public class JLabel extends BaseText {
 		
-		public function JLabel(widht:int, height:int, x:int = 0, y:int = 0, text:String='') {
+		/**
+		 * 构造函数
+		 * @private
+		 * @param	widht
+		 * @param	height
+		 * @param	x
+		 * @param	y
+		 * @param	text
+		 */
+		public function JLabel(widht:int, height:int, x:int = 0, y:int = 0, text:String = '') { 
 			super(widht, height, x, y, text);
 			this.touchable = false;
 		}

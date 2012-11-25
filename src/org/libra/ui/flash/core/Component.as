@@ -179,7 +179,7 @@ package org.libra.ui.flash.core {
 		}
 		
 		override public function destroy():void {
-			removeAllEventListener();
+			super.destroy();
 			setDragEnabled(false);
 		}
 		
@@ -259,15 +259,15 @@ package org.libra.ui.flash.core {
 		 * 比如当宽度或者高度改变时，重新绘制下组件
 		 */
 		protected function draw():void {
-			if (this.invalidationFlag.isSizeInvalid())
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.SIZE))
 				resize();
-			if (this.invalidationFlag.isDataInvalid())
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.DATA))
 				refreshData();
-			if (this.invalidationFlag.isStateInvalid())
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.STATE))
 				refreshState();
-			if (this.invalidationFlag.isStyleInvalid())
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.STYLE))
 				refreshStyle();
-			if (this.invalidationFlag.isTextInvalid())
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.TEXT))
 				refreshText();
 		}
 		

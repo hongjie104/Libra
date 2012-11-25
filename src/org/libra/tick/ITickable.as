@@ -2,7 +2,7 @@ package org.libra.tick {
 	
 	/**
 	 * <p>
-	 * Description
+	 * 需要每帧被调用某方法的对象
 	 * </p>
 	 *
 	 * @class ITickable
@@ -10,10 +10,13 @@ package org.libra.tick {
 	 * @qq 32968210
 	 * @date 09/06/2012
 	 * @version 1.0
-	 * @see
 	 */
 	public interface ITickable {
 		
+		/**
+		 * 每帧调用该方法
+		 * @param	interval 距离上一次被调用该方法的时间间隔，单位毫秒
+		 */
 		function tick(interval:int):void;
 		
 	}

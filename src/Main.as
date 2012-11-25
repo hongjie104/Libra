@@ -7,6 +7,7 @@ package {
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import starling.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import org.libra.aStar.AStarTest;
@@ -27,8 +28,7 @@ package {
 	import org.libra.ui.flash.components.JTextArea;
 	import org.libra.ui.flash.components.JTextField;
 	import org.libra.ui.flash.core.Container;
-	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.starling.managers.UIManager;
+	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.GraphicsUtil;
@@ -49,11 +49,11 @@ package {
 		
 		public function Main():void {
 			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			else addEventListener(flash.events.Event.ADDED_TO_STAGE, init);
 		}
 		
-		private function init(e:Event = null):void {
-			removeEventListener(Event.ADDED_TO_STAGE, init);
+		private function init(e:flash.events.Event = null):void {
+			removeEventListener(flash.events.Event.ADDED_TO_STAGE, init);
 			stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
 			// entry point
@@ -68,23 +68,24 @@ package {
 		 * UI资源加载完成
 		 * @param	evt
 		 */
-		private function onLoadUIComplete(evt:Event):void {
+		private function onLoadUIComplete(evt:flash.events.Event):void {
 			//初始化UI
 			ResManager.getInstance().init();
-			org.libra.ui.flash.managers.UIManager.getInstance().init(this.stage);
-			testUI();
+			UIManager.getInstance().init(this.stage);
+			//testUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
-			//testStarlingUI();
+			testStarlingUI();
 		}
 		
 		private function testStarlingUI():void {
-			//org.libra.ui.starling.managers.UIManager.getInstance().init(stage)
 			starling = new starling.core.Starling(Game, stage);
 			starling.start();
 			starling.showStats = true;
+			
+			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage); } );
 		}
 		
 		private function testDiamond():void {
@@ -189,7 +190,7 @@ package {
 			frame.append(slider);
 			var sliderLabel:JLabel = new JLabel(330, 240, '0');
 			frame.append(sliderLabel);
-			slider.addEventListener(Event.CHANGE, function(evt:Event):void { sliderLabel.text = slider.getValue().toFixed(2); } );
+			slider.addEventListener(flash.events.Event.CHANGE, function(evt:flash.events.Event):void { sliderLabel.text = slider.getValue().toFixed(2); } );
 			
 			var textArea:JTextArea = new JTextArea(50, 160, '请输入：');
 			textArea.setSize(200, 110);

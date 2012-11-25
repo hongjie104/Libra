@@ -1,11 +1,11 @@
-package org.libra.ui.flash.managers {
+package org.libra.ui.managers {
 	import flash.display.Stage;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import org.libra.ui.flash.components.JPanel;
+	import org.libra.ui.flash.interfaces.IPanel;
+	import starling.core.Starling;
+	import starling.display.Sprite;
 	/**
 	 * <p>
-	 * Description
+	 * UI大管家
 	 * </p>
 	 *
 	 * @class UIManager
@@ -17,30 +17,73 @@ package org.libra.ui.flash.managers {
 	 */
 	public final class UIManager {
 		
+		/**
+		 * 单例
+		 * @private
+		 */
 		private static var instance:UIManager;
 		
-		internal var stage:Stage;
+		/**
+		 * 传统显示列表的舞台
+		 * @private
+		 */
+		private var stage:Stage;
 		
-		private var panelList:Vector.<JPanel>;
+		/**
+		 * starling的根容器
+		 * @private
+		 */
+		private var starlingRoot:Sprite;
 		
+		/**
+		 * 在舞台上的所有面板
+		 * @private
+		 */
+		private var panelList:Vector.<IPanel>;
+		
+		/**
+		 * 构造函数
+		 * @param	singleton
+		 * @private
+		 */
 		public function UIManager(singleton:Singleton) {
-			panelList = new Vector.<JPanel>();
+			panelList = new Vector.<IPanel>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * 初始化uiManager
+		 * 在使用ui框架之前就必需初始化
+		 * @param	stage 传统显示列表中的stage
+		 */
 		public function init(stage:Stage):void {
 			this.stage = stage;
-			this.stage.align = StageAlign.TOP_LEFT;
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
+			starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
 		}
 		
+		/**
+		 * 获取传统显示列表中的stage
+		 * @return Stage
+		 */
 		public function getStage():Stage {
 			return this.stage;
 		}
 		
+		/**
+		 * 获取starling的根容器
+		 * @return
+		 */
+		public function getStarlingRoot():Sprite {
+			return starlingRoot;
+		}
+		
+		/**
+		 * 获取单例
+		 * @return UIManager
+		 */
 		public static function getInstance():UIManager {
 			return instance ||= new UIManager(new Singleton());
 		}
@@ -57,4 +100,7 @@ package org.libra.ui.flash.managers {
 
 }
 
+/**
+ * @private
+ */
 class Singleton{}

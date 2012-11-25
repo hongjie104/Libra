@@ -6,6 +6,7 @@ package org.libra.ui.flash.managers {
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	import org.libra.ui.flash.interfaces.IComponent;
+	import org.libra.ui.managers.UIManager;
 	/**
 	 * <p>
 	 * Description
@@ -59,23 +60,23 @@ package org.libra.ui.flash.managers {
 		
 		/**
 		 * 设置组件的提示组件
-		 * @param	toolTipEnabled 组件
+		 * @param	toolTipTarget 组件
 		 * @param	toolTip 提示组件，若为null，则删除组件的提示组件
 		 */
-		public function setToolTip(toolTipEnabled:IComponent, toolTip:IComponent):void { 
+		public function setToolTip(toolTipTarget:IComponent, toolTip:IComponent):void { 
 			if (toolTip) {
-				if (!tiggerToolTipMap[toolTipEnabled]) {
-					toolTipEnabled.addEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler, false, 0, true);
-					toolTipEnabled.addEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler, false, 0, true);
-					toolTipEnabled.addEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler, false, 0, true);
+				if (!tiggerToolTipMap[toolTipTarget]) {
+					toolTipTarget.addEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler, false, 0, true);
+					toolTipTarget.addEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler, false, 0, true);
+					toolTipTarget.addEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler, false, 0, true);
 				}
-				tiggerToolTipMap[toolTipEnabled] = toolTip;
+				tiggerToolTipMap[toolTipTarget] = toolTip;
 			}else {
-				if (tiggerToolTipMap[toolTipEnabled]) {
-					toolTipEnabled.removeEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler);
-					toolTipEnabled.removeEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler);
-					toolTipEnabled.removeEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler);
-					tiggerToolTipMap[toolTipEnabled] = null;
+				if (tiggerToolTipMap[toolTipTarget]) {
+					toolTipTarget.removeEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler);
+					toolTipTarget.removeEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler);
+					toolTipTarget.removeEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler);
+					tiggerToolTipMap[toolTipTarget] = null;
 				}
 			}
 		}
@@ -93,21 +94,12 @@ package org.libra.ui.flash.managers {
 		-------------------------------------------------------------------------------------------*/
 		
 		/**
-		 * 统计鼠标进入组件的时间结束事件
-		 * 显示对应的提示框
-		 * @param	e
-		 */
-		private function onTimerCompleted(e:TimerEvent):void {
-			this.showCustomToolTip();
-		}
-		
-		/**
 		 * 显示提示框
 		 */
 		private function showCustomToolTip():void {
-			UIManager.getInstance().stage.addChild(currentToolTip as DisplayObject);
+			UIManager.getInstance().getStage().addChild(currentToolTip as DisplayObject);
 			onMouseMove(null);
-			UIManager.getInstance().stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			UIManager.getInstance().getStage().addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			
 			/*
 			//让ToolTip出现在物品的下方，且居中显示
@@ -126,7 +118,7 @@ package org.libra.ui.flash.managers {
 		 * 移除提示框
 		 */
 		private function hideCustomToolTip():void {
-			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			UIManager.getInstance().getStage().removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			if (!this.timer.running) {
 				if(currentToolTip.parent)
 					currentToolTip.parent.removeChild(currentToolTip as DisplayObject);
@@ -138,6 +130,16 @@ package org.libra.ui.flash.managers {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
+		
+		/**
+		 * 统计鼠标进入组件的时间结束事件
+		 * 显示对应的提示框
+		 * @param	e
+		 */
+		private function onTimerCompleted(e:TimerEvent):void {
+			this.showCustomToolTip();
+		}
+		
 		/**
 		 * 鼠标移出组件后，移除提示框
 		 * @param	e
@@ -175,7 +177,7 @@ package org.libra.ui.flash.managers {
 		}
 		
 		private function onMouseMove(e:MouseEvent):void {
-			const stage:Stage = UIManager.getInstance().stage;
+			const stage:Stage = UIManager.getInstance().getStage();
 			currentToolTip.x = stage.mouseX + 10;
 			currentToolTip.y = stage.mouseY;
 			if (currentToolTip.x + currentToolTip.width > stage.stageWidth - 10) {
@@ -188,4 +190,4 @@ package org.libra.ui.flash.managers {
 	}
 
 }
-class Singleton{}
+final class Singleton{}

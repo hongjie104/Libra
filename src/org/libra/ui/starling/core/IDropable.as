@@ -1,4 +1,4 @@
-package org.libra.ui.flash.interfaces {
+package org.libra.ui.starling.core {
 	
 	/**
 	 * <p>
@@ -8,7 +8,7 @@ package org.libra.ui.flash.interfaces {
 	 * @class IDropable
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 09/02/2012
+	 * @date 11/04/2012
 	 * @version 1.0
 	 * @see
 	 */

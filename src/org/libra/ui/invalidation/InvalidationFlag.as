@@ -1,7 +1,7 @@
 package org.libra.ui.invalidation {
 	/**
 	 * <p>
-	 * Description
+	 * UI组件的渲染类别
 	 * </p>
 	 *
 	 * @class InvalidationFlag
@@ -13,30 +13,48 @@ package org.libra.ui.invalidation {
 	 */
 	public final class InvalidationFlag {
 		
+		/**
+		 * 所有
+		 */
 		public static const ALL:int = -1;
 		
+		/**
+		 * 大小
+		 */
 		public static const SIZE:int = 0;
 		
+		/**
+		 * 风格样式
+		 */
 		public static const STYLE:int = 1;
 		
+		/**
+		 * 状态
+		 */
 		public static const STATE:int = 2;
 		
+		/**
+		 * 数据
+		 */
 		public static const DATA:int = 3;
 		
+		/**
+		 * 文本
+		 */
 		public static const TEXT:int = 4;
 		
-		//private var size:Boolean;
-		//
-		//private var style:Boolean;
-		//
-		//private var state:Boolean;
-		//
-		//private var data:Boolean;
-		//
-		//private var text:Boolean;
-		
+		/**
+		 * 以bool值记录当前需要渲染的类别，
+		 * 当完成所有渲染后，在reset方法中被重置
+		 * @private
+		 * @default [false, false, false, false, false]
+		 */
 		private var invalidationList:Array;
 		
+		/**
+		 * 构造函数
+		 * @private
+		 */
 		public function InvalidationFlag() {
 			invalidationList = [false, false, false, false, false];
 		}
@@ -45,6 +63,10 @@ package org.libra.ui.invalidation {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * 设置需要渲染的类别
+		 * @param	val
+		 */
 		public function setInvalid(val:int):void {
 			if(val > -1)
 				this.invalidationList[val] = true;
@@ -54,51 +76,18 @@ package org.libra.ui.invalidation {
 			}
 		}
 		
-		public function isSizeInvalid():Boolean {
-			//return this.size;
-			return this.invalidationList[SIZE];
+		/**
+		 * 判断当前需要渲染的类别
+		 * @param	val 
+		 * @return 布尔值
+		 */
+		public function isInvalid(val:int):Boolean {
+			return this.invalidationList[val];
 		}
 		
-		//public function setSizeInvalid(val:Boolean):void {
-			//this.size = val;
-		//}
-		
-		public function isStyleInvalid():Boolean {
-			//return this.style;
-			return this.invalidationList[STYLE];
-		}
-		
-		//public function setStyleInvalid(val:Boolean):void {
-			//this.style = val;
-		//}
-		
-		public function isStateInvalid():Boolean {
-			//return this.state;
-			return this.invalidationList[STATE];
-		}
-		
-		//public function setStateInvalid(val:Boolean):void {
-			//this.state = val;
-		//}
-		
-		public function isDataInvalid():Boolean {
-			//return this.data;
-			return this.invalidationList[DATA];
-		}
-		
-		//public function setDataInvalid(val:Boolean):void {
-			//this.data = val;
-		//}
-		
-		public function isTextInvalid():Boolean {
-			//return this.text;
-			return this.invalidationList[TEXT];
-		}
-		
-		//public function setTextInvalid(val:Boolean):void {
-			//this.text = val;
-		//}
-		
+		/**
+		 * 重置，将所有渲染类别设置为不需要渲染
+		 */
 		public function reset():void {
 			for (var i:* in this.invalidationList)
 				this.invalidationList[i] = false;

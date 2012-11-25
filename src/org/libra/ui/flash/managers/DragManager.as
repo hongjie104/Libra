@@ -8,6 +8,7 @@ package org.libra.ui.flash.managers {
 	import flash.geom.Point;
 	import org.libra.ui.flash.interfaces.IDragable;
 	import org.libra.ui.flash.interfaces.IDropable;
+	import org.libra.ui.managers.UIManager;
 	/**
 	 * <p>
 	 * 拖放管理类
@@ -65,7 +66,7 @@ package org.libra.ui.flash.managers {
 			//获取组件拖动时的bitmapdata
 			dragBitmap.bitmapData = dragComponent.getDragBmd();
 			
-			const stage:Stage = UIManager.getInstance().stage;
+			const stage:Stage = UIManager.getInstance().getStage();
 			startPoint = dragComponent.parent.localToGlobal(new Point(dragComponent.x, dragComponent.y));
 			dragSprite.x = startPoint.x;
 			dragSprite.y = startPoint.y;
@@ -86,7 +87,7 @@ package org.libra.ui.flash.managers {
 		 * @return 容器
 		 */
 		private static function getAcceptContainer(pos:Point):IDropable {
-			const targets:Array = UIManager.getInstance().stage.getObjectsUnderPoint(pos);
+			const targets:Array = UIManager.getInstance().getStage().getObjectsUnderPoint(pos);
 			var l:int = targets.length;
 			var con:IDropable;
 			while (--l > -1) {
@@ -94,7 +95,7 @@ package org.libra.ui.flash.managers {
 					con = targets[l] as IDropable;
 					//先判断一下，鼠标点是否点击到了容器上。
 					//if (con.isMouseHitMe(pos)) {
-						if (con.isDropAcceptEnabled(dragComponent)) {
+						if (con.isDropAccept(dragComponent)) {
 							return con;
 						}
 					//}
@@ -107,8 +108,8 @@ package org.libra.ui.flash.managers {
 		 * 停止拖动，播放动画
 		 */
 		public static function stopDrag():void {
-			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
-			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+			UIManager.getInstance().getStage().removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
+			UIManager.getInstance().getStage().removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 			dragSprite.stopDrag();
 			playMotion();
 		}
@@ -122,7 +123,7 @@ package org.libra.ui.flash.managers {
 				//dragInitiator.dragSuccess();
 				//如果成功拖放了，就直接移除拖放图案的托
 				dragSprite.parent.removeChild(dragSprite);
-				dropComponent.addDragEnabled(dragComponent);
+				dropComponent.addDragComponent(dragComponent);
 			}else {
 				//拖拽失败
 				//dragInitiator.dragFail();

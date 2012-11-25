@@ -1,42 +1,33 @@
-package org.libra.ui.starling.managers {
-	import starling.display.Sprite;
+package org.libra.ui.starling.theme {
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class UIManager
+	 * @class ButtonTheme
 	 * @author Eddie
 	 * @qq 32968210
-	 * @date 10/27/2012
+	 * @date 11/03/2012
 	 * @version 1.0
 	 * @see
 	 */
-	public final class UIManager {
+	public class ButtonTheme {
 		
-		private static var instance:UIManager;
+		public var normal:String;
 		
-		private var root:Sprite;
+		public var over:String;
 		
-		public function UIManager(singleton:Singleton) {
-			
+		public var down:String;
+		
+		public function ButtonTheme(name:String) {
+			normal = name + '_normal';
+			over = name + '_over';
+			down = name + '_down';
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		public function init(root:Sprite):void {
-			this.root = root;
-		}
-		
-		public function getRoot():Sprite {
-			return this.root;
-		}
-		
-		public static function getInstance():UIManager {
-			return instance ||= new UIManager(new Singleton());
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -49,4 +40,3 @@ package org.libra.ui.starling.managers {
 	}
 
 }
-class Singleton{}

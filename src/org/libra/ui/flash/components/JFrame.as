@@ -6,8 +6,8 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.flash.interfaces.IContainer;
-	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.GraphicsUtil;

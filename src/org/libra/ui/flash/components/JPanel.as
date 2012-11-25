@@ -6,6 +6,7 @@ package org.libra.ui.flash.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
+	import org.libra.ui.flash.interfaces.IPanel;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
@@ -22,7 +23,7 @@ package org.libra.ui.flash.components {
 	 * @version 1.0
 	 * @see
 	 */
-	public class JPanel extends Container {
+	public class JPanel extends Container implements IPanel {
 		
 		protected var owner:IContainer;
 		
@@ -74,6 +75,10 @@ package org.libra.ui.flash.components {
 		
 		public function showSwitch():void {
 			showing ? close() : show();
+		}
+		
+		public function isShowing():Boolean {
+			return this.showing;
 		}
 		
 		public function setAutoUp(bool:Boolean):void {

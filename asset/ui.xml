@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:df82c8eb0298a966397e20d7a397575f$ -->
+<TextureAtlas imagePath="ui3.png">
+    <SubTexture name="btnClose_down" x="25" y="74" width="21" height="19"/>
+    <SubTexture name="btnClose_normal" x="2" y="74" width="21" height="19"/>
+    <SubTexture name="btnClose_over" x="103" y="33" width="21" height="19"/>
+    <SubTexture name="btn_down" x="56" y="52" width="43" height="26"/>
+    <SubTexture name="btn_normal" x="2" y="46" width="43" height="26"/>
+    <SubTexture name="btn_over" x="58" y="24" width="43" height="26"/>
+    <SubTexture name="checkBtn_down" x="2" y="24" width="54" height="20"/>
+    <SubTexture name="checkBtn_normal" x="58" y="2" width="54" height="20"/>
+    <SubTexture name="checkBtn_over" x="2" y="2" width="54" height="20"/>
+    <SubTexture name="frameBg" x="101" y="54" width="25" height="85"/>
+    <SubTexture name="hScrollBtnBg" x="47" y="53" width="5" height="15"/>
+    <SubTexture name="hScrollLeftBtn_down" x="38" y="148" width="16" height="16"/>
+    <SubTexture name="hScrollLeftBtn_normal" x="56" y="134" width="16" height="16"/>
+    <SubTexture name="hScrollLeftBtn_over" x="20" y="131" width="16" height="16"/>
+    <SubTexture name="hScrollRightBtn_down" x="2" y="131" width="16" height="16"/>
+    <SubTexture name="hScrollRightBtn_normal" x="74" y="116" width="16" height="16"/>
+    <SubTexture name="hScrollRightBtn_over" x="38" y="130" width="16" height="16"/>
+    <SubTexture name="hScrollThumb" x="103" y="24" width="5" height="7"/>
+    <SubTexture name="panelBg" x="48" y="80" width="17" height="12"/>
+    <SubTexture name="sliderBtn_down" x="56" y="116" width="16" height="16"/>
+    <SubTexture name="sliderBtn_normal" x="20" y="113" width="16" height="16"/>
+    <SubTexture name="sliderBtn_over" x="2" y="113" width="16" height="16"/>
+    <SubTexture name="toolTipBg" x="114" y="2" width="11" height="29"/>
+    <SubTexture name="vScrollBtnBg" x="84" y="98" width="15" height="5"/>
+    <SubTexture name="vScrollDownBtn_down" x="38" y="112" width="16" height="16"/>
+    <SubTexture name="vScrollDownBtn_normal" x="20" y="95" width="16" height="16"/>
+    <SubTexture name="vScrollDownBtn_over" x="2" y="95" width="16" height="16"/>
+    <SubTexture name="vScrollThumb" x="47" y="46" width="7" height="5"/>
+    <SubTexture name="vScrollUpBtn_down" x="66" y="98" width="16" height="16"/>
+    <SubTexture name="vScrollUpBtn_normal" x="48" y="94" width="16" height="16"/>
+    <SubTexture name="vScrollUpBtn_over" x="67" y="80" width="16" height="16"/>
+</TextureAtlas>

@@ -2,7 +2,7 @@ package org.libra.tick {
 	
 	/**
 	 * <p>
-	 * Description
+	 * 需要每隔一段时间被调用某方法的对象
 	 * </p>
 	 *
 	 * @class ITimerable
@@ -10,10 +10,12 @@ package org.libra.tick {
 	 * @qq 32968210
 	 * @date 09/06/2012
 	 * @version 1.0
-	 * @see
 	 */
 	public interface ITimerable {
 		
+		/**
+		 * 每秒调用该方法
+		 */
 		function doAction():void;
 	}
 	
