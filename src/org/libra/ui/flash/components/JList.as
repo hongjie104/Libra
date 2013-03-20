@@ -128,7 +128,7 @@ package org.libra.ui.flash.components {
 		override protected function refreshData():void {
 			var contentHeight:int = dataList.length * itemHeight;
 			scrollBar.setThumbPercent(actualHeight / contentHeight); 
-			var pageSize:Number = MathUtil.floor(actualHeight / itemHeight);
+			const pageSize:Number = MathUtil.floor(actualHeight / itemHeight);
             scrollBar.setMax(MathUtil.max(0, dataList.length - pageSize));
 			scrollBar.setPageSize(pageSize);
 			scrollBar.height = actualHeight;

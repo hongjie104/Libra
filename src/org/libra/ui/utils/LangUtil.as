@@ -34,9 +34,9 @@ package org.libra.ui.utils {
 		 */
 		public function initLang(xml:XML):void {
  			var xmlList:XMLList = xml.string;
-			for (var i:* in xmlList) {
+			var l:int = xmlList.length();
+			for (var i:int = 0; i < l; i += 1) 
 				langMap.put(xmlList[i].@name.toString(), xmlList[i].toString());
-			}
 			inited = true;
 		}
 		

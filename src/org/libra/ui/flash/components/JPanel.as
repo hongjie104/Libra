@@ -66,11 +66,15 @@ package org.libra.ui.flash.components {
 							onComplete:function():void { closeTweening = false; close(false); } } );
 					}
 				}else {
-					this.owner.remove(this);
-					alpha = 1.0;
-					showing = false;
+					removeFromParent();
 				}
 			}
+		}
+		
+		override public function removeFromParent(destroy:Boolean = false):void {
+			alpha = 1.0;
+			showing = false;
+			super.removeFromParent(destroy);
 		}
 		
 		public function showSwitch():void {

@@ -62,6 +62,13 @@ package org.libra.ui.flash.core {
 		
 		protected var toolTipText:String;
 		
+		/**
+		 * 渲染队列的引用
+		 * 渲染队列是单例
+		 * @private
+		 */
+		protected var validationQueue:ValidationQueue;
+		
 		private var invalidationFlag:InvalidationFlag;
 		
 		public function Component(x:int = 0, y:int = 0) { 
@@ -211,7 +218,14 @@ package org.libra.ui.flash.core {
 		}
 		
 		public function addChildAll(...rest):void {
-			for (var i:* in rest) this.addChild(rest[i]);
+			var l:int = rest.length;
+			for (var i:int = 0; i < l; i += 1)
+				this.addChild(rest[i]);
+		}
+		
+		public function validate():void {
+			draw();
+			this.invalidationFlag.reset();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -240,7 +254,7 @@ package org.libra.ui.flash.core {
 		protected function invalidate(flag:int = -1):void {
 			this.invalidationFlag.setInvalid(flag);
 			if(inited)
-				addEventListener(Event.ENTER_FRAME, onInvalidate);
+				validationQueue.addControl(this, false);
 		}
 		
 		/**
@@ -250,6 +264,7 @@ package org.libra.ui.flash.core {
 		 */
 		protected function init():void {
 			inited = true;
+			validationQueue = ValidationQueue.getInstance();
 			this.invalidate();
 		}
 		
@@ -294,12 +309,6 @@ package org.libra.ui.flash.core {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		
-		private function onInvalidate(e:Event):void {
-			removeEventListener(Event.ENTER_FRAME, onInvalidate);
-			draw();
-			this.invalidationFlag.reset();
-		}
 		
 		/**
 		 * 添加到舞台事件

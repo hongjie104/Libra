@@ -7,7 +7,7 @@ package org.libra.ui.flash.core {
 	
 	/**
 	 * <p>
-	 * Description
+	 * 文本的控件的父类
 	 * </p>
 	 *
 	 * @class BaseText

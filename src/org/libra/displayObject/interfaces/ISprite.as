@@ -17,6 +17,8 @@ package org.libra.displayObject.interfaces {
 		function removeFromParent(destroy:Boolean = false):void;
 		
 		function destroy():void;
+		
+		function dispose():void;
 	}
 	
 }

@@ -32,11 +32,11 @@ package org.libra.ui.flash.interfaces {
 		
 		function clear(dispose:Boolean = false):void;
 		
-		function getNumComponent():int;
-		
 		function bringToTop(child:DisplayObject):void;
 		
 		function bringToBottom(child:DisplayObject):void;
+		
+		function get numComponent():int;
 	}
 	
 }

@@ -64,6 +64,7 @@ package org.libra.ui.flash.managers {
 			DragManager.dragComponent = dragComponent;
 			
 			//获取组件拖动时的bitmapdata
+			if (dragBitmap.bitmapData) dragBitmap.bitmapData.dispose();
 			dragBitmap.bitmapData = dragComponent.getDragBmd();
 			
 			const stage:Stage = UIManager.getInstance().getStage();
