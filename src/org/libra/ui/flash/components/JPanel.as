@@ -1,6 +1,7 @@
 package org.libra.ui.flash.components {
 	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
@@ -10,6 +11,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
+	import starling.display.DisplayObject;
 	
 	/**
 	 * <p>
@@ -122,11 +124,16 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function initBackground():void {
-			if (this.background) {
-				if (this.background is Bitmap) (background as Bitmap).bitmapData.dispose();
+			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData('PanelBg'), 
+				actualWidth, actualHeight, new Rectangle(3, 3, 11, 6));
+			if (this.background && this.background is Bitmap) {
+				const bitmap:Bitmap = background as Bitmap;
+				if (bitmap.bitmapData) bitmap.bitmapData.dispose();
+				bitmap.bitmapData = bmd;
+			}else {
+				background = new Bitmap(bmd);
 			}
-			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('PanelBg'), 
-				actualWidth, actualHeight, new Rectangle(3, 3, 11, 6))));
+			this.setBackground(background);
 		}
 		
 		override protected function onAddToStage(e:Event):void {

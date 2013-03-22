@@ -97,9 +97,9 @@ package org.libra.ui.flash.managers {
 		 * 显示提示框
 		 */
 		private function showCustomToolTip():void {
-			UIManager.getInstance().getStage().addChild(currentToolTip as DisplayObject);
+			UIManager.getInstance().stage.addChild(currentToolTip as DisplayObject);
 			onMouseMove(null);
-			UIManager.getInstance().getStage().addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			UIManager.getInstance().stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			
 			/*
 			//让ToolTip出现在物品的下方，且居中显示
@@ -118,7 +118,7 @@ package org.libra.ui.flash.managers {
 		 * 移除提示框
 		 */
 		private function hideCustomToolTip():void {
-			UIManager.getInstance().getStage().removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			if (!this.timer.running) {
 				if(currentToolTip.parent)
 					currentToolTip.parent.removeChild(currentToolTip as DisplayObject);
@@ -177,7 +177,7 @@ package org.libra.ui.flash.managers {
 		}
 		
 		private function onMouseMove(e:MouseEvent):void {
-			const stage:Stage = UIManager.getInstance().getStage();
+			const stage:Stage = UIManager.getInstance().stage;
 			currentToolTip.x = stage.mouseX + 10;
 			currentToolTip.y = stage.mouseY;
 			if (currentToolTip.x + currentToolTip.width > stage.stageWidth - 10) {

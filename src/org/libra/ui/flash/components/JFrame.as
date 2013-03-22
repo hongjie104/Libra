@@ -1,5 +1,6 @@
 package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -56,7 +57,7 @@ package org.libra.ui.flash.components {
 			if (!this.dragBounds) this.dragBounds = new Rectangle();
 			dragBounds.x = 40 - w;
 			dragBounds.y = 0;
-			const stage:Stage = UIManager.getInstance().getStage();
+			const stage:Stage = UIManager.getInstance().stage;
 			dragBounds.width = stage.stageWidth + w - 80;
 			dragBounds.height = stage.stageHeight - barHeight;
 			
@@ -129,20 +130,16 @@ package org.libra.ui.flash.components {
 		}
 		
 		override protected function initBackground():void {
-			this.setBackground(new Bitmap(BitmapDataUtil.getScaledBitmapData(ResManager.getInstance().getBitmapData('frameBg'), 
-				actualWidth, actualHeight, new Rectangle(12, 60, 1, 1))));
-		}
-		
-		override protected function onAddToStage(e:Event):void {
-			super.onAddToStage(e);
-			if (dragBarEnabled) addBarDragListeners();
-			this.closeBtn.addEventListener(MouseEvent.CLICK, onCloseBtnClikced);
-		}
-		
-		override protected function onRemoveFromStage(e:Event):void {
-			super.onRemoveFromStage(e);
-			if (dragBarEnabled) removeBarDragListeners();
-			this.closeBtn.removeEventListener(MouseEvent.CLICK, onCloseBtnClikced);
+			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData('frameBg'), 
+				actualWidth, actualHeight, new Rectangle(12, 60, 1, 1));
+			if (this.background && this.background is Bitmap) {
+				const bitmap:Bitmap = background as Bitmap;
+				if (bitmap.bitmapData) bitmap.bitmapData.dispose();
+				bitmap.bitmapData = bmd;
+			}else {
+				background = new Bitmap(bmd);
+			}
+			setBackground(background);
 		}
 		
 		private function addBarDragListeners():void {
@@ -165,6 +162,19 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
+		
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
+			if (dragBarEnabled) addBarDragListeners();
+			this.closeBtn.addEventListener(MouseEvent.CLICK, onCloseBtnClikced);
+		}
+		
+		override protected function onRemoveFromStage(e:Event):void {
+			super.onRemoveFromStage(e);
+			if (dragBarEnabled) removeBarDragListeners();
+			this.closeBtn.removeEventListener(MouseEvent.CLICK, onCloseBtnClikced);
+		}
+		
 		private function onBarMouseUp(e:MouseEvent):void {
 			this.stopDrag();
 		}

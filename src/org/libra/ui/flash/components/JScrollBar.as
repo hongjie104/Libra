@@ -170,22 +170,6 @@ package org.libra.ui.flash.components {
 			this.addChild(downBtn);
 		}
 		
-		override protected function onAddToStage(e:Event):void {
-			super.onAddToStage(e);
-			this.scrollSlider.addEventListener(Event.CHANGE, onChange);
-			this.upBtn.addEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
-			this.downBtn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
-			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-		}
-		
-		override protected function onRemoveFromStage(e:Event):void {
-			super.onRemoveFromStage(e);
-			this.scrollSlider.removeEventListener(Event.CHANGE, onChange);
-			this.upBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
-			this.downBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
-			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-		}
-		
 		override protected function resize():void {
 			if(orientation == Constants.VERTICAL) {
 				scrollSlider.x = 0;
@@ -206,11 +190,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		override protected function refreshState():void {
-			 if(autoHide) {
-                visible = scrollSlider.getThumbPercent() < 1.0;
-            } else {
-                visible = true;
-            }
+			visible = autoHide ? scrollSlider.getThumbPercent() < 1.0 : true;
 		}
 		
 		protected function goUp():void {
@@ -226,6 +206,22 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
+		
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
+			this.scrollSlider.addEventListener(Event.CHANGE, onChange);
+			this.upBtn.addEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
+			this.downBtn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
+			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		}
+		
+		override protected function onRemoveFromStage(e:Event):void {
+			super.onRemoveFromStage(e);
+			this.scrollSlider.removeEventListener(Event.CHANGE, onChange);
+			this.upBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
+			this.downBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
+			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		}
 		
 		protected function onUpBtnDown(event:MouseEvent):void {
 			goUp();

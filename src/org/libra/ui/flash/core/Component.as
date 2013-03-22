@@ -125,11 +125,16 @@ package org.libra.ui.flash.core {
 			}
         }
 		
-		public function setLocation(x:int, y:int):void { 
+		public function setLocation(x:int = 0, y:int = 0):void { 
 			this.x = x;
 			this.y = y;
 		}
 		
+		/**
+		 * 设置控件的大小
+		 * @param	w
+		 * @param	h
+		 */
 		public function setSize(w:int, h:int):void {
 			if (actualWidth != w || actualHeight != h) {
 				this.actualWidth = w;
@@ -168,7 +173,7 @@ package org.libra.ui.flash.core {
 		 * @param	bg
 		 */
 		public function setBackground(bg:DisplayObject):void {
-			if (this.background) this.removeChild(this.background);
+			if (this.background && background.parent == this) this.removeChild(this.background);
 			this.background = bg;
 			super.addChildAt(bg, 0);
 		}

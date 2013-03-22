@@ -4,6 +4,7 @@ package org.libra.ui.flash.components {
 	import flash.text.TextFieldType;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.BaseText;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.ui.style.Style;
 	import org.libra.ui.text.JFont;
 	
@@ -23,8 +24,11 @@ package org.libra.ui.flash.components {
 		
 		private var scrollBar:JScrollBar;
 		
+		private var scrollBarAutoHide:Boolean;
+		
 		public function JTextArea(x:int = 0, y:int = 0, text:String = '') { 
 			super(x, y, text);
+			scrollBarAutoHide = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -54,7 +58,10 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function setAutoHideScrollBar(value:Boolean):void {
-            scrollBar.setAutoHide(value);
+		   if (scrollBarAutoHide != value) {
+			   this.scrollBarAutoHide = value;
+			   invalidate(InvalidationFlag.STATE);
+		   }
         }
 		
 		/*-----------------------------------------------------------------------------------------
@@ -65,7 +72,7 @@ package org.libra.ui.flash.components {
 			super.init();
 			
 			scrollBar = new JScrollBar(Constants.VERTICAL);
-			scrollBar.setAutoHide(true);
+			scrollBar.setAutoHide(scrollBarAutoHide);
 			this.addChild(scrollBar);
 		}
 		
@@ -74,6 +81,10 @@ package org.libra.ui.flash.components {
 			scrollBar.x = actualWidth - scrollBar.width;
 			scrollBar.height = actualHeight;
 			updateScrollBar();
+		}
+		
+		override protected function refreshState():void {
+			scrollBar.setAutoHide(this.scrollBarAutoHide);
 		}
 		
 		override protected function onAddToStage(e:Event):void {
