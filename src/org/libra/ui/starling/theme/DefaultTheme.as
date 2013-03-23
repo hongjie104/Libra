@@ -7,7 +7,7 @@ package org.libra.ui.starling.theme {
 	import starling.textures.TextureAtlas;
 	/**
 	 * <p>
-	 * Description
+	 * 默认的主题
 	 * </p>
 	 *
 	 * @class DefaultTheme
