@@ -196,7 +196,8 @@ package org.libra.game.components.animatable {
 			var frame:int = -1;
 			if (isNaN(target)) {
 				var label:String = target;
-				for (var i:* in this.frameList) {
+				var l:int = frameList.length;
+				for (var i:int = 0; i < l; i += 1) { 
 					if (frameList[i].getLabel() == label) {
 						frame = i;
 						break;

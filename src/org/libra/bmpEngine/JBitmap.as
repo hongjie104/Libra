@@ -186,7 +186,8 @@ package org.libra.bmpEngine {
 			var bitmap:JBitmap = new JBitmap();
 			bitmap.setFrameRate(this.frameRate);
 			var frameList:Vector.<BitmapFrame> = new Vector.<BitmapFrame>(this.frameList.length);
-			for (var i:* in this.frameList) frameList[i] = this.frameList[i].clone();
+			var l:int = frameList.length;
+			for (var i:int = 0; i < l; i += 1) frameList[i] = this.frameList[i].clone();
 			bitmap.setFrameList(frameList);
 			if (autoPlay) bitmap.play();
 			return bitmap;
@@ -194,9 +195,9 @@ package org.libra.bmpEngine {
 		
 		override public function destroy():void {
 			this.baseBitmap.bitmapData = null;
-			for (var i:* in this.frameList) {
+			var l:int = frameList.length;
+			for (var i:int = 0; i < l; i += 1)
 				frameList[i].dispose();
-			}
 		}
 		
 		public function setFrameList(frameList:Vector.<BitmapFrame>):void {
@@ -234,7 +235,8 @@ package org.libra.bmpEngine {
 			var frame:int = -1;
 			if (isNaN(target)) {
 				var label:String = target;
-				for (var i:* in this.frameList) {
+				var l:int = frameList.length;
+				for (var i:int = 0; i < l; i += 1) { 
 					if (frameList[i].getLabel() == label) {
 						frame = i;
 						break;

@@ -1,5 +1,4 @@
 package org.libra.ui.starling.theme {
-	import com.google.analytics.debug.Panel;
 	import flash.geom.Rectangle;
 	import org.libra.ui.starling.textures.Scale9Texture;
 	import org.libra.utils.HashMap;

@@ -2,14 +2,14 @@ package  {
 	
 	/**
 	 * ...
-	 * @author Eddie
+	 * @author 鸿杰
 	 */
 	public final class Version {
 		
 		static public const Major:int = 1;
 		static public const Minor:int = 0;
-		static public const Build:int = 919;
-		static public const Revision:int = 197;
+		static public const Build:int = 322;
+		static public const Revision:int = 233;
 		
 	}
 	

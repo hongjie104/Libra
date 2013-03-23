@@ -113,7 +113,7 @@ package org.libra.ui.starling.managers {
 			//当tooltip加入到舞台之后，进行初始化
 			currentToolTip.addEventListener(Event.ADDED_TO_STAGE, onToopTipAddToStage);
 			updateToolTipLocation();
-			UIManager.getInstance().getStarlingRoot().stage.addChild(currentToolTip as DisplayObject);
+			UIManager.getInstance().starlingRoot.stage.addChild(currentToolTip as DisplayObject);
 			touchPointID = tmpTouchPointID;
 		}
 		
@@ -128,7 +128,7 @@ package org.libra.ui.starling.managers {
 		}
 		
 		private function updateToolTipLocation():void {
-			var stage:Stage = UIManager.getInstance().getStarlingRoot().stage;
+			var stage:Stage = UIManager.getInstance().starlingRoot.stage;
 			touch.getLocation(stage, helpPoint);
 			var x:int = helpPoint.x + 6;
 			var y:int = helpPoint.y + 6;

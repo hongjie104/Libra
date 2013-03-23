@@ -64,9 +64,10 @@ package org.libra.ui.flash.managers {
 			DragManager.dragComponent = dragComponent;
 			
 			//获取组件拖动时的bitmapdata
+			if (dragBitmap.bitmapData) dragBitmap.bitmapData.dispose();
 			dragBitmap.bitmapData = dragComponent.getDragBmd();
 			
-			const stage:Stage = UIManager.getInstance().getStage();
+			const stage:Stage = UIManager.getInstance().stage;
 			startPoint = dragComponent.parent.localToGlobal(new Point(dragComponent.x, dragComponent.y));
 			dragSprite.x = startPoint.x;
 			dragSprite.y = startPoint.y;
@@ -87,7 +88,7 @@ package org.libra.ui.flash.managers {
 		 * @return 容器
 		 */
 		private static function getAcceptContainer(pos:Point):IDropable {
-			const targets:Array = UIManager.getInstance().getStage().getObjectsUnderPoint(pos);
+			const targets:Array = UIManager.getInstance().stage.getObjectsUnderPoint(pos);
 			var l:int = targets.length;
 			var con:IDropable;
 			while (--l > -1) {
@@ -108,8 +109,8 @@ package org.libra.ui.flash.managers {
 		 * 停止拖动，播放动画
 		 */
 		public static function stopDrag():void {
-			UIManager.getInstance().getStage().removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
-			UIManager.getInstance().getStage().removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
+			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 			dragSprite.stopDrag();
 			playMotion();
 		}

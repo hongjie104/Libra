@@ -72,12 +72,12 @@ package {
 			//初始化UI
 			ResManager.getInstance().init();
 			UIManager.getInstance().init(this.stage);
-			//testUI();
+			testUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
-			testStarlingUI();
+			//testStarlingUI();
 		}
 		
 		private function testStarlingUI():void {

@@ -21,14 +21,14 @@ package org.libra.ui.flash.core {
 		
 		protected var componentList:Vector.<Component>;
 		
-		protected var numComponent:int;
+		protected var $numComponent:int;
 		
 		private var dropAcceptList:Vector.<IDragable>;
 		
 		public function Container(x:int = 0, y:int = 0) { 
 			super(x, y);
 			componentList = new Vector.<Component>();
-			numComponent = 0;
+			$numComponent = 0;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ package org.libra.ui.flash.core {
 		
 		public function append(child:Component):Component {
 			if (this.componentList.indexOf(child) == -1) {
-				this.componentList[numComponent++] = child;
+				this.componentList[$numComponent++] = child;
 				super.addChild(child);
 				return child;
 			}
@@ -53,7 +53,7 @@ package org.libra.ui.flash.core {
 				this.setChildIndex(child, index);
 				var tmp:Component = this.componentList[index];
 				this.componentList[index] = child;
-				this.componentList[numComponent - 1] = tmp;
+				this.componentList[$numComponent - 1] = tmp;
 				return child;
 			}
 			return null;
@@ -67,7 +67,7 @@ package org.libra.ui.flash.core {
 			var index:int = this.componentList.indexOf(child);
 			if (index == -1) return null;
 			this.componentList.splice(index, 1);
-			numComponent--;
+			$numComponent--;
 			super.removeChild(child);
 			if(destroy)
 				child.destroy();
@@ -88,7 +88,7 @@ package org.libra.ui.flash.core {
 				this.removeChild(componentList[i]);
 			}
 			componentList.length = 0;
-			this.numComponent = 0;
+			this.$numComponent = 0;
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject {
@@ -112,14 +112,10 @@ package org.libra.ui.flash.core {
 				var index:int = this.componentList.indexOf(child);
 				if (index != -1) {
 					this.componentList.splice(index, 1);
-					numComponent--;
+					$numComponent--;
 				}
 			}
 			return child;
-		}
-		
-		public function getNumComponent():int {
-			return this.numComponent;
 		}
 		
 		/**
@@ -160,7 +156,7 @@ package org.libra.ui.flash.core {
 				this.componentList[i].destroy();
 			}
 			this.componentList = null;
-			numComponent = 0;
+			$numComponent = 0;
 		}
 		
 		/* INTERFACE org.libra.ui.interfaces.IDropable */
@@ -185,6 +181,10 @@ package org.libra.ui.flash.core {
 		public function addDragComponent(dragEnabled:IDragable):void {
 			dragEnabled.removeFromParent();
 			this.append(dragEnabled as Component);
+		}
+		
+		public function get numComponent():int {
+			return this.$numComponent;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.utils.DepthUtil;
 	import org.libra.utils.MathUtil;
 	
 	/**
@@ -76,7 +77,7 @@ package org.libra.ui.flash.components {
 		
 		public function setSelectedIndex(value:int):void {
 			this.selectedIndex = value >= 0 && value < itemList.length ? value : -1;
-			invalidate(InvalidationFlag.DATA);
+			//invalidate(InvalidationFlag.DATA);
 			dispatchEvent(new Event(Event.SELECT));
 		}
 		
@@ -126,9 +127,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		override protected function refreshData():void {
-			var contentHeight:int = dataList.length * itemHeight;
-			scrollBar.setThumbPercent(actualHeight / contentHeight); 
-			var pageSize:Number = MathUtil.floor(actualHeight / itemHeight);
+			scrollBar.setThumbPercent(actualHeight / (dataList.length * itemHeight)); 
+			const pageSize:Number = MathUtil.floor(actualHeight / itemHeight);
             scrollBar.setMax(MathUtil.max(0, dataList.length - pageSize));
 			scrollBar.setPageSize(pageSize);
 			scrollBar.height = actualHeight;
@@ -143,7 +143,7 @@ package org.libra.ui.flash.components {
 			var itemPool:Vector.<JListItem> = this.itemList.slice();
 			itemList.length = 0;
 			var item:JListItem;
-            var numItems:int = Math.ceil(actualHeight / itemHeight);
+            const numItems:int = Math.ceil(actualHeight / itemHeight);
 			for(var i:int = 0; i < numItems; i++) {
 				item = itemPool.length ? itemPool.shift() : new JListItem();
 				item.setLocation(0, i * itemHeight);
@@ -152,6 +152,7 @@ package org.libra.ui.flash.components {
 				item.addEventListener(MouseEvent.CLICK, onSelect);
 				this.addChild(item);
 			}
+			DepthUtil.bringToTop(scrollBar);
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -173,10 +174,10 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function updateItems():void {
-            var offset:int = this.scrollBar.getValue();
-            var numItems:int = this.itemList.length;
+            const offset:int = this.scrollBar.getValue();
+            const numItems:int = this.itemList.length;
+			const numData:int = this.dataList.length;
 			var item:JListItem;
-			var numData:int = this.dataList.length;
             for(var i:int = 0; i < numItems; i++) {
                 item = itemList[i];
 				item.setSize(actualWidth, itemHeight);
@@ -192,7 +193,7 @@ package org.libra.ui.flash.components {
 			if(this.selectedIndex == -1) {
 				this.scrollBar.setValue(0);
 			} else {
-				var numItems:int = itemList.length;
+				const numItems:int = itemList.length;
 				if (scrollBar.getValue() + numItems < selectedIndex) { 
                     scrollBar.setValue(selectedIndex - numItems + 1);
 				}

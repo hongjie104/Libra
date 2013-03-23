@@ -7,7 +7,7 @@ package org.libra.ui.flash.core {
 	
 	/**
 	 * <p>
-	 * Description
+	 * 文本的控件的父类
 	 * </p>
 	 *
 	 * @class BaseText
@@ -33,6 +33,9 @@ package org.libra.ui.flash.core {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function setSize(w:int, h:int):void {
 			super.setSize(w, h);
 			this.textField.width = w - textField.x;

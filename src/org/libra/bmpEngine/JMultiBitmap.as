@@ -118,7 +118,8 @@ package org.libra.bmpEngine {
 			if (needRender) {
 				this.baseBitmap.bitmapData.fillRect(baseBitmap.bitmapData.rect, 0x00000000);
 				var layer:RenderLayer;
-				for (var i:* in layerList) {
+				var l:int = layerList.length;
+				for (var i:int = 0; i < l; i += 1) { 
 					layer = layerList[i];
 					layer.render();
 					if (layer.visible) {
@@ -134,9 +135,9 @@ package org.libra.bmpEngine {
 		
 		override public function dispose():void {
 			this.baseBitmap.bitmapData.dispose();
-			for (var i:* in this.layerList) {
+			var l:int = layerList.length;
+			while(--l > -1)
 				layerList[i].dispose();
-			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------

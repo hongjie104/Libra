@@ -27,13 +27,13 @@ package org.libra.ui.managers {
 		 * 传统显示列表的舞台
 		 * @private
 		 */
-		private var stage:Stage;
+		private var $stage:Stage;
 		
 		/**
 		 * starling的根容器
 		 * @private
 		 */
-		private var starlingRoot:Sprite;
+		private var $starlingRoot:Sprite;
 		
 		/**
 		 * 在舞台上的所有面板
@@ -60,24 +60,24 @@ package org.libra.ui.managers {
 		 * @param	stage 传统显示列表中的stage
 		 */
 		public function init(stage:Stage):void {
-			this.stage = stage;
-			starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
+			this.$stage = stage;
+			$starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
 		}
 		
 		/**
 		 * 获取传统显示列表中的stage
 		 * @return Stage
 		 */
-		public function getStage():Stage {
-			return this.stage;
+		public function get stage():Stage {
+			return this.$stage;
 		}
 		
 		/**
 		 * 获取starling的根容器
 		 * @return
 		 */
-		public function getStarlingRoot():Sprite {
-			return starlingRoot;
+		public function get starlingRoot():Sprite {
+			return $starlingRoot;
 		}
 		
 		/**

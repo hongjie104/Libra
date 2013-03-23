@@ -62,10 +62,10 @@ package org.libra.ui.flash.components {
 			if (back.bitmapData) back.bitmapData.dispose();
 			if (orientation == Constants.HORIZONTAL) {
 				var source:BitmapData = ResManager.getInstance().getBitmapData('hScrollBtnBg');
-				back.bitmapData = BitmapDataUtil.getScaledBitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 1, 11));
+				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 1, 11));
 			}else {
 				source = ResManager.getInstance().getBitmapData('vScrollBtnBg');
-				back.bitmapData = BitmapDataUtil.getScaledBitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 11, 1));
+				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 11, 1));
 			}
 			fore.x = (actualWidth - fore.width) >> 1;
 			fore.y = (actualHeight - fore.height) >> 1;
