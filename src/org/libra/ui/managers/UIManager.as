@@ -103,4 +103,4 @@ package org.libra.ui.managers {
 /**
  * @private
  */
-class Singleton{}
+final class Singleton{}

@@ -5,7 +5,7 @@ package org.libra.displayObject {
 	import org.libra.displayObject.interfaces.ISprite;
 	/**
 	 * <p>
-	 * Description
+	 * 给Sprite稍微加上一些常用的方法
 	 * </p>
 	 *
 	 * @class JSprite
@@ -19,9 +19,13 @@ package org.libra.displayObject {
 		
 		/**
 		 * 记录所有事件侦听器
+		 * @private
 		 */
 		private var eventListeners:Dictionary;
 		
+		/**
+		 * 构造函数
+		 */
 		public function JSprite() {
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
@@ -30,10 +34,16 @@ package org.libra.displayObject {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * 清除容器里所有的子对象
+		 */
 		public function clearChildren():void {
 			while (this.numChildren > 0) this.removeChildAt(0);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void { 
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 			if(!eventListeners)
@@ -47,6 +57,9 @@ package org.libra.displayObject {
 				eventListeners[type].push(listener);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void { 
 			super.removeEventListener(type, listener, useCapture);
 			//查询需要移除的事件类型对应侦听器是否存在，若存在则从记录中移除
@@ -76,6 +89,11 @@ package org.libra.displayObject {
 		
 		/* INTERFACE org.libra.displayObject.interfaces.ISprite */
 		
+		/**
+		 * 从父容器中移除自己
+		 * @param	destroy 移除时是否销毁自己,默认为false
+		 * @default false
+		 */
 		public function removeFromParent(destroy:Boolean = false):void {
 			if (this.parent) {
 				this.parent.removeChild(this);
@@ -83,10 +101,16 @@ package org.libra.displayObject {
 			}
 		}
 		
+		/**
+		 * 自杀
+		 */
 		public function destroy():void {
 			removeAllEventListener();
 		}
 		
+		/**
+		 * 释放内存
+		 */
 		public function dispose():void {
 			
 		}
@@ -98,11 +122,22 @@ package org.libra.displayObject {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
+		
+		/**
+		 * 加入到舞台上的事件
+		 * @private
+		 * @param	e
+		 */
 		protected function onAddToStage(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 		}
 		
+		/**
+		 * 从舞台移除的事件
+		 * @private
+		 * @param	e
+		 */
 		protected function onRemoveFromStage(e:Event):void {
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);

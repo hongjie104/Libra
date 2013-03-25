@@ -21,9 +21,16 @@ package org.libra.ui.flash.core {
 		
 		/**
 		 * 文本组件，flash自带的
+		 * @private
 		 */
 		protected var textField:TextField;
 		
+		/**
+		 * 构造函数
+		 * @param	x 横坐标
+		 * @param	y 纵坐标
+		 * @param	text 文本内容
+		 */
 		public function BaseText(x:int = 0, y:int = 0, text:String = '') { 
 			super(x, y);
 			this.initTextField(text);
@@ -42,10 +49,19 @@ package org.libra.ui.flash.core {
 			this.textField.height = h - textField.y;
 		}
 		
+		/**
+		 * 追加文本内容
+		 * @param	text 文本
+		 */
 		public function appendText(text:String):void {
 			this.textField.appendText(text);
 		}
 		
+		/**
+		 * 设置文本在控件里的相对坐标
+		 * @param	x 横坐标
+		 * @param	y 纵坐标
+		 */
 		public function setTextLocation(x:int, y:int):void {
 			this.textField.x = x;
 			this.textField.y = y;
@@ -93,38 +109,67 @@ package org.libra.ui.flash.core {
 		/*-----------------------------------------------------------------------------------------
 		Getters and setter
 		-------------------------------------------------------------------------------------------*/
+		
+		/**
+		 * 设置文本
+		 */
 		public function set text(text:String):void {
 			this.textField.text = text;
 		}
 		
+		/**
+		 * 获取文本
+		 */
 		public function get text():String {
 			return this.textField.text;
 		}
 		
+		/**
+		 * 设置html格式的文本
+		 */
 		public function set htmlText(text:String):void {
 			this.textField.htmlText = text;
 		}
 		
+		/**
+		 * 获取html格式的文本
+		 */
 		public function get htmlText():String {
 			return this.textField.htmlText;
 		}
 		
+		/**
+		 * 获取文本长度
+		 */
 		public function get textLength():int {
 			return this.textField.length;
 		}
 		
+		/**
+		 * 设置文本是否自动换行，当文本内容超过文本宽度时
+		 */
 		public function set wordWrap(val:Boolean):void {
 			this.textField.wordWrap = val;
 		}
 		
+		/**
+		 * 设置文本的字体颜色
+		 */
 		public function set textColor(color:int):void {
 			this.textField.textColor = color;
 		}
 		
+		/**
+		 * 设置文本的滤镜
+		 */
 		public function set textFilter(filter:Array):void {
 			this.textField.filters = filter;
 		}
 		
+		/**
+		 * 设置文本自动对齐的格式
+		 * 三种:'left','center','right'
+		 */
 		public function set textAlign(val:String):void {
 			var tf:TextFormat = this.textField.defaultTextFormat;
 			tf.align = val;
@@ -133,15 +178,24 @@ package org.libra.ui.flash.core {
 			this.textField.text = this.textField.text;
 		}
 		
+		/**
+		 * 设置文本的最大字数
+		 */
 		public function set maxChars(val:int):void {
 			this.textField.maxChars = val;
 		}
 		
+		/**
+		 * 设置文本的宽度
+		 */
 		override public function set width(value:Number):void {
 			super.width = value;
 			this.textField.width = value - textField.x;
 		}
 		
+		/**
+		 * 设置文本的高度
+		 */
 		override public function set height(value:Number):void {
 			super.height = value;
 			this.textField.height = value - textField.y;
@@ -151,6 +205,13 @@ package org.libra.ui.flash.core {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * 初始化文本
+		 * 某些子类需要个性化的文本时可以重写这个方法
+		 * @private
+		 * @param	text 文本的内容
+		 * @default ''
+		 */
 		protected function initTextField(text:String = ''):void {
 			textField = new TextField();
 			textField.selectable = textField.tabEnabled = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
@@ -161,11 +222,17 @@ package org.libra.ui.flash.core {
 			this.addChild(textField);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
 			this.textField.addEventListener(Event.CHANGE, onTextChanged);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
 			this.textField.removeEventListener(Event.CHANGE, onTextChanged);

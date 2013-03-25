@@ -5,7 +5,7 @@ package org.libra.ui.flash.core {
 	
 	/**
 	 * <p>
-	 * Description
+	 * 更新UI控件的控制器
 	 * </p>
 	 *
 	 * @class ValidationQueue
@@ -17,12 +17,25 @@ package org.libra.ui.flash.core {
 	 */
 	public final class ValidationQueue implements ITickable {
 		
+		/**
+		 * 单例
+		 * @private
+		 */
 		private static var instance:ValidationQueue;
 		
+		/**
+		 * @private
+		 */
 		private var validating:Boolean;
 		
+		/**
+		 * @private
+		 */
 		private var delayedQueue:Vector.<Component>;
 		
+		/**
+		 * @private
+		 */
 		private var queue:Vector.<Component>;
 		
 		public function ValidationQueue(singleton:Singleton) {
@@ -56,9 +69,11 @@ package org.libra.ui.flash.core {
 		
 		public function tick(interval:int):void {
 			this.validating = true;
-			while(this.queue.length) {
-				this.queue.shift().validate();
+			var l:int = queue.length;
+			while(--l > -1) {
+				this.queue[l].validate();
 			}
+			queue.length = 0;
 			const temp:Vector.<Component> = this.queue;
 			this.queue = this.delayedQueue;
 			this.delayedQueue = temp;
