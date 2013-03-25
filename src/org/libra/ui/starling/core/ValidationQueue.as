@@ -37,7 +37,7 @@ package org.libra.ui.starling.core {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function addControl(control:Component, delayIfValidating:Boolean):void {
-			const currentQueue:Vector.<Component> = (this.validating && delayIfValidating) ? this.delayedQueue : this.queue;
+			const currentQueue:Vector.<Component> = (this.validating || delayIfValidating) ? this.delayedQueue : this.queue;
 			const queueLength:int = currentQueue.length;
 			const containerControl:DisplayObjectContainer = control as DisplayObjectContainer;
 			for(var i:int = 0; i < queueLength; i++) {
@@ -57,10 +57,18 @@ package org.libra.ui.starling.core {
 		
 		public function advanceTime(time:Number):void {
 			this.validating = true;
-			while(this.queue.length) {
+			
+			const l:int = queue.length;
+			var count:int = 0;
+			while(count < l) {
+				this.queue[count++].validate();
+			}
+			queue.length = 0;
+			
+			/*while(this.queue.length) {
 				var item:Component = this.queue.shift();
 				item.validate();
-			}
+			}*/
 			const temp:Vector.<Component> = this.queue;
 			this.queue = this.delayedQueue;
 			this.delayedQueue = temp;

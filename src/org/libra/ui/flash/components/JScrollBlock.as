@@ -58,6 +58,10 @@ package org.libra.ui.flash.components {
 			this.addChild(fore);
 		}
 		
+		override public function setSize(w:int, h:int):void {
+			super.setSize(w, h);
+		}
+		
 		override protected function resize():void {
 			if (back.bitmapData) back.bitmapData.dispose();
 			if (orientation == Constants.HORIZONTAL) {

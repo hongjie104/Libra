@@ -105,7 +105,7 @@ package org.libra.utils {
 			return bmpData;
 		}
 		
-		public static function getScale3BitmapData(source:BitmapData, length:int, scaleInfo:Rectangle, direction:int = Constants.HORIZONTAL):BitmapData { 
+		public static function getScale3BitmapData(source:BitmapData, length:int, scaleInfo:Rectangle, direction:int = 0):BitmapData { 
 			var sourceImgWidth:int = source.width;
 			var sourceImgHeight:int = source.height;
 			var matrix:Matrix = new Matrix();
