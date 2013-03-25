@@ -1,13 +1,11 @@
 package {
 	import com.greensock.loading.SWFLoader;
-	import com.sociodox.theminer.TheMiner;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import starling.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import org.libra.aStar.AStarTest;
@@ -33,6 +31,7 @@ package {
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.GraphicsUtil;
 	import starling.core.Starling;
+	import starling.events.Event;
 	
 	/**
 	 * ...

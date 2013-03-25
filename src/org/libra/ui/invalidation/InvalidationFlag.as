@@ -51,12 +51,15 @@ package org.libra.ui.invalidation {
 		 */
 		private var invalidationList:Array;
 		
+		private var length:int;
+		
 		/**
 		 * 构造函数
 		 * @private
 		 */
 		public function InvalidationFlag() {
 			invalidationList = [false, false, false, false, false];
+			length = invalidationList.length;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -71,7 +74,7 @@ package org.libra.ui.invalidation {
 			if(val > -1)
 				this.invalidationList[val] = true;
 			else {
-				for (var i:* in this.invalidationList) 
+				for (var i:int = 0; i < length; i += 1) 
 					this.invalidationList[i] = true;
 			}
 		}
@@ -89,7 +92,7 @@ package org.libra.ui.invalidation {
 		 * 重置，将所有渲染类别设置为不需要渲染
 		 */
 		public function reset():void {
-			for (var i:* in this.invalidationList)
+			for (var i:int = 0; i < length; i += 1) 
 				this.invalidationList[i] = false;
 		}
 		

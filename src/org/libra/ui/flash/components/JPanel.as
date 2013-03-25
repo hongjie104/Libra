@@ -11,7 +11,6 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
-	import starling.display.DisplayObject;
 	
 	/**
 	 * <p>
