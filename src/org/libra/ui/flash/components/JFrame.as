@@ -7,6 +7,7 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.flash.interfaces.IContainer;
+	import org.libra.ui.flash.theme.DefaultPanelTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
@@ -41,9 +42,9 @@ package org.libra.ui.flash.components {
 		
 		private var dragBarEnabled:Boolean;
 		
-		public function JFrame(parent:IContainer, w:int = 300, h:int = 200, x:int = 0, y:int = 0, barHeight:int = 25) { 
+		public function JFrame(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, x:int = 0, y:int = 0, barHeight:int = 25) { 
 			this.barHeight = barHeight;
-			super(parent, w, h, x, y);
+			super(owner, theme, w, h, x, y);
 			closeEnabled = true;
 			closeEnabled = true;
 			dragBarEnabled = true;
@@ -106,14 +107,13 @@ package org.libra.ui.flash.components {
 			GraphicsUtil.drawRect(bar.graphics, 0, 0, actualWidth, barHeight, 0, .0);
 			this.addChild(bar);
 			
-			closeBtn = new JButton(0, 0, '', 'btnClose');
-			closeBtn.setSize(21, 19);
+			closeBtn = new JButton(UIManager.getInstance().theme.frameClosebtnTheme);
 			closeBtn.setLocation(actualWidth - closeBtn.width - 6, 6);
 			if(closeEnabled)
 				this.append(closeBtn);
 			
 			//面板的标题，默认距离顶部4个像素
-			title = new JLabel(0, 4, 'JFrame Title');
+			title = new JLabel(UIManager.getInstance().theme.labelTheme, 0, 4, 'JFrame Title');
 			title.setSize(actualWidth, 20);
 			title.textAlign = 'center';
 			this.append(title);
@@ -127,19 +127,6 @@ package org.libra.ui.flash.components {
 		override protected function refreshState():void {
 			closeEnabled ? append(closeBtn) : remove(closeBtn);
 			dragBarEnabled ? addBarDragListeners() : removeBarDragListeners();
-		}
-		
-		override protected function initBackground():void {
-			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData('frameBg'), 
-				actualWidth, actualHeight, new Rectangle(12, 60, 1, 1));
-			if (this.background && this.background is Bitmap) {
-				const bitmap:Bitmap = background as Bitmap;
-				if (bitmap.bitmapData) bitmap.bitmapData.dispose();
-				bitmap.bitmapData = bmd;
-			}else {
-				background = new Bitmap(bmd);
-			}
-			setBackground(background);
 		}
 		
 		private function addBarDragListeners():void {

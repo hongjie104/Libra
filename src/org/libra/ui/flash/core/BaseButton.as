@@ -1,10 +1,11 @@
 package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	import org.libra.ui.flash.core.state.BaseButtonState;
 	import org.libra.ui.flash.core.state.IButtonState;
+	import org.libra.ui.flash.theme.DefaultBtnTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.text.JFont;
 	
 	/**
 	 * <p>
@@ -48,12 +49,6 @@ package org.libra.ui.flash.core {
 		protected var curState:int;
 		
 		/**
-		 * 按钮皮肤资源名
-		 * @private
-		 */
-		protected var resName:String;
-		
-		/**
 		 * 控制按钮皮肤
 		 * @private
 		 */
@@ -73,16 +68,15 @@ package org.libra.ui.flash.core {
 		
 		/**
 		 * 构造函数
+		 * @param   theme 按钮主题
 		 * @param	x 横坐标
 		 * @param	y 纵坐标
 		 * @param	text 按钮文本
-		 * @param	resName 按钮皮肤图片名
 		 */
-		public function BaseButton(x:int = 0, y:int = 0, text:String = '',  resName:String = 'btn') { 
+		public function BaseButton(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme, x, y, text);
 			curState = NORMAL;
-			this.resName = resName;
 			this.initState();
-			super(x, y, text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -107,18 +101,22 @@ package org.libra.ui.flash.core {
 		 */
 		protected function initState():void {
 			this.state = new BaseButtonState();
-			this.state.setResName(resName);
-			this.addChild(this.state.getDisplayObject());
+			this.state.setResName((theme as DefaultBtnTheme).resName);
+			addChildAt(this.state.getDisplayObject(), 0);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function initTextField(text:String = ''):void {
-			super.initTextField(text);
-			setFont(JFont.FONT_BTN);
+			textField = new TextField();
+			textField.selectable = textField.tabEnabled = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
+			textField.multiline = false;
+			setFont(theme.font);
+			textField.filters = theme.filter;
 			this.textAlign = 'center';
 			this.text = text;
+			this.addChild(textField);
 		}
 		
 		/**
@@ -126,6 +124,8 @@ package org.libra.ui.flash.core {
 		 */
 		override protected function resize():void {
 			this.state.setSize(actualWidth, actualHeight);
+			//保证按钮中的文本在垂直方向上永远居中
+			setTextLocation(textX, (actualHeight - textField.textHeight) >> 1);
 		}
 		
 		/**

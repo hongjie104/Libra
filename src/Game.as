@@ -1,4 +1,6 @@
 package  {
+	import org.libra.ui.flash.theme.Filter;
+	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.starling.component.JButton;
 	import org.libra.ui.starling.component.JCheckBox;
 	import org.libra.ui.starling.component.JCheckBoxGroup;
@@ -8,8 +10,6 @@ package  {
 	import org.libra.ui.starling.component.JToolTip;
 	import org.libra.ui.starling.core.Container;
 	import org.libra.ui.starling.theme.DefaultTheme;
-	import org.libra.ui.style.Filter;
-	import org.libra.ui.text.JFont;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	

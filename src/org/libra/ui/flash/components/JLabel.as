@@ -1,5 +1,6 @@
 package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseText;
+	import org.libra.ui.flash.theme.DefaultTextTheme;
 	
 	/**
 	 * <p>
@@ -15,10 +16,9 @@ package org.libra.ui.flash.components {
 	 */
 	public class JLabel extends BaseText {
 		
-		public function JLabel(x:int = 0, y:int = 0, text:String = '') { 
-			super(x, y, text);
+		public function JLabel(theme:DefaultTextTheme, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme, x, y, text);
 			this.mouseChildren = this.mouseEnabled = false;
-			this.setSize(60,20);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

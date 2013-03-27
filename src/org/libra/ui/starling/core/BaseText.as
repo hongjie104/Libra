@@ -4,8 +4,8 @@ package org.libra.ui.starling.core {
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.text.JFont;
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.textures.Texture;
@@ -172,7 +172,7 @@ package org.libra.ui.starling.core {
 		/**
 		 * 设置字体
 		 * @param	font
-		 * @see org.libra.ui.text.JFont
+		 * @see org.libra.ui.flash.theme.JFont
 		 */
 		public function setFont(font:JFont):void {
 			if (helpTextField.defaultTextFormat != font.getTextFormat()) {

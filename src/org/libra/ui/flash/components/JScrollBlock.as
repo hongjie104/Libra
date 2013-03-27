@@ -1,9 +1,9 @@
 package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.geom.Rectangle;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	
@@ -54,22 +54,18 @@ package org.libra.ui.flash.components {
 			
 			back = new Bitmap();
 			this.addChild(back);
-			fore = new Bitmap(ResManager.getInstance().getBitmapData(orientation == Constants.HORIZONTAL ? 'hScrollThumb' : 'vScrollThumb'));
+			fore = new Bitmap(ResManager.getInstance().getBitmapData(orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.scrollBlockTheme.hScrollThumb : UIManager.getInstance().theme.scrollBlockTheme.vScrollThumb));
 			this.addChild(fore);
-		}
-		
-		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
 		}
 		
 		override protected function resize():void {
 			if (back.bitmapData) back.bitmapData.dispose();
 			if (orientation == Constants.HORIZONTAL) {
-				var source:BitmapData = ResManager.getInstance().getBitmapData('hScrollBtnBg');
-				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 1, 11));
+				var source:BitmapData = ResManager.getInstance().getBitmapData(UIManager.getInstance().theme.scrollBlockTheme.hScrollBtnBg);
+				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, UIManager.getInstance().theme.scrollBlockTheme.hScrollBtnScale9Rect);
 			}else {
-				source = ResManager.getInstance().getBitmapData('vScrollBtnBg');
-				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, new Rectangle(2, 2, 11, 1));
+				source = ResManager.getInstance().getBitmapData(UIManager.getInstance().theme.scrollBlockTheme.vScrollBtnBg);
+				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, UIManager.getInstance().theme.scrollBlockTheme.vScrollBtnScale9Rect);
 			}
 			fore.x = (actualWidth - fore.width) >> 1;
 			fore.y = (actualHeight - fore.height) >> 1;

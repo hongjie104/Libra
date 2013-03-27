@@ -8,6 +8,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IPanel;
+	import org.libra.ui.flash.theme.DefaultPanelTheme;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
@@ -41,8 +42,11 @@ package org.libra.ui.flash.components {
 		 */
 		private var autoUp:Boolean;
 		
-		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, x:int = 0, y:int = 0) { 
+		protected var theme:DefaultPanelTheme;
+		
+		public function JPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, x:int = 0, y:int = 0) { 
 			super(x, y);
+			this.theme = theme;
 			this.setSize(w, h);
 			this.owner = owner;
 			closeTweening = showing = false;
@@ -123,8 +127,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function initBackground():void {
-			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData('PanelBg'), 
-				actualWidth, actualHeight, new Rectangle(3, 3, 11, 6));
+			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData(theme.resName), 
+				actualWidth, actualHeight, theme.scale9Rect);
 			if (this.background && this.background is Bitmap) {
 				const bitmap:Bitmap = background as Bitmap;
 				if (bitmap.bitmapData) bitmap.bitmapData.dispose();

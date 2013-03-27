@@ -2,8 +2,8 @@ package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import org.libra.ui.style.Filter;
-	import org.libra.ui.text.JFont;
+	import org.libra.ui.flash.theme.DefaultTextTheme;
+	import org.libra.ui.flash.theme.JFont;
 	
 	/**
 	 * <p>
@@ -26,14 +26,22 @@ package org.libra.ui.flash.core {
 		protected var textField:TextField;
 		
 		/**
+		 * 主题
+		 * @private
+		 */
+		protected var theme:DefaultTextTheme;
+		
+		/**
 		 * 构造函数
 		 * @param	x 横坐标
 		 * @param	y 纵坐标
 		 * @param	text 文本内容
 		 */
-		public function BaseText(x:int = 0, y:int = 0, text:String = '') { 
+		public function BaseText(theme:DefaultTextTheme, x:int = 0, y:int = 0, text:String = '') { 
 			super(x, y);
+			this.theme = theme;
 			this.initTextField(text);
+			this.setSize(theme.width, theme.height);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -216,8 +224,8 @@ package org.libra.ui.flash.core {
 			textField = new TextField();
 			textField.selectable = textField.tabEnabled = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
 			textField.multiline = false;
-			setFont(JFont.FONT_LABEL);
-			textField.filters = Filter.BLACK;
+			setFont(theme.font);
+			textField.filters = theme.filter;
 			this.text = text;
 			this.addChild(textField);
 		}

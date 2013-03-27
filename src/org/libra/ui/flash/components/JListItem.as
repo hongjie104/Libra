@@ -5,6 +5,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.state.BaseListItemState;
 	import org.libra.ui.flash.core.state.ISelectState;
 	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.managers.UIManager;
 	/**
 	 * <p>
 	 * Description
@@ -75,7 +76,7 @@ package org.libra.ui.flash.components {
 		
 		override protected function init():void {
 			super.init();
-			label = new JLabel();
+			label = new JLabel(UIManager.getInstance().theme.labelTheme);
 			this.append(label);
 		}
 		

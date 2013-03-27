@@ -7,6 +7,7 @@ package org.libra.ui.flash.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.flash.theme.DefaultComboBoxTheme;
 	import org.libra.utils.GraphicsUtil;
 	
 	/**
@@ -44,6 +45,8 @@ package org.libra.ui.flash.components {
 		
 		private var foldTweenLite:TweenLite;
 		
+		private var theme:DefaultComboBoxTheme;
+		
 		/**
 		 * 构造函数
 		 * @param	orientation 下拉框方向。默认是4，向下，其他值：向上
@@ -51,11 +54,12 @@ package org.libra.ui.flash.components {
 		 * @param	x
 		 * @param	y
 		 */
-		public function JComboBox(orientation:int = 4, defaultText:String = '', x:int = 0, y:int = 0) { 
+		public function JComboBox(theme:DefaultComboBoxTheme, orientation:int = 4, defaultText:String = '', x:int = 0, y:int = 0) { 
 			super(x, y);
+			this.theme = theme;
 			this.orientation = orientation;
 			this.defaultText = defaultText;
-			this.setSize(100, 20);
+			this.setSize(theme.width, theme.height);
 			fold = true;
 		}
 		
@@ -78,9 +82,8 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			
-			content = new JLabel(0, 0, defaultText);
-			pressBtn = new JButton(0, 0, '', 'vScrollDownBtn');
-			pressBtn.setSize(16, 16);
+			content = new JLabel(theme.contentTheme, 0, 0, defaultText);
+			pressBtn = new JButton(theme.pressBtnTheme, 0, 0);
 			this.addChildAll(content, pressBtn);
 			
 			list = new JList();
@@ -160,7 +163,7 @@ package org.libra.ui.flash.components {
 		 * @param	e
 		 */
 		private function onItemSelected(e:Event):void {
-			var selectedItem:JListItem = list.getSelectedItem();
+			const selectedItem:JListItem = list.getSelectedItem();
 			this.content.text = selectedItem.getData();
 			onPressClicked(null);
 		}
@@ -171,9 +174,8 @@ package org.libra.ui.flash.components {
 		 */
 		private function onStageMouseUp(e:MouseEvent):void {
 			if (e.target == pressBtn) return;
-			var p:Point = localToGlobal(new Point(list.x, list.y));
-			if(new Rectangle(p.x, p.y, list.width, list.height).contains(e.stageX, e.stageY)) return;
-			this.toFold();
+			const p:Point = localToGlobal(new Point(list.x, list.y));
+			if (!new Rectangle(p.x, p.y, list.width, list.height).contains(e.stageX, e.stageY)) this.toFold();
 		}
 		
 	}

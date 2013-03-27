@@ -14,6 +14,7 @@ package {
 	import org.libra.game.components.animatable.BitmapAnimatable;
 	import org.libra.game.components.animatable.BitmapFrame;
 	import org.libra.game.objects.Avatar;
+	import org.libra.ui.Constants;
 	import org.libra.ui.flash.components.JButton;
 	import org.libra.ui.flash.components.JCheckBox;
 	import org.libra.ui.flash.components.JCheckBoxGroup;
@@ -26,6 +27,7 @@ package {
 	import org.libra.ui.flash.components.JTextArea;
 	import org.libra.ui.flash.components.JTextField;
 	import org.libra.ui.flash.core.Container;
+	import org.libra.ui.flash.theme.DefaultTheme;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
@@ -70,7 +72,7 @@ package {
 		private function onLoadUIComplete(evt:flash.events.Event):void {
 			//初始化UI
 			ResManager.getInstance().init();
-			UIManager.getInstance().init(this.stage);
+			UIManager.getInstance().init(this.stage, new DefaultTheme());
 			testUI();
 			//testBmpEngine();
 			//testAStar();
@@ -84,7 +86,7 @@ package {
 			starling.start();
 			starling.showStats = true;
 			
-			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage); } );
+			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage, new DefaultTheme()); } );
 		}
 		
 		private function testDiamond():void {
@@ -155,44 +157,41 @@ package {
 			var uiContainer:Container = new Container();
 			this.addChild(uiContainer);
 			
-			frame = new JFrame(uiContainer, 400, 300, 350, 50);
+			frame = new JFrame(uiContainer, UIManager.getInstance().theme.frameTheme, 400, 300, 350, 50);
 			//frame.setCloseEnabled(false);
 			//frame.setDragBarEnabled(false);
 			frame.show();
 			
-			var panel:JPanel = new JPanel(uiContainer, 300, 200, 50, 50);
+			var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme, 300, 200, 50, 50);
 			panel.show();
 			
-			var label:JLabel = new JLabel(40, 32, 'hello world!');
-			label.setSize(120, 20);
-			var tf:JTextField = new JTextField(40, 50, '输入框');
-			tf.setSize(120, 20);
-			var pw:JTextField = new JTextField(40, 80, '密码输入框');
-			pw.setSize(120, 20);
+			var label:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 40, 32, 'hello world!');
+			var tf:JTextField = new JTextField(UIManager.getInstance().theme.textFieldTheme, 40, 50, '输入框');
+			var pw:JTextField = new JTextField(UIManager.getInstance().theme.textFieldTheme, 40, 80, '密码输入框');
 			pw.displayAsPassword = true;
 			panel.appendAll(label, tf, pw);
-			var btn0:JButton = new JButton(250, 50, '开关');
+			var btn0:JButton = new JButton(UIManager.getInstance().theme.btnTheme, 250, 50, '开关');
 			btn0.setToolTipText('开关');
 			panel.append(btn0);
 			btn0.addEventListener(MouseEvent.CLICK, onCliked);
 			
-			var btn:JButton = new JButton(30, 60, '按钮');
+			var btn:JButton = new JButton(UIManager.getInstance().theme.btnTheme, 30, 60, '按钮');
 			frame.append(btn);
 			
 			var checkBoxGroup:JCheckBoxGroup = new JCheckBoxGroup(30, 120, 0);
-			checkBoxGroup.appendAllCheckBox(new JCheckBox(0, 0, '按钮0'), new JCheckBox(30, 90, '按钮1'), new JCheckBox(30, 90, '按钮2'));
+			checkBoxGroup.appendAllCheckBox(new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 0, 0, '按钮0'), 
+				new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 30, 90, '按钮1'), new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 30, 90, '按钮2'));
 			frame.append(checkBoxGroup);
 			
 			btn.setToolTipText('我是按钮ToolTip');
 			
 			var slider:JSlider = new JSlider(0, 280, 200);
 			frame.append(slider);
-			var sliderLabel:JLabel = new JLabel(330, 240, '0');
+			var sliderLabel:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 330, 240, '0');
 			frame.append(sliderLabel);
 			slider.addEventListener(flash.events.Event.CHANGE, function(evt:flash.events.Event):void { sliderLabel.text = slider.getValue().toFixed(2); } );
 			
-			var textArea:JTextArea = new JTextArea(50, 160, '请输入：');
-			textArea.setSize(200, 110);
+			var textArea:JTextArea = new JTextArea(UIManager.getInstance().theme.textAreaTheme, 50, 160, '请输入：');
 			frame.append(textArea);
 			var list:JList = new JList(240, 60);
 			list.setSize(60, 100);
@@ -202,7 +201,7 @@ package {
 				data[i] = 'item' + i;
 			list.setDataList(data);
 			
-			var comboBox:JComboBox = new JComboBox(4, '下拉框', 50, 100);
+			var comboBox:JComboBox = new JComboBox(UIManager.getInstance().theme.comboBoxTheme, Constants.DOWN, '下拉框', 50, 100);
 			panel.append(comboBox);
 			comboBox.setDataList(data);
 		}

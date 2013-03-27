@@ -4,9 +4,10 @@ package org.libra.ui.flash.components {
 	import flash.text.TextFieldType;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.BaseText;
+	import org.libra.ui.flash.theme.DefaultTextTheme;
+	import org.libra.ui.flash.theme.DefaultTheme;
+	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.style.Style;
-	import org.libra.ui.text.JFont;
 	
 	/**
 	 * <p>
@@ -26,8 +27,8 @@ package org.libra.ui.flash.components {
 		
 		private var scrollBarAutoHide:Boolean;
 		
-		public function JTextArea(x:int = 0, y:int = 0, text:String = '') { 
-			super(x, y, text);
+		public function JTextArea(theme:DefaultTextTheme, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme, x, y, text);
 			scrollBarAutoHide = true;
 		}
 		
@@ -43,7 +44,7 @@ package org.libra.ui.flash.components {
 			textField.selectable = textField.mouseEnabled = true;
 			this.textField.type = TextFieldType.INPUT;
 			textField.background = true;
-			textField.backgroundColor = Style.BACKGROUND;
+			textField.backgroundColor = DefaultTheme.BACKGROUND;
 		}
 		
 		/**

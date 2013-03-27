@@ -3,9 +3,9 @@ package org.libra.ui.starling.component {
 	import flash.text.AntiAliasType;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import org.libra.ui.flash.theme.Filter;
+	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.starling.theme.DefaultTheme;
-	import org.libra.ui.style.Filter;
-	import org.libra.ui.text.JFont;
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.textures.Texture;

@@ -1,5 +1,7 @@
 package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseButton;
+	import org.libra.ui.flash.theme.DefaultBtnTheme;
+	import org.libra.ui.managers.UIManager;
 	
 	/**
 	 * <p>
@@ -22,9 +24,8 @@ package org.libra.ui.flash.components {
 		 * @param	text 按钮上的文本
 		 * @param	resName 按钮的皮肤资源
 		 */
-		public function JButton(x:int = 0, y:int = 0, text:String = '', resName:String = 'btn') { 
-			super(x, y, text, resName);
-			this.setSize(43, 26);
+		public function JButton(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme, x, y, text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -34,16 +35,6 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		
-		/**
-		 * @inheritDoc
-		 * @param	w
-		 * @param	h
-		 */
-		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
-			setTextLocation(0, h - 21);
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

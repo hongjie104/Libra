@@ -1,6 +1,7 @@
 package org.libra.ui.managers {
 	import flash.display.Stage;
-	import org.libra.ui.flash.interfaces.IPanel;
+	import org.libra.ui.flash.theme.DefaultTheme;
+	//import org.libra.ui.flash.interfaces.IPanel;
 	import starling.core.Starling;
 	import starling.display.Sprite;
 	/**
@@ -39,7 +40,12 @@ package org.libra.ui.managers {
 		 * 在舞台上的所有面板
 		 * @private
 		 */
-		private var panelList:Vector.<IPanel>;
+		//private var panelList:Vector.<IPanel>;
+		
+		/**
+		 * 默认的主题
+		 */
+		private var $theme:DefaultTheme;
 		
 		/**
 		 * 构造函数
@@ -47,7 +53,7 @@ package org.libra.ui.managers {
 		 * @private
 		 */
 		public function UIManager(singleton:Singleton) {
-			panelList = new Vector.<IPanel>();
+			//panelList = new Vector.<IPanel>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -59,9 +65,14 @@ package org.libra.ui.managers {
 		 * 在使用ui框架之前就必需初始化
 		 * @param	stage 传统显示列表中的stage
 		 */
-		public function init(stage:Stage):void {
+		public function init(stage:Stage, theme:DefaultTheme):void {
 			this.$stage = stage;
+			this.$theme = theme;
 			$starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
+		}
+		
+		public function get theme():DefaultTheme {
+			return $theme;
 		}
 		
 		/**

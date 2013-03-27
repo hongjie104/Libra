@@ -1,7 +1,8 @@
 package org.libra.ui.flash.components {
 	import flash.text.TextFieldType;
-	import org.libra.ui.style.Style;
-	import org.libra.ui.text.JFont;
+	import org.libra.ui.flash.theme.DefaultTextTheme;
+	import org.libra.ui.flash.theme.DefaultTheme;
+	import org.libra.ui.flash.theme.JFont;
 	
 	/**
 	 * <p>
@@ -17,8 +18,8 @@ package org.libra.ui.flash.components {
 	 */
 	public class JTextField extends JLabel {
 		
-		public function JTextField(x:int = 0, y:int = 0, text:String = '') { 
-			super(x, y, text);
+		public function JTextField(theme:DefaultTextTheme, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme, x, y, text);
 			this.mouseChildren = this.mouseEnabled = true;
 		}
 		
@@ -43,12 +44,12 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
-			this.setFont(JFont.FONT_INPUT);
+			this.setFont(theme.font);
 			this.text = text;
 			textField.selectable = textField.mouseEnabled = true;
 			this.textField.type = TextFieldType.INPUT;
 			textField.background = true;
-			textField.backgroundColor = Style.BACKGROUND;
+			textField.backgroundColor = DefaultTheme.BACKGROUND;
 		}
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

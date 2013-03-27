@@ -5,6 +5,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.state.BaseCheckBoxState;
 	import org.libra.ui.flash.core.state.ISelectState;
 	import org.libra.ui.flash.events.CheckBoxEvent;
+	import org.libra.ui.flash.theme.DefaultBtnTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
@@ -25,9 +26,8 @@ package org.libra.ui.flash.components {
 		
 		private var group:JCheckBoxGroup;
 		
-		public function JCheckBox(x:int = 0, y:int = 0, text:String = '', resName:String = 'checkBtn') { 
-			super(x, y, text, resName);
-			this.setSize(54, 20);
+		public function JCheckBox(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme, x, y, text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -55,8 +55,8 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		override protected function initState():void {
 			this.state = new BaseCheckBoxState();
-			this.state.setResName(resName);
-			this.addChild(this.state.getDisplayObject());
+			this.state.setResName((theme as DefaultBtnTheme).resName);
+			this.addChildAt(this.state.getDisplayObject(), 0);
 		}
 		
 		override protected function refreshState():void {
@@ -66,11 +66,6 @@ package org.libra.ui.flash.components {
 				if (this.group) this.group.setCheckBoxUnselected(this);
 				dispatchEvent(new CheckBoxEvent(CheckBoxEvent.SELECTED));
 			}
-		}
-		
-		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
-			setTextLocation(0, h - 18);
 		}
 		
 		override protected function onAddToStage(e:Event):void {

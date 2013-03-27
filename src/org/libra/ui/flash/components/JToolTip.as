@@ -2,8 +2,9 @@ package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldAutoSize;
+	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.text.JFont;
+	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	/**
@@ -23,7 +24,7 @@ package org.libra.ui.flash.components {
 		private static var instance:JLabel;
 		
 		public function JToolTip(singleton:Singleton) {
-			super();
+			super(UIManager.getInstance().theme.labelTheme);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -78,4 +79,4 @@ package org.libra.ui.flash.components {
 	}
 
 }
-class Singleton{}
+final class Singleton{}

@@ -6,6 +6,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.managers.UIManager;
 	
 	/**
 	 * <p>
@@ -162,11 +163,9 @@ package org.libra.ui.flash.components {
 			this.addChild(scrollSlider);
 			
 			//上下两个按钮
-			upBtn = new JButton(0, 0, '', orientation == Constants.HORIZONTAL ? 'hScrollRightBtn' : 'vScrollUpBtn');
-			upBtn.setSize(16, 16);
+			upBtn = new JButton(orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollRightBtnTheme : UIManager.getInstance().theme.vScrollUpBtnTheme);
 			this.addChild(upBtn);
-			downBtn = new JButton(0, 0, '', orientation == Constants.HORIZONTAL ? 'hScrollLeftBtn' : 'vScrollDownBtn');
-			downBtn.setSize(16, 16);
+			downBtn = new JButton(orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollLefttBtnTheme : UIManager.getInstance().theme.vScrollDownBtnTheme);
 			this.addChild(downBtn);
 		}
 		

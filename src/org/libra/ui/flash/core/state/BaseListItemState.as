@@ -1,7 +1,7 @@
 package org.libra.ui.flash.core.state {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import org.libra.ui.style.Style;
+	import org.libra.ui.flash.theme.DefaultTheme;
 	import org.libra.utils.GraphicsUtil;
 	
 	/**
@@ -38,7 +38,7 @@ package org.libra.ui.flash.core.state {
 		}
 		
 		public function toSelected():void {
-			GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Style.LIST_SELECTED);
+			GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, DefaultTheme.LIST_SELECTED);
 		}
 		
 		public function setSize(w:int, h:int):void {
@@ -55,11 +55,11 @@ package org.libra.ui.flash.core.state {
 		}
 		
 		public function toNormal():void {
-			selected ? toSelected() : GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Style.LIST_DEFAULT);
+			selected ? toSelected() : GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, DefaultTheme.LIST_DEFAULT);
 		}
 		
 		public function toMouseOver():void {
-			GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Style.LIST_ROLLOVER);
+			GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, DefaultTheme.LIST_ROLLOVER);
 		}
 		
 		public function toMouseDown():void {
