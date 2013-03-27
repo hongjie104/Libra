@@ -23,6 +23,7 @@ package {
 	import org.libra.ui.flash.components.JLabel;
 	import org.libra.ui.flash.components.JList;
 	import org.libra.ui.flash.components.JPanel;
+	import org.libra.ui.flash.components.JProgressBar;
 	import org.libra.ui.flash.components.JSlider;
 	import org.libra.ui.flash.components.JTextArea;
 	import org.libra.ui.flash.components.JTextField;
@@ -162,7 +163,7 @@ package {
 			//frame.setDragBarEnabled(false);
 			frame.show();
 			
-			var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme, 300, 200, 50, 50);
+			var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme, 300, 200, 50, 50, true);
 			panel.show();
 			
 			var label:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 40, 32, 'hello world!');
@@ -185,11 +186,14 @@ package {
 			
 			btn.setToolTipText('我是按钮ToolTip');
 			
+			var progressBar:JProgressBar = new JProgressBar(UIManager.getInstance().theme.progressBarTheme);
+			frame.append(progressBar);
+			
 			var slider:JSlider = new JSlider(0, 280, 200);
 			frame.append(slider);
 			var sliderLabel:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 330, 240, '0');
 			frame.append(sliderLabel);
-			slider.addEventListener(flash.events.Event.CHANGE, function(evt:flash.events.Event):void { sliderLabel.text = slider.getValue().toFixed(2); } );
+			slider.addEventListener(flash.events.Event.CHANGE, function(evt:flash.events.Event):void { sliderLabel.text = slider.getValue().toFixed(2); progressBar.setProgress(slider.getValue() / 100); } );
 			
 			var textArea:JTextArea = new JTextArea(UIManager.getInstance().theme.textAreaTheme, 50, 160, '请输入：');
 			frame.append(textArea);

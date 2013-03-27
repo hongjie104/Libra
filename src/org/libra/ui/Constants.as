@@ -39,6 +39,7 @@ package org.libra.ui {
 		
 		public static const LEFT_UP:int = 7;
 		
+		public static const CENTER:int = 8;
 		
 		public function Constants() {
 		}

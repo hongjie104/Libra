@@ -1,4 +1,5 @@
 package org.libra.utils {
+	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.geom.Point;
 	/**
@@ -38,6 +39,13 @@ package org.libra.utils {
 			if(clear)
 				g.clear();
 			g.beginFill(color, alpha);
+			g.drawRect(x, y, w, h);
+			g.endFill();
+		}
+		
+		static public function drawRectWithBmd(g:Graphics, x:int, y:int, w:int, h:int, bmd:BitmapData, clear:Boolean = true):void {
+			if (clear) g.clear();
+			g.beginBitmapFill(bmd);
 			g.drawRect(x, y, w, h);
 			g.endFill();
 		}

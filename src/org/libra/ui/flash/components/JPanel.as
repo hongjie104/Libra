@@ -8,6 +8,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IPanel;
+	import org.libra.ui.flash.managers.LayoutManager;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
@@ -29,6 +30,15 @@ package org.libra.ui.flash.components {
 		
 		protected var owner:IContainer;
 		
+		protected var theme:DefaultPanelTheme;
+		
+		/**
+		 * 当该面试显示时，其他面板是否需要是不能响应鼠标事件
+		 * @private
+		 * @default false
+		 */
+		protected var model:Boolean;
+		
 		protected var showing:Boolean;
 		
 		protected var defaultBtn:JButton;
@@ -42,13 +52,12 @@ package org.libra.ui.flash.components {
 		 */
 		private var autoUp:Boolean;
 		
-		protected var theme:DefaultPanelTheme;
-		
-		public function JPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, x:int = 0, y:int = 0) { 
+		public function JPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, x:int = 0, y:int = 0, model:Boolean = false) { 
 			super(x, y);
 			this.theme = theme;
 			this.setSize(w, h);
 			this.owner = owner;
+			this.model = model;
 			closeTweening = showing = false;
 			autoUp = true;
 		}
@@ -56,10 +65,16 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public function isModel():Boolean {
+			return model;
+		}
+		
 		public function show():void {
 			if (showing) return;
 			this.owner.append(this);
 			showing = true;
+			LayoutManager.getInstance().addPanel(this);
 		}
 		
 		public function close(tween:Boolean = true):void {
@@ -72,6 +87,7 @@ package org.libra.ui.flash.components {
 					}
 				}else {
 					removeFromParent();
+					LayoutManager.getInstance().removePanel(this);
 				}
 			}
 		}

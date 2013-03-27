@@ -76,7 +76,6 @@ package org.libra.ui.flash.core {
 		public function BaseButton(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
 			super(theme, x, y, text);
 			curState = NORMAL;
-			this.initState();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -88,6 +87,11 @@ package org.libra.ui.flash.core {
 		 */
 		public function doClick():void {
 			dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+		}
+		
+		override protected function init():void {
+			super.init();
+			this.initState();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
