@@ -95,7 +95,7 @@ package org.libra.ui.flash.components {
 		
 		//public function setItemHeight(value:int):void { 
 			//itemHeight = value;
-            //initListItems();
+			//initListItems();
 			//invalidate();
 		//}
 		//
@@ -113,8 +113,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function setAutoHideScrollBar(value:Boolean):void {
-            scrollBar.setAutoHide(value);
-        }
+			scrollBar.setAutoHide(value);
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -129,10 +129,10 @@ package org.libra.ui.flash.components {
 		override protected function refreshData():void {
 			scrollBar.setThumbPercent(actualHeight / (dataList.length * itemHeight)); 
 			const pageSize:Number = MathUtil.floor(actualHeight / itemHeight);
-            scrollBar.setMax(MathUtil.max(0, dataList.length - pageSize));
+			scrollBar.setMax(MathUtil.max(0, dataList.length - pageSize));
 			scrollBar.setPageSize(pageSize);
 			scrollBar.height = actualHeight;
-            scrollToSelection();
+			scrollToSelection();
 		}
 		
 		override protected function resize():void {
@@ -143,7 +143,7 @@ package org.libra.ui.flash.components {
 			var itemPool:Vector.<JListItem> = this.itemList.slice();
 			itemList.length = 0;
 			var item:JListItem;
-            const numItems:int = Math.ceil(actualHeight / itemHeight);
+			const numItems:int = Math.ceil(actualHeight / itemHeight);
 			for(var i:int = 0; i < numItems; i++) {
 				item = itemPool.length ? itemPool.shift() : new JListItem();
 				item.setLocation(0, i * itemHeight);
@@ -174,17 +174,17 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function updateItems():void {
-            const offset:int = this.scrollBar.getValue();
-            const numItems:int = this.itemList.length;
+			const offset:int = this.scrollBar.getValue();
+			const numItems:int = this.itemList.length;
 			const numData:int = this.dataList.length;
 			var item:JListItem;
-            for(var i:int = 0; i < numItems; i++) {
-                item = itemList[i];
+			for(var i:int = 0; i < numItems; i++) {
+				item = itemList[i];
 				item.setSize(actualWidth, itemHeight);
 				item.setData(offset + i < numData ? this.dataList[offset + i] : '');
 				item.setSelected(offset + i == selectedIndex);
-            }
-        }
+			}
+		}
 		
 		/**
 		 * 如果选中的item不在视野中，挑战滚动条数值，直到选中的item出现
@@ -194,11 +194,10 @@ package org.libra.ui.flash.components {
 				this.scrollBar.setValue(0);
 			} else {
 				const numItems:int = itemList.length;
-				if (scrollBar.getValue() + numItems < selectedIndex) { 
-                    scrollBar.setValue(selectedIndex - numItems + 1);
-				}
+				if (scrollBar.getValue() + numItems < selectedIndex) 
+					scrollBar.setValue(selectedIndex - numItems + 1);
 			}
-            updateItems();
+			updateItems();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -210,7 +209,7 @@ package org.libra.ui.flash.components {
 		
 		private function onMouseWheel(e:MouseEvent):void {
 			this.scrollBar.changeValue(0 - e.delta);
-            updateItems();
+			updateItems();
 		}
 		
 		protected function onSelect(event:Event):void {

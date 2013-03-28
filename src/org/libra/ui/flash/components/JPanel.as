@@ -236,7 +236,7 @@ package org.libra.ui.flash.components {
 				Logger.error(toString() + '里的独有资源中获取' + className + '时出错了');
 			}
 			return null;
-        }
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
