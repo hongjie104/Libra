@@ -73,7 +73,7 @@ package {
 		private function onLoadUIComplete(evt:flash.events.Event):void {
 			//初始化UI
 			ResManager.getInstance().init();
-			UIManager.getInstance().init(this.stage, new DefaultTheme());
+			//UIManager.getInstance().init(this.stage, new DefaultTheme());
 			testUI();
 			//testBmpEngine();
 			//testAStar();
@@ -87,7 +87,7 @@ package {
 			starling.start();
 			starling.showStats = true;
 			
-			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage, new DefaultTheme()); } );
+			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage, null, new DefaultTheme()); } );
 		}
 		
 		private function testDiamond():void {
@@ -158,12 +158,14 @@ package {
 			var uiContainer:Container = new Container();
 			this.addChild(uiContainer);
 			
-			frame = new JFrame(uiContainer, UIManager.getInstance().theme.frameTheme, 400, 300, 350, 50);
+			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
+			
+			frame = new JFrame(uiContainer, UIManager.getInstance().theme.frameTheme, 400, 300);
 			//frame.setCloseEnabled(false);
 			//frame.setDragBarEnabled(false);
 			frame.show();
 			
-			var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme, 300, 200, 50, 50, true);
+			var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme, 300, 200);
 			panel.show();
 			
 			var label:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 40, 32, 'hello world!');

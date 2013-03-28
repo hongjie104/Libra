@@ -42,6 +42,7 @@ package org.libra.ui {
 		public static const CENTER:int = 8;
 		
 		public function Constants() {
+			throw new Error('Constants类不允许被实例化');
 		}
 		
 		/*-----------------------------------------------------------------------------------------

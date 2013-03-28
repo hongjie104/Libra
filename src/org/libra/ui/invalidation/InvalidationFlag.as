@@ -70,9 +70,9 @@ package org.libra.ui.invalidation {
 		 * 设置需要渲染的类别
 		 * @param	val
 		 */
-		public function setInvalid(val:int):void {
-			if(val > -1)
-				this.invalidationList[val] = true;
+		public function setInvalid(invalidationFlag:int):void {
+			if(invalidationFlag > -1)
+				this.invalidationList[invalidationFlag] = true;
 			else {
 				for (var i:int = 0; i < length; i += 1) 
 					this.invalidationList[i] = true;
@@ -84,8 +84,8 @@ package org.libra.ui.invalidation {
 		 * @param	val 
 		 * @return 布尔值
 		 */
-		public function isInvalid(val:int):Boolean {
-			return this.invalidationList[val];
+		public function isInvalid(invalidationFlag:int):Boolean {
+			return this.invalidationList[invalidationFlag];
 		}
 		
 		/**

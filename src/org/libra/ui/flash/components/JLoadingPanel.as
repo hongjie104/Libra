@@ -1,6 +1,8 @@
 package org.libra.ui.flash.components {
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
+	import org.libra.ui.invalidation.InvalidationFlag;
+	import org.libra.ui.managers.UIManager;
 	
 	/**
 	 * <p>
@@ -16,14 +18,28 @@ package org.libra.ui.flash.components {
 	 */
 	public class JLoadingPanel extends JPanel {
 		
-		public function JLoadingPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, x:int = 0, y:int = 0) { 
-			super(owner, theme, w, h, x, y, true);
-			
+		protected var progressBar:JProgressBar;
+		
+		protected var progress:Number;
+		
+		public function JLoadingPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200) { 
+			super(owner, theme, w, h, '', true);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		override protected function init():void {
+			super.init();
+			progressBar = new JProgressBar(UIManager.getInstance().theme.progressBarTheme);
+			this.append(progressBar);
+		}
+		
+		public function setProgress(val:Number):void {
+			progress = val;
+			invalidate(InvalidationFlag.DATA);
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

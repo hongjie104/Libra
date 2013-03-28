@@ -83,6 +83,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		private function onClicked(e:MouseEvent):void {
 			this.setSelected(!selected);
+			e.stopPropagation();
 		}
 	}
 

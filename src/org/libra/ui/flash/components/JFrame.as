@@ -42,9 +42,9 @@ package org.libra.ui.flash.components {
 		
 		private var dragBarEnabled:Boolean;
 		
-		public function JFrame(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, x:int = 0, y:int = 0, barHeight:int = 25) { 
+		public function JFrame(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, barHeight:int = 25) { 
 			this.barHeight = barHeight;
-			super(owner, theme, w, h, x, y);
+			super(owner, theme, w, h);
 			closeEnabled = true;
 			closeEnabled = true;
 			dragBarEnabled = true;
@@ -172,6 +172,7 @@ package org.libra.ui.flash.components {
 		
 		private function onCloseBtnClikced(e:MouseEvent):void {
 			this.close();
+			e.stopPropagation();
 		}
 	}
 

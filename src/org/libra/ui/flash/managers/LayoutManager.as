@@ -46,7 +46,8 @@ package org.libra.ui.flash.managers {
 		public function addPanel(p:JPanel):void {
 			if (panelList.indexOf(p) == -1) {
 				panelList[panelList.length] = p;
-				toCenter(p);
+				if(p.isAutoCenter())
+					toCenter(p);
 				if (p.isModel()) {
 					p.parent.addChild(modelSprite);
 					DepthUtil.bringToTop(p);

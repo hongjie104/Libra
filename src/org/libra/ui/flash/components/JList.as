@@ -225,6 +225,7 @@ package org.libra.ui.flash.components {
 			}
 			target.setSelected(true);
 			this.setSelectedItem(target);
+			event.stopPropagation();
 		}
 		
 	}

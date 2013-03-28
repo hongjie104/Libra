@@ -2,14 +2,19 @@ package org.libra.ui.flash.components {
 	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
+	import flash.events.ProgressEvent;
+	import flash.net.URLRequest;
+	import org.libra.log4a.Logger;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IPanel;
 	import org.libra.ui.flash.managers.LayoutManager;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
+	import org.libra.ui.URI;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.BitmapDataUtil;
 	import org.libra.utils.DepthUtil;
@@ -43,23 +48,60 @@ package org.libra.ui.flash.components {
 		
 		protected var defaultBtn:JButton;
 		
-		private var closeTween:TweenLite;
+		protected var closeTween:TweenLite;
 		
-		private var closeTweening:Boolean;
+		protected var closeTweening:Boolean;
+		
+		/**
+		 * 面板独有的资源库名，如果面板没有独有的资源库，那么resName就为空字符串
+		 * @private
+		 * @default ''
+		 */
+		protected var resName:String;
+		
+		/**
+		 * 加载资源库的Loader
+		 * @private
+		 */
+		protected var loader:Loader;
+		
+		/**
+		 * 是否加载了资源库
+		 * @private
+		 * @default false
+		 */
+		protected var loaded:Boolean;
 		
 		/**
 		 * 鼠标按下时，是否自动放到显示层的最上层
+		 * @private
+		 * @default true
 		 */
-		private var autoUp:Boolean;
+		protected var autoUp:Boolean;
 		
-		public function JPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, x:int = 0, y:int = 0, model:Boolean = false) { 
-			super(x, y);
+		/**
+		 * 是不是全屏的面板,默认值是false
+		 * @private
+		 * @default false
+		 */
+		protected var fullScreen:Boolean;
+		
+		/**
+		 * 打开面板时是否要自动居中显示，默认值true
+		 * @private
+		 * @default true
+		 */
+		protected var autoCenter:Boolean;
+		
+		public function JPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false) { 
+			super();
 			this.theme = theme;
 			this.setSize(w, h);
 			this.owner = owner;
 			this.model = model;
+			this.resName = resName;
 			closeTweening = showing = false;
-			autoUp = true;
+			autoCenter = autoUp = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -70,11 +112,27 @@ package org.libra.ui.flash.components {
 			return model;
 		}
 		
+		public function isFullScreen():Boolean {
+			return this.fullScreen;
+		}
+		
+		public function isAutoCenter():Boolean {
+			return autoCenter;
+		}
+		
 		public function show():void {
-			if (showing) return;
-			this.owner.append(this);
-			showing = true;
-			LayoutManager.getInstance().addPanel(this);
+			if (this.resName && !loaded) {
+				//加载独有的资源库去
+				loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onResLoaded);
+				loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
+				loader.load(new URLRequest(URI.RES_URL + this.resName + '.swf'));
+			}else {
+				if (showing) return;
+				this.owner.append(this);
+				showing = true;
+				LayoutManager.getInstance().addPanel(this);
+			}
 		}
 		
 		public function close(tween:Boolean = true):void {
@@ -104,10 +162,6 @@ package org.libra.ui.flash.components {
 		
 		public function isShowing():Boolean {
 			return this.showing;
-		}
-		
-		public function setAutoUp(bool:Boolean):void {
-			this.autoUp = bool;
 		}
 		
 		override public function setSize(w:int, h:int):void {
@@ -140,6 +194,10 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			initBackground();
+			if (loader) {
+				loader.unloadAndStop();
+				loader = null;
+			}
 		}
 		
 		protected function initBackground():void {
@@ -165,6 +223,21 @@ package org.libra.ui.flash.components {
 			this.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		}
 		
+		/**
+		 * 从loader中获取资源类
+		 * @private
+		 * @param	className 资源类名
+		 * @return  类
+		 */
+		protected function getDefinitionByName(className:String):Object {
+			try {
+				return loader.contentLoaderInfo.applicationDomain.hasDefinition(className) ? loader.contentLoaderInfo.applicationDomain.getDefinition(className) : null;
+			}catch (e:Error) {
+				Logger.error(toString() + '里的独有资源中获取' + className + '时出错了');
+			}
+			return null;
+        }
+		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
@@ -175,6 +248,17 @@ package org.libra.ui.flash.components {
 		 */
 		protected function onMouseDown(e:MouseEvent):void {
 			if(autoUp) DepthUtil.bringToTop(this);
+		}
+		
+		private function onResLoadProgress(e:ProgressEvent):void {
+			
+		}
+		
+		private function onResLoaded(e:Event):void {
+			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onResLoaded);
+			loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
+			loaded = true;
+			show();
 		}
 	}
 

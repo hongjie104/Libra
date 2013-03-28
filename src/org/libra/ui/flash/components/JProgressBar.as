@@ -34,6 +34,7 @@ package org.libra.ui.flash.components {
 		
 		public function JProgressBar(theme:DefaultProgressBarTheme, x:int = 0, y:int = 0) { 
 			super(x, y);
+			progress = .0;
 			this.theme = theme;
 			setSize(theme.width, theme.height);
 		}

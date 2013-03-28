@@ -355,9 +355,10 @@ package org.libra.ui.flash.core {
 		 * 并且将该控件放进validationQueue的待更新列表中等待被更新
 		 * @private
 		 * @param	flag
+		 * @see org.libra.ui.invalidation.InvalidationFlag
 		 */
-		protected function invalidate(flag:int = -1):void {
-			this.invalidationFlag.setInvalid(flag);
+		protected function invalidate(invalidationFlag:int = -1):void {
+			this.invalidationFlag.setInvalid(invalidationFlag);
 			if(inited)
 				validationQueue.addControl(this, false);
 		}
