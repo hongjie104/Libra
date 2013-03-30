@@ -1,11 +1,8 @@
-package org.libra.ui.managers {
+package org.libra.ui.starling.managers {
 	import flash.display.Stage;
-	import org.libra.ui.flash.components.JLoadingPanel;
-	import org.libra.ui.flash.interfaces.IContainer;
-	import org.libra.ui.flash.theme.DefaultTheme;
-	//import org.libra.ui.flash.interfaces.IPanel;
 	import starling.core.Starling;
 	import starling.display.Sprite;
+	//import starling.display.Sprite;
 	/**
 	 * <p>
 	 * UI大管家
@@ -45,18 +42,6 @@ package org.libra.ui.managers {
 		//private var panelList:Vector.<IPanel>;
 		
 		/**
-		 * 默认的主题
-		 */
-		private var $theme:DefaultTheme;
-		
-		private var $uiContainer:IContainer;
-		
-		/**
-		 * 加载进度面板
-		 */
-		private var loadingPanel:JLoadingPanel;
-		
-		/**
 		 * 构造函数
 		 * @param	singleton
 		 * @private
@@ -74,13 +59,11 @@ package org.libra.ui.managers {
 		 * 在使用ui框架之前就必需初始化
 		 * @param	stage 传统显示列表中的stage
 		 */
-		public function init(stage:Stage, uiContainer:IContainer, theme:DefaultTheme):void {
+		public function init(stage:Stage):void {
 			this.$stage = stage;
-			this.$uiContainer = uiContainer;
-			this.$theme = theme;
+			//this.$uiContainer = uiContainer;
+			//this.$theme = theme;
 			$starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
-			
-			this.loadingPanel = new JLoadingPanel(uiContainer, theme.panelTheme);
 		}
 		
 		public function get theme():DefaultTheme {
@@ -95,24 +78,16 @@ package org.libra.ui.managers {
 			return this.$stage;
 		}
 		
+		public function get uiContainer():Container {
+			return $uiContainer;
+		}
+		
 		/**
 		 * 获取starling的根容器
 		 * @return
 		 */
 		public function get starlingRoot():Sprite {
 			return $starlingRoot;
-		}
-		
-		public function showLoading():void {
-			this.loadingPanel.show();
-		}
-		
-		public function setLoadingProgress(val:Number):void {
-			this.loadingPanel.setProgress(val);
-		}
-		
-		public function closeLoading():void {
-			this.loadingPanel.close();
 		}
 		
 		/**

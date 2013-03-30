@@ -8,7 +8,6 @@ package org.libra.ui.flash.managers {
 	import flash.geom.Point;
 	import org.libra.ui.flash.interfaces.IDragable;
 	import org.libra.ui.flash.interfaces.IDropable;
-	import org.libra.ui.managers.UIManager;
 	/**
 	 * <p>
 	 * 拖放管理类

@@ -3,7 +3,7 @@ package org.libra.ui.flash.core {
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IDragable;
 	import org.libra.ui.flash.interfaces.IDropable;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
 	 * <p>

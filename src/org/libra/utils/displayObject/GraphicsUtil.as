@@ -1,4 +1,4 @@
-package org.libra.utils {
+package org.libra.utils.displayObject {
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.geom.Point;

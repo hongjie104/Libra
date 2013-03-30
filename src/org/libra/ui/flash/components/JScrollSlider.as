@@ -4,7 +4,7 @@ package org.libra.ui.flash.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.Constants;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	import org.libra.utils.MathUtil;
 	/**
 	 * <p>

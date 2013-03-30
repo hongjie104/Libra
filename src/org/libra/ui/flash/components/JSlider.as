@@ -6,7 +6,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.theme.DefaultTheme;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	import org.libra.utils.MathUtil;
 	
 	/**

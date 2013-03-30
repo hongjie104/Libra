@@ -2,12 +2,14 @@ package {
 	import com.greensock.loading.SWFLoader;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.net.URLRequest;
 	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
@@ -28,11 +30,11 @@ package {
 	import org.libra.ui.flash.components.JTextArea;
 	import org.libra.ui.flash.components.JTextField;
 	import org.libra.ui.flash.core.Container;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTheme;
-	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.BitmapDataUtil;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.BitmapDataUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	import starling.core.Starling;
 	import starling.events.Event;
 	
@@ -48,6 +50,7 @@ package {
 		private var BMP:Class;
 		
 		private var starling:Starling;
+		private var loader:Loader;
 		
 		public function Main():void {
 			if (stage) init();
@@ -62,8 +65,11 @@ package {
 			//this.addChild(new TheMiner(true));
 			
 			//开始加载ui资源
-			var swfLoader:SWFLoader = new SWFLoader('../asset/UI.swf', { name:'UI', onComplete:onLoadUIComplete } );
-			swfLoader.load();
+			//var swfLoader:SWFLoader = new SWFLoader('../asset/UI.swf', { name:'UI', onComplete:onLoadUIComplete } );
+			//swfLoader.load();
+			loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(flash.events.Event.COMPLETE, onLoadUIComplete);
+			loader.load(new URLRequest('../asset/UI.swf'));
 		}
 		
 		/**
@@ -72,7 +78,7 @@ package {
 		 */
 		private function onLoadUIComplete(evt:flash.events.Event):void {
 			//初始化UI
-			ResManager.getInstance().init();
+			ResManager.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
 			testUI();
 			//testBmpEngine();
@@ -83,11 +89,11 @@ package {
 		}
 		
 		private function testStarlingUI():void {
-			starling = new starling.core.Starling(Game, stage);
+			/*starling = new starling.core.Starling(Game, stage);
 			starling.start();
 			starling.showStats = true;
 			
-			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage, null, new DefaultTheme()); } );
+			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage, null, new DefaultTheme()); } );*/
 		}
 		
 		private function testDiamond():void {

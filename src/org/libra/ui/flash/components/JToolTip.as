@@ -2,11 +2,11 @@ package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldAutoSize;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.BitmapDataUtil;
+	import org.libra.utils.displayObject.BitmapDataUtil;
 	/**
 	 * <p>
 	 * Description

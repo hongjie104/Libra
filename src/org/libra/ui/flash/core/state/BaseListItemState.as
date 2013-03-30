@@ -2,7 +2,7 @@ package org.libra.ui.flash.core.state {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import org.libra.ui.flash.theme.DefaultTheme;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
 	 * <p>

@@ -3,9 +3,9 @@ package org.libra.ui.flash.components {
 	import flash.display.BitmapData;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
-	import org.libra.ui.managers.UIManager;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.BitmapDataUtil;
+	import org.libra.utils.displayObject.BitmapDataUtil;
 	
 	/**
 	 * <p>

@@ -12,9 +12,9 @@ package org.libra.utils {
 		private var length:int;
 		private var content:Dictionary;
 		
-		public function HashMap() {
+		public function HashMap(weakKeys:Boolean = false) { 
 			length = 0;
-			content = new Dictionary();
+			content = new Dictionary(weakKeys);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

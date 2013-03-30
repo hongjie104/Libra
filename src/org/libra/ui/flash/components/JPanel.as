@@ -3,21 +3,21 @@ package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
-	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
-	import org.libra.log4a.Logger;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IPanel;
 	import org.libra.ui.flash.managers.LayoutManager;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
-	import org.libra.ui.URI;
 	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.BitmapDataUtil;
-	import org.libra.utils.DepthUtil;
+	import org.libra.URI;
+	import org.libra.utils.displayObject.BitmapDataUtil;
+	import org.libra.utils.displayObject.DepthUtil;
+	import org.libra.utils.ReflectUtil;
 	
 	/**
 	 * <p>
@@ -123,6 +123,7 @@ package org.libra.ui.flash.components {
 		public function show():void {
 			if (this.resName && !loaded) {
 				//加载独有的资源库去
+				UIManager.getInstance().showLoading();
 				loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onResLoaded);
 				loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
@@ -223,19 +224,9 @@ package org.libra.ui.flash.components {
 			this.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		}
 		
-		/**
-		 * 从loader中获取资源类
-		 * @private
-		 * @param	className 资源类名
-		 * @return  类
-		 */
-		protected function getDefinitionByName(className:String):Object {
-			try {
-				return loader.contentLoaderInfo.applicationDomain.hasDefinition(className) ? loader.contentLoaderInfo.applicationDomain.getDefinition(className) : null;
-			}catch (e:Error) {
-				Logger.error(toString() + '里的独有资源中获取' + className + '时出错了');
-			}
-			return null;
+		protected function getBmdFromLoader(bmdName:String):BitmapData {
+			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, loader) as Class;
+			return c ? new c() : null;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -251,13 +242,14 @@ package org.libra.ui.flash.components {
 		}
 		
 		private function onResLoadProgress(e:ProgressEvent):void {
-			
+			UIManager.getInstance().setLoadingProgress(e.bytesLoaded / e.bytesTotal);
 		}
 		
 		private function onResLoaded(e:Event):void {
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onResLoaded);
 			loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
 			loaded = true;
+			UIManager.getInstance().closeLoading();
 			show();
 		}
 	}

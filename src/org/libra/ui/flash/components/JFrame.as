@@ -1,18 +1,14 @@
 package org.libra.ui.flash.components {
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import org.libra.ui.flash.interfaces.IContainer;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.managers.UIManager;
-	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.BitmapDataUtil;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
 	 * <p>

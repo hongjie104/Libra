@@ -13,7 +13,7 @@ package org.libra.ui.flash.core {
 	import org.libra.ui.flash.managers.DragManager;
 	import org.libra.ui.flash.managers.ToolTipManager;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
 	 * <p>
@@ -264,12 +264,12 @@ package org.libra.ui.flash.core {
 		/**
 		 * @inheritDoc
 		 */
-		override public function dispatchEvent(event:Event):Boolean {
-			if (this.hasEventListener(event.type)) {
-				return super.dispatchEvent(event);	
-			}
-			return false;
-		}
+		//override public function dispatchEvent(event:Event):Boolean {
+			//if (this.hasEventListener(event.type)) {
+				//return super.dispatchEvent(event);	
+			//}
+			//return false;
+		//}
 		
 		/* INTERFACE org.libra.ui.interfaces.IDragable */
 		

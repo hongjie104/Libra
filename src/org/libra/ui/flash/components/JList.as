@@ -4,7 +4,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.utils.DepthUtil;
+	import org.libra.utils.displayObject.DepthUtil;
 	import org.libra.utils.MathUtil;
 	
 	/**

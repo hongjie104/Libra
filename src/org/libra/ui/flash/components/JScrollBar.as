@@ -5,8 +5,8 @@ package org.libra.ui.flash.components {
 	import flash.utils.Timer;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.managers.UIManager;
 	
 	/**
 	 * <p>

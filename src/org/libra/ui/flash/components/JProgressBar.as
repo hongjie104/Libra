@@ -7,8 +7,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.theme.DefaultProgressBarTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.ui.utils.ResManager;
-	import org.libra.utils.BitmapDataUtil;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.BitmapDataUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
 	 * <p>

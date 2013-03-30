@@ -4,8 +4,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.core.state.BaseListItemState;
 	import org.libra.ui.flash.core.state.ISelectState;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.managers.UIManager;
 	/**
 	 * <p>
 	 * Description

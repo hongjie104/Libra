@@ -1,8 +1,9 @@
 package org.libra.ui.flash.components {
 	import org.libra.ui.flash.interfaces.IContainer;
+	import org.libra.ui.flash.managers.LayoutManager;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.managers.UIManager;
 	
 	/**
 	 * <p>
@@ -34,6 +35,13 @@ package org.libra.ui.flash.components {
 			super.init();
 			progressBar = new JProgressBar(UIManager.getInstance().theme.progressBarTheme);
 			this.append(progressBar);
+		}
+		
+		override public function show():void {
+			if (showing) return;
+			this.owner.append(this);
+			showing = true;
+			LayoutManager.getInstance().addPanel(this);
 		}
 		
 		public function setProgress(val:Number):void {

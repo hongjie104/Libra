@@ -8,7 +8,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.theme.DefaultComboBoxTheme;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
 	 * <p>

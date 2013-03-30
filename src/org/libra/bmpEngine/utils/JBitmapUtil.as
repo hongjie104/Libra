@@ -5,7 +5,7 @@ package org.libra.bmpEngine.utils {
 	import flash.geom.Rectangle;
 	import org.libra.bmpEngine.BitmapFrame;
 	import org.libra.bmpEngine.JBitmap;
-	import org.libra.utils.BitmapDataUtil;
+	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.HashMap;
 	/**
 	 * <p>

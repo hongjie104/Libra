@@ -1,8 +1,8 @@
 package org.libra.ui.flash.managers {
 	import flash.display.Sprite;
 	import org.libra.ui.flash.components.JPanel;
-	import org.libra.utils.DepthUtil;
-	import org.libra.utils.GraphicsUtil;
+	import org.libra.utils.displayObject.DepthUtil;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	/**
 	 * <p>
 	 * 布局管理器

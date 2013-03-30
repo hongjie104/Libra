@@ -1,30 +1,26 @@
-package org.libra.ui.flash.components {
-	import org.libra.ui.flash.core.BaseButton;
-	import org.libra.ui.flash.theme.DefaultBtnTheme;
-	
+package org.libra {
 	/**
 	 * <p>
-	 * 按钮类
+	 * Description
 	 * </p>
 	 *
-	 * @class JButton
-	 * @author Eddie
+	 * @class URI
+	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08-31-2012
+	 * @date 03/28/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JButton extends BaseButton {
+	public final class URI {
 		
-		/**
-		 * 构造函数
-		 * @param	x 横坐标
-		 * @param	y 纵坐标
-		 * @param	text 按钮上的文本
-		 * @param	resName 按钮的皮肤资源
-		 */
-		public function JButton(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme, x, y, text);
+		public static const RES_URL:String = '../asset/';
+		
+		static public var ip:String;
+		
+		static public var port:int;
+		
+		public function URI() {
+			throw new Error('URI类不允许被实例化');
 		}
 		
 		/*-----------------------------------------------------------------------------------------
