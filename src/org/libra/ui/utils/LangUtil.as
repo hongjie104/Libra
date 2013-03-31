@@ -66,4 +66,8 @@ package org.libra.ui.utils {
 	}
 
 }
-class Singleton{}
+
+/**
+ * @private
+ */
+final class Singleton{}

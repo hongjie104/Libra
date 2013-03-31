@@ -1,6 +1,4 @@
 package org.libra.ui.utils {
-	import com.greensock.loading.LoaderMax;
-	import com.greensock.loading.SWFLoader;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import org.libra.utils.HashMap;

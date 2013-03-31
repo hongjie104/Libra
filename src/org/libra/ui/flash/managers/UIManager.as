@@ -4,9 +4,7 @@ package org.libra.ui.flash.managers {
 	import org.libra.ui.flash.components.JLoadingPanel;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.theme.DefaultTheme;
-	//import org.libra.ui.flash.interfaces.IPanel;
-	//import starling.core.Starling;
-	//import starling.display.Sprite;
+	import org.libra.utils.ui.KeyPoll;
 	/**
 	 * <p>
 	 * UI大管家
@@ -52,6 +50,11 @@ package org.libra.ui.flash.managers {
 		private var loadingPanel:JLoadingPanel;
 		
 		/**
+		 * 按键管理器
+		 */
+		private var $keyPoll:KeyPoll;
+		
+		/**
 		 * 构造函数
 		 * @param	singleton
 		 * @private
@@ -74,12 +77,18 @@ package org.libra.ui.flash.managers {
 			this.$uiContainer = uiContainer;
 			this.$theme = theme;
 			$stage.addChild($uiContainer as DisplayObject);
+			LayoutManager.getInstance().resize(stage.stageWidth, stage.stageHeight);
+			$keyPoll = new KeyPoll(stage);
 			
 			this.loadingPanel = new JLoadingPanel(uiContainer, theme.panelTheme);
 		}
 		
 		public function get theme():DefaultTheme {
 			return $theme;
+		}
+		
+		public function get keyPoll():KeyPoll {
+			return $keyPoll;
 		}
 		
 		/**

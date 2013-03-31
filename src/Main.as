@@ -10,6 +10,7 @@ package {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.net.URLRequest;
+	import flash.ui.Keyboard;
 	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
@@ -17,13 +18,16 @@ package {
 	import org.libra.game.components.animatable.BitmapFrame;
 	import org.libra.game.objects.Avatar;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.components.JAlert;
 	import org.libra.ui.flash.components.JButton;
 	import org.libra.ui.flash.components.JCheckBox;
 	import org.libra.ui.flash.components.JCheckBoxGroup;
 	import org.libra.ui.flash.components.JComboBox;
+	import org.libra.ui.flash.components.JCountDown;
 	import org.libra.ui.flash.components.JFrame;
 	import org.libra.ui.flash.components.JLabel;
 	import org.libra.ui.flash.components.JList;
+	import org.libra.ui.flash.components.JPageCounter;
 	import org.libra.ui.flash.components.JPanel;
 	import org.libra.ui.flash.components.JProgressBar;
 	import org.libra.ui.flash.components.JSlider;
@@ -216,10 +220,19 @@ package {
 			var comboBox:JComboBox = new JComboBox(UIManager.getInstance().theme.comboBoxTheme, Constants.DOWN, '下拉框', 50, 100);
 			panel.append(comboBox);
 			comboBox.setDataList(data);
+			
+			var pageCounter:JPageCounter = new JPageCounter(UIManager.getInstance().theme.pageCountTheme, 10, 3, 50, 50);
+			frame.append(pageCounter);
+			
+			var cd:JCountDown = new JCountDown(UIManager.getInstance().theme.labelTheme, 100, 100, '剩余时间: ');
+			frame.append(cd);
+			cd.setLeftSecond(528);
 		}
 		
 		private function onCliked(e:MouseEvent):void {
-			frame.showSwitch();
+			//frame.showSwitch();
+			JAlert.show('测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗', function(r:int):void { trace(r); }, JAlert.OK | JAlert.CANCEL | JAlert.YES );
+			//trace(UIManager.getInstance().keyPoll.isUp(Keyboard.D));
 		}
 		
 	}

@@ -264,12 +264,18 @@ package org.libra.ui.flash.core {
 		/**
 		 * @inheritDoc
 		 */
-		//override public function dispatchEvent(event:Event):Boolean {
-			//if (this.hasEventListener(event.type)) {
-				//return super.dispatchEvent(event);	
-			//}
-			//return false;
-		//}
+		override public function dispatchEvent(event:Event):Boolean {
+			return this.hasEventListener(event.type) ? super.dispatchEvent(event) : false;
+		}
+		
+		/**
+		 * 强制性地发出事件，不管是否有此类事件的监听
+		 * @param	event
+		 * @return
+		 */
+		public function dispatchEventForce(event:Event):Boolean {
+			return super.dispatchEvent(event);
+		}
 		
 		/* INTERFACE org.libra.ui.interfaces.IDragable */
 		

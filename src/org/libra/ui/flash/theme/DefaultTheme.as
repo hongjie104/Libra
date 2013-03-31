@@ -38,8 +38,6 @@ package org.libra.ui.flash.theme {
 		
 		protected var $hScrollLeftBtnTheme:DefaultBtnTheme;
 		
-		protected var $frameCloseBtnTheme:DefaultBtnTheme;
-		
 		protected var $labelTheme:DefaultTextTheme;
 		
 		protected var $textAreaTheme:DefaultTextTheme;
@@ -48,13 +46,15 @@ package org.libra.ui.flash.theme {
 		
 		protected var $panelTheme:DefaultPanelTheme;
 		
-		protected var $frameTheme:DefaultPanelTheme;
+		protected var $frameTheme:DefaultFrameTheme;
 		
 		protected var $scrollBlockTheme:DefaultScrollBlockTheme;
 		
 		protected var $comboBoxTheme:DefaultComboBoxTheme; 
 		
 		protected var $progressBarTheme:DefaultProgressBarTheme;
+		
+		protected var $pageCounterTheme:DefaultPageCounterTheme;
 		
 		public function DefaultTheme() {
 			$btnTheme = new DefaultBtnTheme(43, 26, JFont.FONT_BTN, Filter.BLACK, 'btn');
@@ -63,15 +63,15 @@ package org.libra.ui.flash.theme {
 			$vScrollUpBtnTheme = new DefaultBtnTheme(16, 16, JFont.FONT_BTN, Filter.BLACK, 'vScrollUpBtn');
 			$hScrollRightBtnTheme = new DefaultBtnTheme(16, 16, JFont.FONT_BTN, Filter.BLACK, 'hScrollRightBtn');
 			$hScrollLeftBtnTheme = new DefaultBtnTheme(16, 16, JFont.FONT_BTN, Filter.BLACK, 'hScrollLeftBtn');
-			$frameCloseBtnTheme = new DefaultBtnTheme(21, 19, JFont.FONT_BTN, Filter.BLACK, 'btnClose');
-			$labelTheme = new DefaultTextTheme(60, 20, JFont.FONT_LABEL, Filter.BLACK);
+			$labelTheme = new DefaultTextTheme(120, 20, JFont.FONT_LABEL, Filter.BLACK);
 			$textAreaTheme = new DefaultTextTheme(200, 100, JFont.FONT_LABEL, Filter.BLACK);
 			$textFieldTheme = new DefaultTextTheme(120, 20, JFont.FONT_INPUT, Filter.BLACK);
 			$panelTheme = new DefaultPanelTheme('PanelBg', new Rectangle(3, 3, 11, 6));
-			$frameTheme = new DefaultPanelTheme('frameBg', new Rectangle(12, 60, 1, 1));
+			$frameTheme = new DefaultFrameTheme('frameBg', new Rectangle(12, 60, 1, 1));
 			$scrollBlockTheme = new DefaultScrollBlockTheme('vScrollThumb', 'vScrollBtnBg', new Rectangle(2, 2, 11, 1), 'hScrollThumb', 'hScrollBtnBg', new Rectangle(2, 2, 1, 11));
 			$comboBoxTheme = new DefaultComboBoxTheme($labelTheme, $vScrollDownBtnTheme);
 			$progressBarTheme = new DefaultProgressBarTheme('progressBar', new Rectangle(5, 0, 1, 16), 'progressBarBg', new Rectangle(34, 0, 1, 18));
+			$pageCounterTheme = new DefaultPageCounterTheme($hScrollLeftBtnTheme, $hScrollRightBtnTheme, $labelTheme);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -102,10 +102,6 @@ package org.libra.ui.flash.theme {
 			return $hScrollLeftBtnTheme;
 		}
 		
-		public function get frameClosebtnTheme():DefaultBtnTheme {
-			return $frameCloseBtnTheme;
-		}
-		
 		public function get labelTheme():DefaultTextTheme {
 			return $labelTheme;
 		}
@@ -122,7 +118,7 @@ package org.libra.ui.flash.theme {
 			return $panelTheme;
 		}
 		
-		public function get frameTheme():DefaultPanelTheme {
+		public function get frameTheme():DefaultFrameTheme {
 			return $frameTheme;
 		}
 		
@@ -136,6 +132,10 @@ package org.libra.ui.flash.theme {
 		
 		public function get progressBarTheme():DefaultProgressBarTheme {
 			return $progressBarTheme;
+		}
+		
+		public function get pageCountTheme():DefaultPageCounterTheme {
+			return $pageCounterTheme;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

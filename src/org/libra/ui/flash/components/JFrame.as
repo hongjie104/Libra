@@ -6,6 +6,7 @@ package org.libra.ui.flash.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.managers.UIManager;
+	import org.libra.ui.flash.theme.DefaultFrameTheme;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.displayObject.GraphicsUtil;
@@ -38,10 +39,9 @@ package org.libra.ui.flash.components {
 		
 		private var dragBarEnabled:Boolean;
 		
-		public function JFrame(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200, barHeight:int = 25) { 
+		public function JFrame(owner:IContainer, theme:DefaultFrameTheme, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, barHeight:int = 25) {
+ 			super(owner, theme, w, h, resName, model);
 			this.barHeight = barHeight;
-			super(owner, theme, w, h);
-			closeEnabled = true;
 			closeEnabled = true;
 			dragBarEnabled = true;
 		}
@@ -103,7 +103,7 @@ package org.libra.ui.flash.components {
 			GraphicsUtil.drawRect(bar.graphics, 0, 0, actualWidth, barHeight, 0, .0);
 			this.addChild(bar);
 			
-			closeBtn = new JButton(UIManager.getInstance().theme.frameClosebtnTheme);
+			closeBtn = new JButton((theme as DefaultFrameTheme).closeBtnTheme);
 			closeBtn.setLocation(actualWidth - closeBtn.width - 6, 6);
 			if(closeEnabled)
 				this.append(closeBtn);

@@ -47,12 +47,12 @@ package org.libra.tick {
 		public function MultiTimer(singleton:Singleton) { 
 			timerEnabledList = new Vector.<ITimerable>();
 			pause = true;
-			sleepTimer = new SleepTimer(100);
+			sleepTimer = new SleepTimer(1000);
 			sleepTimer.addEventListener(TimerEvent.TIMER, onTimerHandler);
 		}
 		
 		/**
-		 * 每100毫秒触发该事件
+		 * 每1000毫秒触发该事件
 		 * @private
 		 * @param	e
 		 */
@@ -152,4 +152,4 @@ package org.libra.tick {
  * 单例模式
  * @private
  */
-class Singleton{}
+final class Singleton{}

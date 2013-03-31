@@ -49,7 +49,10 @@ package org.libra.ui.flash.managers {
 				if(p.isAutoCenter())
 					toCenter(p);
 				if (p.isModel()) {
-					p.parent.addChild(modelSprite);
+					if (modelSprite.parent == p.parent)
+						DepthUtil.bringToTop(modelSprite);
+					else
+						p.parent.addChild(modelSprite);
 					DepthUtil.bringToTop(p);
 				}
 			}
@@ -60,7 +63,11 @@ package org.libra.ui.flash.managers {
 			if (index != -1) {
 				panelList.splice(index, 1);
 				if (p.isModel()) {
-					if (modelSprite.parent) modelSprite.parent.removeChild(modelSprite);
+					if (panelList[panelList.length - 1].isModel()) {
+						DepthUtil.bringToTop(panelList[panelList.length - 1]);
+					}else {
+						modelSprite.parent.removeChild(modelSprite);	
+					}
 				}
 			}
 		}
@@ -91,4 +98,8 @@ package org.libra.ui.flash.managers {
 	}
 
 }
+
+/**
+ * @private
+ */
 final class Singleton{}

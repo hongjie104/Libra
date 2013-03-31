@@ -136,17 +136,17 @@ package org.libra.ui.flash.components {
 			}
 		}
 		
-		public function close(tween:Boolean = true):void {
+		public function close(tween:Boolean = true, destroy:Boolean = false):void {
 			if (showing) {
 				if (tween) {
 					if (!closeTweening) {
 						if (closeTween) closeTween.restart();
 						else closeTween = TweenLite.to(this, .5, { alpha:.0, onStart:function():void { closeTweening = true; }, 
-							onComplete:function():void { closeTweening = false; close(false); } } );
+							onComplete:function():void { closeTweening = false; close(false, destroy); } } );
 					}
 				}else {
-					removeFromParent();
 					LayoutManager.getInstance().removePanel(this);
+					removeFromParent(destroy);
 				}
 			}
 		}
