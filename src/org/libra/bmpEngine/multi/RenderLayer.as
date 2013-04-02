@@ -1,6 +1,7 @@
-package org.libra.bmpEngine {
+package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
+	import org.libra.bmpEngine.single.BitmapFrame;
 	/**
 	 * <p>
 	 * Description
@@ -16,18 +17,18 @@ package org.libra.bmpEngine {
 	public final class RenderLayer {
 		
 		/**
-		 * renderItemList中是否有任何RenderItem的bitmapData发生了变化
+		 * itemList中是否有任何RenderItem的bitmapData发生了变化
 		 * 默认为true。否则RenderItem一开始不会对该层进行渲染，假如该层的BitmapData一直不变，
 		 * 那么该层永远不会被渲染。
 		 */
 		private var needRender:Boolean;
 		
-		private var renderItemList:Vector.<RenderItem>;
+		private var itemList:Vector.<RenderItem>;
 		
 		/**
 		 * 当前层的bitmapData
 		 */
-		private var bmd:BitmapData;
+		private var $bitmapData:BitmapData;
 		
 		private var renderOffset:Point;
 		
@@ -36,7 +37,7 @@ package org.libra.bmpEngine {
 		private var bitmapFrame:BitmapFrame;
 		
 		public function RenderLayer() {
-			renderItemList = new Vector.<RenderItem>();
+			itemList = new Vector.<RenderItem>();
 			renderOffset = new Point();
 			$visible = true;
 			needRender = true;
@@ -52,18 +53,18 @@ package org.libra.bmpEngine {
 		 * @param	h 高度
 		 */
 		public function setSize(w:int, h:int):void {
-			if (bmd) bmd.dispose();
+			if ($bitmapData) $bitmapData.dispose();
 			if (w > 0 && h > 0) {
-				bmd = new BitmapData(w, h, true, 0);
+				$bitmapData = new BitmapData(w, h, true, 0);
 				setNeedRender(true);
 			}
 		}
 		
 		public function setNeedRender(boolean:Boolean):void {
 			this.needRender = boolean;
-			if (needRender) {
-				if (bitmapFrame) this.bitmapFrame.setNeedRender(true);
-			}
+			//if (needRender) {
+				//if (bitmapFrame) this.bitmapFrame.setNeedRender(true);
+			//}
 		}
 		
 		public function isNeedRender():Boolean {
@@ -75,30 +76,30 @@ package org.libra.bmpEngine {
 		}
 		
 		public function addItemAt(renderItem:RenderItem, index:int = -1):void {
-			if (this.renderItemList.indexOf(renderItem) == -1) {
-				index = index < 0 ? renderItemList.length : (index > renderItemList.length ? renderItemList.length : index);
-				this.renderItemList.splice(index, 0, renderItem);
+			if (this.itemList.indexOf(renderItem) == -1) {
+				index = index < 0 ? itemList.length : (index > itemList.length ? itemList.length : index);
+				this.itemList.splice(index, 0, renderItem);
 				renderItem.setRenderLayer(this);
 				setNeedRender(true);
 			}
 		}
 		
 		public function removeItem(renderItem:RenderItem):void {
-			removeItemAt(this.renderItemList.indexOf(renderItem));
+			removeItemAt(this.itemList.indexOf(renderItem));
 		}
 		
 		public function removeItemAt(index:int):void {
-			if (index < 0 || index >= this.renderItemList.length) return;
-			this.renderItemList.splice(index, 1);
+			if (index < 0 || index >= this.itemList.length) return;
+			this.itemList.splice(index, 1);
 			setNeedRender(true);
 		}
 		
 		public function clearItems():void {
-			for (var i:* in this.renderItemList) {
-				renderItemList[i].setRenderLayer(null);
-				renderItemList[i].dispose();
+			for (var i:* in this.itemList) {
+				itemList[i].setRenderLayer(null);
+				itemList[i].dispose();
 			}
-			renderItemList.length = 0;
+			itemList.length = 0;
 			this.setNeedRender(true);
 		}
 		
@@ -109,15 +110,15 @@ package org.libra.bmpEngine {
 			if (needRender) {
 				var item:RenderItem;
 				var bmd:BitmapData;
-				this.bmd.fillRect(this.bmd.rect, 0x00000000);
-				for (var i:* in this.renderItemList) {
-					item = renderItemList[i];
+				this.$bitmapData.fillRect(this.$bitmapData.rect, 0x00000000);
+				for (var i:* in this.itemList) {
+					item = itemList[i];
 					if (item.visible) {
 						renderOffset.x = item.x;
 						renderOffset.y = item.y;
-						bmd = item.getBmd();
+						bmd = item.bitmapData;
 						if(bmd)
-							this.bmd.copyPixels(bmd, bmd.rect, renderOffset, null, null, true);
+							this.$bitmapData.copyPixels(bmd, bmd.rect, renderOffset, null, null, true);
 						item.setNeedRender(false);
 					}
 				}
@@ -129,8 +130,8 @@ package org.libra.bmpEngine {
 		 * 获取层的BitmapData
 		 * @return
 		 */
-		public function getBmd():BitmapData {
-			return this.bmd;
+		public function get bitmapData():BitmapData {
+			return this.$bitmapData;
 		}
 		
 		public function setBitmapFrame(bitmapFrame:BitmapFrame):void {
@@ -139,9 +140,9 @@ package org.libra.bmpEngine {
 		
 		public function dispose():void {
 			clearItems();
-			if (this.bmd) {
-				this.bmd.dispose();
-				this.bmd = null;
+			if (this.$bitmapData) {
+				this.$bitmapData.dispose();
+				this.$bitmapData = null;
 			}
 		}
 		

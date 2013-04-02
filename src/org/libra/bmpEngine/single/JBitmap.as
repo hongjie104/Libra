@@ -1,4 +1,4 @@
-package org.libra.bmpEngine {
+package org.libra.bmpEngine.single {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;

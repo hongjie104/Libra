@@ -3,8 +3,8 @@ package org.libra.bmpEngine.utils {
 	import flash.display.MovieClip;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	import org.libra.bmpEngine.BitmapFrame;
-	import org.libra.bmpEngine.JBitmap;
+	import org.libra.bmpEngine.single.BitmapFrame;
+	import org.libra.bmpEngine.single.JBitmap;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.HashMap;
 	/**
@@ -23,23 +23,23 @@ package org.libra.bmpEngine.utils {
 		
 		private static var instance:JBitmapUtil;
 		
-		private var bitmapFramePool:HashMap;
+		//private var bitmapFramePool:HashMap;
 		
 		public function JBitmapUtil(singleton:Singleton) {
-			bitmapFramePool = new HashMap();
+			//bitmapFramePool = new HashMap();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function getBitmapFrameList(key:*):Vector.<BitmapFrame> {
-			return this.bitmapFramePool.get(key);
-		}
-		
-		public function putBitmapFrameList(key:*, bitmapFrameList:Vector.<BitmapFrame>):void {
-			this.bitmapFramePool.put(key, bitmapFrameList);
-		}
+		//public function getBitmapFrameList(key:*):Vector.<BitmapFrame> {
+			//return this.bitmapFramePool.get(key);
+		//}
+		//
+		//public function putBitmapFrameList(key:*, bitmapFrameList:Vector.<BitmapFrame>):void {
+			//this.bitmapFramePool.put(key, bitmapFrameList);
+		//}
 		
 		/**
 		 * 从序列图创建
@@ -130,4 +130,8 @@ package org.libra.bmpEngine.utils {
 	}
 
 }
-class Singleton{}
+
+/**
+ * @private
+ */
+final class Singleton{}

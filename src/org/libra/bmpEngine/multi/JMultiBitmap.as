@@ -1,4 +1,4 @@
-package org.libra.bmpEngine {
+package org.libra.bmpEngine.multi {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
@@ -52,8 +52,6 @@ package org.libra.bmpEngine {
 			this.addChild(baseBitmap);
 			layerList = new Vector.<RenderLayer>();
 			needRender = true;
-			
-			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -77,7 +75,7 @@ package org.libra.bmpEngine {
 			if (this.layerList.indexOf(l) == -1) {
 				index = index < 0 ? this.layerList.length : (index > layerList.length ? layerList.length : index);
 				this.layerList.splice(index, 0, l);
-				l.setMultiBitmap(this);
+				//l.setMultiBitmap(this);
 				l.setSize($width, $height);
 				needRender = true;
 			}
@@ -123,7 +121,7 @@ package org.libra.bmpEngine {
 					layer = layerList[i];
 					layer.render();
 					if (layer.visible) {
-						var bmd:BitmapData = layer.getBmd();
+						var bmd:BitmapData = layer.bitmapData;
 						if(bmd)
 							baseBitmap.bitmapData.copyPixels(bmd, bmd.rect, ZERO_POINT, null, null, true);
 					}
@@ -137,7 +135,7 @@ package org.libra.bmpEngine {
 			this.baseBitmap.bitmapData.dispose();
 			var l:int = layerList.length;
 			while(--l > -1)
-				layerList[i].dispose();
+				layerList[l].dispose();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -147,15 +145,13 @@ package org.libra.bmpEngine {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		private function onAddToStage(e:Event):void {
-			removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
 			Tick.getInstance().addItem(this);
 		}
 		
-		private function onRemoveFromStage(e:Event):void {
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
-			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+		override protected function onRemoveFromStage(e:Event):void {
+			super.onRemoveFromStage(e);
 			Tick.getInstance().removeItem(this);
 		}
 	}
