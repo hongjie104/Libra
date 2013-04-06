@@ -1,7 +1,8 @@
 package org.libra.utils {
-	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import org.libra.displayObject.interfaces.ISprite;
 	
 	/**
      * 四叉树 ，主要用于渲染动态地表和建筑
@@ -43,7 +44,7 @@ package org.libra.utils {
          * 添加可视对象到树中
          * @param obj 类型为DisplayObjects
          */
-        public function insertObj( obj:DisplayObject ):void{
+        public function insertObj( obj:ISprite ):void{
             var sonNode:Node = searchNodeByPoint(new Point(obj.x,obj.y) , _mainNode );
             sonNode.objVec.push( obj );
         }
@@ -52,7 +53,7 @@ package org.libra.utils {
          * 从树中删除对象
          * @param obj
          */
-        public function deleteObj (obj:DisplayObject):void{
+        public function deleteObj (obj:ISprite):void{
             var sonNode:Node = searchNodeByPoint(new Point(obj.x,obj.y) , _mainNode );
             for(var i:int = 0;i<sonNode.objVec.length ; i++){
                 if(sonNode.objVec[i]==obj){
@@ -68,8 +69,8 @@ package org.libra.utils {
          * @param exact true表示精确查询
          * @return 该区域的显示对象集合
          */
-        public function searchByRect( rect:Rectangle , exact:Boolean ):Vector.<DisplayObject>{
-            var objVec:Vector.<DisplayObject> = new Vector.<DisplayObject>();
+        public function searchByRect( rect:Rectangle , exact:Boolean ):Vector.<ISprite>{
+            var objVec:Vector.<ISprite> = new Vector.<ISprite>();
             if(_mainNode!=null){
                 queryAndAdd(objVec , rect , _mainNode ,exact ) ;
             }
@@ -115,7 +116,7 @@ package org.libra.utils {
          * @param rect 范围
          * @param tempNode
          */
-        private function queryAndAdd(objVec:Vector.<DisplayObject>, rect:Rectangle, tempNode:Node , exact:Boolean ):void { 
+        private function queryAndAdd(objVec:Vector.<ISprite>, rect:Rectangle, tempNode:Node , exact:Boolean ):void { 
             //如果没有交集，则返回
             if (!rect.intersects(tempNode.rect)) { 
                 return;
@@ -130,7 +131,7 @@ package org.libra.utils {
                 }
             }else{
                 //如果是最后的节点，则把里面的对象加入数组中
-                for each(var obj:DisplayObject in tempNode.objVec){
+                for each(var obj:ISprite in tempNode.objVec){
                     if(exact){
                         var sonRect:Rectangle = new Rectangle(obj.x,obj.y,obj.width,obj.height) ;
                         if(sonRect.intersects(rect)){

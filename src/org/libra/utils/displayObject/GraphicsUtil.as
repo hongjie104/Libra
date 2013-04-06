@@ -2,6 +2,9 @@ package org.libra.utils.displayObject {
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.geom.Point;
+	
+	import org.libra.utils.MathUtil;
+
 	/**
 	 * <p>
 	 * Description
@@ -58,21 +61,26 @@ package org.libra.utils.displayObject {
 		 * @param	tileWidth 小菱形的宽度
 		 * @param	color
 		 */
-		public static function drawDiamondNet(g:Graphics, topPoint:Point, size:int = 10, tileWidth:int = 30, color:int = 0xff0000):void { 
-			var tileHeight:int = tileWidth >> 1;
-			var p:Point = new Point();
+		public static function drawDiamondNet(g:Graphics, topPoint:Point, rows:int = 10, cols:int = 10, tileWidth:int = 30, color:int = 0xff0000):void { 
+			const tileHeight:int = tileWidth >> 1;
+			const p:Point = new Point();
+			var endX:Number = cols * tileWidth / 2;
+			var endY:Number = endX / 2;
 			g.clear();
 			g.lineStyle(1, color);
-			for (var i:int = 0; i < size; i++ ) {
+			for (var i:int = 0; i < rows + 1; i++ ) {
 				p.x = topPoint.x - tileWidth / 2 * i;
 				p.y = topPoint.y + tileHeight / 2 * i;
 				g.moveTo(p.x, p.y);
-				g.lineTo(size * tileWidth / 2 + p.x, size * tileHeight / 2 + p.y);
-				
+				g.lineTo(endX + p.x, endY + p.y);
+			}
+			endX = rows * tileWidth / 2;
+			endY = endX / 2;
+			for(i = 0; i < cols + 1; i+=1){
 				p.x = topPoint.x + tileWidth / 2 * i;
 				p.y = topPoint.y + tileHeight / 2 * i;
 				g.moveTo(p.x, p.y);
-				g.lineTo(p.x - (size * tileWidth / 2), p.y + (size * tileHeight / 2));
+				g.lineTo(p.x - endX, p.y + endY);
 			}
 		}
 		
