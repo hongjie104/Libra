@@ -1,6 +1,9 @@
 package org.libra.bmpEngine.multiTest {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.geom.Point;
 	import org.libra.displayObject.JSprite;
+	import org.libra.tick.ITickable;
 	
 	/**
 	 * <p>
@@ -14,77 +17,102 @@ package org.libra.bmpEngine.multiTest {
 	 * @version 1.0
 	 * @see
 	 */
-	public class JMultiBitmapTest extends JSprite {
+	public class JMultiBitmapTest extends Bitmap implements ITickable {
 		
-		protected var $totalFrame:int;
+		static public const ZERO_POINT:Point = new Point();
 		
-		protected var $frame:int;
+		//protected var baseBitmap:Bitmap;
 		
-		protected var $playing:Boolean;
-		
-		protected var baseBitmap:Bitmap;
+		protected var $numChildren:int;
 		
 		private var layerList:Vector.<RenderLayerTest>;
 		
-		public function JMultiBitmapTest() {
+		protected var $updated:Boolean;
+		
+		public function JMultiBitmapTest(width:int, height:int) { 
 			super();
-			baseBitmap = new Bitmap();
-			this.addChild(baseBitmap);
+			//baseBitmap = new Bitmap(new BitmapData(width, height, true, 0x0));
+			//this.addChild(baseBitmap);
+			bitmapData = new BitmapData(width, height, true, 0x0);
+			layerList = new Vector.<RenderLayerTest>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function gotoAndPlay(frame:int):void {
-			this.frame = frame;
-			$playing = true;
+		public function setSize(width:int, height:int):void {
+			//if (this.baseBitmap.bitmapData) baseBitmap.bitmapData.dispose();
+			//baseBitmap.bitmapData = new BitmapData(width, height, true, 0x0);
+			if (this.bitmapData) bitmapData.dispose();
+			bitmapData = new BitmapData(width, height, true, 0x0);
+			$updated = true;
 		}
 		
-		public function set frame(val:int):void {
-			if (this.$frame != val) {
-				this.$frame = val;
+		public function addLayer(layer:RenderLayerTest):void {
+			this.layerList.push(layer);
+			$updated = true;
+			$numChildren += 1;
+		}
+		
+		public function addLayerAt(layer:RenderLayerTest, index:int = -1):void {
+			if (index < 0) layerList.unshift(layer);
+			else if (index > $numChildren) layerList.push(layer);
+			else layerList.splice(index, 0, layer);
+			$numChildren += 1;
+			$updated = true;
+		}
+		
+		public function removeLayer(layer:RenderLayerTest, dispose:Boolean = false):void { 
+			const index:int = this.layerList.indexOf(layer);
+			if (index != -1) {
+				layerList.splice(index, 1);
+				$numChildren--;
+				$updated = true;
+				if (dispose) layer.dispose();
 			}
 		}
 		
-		public function get playing():Boolean {
-			return $playing;
-		}
-		
-		public function set playing(val:Boolean):void {
-			this.$playing = val;
+		public function removeLayerAt(index:int, dispose:Boolean = false):void { 
+			var layer:RenderLayerTest;
+			if (index > $numChildren) layer = layerList.pop();
+			else if (index < 0) layer = layerList.shift();
+			else layer = layerList.splice(index, 1)[0];
+			$numChildren--;
+			$updated = true;
+			if (dispose) layer.dispose();
 		}
 		
 		public function render():void {
-			/*var rebuild:Boolean = false;
-                        
-                        for each (var clayer:RenderLayer in layers)
-                        {
-                                clayer.render();
-                                
-                                if (clayer.hasUpdated())
-                                {
-                                        rebuild = true;
-                                        continue;
-                                }
-                        }
-                        
-                        if (rebuild)
-                        {
-                                bitmapData.lock();
-                                
-                                if ( !hasBG )
-                                {
-                                        bitmapData.fillRect( rect, 0x0 );
-                                }
-                                
-                                for each (var layer:RenderLayer in layers)
-                                {
-                                        bitmapData.copyPixels( layer.bitmapData, layer.rect, ZERO_POINT, null, null, true );
-                                }
-                                
-                                bitmapData.unlock();
-                        }*/
+			var needRender:Boolean;
+			var l:int = $numChildren;
+			var layer:RenderLayerTest;
+			while (--l > -1) {
+				layer = this.layerList[l];
+				layer.render();
+				if (layer.updated) {
+					needRender = true;
+				}
+			}
+			if (needRender || $updated) {
+				bitmapData.lock();
+				bitmapData.fillRect(bitmapData.rect, 0x00000000);
+				for (var i:int = 0; i < $numChildren; i += 1) {
+					layer = layerList[i];
+					bitmapData.copyPixels(layer.bitmapData, layer.rect, ZERO_POINT, null, null, true);
+					layer.updated = false;
+				}
+				bitmapData.unlock();
+				/*baseBitmap.bitmapData = layerList[0].bitmapData;
+				layerList[0].updated = false;*/
+				$updated = false;
+			}
+		}
+		
+		/* INTERFACE org.libra.tick.ITickable */
+		
+		public function tick(interval:int):void {
+			render();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

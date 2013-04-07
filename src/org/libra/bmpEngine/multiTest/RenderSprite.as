@@ -14,7 +14,7 @@ package org.libra.bmpEngine.multiTest {
 	 * @version 1.0
 	 * @see
 	 */
-	public class RenderItemTest {
+	public class RenderSprite {
 		
 		protected var $rect:Rectangle;
 		
@@ -34,11 +34,12 @@ package org.libra.bmpEngine.multiTest {
 		
 		protected var $bitmapData:BitmapData;
 		
-		protected var $rebuild:Boolean;
+		protected var $updated:Boolean;
 		
-		public function RenderItemTest(bitmapData:BitmapData) {
+		public function RenderSprite(bitmapData:BitmapData) {
 			$bitmapData = bitmapData;
 			$rect = $bitmapData.rect;
+			$visible = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -52,7 +53,7 @@ package org.libra.bmpEngine.multiTest {
 		public function set x(val:int):void {
 			if ($x != val) {
 				$x = val;
-				$rebuild = true;
+				$updated = true;
 			}
 		}
 		
@@ -63,7 +64,7 @@ package org.libra.bmpEngine.multiTest {
 		public function set y(val:int):void {
 			if ($y != val) {
 				$y = val;
-				$rebuild = true;
+				$updated = true;
 			}
 		}
 		
@@ -95,15 +96,15 @@ package org.libra.bmpEngine.multiTest {
 		
 		public function set bitmapData(value:BitmapData):void {
 			$bitmapData = value;
-			$rebuild = true;
+			$updated = true;
 		}
 		
-		public function get rebuild():Boolean {
-			return $rebuild;
+		public function get updated():Boolean {
+			return $updated;
 		}
 		
-		public function set rebuild(value:Boolean):void {
-			$rebuild = value;
+		public function set updated(value:Boolean):void {
+			$updated = value;
 		}
 		
 		public function get width():int {
@@ -119,14 +120,17 @@ package org.libra.bmpEngine.multiTest {
 		}
 		
 		public function set visible(value:Boolean):void {
-			$visible = value;
+			if ($visible != value) {
+				$visible = value;
+				$updated = true;
+			}
 		}
 		
 		public function get rect():Rectangle {
 			return $rect;
 		}
 		
-		public function dispose():Boolean {
+		public function dispose():void {
 			if ($bitmapData) $bitmapData.dispose();
 			$bitmapData = null;
 		}
@@ -143,7 +147,7 @@ package org.libra.bmpEngine.multiTest {
 			scaledBitmapData.draw($bitmapData, matrix);
 			bitmapData = scaledBitmapData.clone();
 			scaledBitmapData.dispose();
-			$rebuild = true;
+			$updated = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

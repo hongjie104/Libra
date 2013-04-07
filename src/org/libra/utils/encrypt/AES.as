@@ -322,8 +322,7 @@ package org.libra.utils.encrypt {
 			// rotate 4-byte word w left by one byte
 			var tmp:int = w[0];
 			for (var i:int = 0;i < 3;i++) w[i] = w[i + 1];
-			w[3] = tmp;
-			
+				w[3] = tmp;
 			return w;
 		}
 		
