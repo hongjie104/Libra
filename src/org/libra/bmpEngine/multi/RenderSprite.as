@@ -1,4 +1,4 @@
-package org.libra.bmpEngine.multiTest {
+package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
@@ -139,7 +139,7 @@ package org.libra.bmpEngine.multiTest {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		private function scale():void {
+		protected function scale():void {
 			const matrix:Matrix = new Matrix();
 			matrix.scale(this.$scaleX, this.$scaleY);
 			

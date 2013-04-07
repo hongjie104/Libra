@@ -1,164 +1,157 @@
 package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
-	import org.libra.bmpEngine.single.BitmapFrame;
+	import flash.geom.Rectangle;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class RenderLayer
-	 * @author Eddie
+	 * @class RenderLayerTest
+	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 09/09/2012
+	 * @date 04/01/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public final class RenderLayer {
+	public class RenderLayer {
 		
-		/**
-		 * itemList中是否有任何RenderItem的bitmapData发生了变化
-		 * 默认为true。否则RenderItem一开始不会对该层进行渲染，假如该层的BitmapData一直不变，
-		 * 那么该层永远不会被渲染。
-		 */
-		private var needRender:Boolean;
+		private static const HELP_POINT:Point = new Point();
 		
-		private var itemList:Vector.<RenderItem>;
+		protected var $rect:Rectangle;
 		
-		/**
-		 * 当前层的bitmapData
-		 */
-		private var $bitmapData:BitmapData;
+		protected var itemList:Vector.<RenderSprite>;
 		
-		private var renderOffset:Point;
+		protected var $bitmapData:BitmapData;
 		
-		private var $visible:Boolean;
+		protected var $updated:Boolean;
 		
-		private var bitmapFrame:BitmapFrame;
+		protected var $numChildren:int;
 		
-		public function RenderLayer() {
-			itemList = new Vector.<RenderItem>();
-			renderOffset = new Point();
+		protected var $visible:Boolean;
+		
+		public function RenderLayer(width:int, height:int) { 
+			itemList = new Vector.<RenderSprite>();
+			$bitmapData = new BitmapData(width, height, true, 0x0);
+			$rect = $bitmapData.rect;
 			$visible = true;
-			needRender = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		/**
-		 * 设置该层大小。在JBitmap的addLayer（）方法中自动调用
-		 * @param	w 宽度
-		 * @param	h 高度
-		 */
-		public function setSize(w:int, h:int):void {
-			if ($bitmapData) $bitmapData.dispose();
-			if (w > 0 && h > 0) {
-				$bitmapData = new BitmapData(w, h, true, 0);
-				setNeedRender(true);
+		public function get visible():Boolean {
+			return $visible;
+		}
+		
+		public function setvisible(val:Boolean):void {
+			if ($visible != val) {
+				$visible = val;
+				$updated = true;
 			}
 		}
 		
-		public function setNeedRender(boolean:Boolean):void {
-			this.needRender = boolean;
-			//if (needRender) {
-				//if (bitmapFrame) this.bitmapFrame.setNeedRender(true);
-			//}
+		public function get bitmapData():BitmapData {
+			return $bitmapData;
 		}
 		
-		public function isNeedRender():Boolean {
-			return this.needRender;
+		public function get rect():Rectangle {
+			return $rect;
 		}
 		
-		public function addItem(renderItem:RenderItem):void {
-			this.addItemAt(renderItem);
+		public function get updated():Boolean {
+			return $updated;
 		}
 		
-		public function addItemAt(renderItem:RenderItem, index:int = -1):void {
-			if (this.itemList.indexOf(renderItem) == -1) {
-				index = index < 0 ? itemList.length : (index > itemList.length ? itemList.length : index);
-				this.itemList.splice(index, 0, renderItem);
-				renderItem.setRenderLayer(this);
-				setNeedRender(true);
+		public function set updated(value:Boolean):void {
+			$updated = value;
+		}
+		
+		public function addItem(item:RenderSprite):void {
+			if (itemList.indexOf(item) == -1) {
+				itemList.push(item);
+				$numChildren += 1;
 			}
 		}
 		
-		public function removeItem(renderItem:RenderItem):void {
-			removeItemAt(this.itemList.indexOf(renderItem));
+		public function addItemAt(item:RenderSprite, index:int = -1):void {
+			if (index < 1) itemList.unshift(item);
+			else if (index > $numChildren) itemList.push(item);
+			else itemList.splice(index, 0, item);
+			$numChildren += 1;
 		}
 		
-		public function removeItemAt(index:int):void {
-			if (index < 0 || index >= this.itemList.length) return;
-			this.itemList.splice(index, 1);
-			setNeedRender(true);
-		}
-		
-		public function clearItems():void {
-			for (var i:* in this.itemList) {
-				itemList[i].setRenderLayer(null);
-				itemList[i].dispose();
+		public function removeItem(item:RenderSprite, dispose:Boolean = false):void { 
+			const index:int = itemList.indexOf(item);
+			if (index != -1) {
+				itemList.splice(index, 1);
+				$numChildren--;
+				if (dispose) item.dispose();
 			}
-			itemList.length = 0;
-			this.setNeedRender(true);
 		}
 		
-		/**
-		 * 渲染
-		 */
+		public function removeItemAt(index:int = 0, dispose:Boolean = false):void {
+			var item:RenderSprite;
+			if (index > $numChildren) item = itemList.pop();
+			else if (index < 0) item = itemList.shift();
+			else item = itemList.splice(index, 1)[0];
+			$numChildren--;
+			if (dispose) item.dispose();
+		}
+		
+		public function clearItem(dispose:Boolean = false):void {
+			if (dispose) {
+				const l:int = $numChildren;
+				while (--l > -1)
+					itemList[l].dispose();
+			}
+			this.itemList.length = 0;
+			$numChildren = 0;
+		}
+		
+		public function swapDepths(item1:RenderSprite, item2:RenderSprite):void { 
+			const index1:int = itemList.indexOf(item1);
+			if (index1 > -1) {
+				const index2:int = itemList.indexOf(item2);
+				if (index2 > -1) {
+					// swap their data
+					itemList[index1] = item2;
+					itemList[index2] = item1;
+				}
+			}
+		}
+		
 		public function render():void {
+			var l:int = $numChildren;
+			var needRender:Boolean = false;
+			while (--l > -1) {
+				if (itemList[l].updated) {
+					needRender = true;
+					break;
+				}
+			}
 			if (needRender) {
-				var item:RenderItem;
-				var bmd:BitmapData;
-				this.$bitmapData.fillRect(this.$bitmapData.rect, 0x00000000);
-				for (var i:* in this.itemList) {
+				var item:RenderSprite;
+				$bitmapData.lock();
+				$bitmapData.fillRect($bitmapData.rect, 0x00000000);
+				for (var i:int = 0; i < $numChildren; i += 1) {
 					item = itemList[i];
 					if (item.visible) {
-						renderOffset.x = item.x;
-						renderOffset.y = item.y;
-						bmd = item.bitmapData;
-						if(bmd)
-							this.$bitmapData.copyPixels(bmd, bmd.rect, renderOffset, null, null, true);
-						item.setNeedRender(false);
+						HELP_POINT.x = item.x;
+						HELP_POINT.y = item.y;
+						$bitmapData.copyPixels(item.bitmapData, item.rect, HELP_POINT, null, null, true);
 					}
+					item.updated = false;
 				}
-				needRender = false;
+				$bitmapData.unlock();
+				
+				$updated = true;
 			}
-		}
-		
-		/**
-		 * 获取层的BitmapData
-		 * @return
-		 */
-		public function get bitmapData():BitmapData {
-			return this.$bitmapData;
-		}
-		
-		public function setBitmapFrame(bitmapFrame:BitmapFrame):void {
-			this.bitmapFrame = bitmapFrame;
 		}
 		
 		public function dispose():void {
-			clearItems();
-			if (this.$bitmapData) {
-				this.$bitmapData.dispose();
-				this.$bitmapData = null;
-			}
-		}
-		
-		/*-----------------------------------------------------------------------------------------
-		Getters ans setters
-		-------------------------------------------------------------------------------------------*/
-		
-		public function get visible():Boolean {
-			return this.$visible;
-		}
-		
-		public function set visible(value:Boolean):void {
-			if (this.$visible != value) {
-				this.$visible = value;
-				this.setNeedRender(true);
-			}
+			clearItem(true);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

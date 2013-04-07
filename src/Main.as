@@ -1,9 +1,7 @@
 package {
-	import com.greensock.loading.SWFLoader;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -11,14 +9,10 @@ package {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.net.URLRequest;
-	import flash.ui.Keyboard;
 	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.multi.JMultiBitmap;
-	import org.libra.bmpEngine.multi.RenderItem;
 	import org.libra.bmpEngine.multi.RenderLayer;
-	import org.libra.bmpEngine.multiTest.JMultiBitmapTest;
-	import org.libra.bmpEngine.multiTest.RenderLayerTest;
-	import org.libra.bmpEngine.multiTest.RenderMovieCelip;
+	import org.libra.bmpEngine.multi.RenderMovieCelip;
 	import org.libra.bmpEngine.single.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
 	import org.libra.game.components.animatable.BitmapAnimatable;
@@ -129,9 +123,9 @@ package {
 			var h:int = source.height >> 3;
 			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
 			
-			for (var i:int = 0; i < 200; i += 1) {
-				var bitmap:JMultiBitmapTest = new JMultiBitmapTest(w, h);
-				var layer:RenderLayerTest = new RenderLayerTest(w, h);
+			for (var i:int = 0; i < 500; i += 1) {
+				var bitmap:JMultiBitmap = new JMultiBitmap(w, h);
+				var layer:RenderLayer = new RenderLayer(w, h);
 				var sprite:RenderMovieCelip = new RenderMovieCelip(bmdList);
 				//sprite.frameRate = 12;
 				sprite.play();

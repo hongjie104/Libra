@@ -1,141 +1,124 @@
 package org.libra.bmpEngine.multi {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.events.Event;
 	import flash.geom.Point;
-	import org.libra.displayObject.JSprite;
 	import org.libra.tick.ITickable;
-	import org.libra.tick.Tick;
+	
 	/**
 	 * <p>
-	 * 有很多层的可视对象
+	 * Description
 	 * </p>
 	 *
-	 * @class JMultiBitmap
-	 * @author Eddie
+	 * @class JMultiBitmapTest
+	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 09/09/2012
+	 * @date 04/01/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JMultiBitmap extends JSprite implements ITickable {
+	public class JMultiBitmap extends Bitmap implements ITickable {
 		
-		/**
-		 * 公共静态常量：原点，x和y都是0的点。
-		 */
-		private static const ZERO_POINT:Point = new Point();
+		static public const ZERO_POINT:Point = new Point();
 		
-		/**
-		 * 层次数组。
-		 */
+		//protected var baseBitmap:Bitmap;
+		
+		protected var $numChildren:int;
+		
 		private var layerList:Vector.<RenderLayer>;
 		
-		/**
-		 * 图片的宽度
-		 */
-		private var $width:int;
+		protected var $updated:Boolean;
 		
-		/**
-		 * 图片的高度
-		 */
-		private var $height:int;
+		protected var $width:int;
 		
-		private var needRender:Boolean;
-		
-		private var baseBitmap:Bitmap;
+		protected var $height:int;
 		
 		public function JMultiBitmap(width:int, height:int) { 
 			super();
-			this.$width = width;
-			this.$height = height;
-			baseBitmap = new Bitmap(new BitmapData($width, $height, true, 0))
-			this.addChild(baseBitmap);
+			//baseBitmap = new Bitmap(new BitmapData(width, height, true, 0x0));
+			//this.addChild(baseBitmap);
+			bitmapData = new BitmapData(width, height, true, 0x0);
+			$width = width;
+			$height = height;
 			layerList = new Vector.<RenderLayer>();
-			needRender = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function hitTest(point:Point):Boolean { 
-			var bmd:BitmapData = baseBitmap.bitmapData;
-			return bmd ? bmd.hitTest(new Point(this.x + baseBitmap.x, this.y + baseBitmap.y), 255, point) : false;
-		}
-		
-		/**
-		 * 增加层
-		 * @param	l 将要被增加的层
-		 */
-		public function addLayer(l:RenderLayer):void {
-			addLayerAt(l);
-		}
-		
-		public function addLayerAt(l:RenderLayer, index:int = -1):void {
-			if (this.layerList.indexOf(l) == -1) {
-				index = index < 0 ? this.layerList.length : (index > layerList.length ? layerList.length : index);
-				this.layerList.splice(index, 0, l);
-				//l.setMultiBitmap(this);
-				l.setSize($width, $height);
-				needRender = true;
+		public function setSize(width:int, height:int):void {
+			//if (this.baseBitmap.bitmapData) baseBitmap.bitmapData.dispose();
+			//baseBitmap.bitmapData = new BitmapData(width, height, true, 0x0);
+			if ($width != width || $height != height) {
+				$width = width; $height = $height;
+				if (this.bitmapData) bitmapData.dispose();
+				bitmapData = new BitmapData(width, height, true, 0x0);
+				$updated = true;
 			}
 		}
 		
-		/**
-		 * 移除层
-		 * @param	l 将要被移除的层
-		 */
-		public function removeLayer(l:RenderLayer):void {
-			removeLayerAt(this.layerList.indexOf(l));
+		public function addLayer(layer:RenderLayer):void {
+			this.layerList.push(layer);
+			$updated = true;
+			$numChildren += 1;
 		}
 		
-		public function removeLayerAt(index:int):void {
-			if (index < 0 || index >= this.layerList.length) return;
-			this.layerList.splice(index, 1);
-			needRender = true;
+		public function addLayerAt(layer:RenderLayer, index:int = -1):void {
+			if (index < 0) layerList.unshift(layer);
+			else if (index > $numChildren) layerList.push(layer);
+			else layerList.splice(index, 0, layer);
+			$numChildren += 1;
+			$updated = true;
 		}
 		
-		public function setNeedRender(boolean:Boolean):void {
-			this.needRender = boolean;
-		}
-		
-		public function setSize(w:int, h:int):void {
-			if (this.baseBitmap.bitmapData) baseBitmap.bitmapData.dispose();
-			$width = w;
-			$height = h;
-			baseBitmap.bitmapData = new BitmapData(w, h, true, 0);
-			for each(var l:RenderLayer in layerList) {
-				l.setSize(w, h);	
+		public function removeLayer(layer:RenderLayer, dispose:Boolean = false):void { 
+			const index:int = this.layerList.indexOf(layer);
+			if (index != -1) {
+				layerList.splice(index, 1);
+				$numChildren--;
+				$updated = true;
+				if (dispose) layer.dispose();
 			}
 		}
 		
-		/**
-		 * 渲染
-		 */
+		public function removeLayerAt(index:int, dispose:Boolean = false):void { 
+			var layer:RenderLayer;
+			if (index > $numChildren) layer = layerList.pop();
+			else if (index < 0) layer = layerList.shift();
+			else layer = layerList.splice(index, 1)[0];
+			$numChildren--;
+			$updated = true;
+			if (dispose) layer.dispose();
+		}
+		
+		/* INTERFACE org.libra.tick.ITickable */
+		
 		public function tick(interval:int):void {
-			if (needRender) {
-				this.baseBitmap.bitmapData.fillRect(baseBitmap.bitmapData.rect, 0x00000000);
-				var layer:RenderLayer;
-				var l:int = layerList.length;
-				for (var i:int = 0; i < l; i += 1) { 
-					layer = layerList[i];
-					layer.render();
-					if (layer.visible) {
-						var bmd:BitmapData = layer.bitmapData;
-						if(bmd)
-							baseBitmap.bitmapData.copyPixels(bmd, bmd.rect, ZERO_POINT, null, null, true);
-					}
-					layer.setNeedRender(false);
+			var needRender:Boolean;
+			var l:int = $numChildren;
+			var layer:RenderLayer;
+			while (--l > -1) {
+				layer = this.layerList[l];
+				layer.render();
+				if (layer.updated) {
+					needRender = true;
 				}
-				needRender = false;
 			}
-		}
-		
-		override public function dispose():void {
-			this.baseBitmap.bitmapData.dispose();
-			var l:int = layerList.length;
-			while(--l > -1)
-				layerList[l].dispose();
+			if (needRender || $updated) {
+				bitmapData.lock();
+				bitmapData.fillRect(bitmapData.rect, 0x00000000);
+				for (var i:int = 0; i < $numChildren; i += 1) {
+					layer = layerList[i];
+					if (layer.visible) {
+						bitmapData.copyPixels(layer.bitmapData, layer.rect, ZERO_POINT, null, null, true);
+						layer.updated = false;
+					}
+				}
+				bitmapData.unlock();
+				/*baseBitmap.bitmapData = layerList[0].bitmapData;
+				layerList[0].updated = false;*/
+				$updated = false;
+			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -145,15 +128,7 @@ package org.libra.bmpEngine.multi {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		override protected function onAddToStage(e:Event):void {
-			super.onAddToStage(e);
-			Tick.getInstance().addItem(this);
-		}
 		
-		override protected function onRemoveFromStage(e:Event):void {
-			super.onRemoveFromStage(e);
-			Tick.getInstance().removeItem(this);
-		}
 	}
 
 }

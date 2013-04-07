@@ -1,7 +1,6 @@
-package org.libra.bmpEngine.multiTest {
+package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import org.libra.tick.ITickable;
-	import org.libra.utils.MathUtil;
 	
 	/**
 	 * <p>
@@ -138,45 +137,6 @@ package org.libra.bmpEngine.multiTest {
 		/* INTERFACE org.libra.tick.ITickable */
 		
 		public function tick(interval:int):void {
-			
-			/*if ($loop == 0) return;
-			//if (useDefaultBmd) {
-				
-			//}else {
-				
-				while (frameTimer < 0) {
-					if (this.curFrame >= totalFrame) {
-						if ($loop > 0)
-							$loop--;
-						if ($loop == 0) {
-							this.frameTimer = 0;
-							this.doScript(curFrame);
-							movieEnd();
-							return;
-						}else {
-							this.curFrame = 0;
-							this.doScript(curFrame);
-							this.setBaseBitmapData(this.bitmapDataList ? this.bitmapDataList[curFrame] : null);
-							curFrame += 1;
-						}
-					}else {
-						this.doScript(curFrame);
-						this.setBaseBitmapData(this.bitmapDataList ? this.bitmapDataList[curFrame] : null);
-						curFrame += 1;
-					}
-					frameTimer += rateTimer;
-				}
-				//super.tick(interval);
-			//}*/
-			
-			//if (playing) {
-				//frameTimer -= interval;
-				//while (frameTimer < 0) {
-					//frameTimer += rateTimer;
-					//setCurrentFrame($currentFrame + 1);
-				//}
-			//}
-			
 			if (playing) {
 				if ($loop == 0) {
 					stop();
@@ -204,29 +164,6 @@ package org.libra.bmpEngine.multiTest {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
-		
-		//private function setCurrentFrame(frame:int):void {
-			//if ($currentFrame != frame) {
-				//frame = MathUtil.max(0, frame);
-				//if (frame > $totalFrames) {
-					//if ($loop > 0) {
-						//$loop--;
-						//if ($loop) {
-							//$currentFrame = frame % $totalFrames;
-						//}else {
-							//$currentFrame = $totalFrames;
-							//stop();
-						//}
-					//}else {
-						//$currentFrame = frame % $totalFrames;
-					//}
-				//}else {
-					//$currentFrame = frame;
-				//}
-				//this.$bitmapData = this.bmdList[$currentFrame];
-				//$updated = true;
-			//}
-		//}
 		
 		private function setCurrentFrame(frame:int):void {
 			if ($currentFrame != frame) {
