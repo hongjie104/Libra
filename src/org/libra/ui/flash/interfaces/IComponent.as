@@ -1,5 +1,7 @@
 package org.libra.ui.flash.interfaces {
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Stage;
+	import flash.events.Event;
 	import org.libra.displayObject.interfaces.ISprite;
 	
 	/**
@@ -20,6 +22,8 @@ package org.libra.ui.flash.interfaces {
 		
 		function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void;
 		
+		function dispatchEventForce(event:Event):Boolean;
+		
 		function initToolTip():void;
 		
 		function get x():Number;
@@ -39,6 +43,8 @@ package org.libra.ui.flash.interfaces {
 		function set height(val:Number):void;
 		
 		function get parent():DisplayObjectContainer;
+		
+		function get stage():Stage;
 	}
 	
 }

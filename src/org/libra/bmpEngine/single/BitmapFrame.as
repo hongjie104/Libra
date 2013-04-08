@@ -1,4 +1,4 @@
-package org.libra.bmpEngine {
+package org.libra.bmpEngine.single {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	/**

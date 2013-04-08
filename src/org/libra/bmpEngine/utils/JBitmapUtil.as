@@ -3,8 +3,8 @@ package org.libra.bmpEngine.utils {
 	import flash.display.MovieClip;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	import org.libra.bmpEngine.BitmapFrame;
-	import org.libra.bmpEngine.JBitmap;
+	import org.libra.bmpEngine.single.BitmapFrame;
+	import org.libra.bmpEngine.single.JBitmap;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.HashMap;
 	/**
@@ -130,4 +130,8 @@ package org.libra.bmpEngine.utils {
 	}
 
 }
-class Singleton{}
+
+/**
+ * @private
+ */
+final class Singleton{}

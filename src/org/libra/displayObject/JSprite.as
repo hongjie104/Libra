@@ -27,6 +27,7 @@ package org.libra.displayObject {
 		 * 构造函数
 		 */
 		public function JSprite() {
+			super();
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		

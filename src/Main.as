@@ -1,5 +1,4 @@
 package {
-	import com.greensock.loading.SWFLoader;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
@@ -10,13 +9,16 @@ package {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.net.URLRequest;
-	import flash.ui.Keyboard;
 	import org.libra.aStar.AStarTest;
-	import org.libra.bmpEngine.JBitmap;
+	import org.libra.bmpEngine.multi.JMultiBitmap;
+	import org.libra.bmpEngine.multi.RenderLayer;
+	import org.libra.bmpEngine.multi.RenderMovieCelip;
+	import org.libra.bmpEngine.single.JBitmap;
 	import org.libra.bmpEngine.utils.JBitmapUtil;
 	import org.libra.game.components.animatable.BitmapAnimatable;
 	import org.libra.game.components.animatable.BitmapFrame;
 	import org.libra.game.objects.Avatar;
+	import org.libra.tick.Tick;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.components.JAlert;
 	import org.libra.ui.flash.components.JButton;
@@ -39,6 +41,8 @@ package {
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.displayObject.GraphicsUtil;
+	import org.libra.utils.MathUtil;
+	import org.libra.utils.SystemStatus;
 	import starling.core.Starling;
 	import starling.events.Event;
 	
@@ -84,12 +88,15 @@ package {
 			//初始化UI
 			ResManager.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
-			testUI();
+			//testUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
 			//testStarlingUI();
+			testMultiBitmap();
+			
+			addChild(new SystemStatus());
 		}
 		
 		private function testStarlingUI():void {
@@ -110,6 +117,28 @@ package {
 			this.addChild(map);
 		}
 		
+		private function testMultiBitmap():void {
+			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
+			var w:int = source.width >> 3;
+			var h:int = source.height >> 3;
+			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
+			
+			for (var i:int = 0; i < 500; i += 1) {
+				var bitmap:JMultiBitmap = new JMultiBitmap(w, h);
+				var layer:RenderLayer = new RenderLayer(w, h);
+				var sprite:RenderMovieCelip = new RenderMovieCelip(bmdList);
+				//sprite.frameRate = 12;
+				sprite.play();
+				layer.addItem(sprite);
+				bitmap.addLayer(layer);
+				this.addChild(bitmap);
+				bitmap.x = MathUtil.random(0, stage.stageWidth);
+				bitmap.y = MathUtil.random(0, stage.stageHeight);
+				Tick.getInstance().addItem(bitmap);
+				Tick.getInstance().addItem(sprite);
+			}
+		}
+		
 		private function testBmpEngine():void {
 			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
 			
@@ -122,7 +151,7 @@ package {
 				for(var j:* in bmdList1)
 				frameList[count] = new BitmapFrame(count++, bmdList1[j]);
 			}
-			for (i = 0; i < 5; i += 1 ) {
+			for (i = 0; i < 200; i += 1 ) {
 				var avatar:Avatar = new Avatar();
 				var animatable:BitmapAnimatable = new BitmapAnimatable(avatar.getBitmap());
 				animatable.setFrameList(frameList);
@@ -142,26 +171,26 @@ package {
 				bmp.y = Math.random() * stage.stageHeight;
 			}
 			
-			//var source:MovieClip = new TestRole();
-			//for (var i:int = 0; i < 100; i += 1 ) {
-				//var bmp:JBitmap = JBitmapUtil.createFromMC(source);
-				//this.addChild(bmp);
-				//bmp.x = Math.random() * stage.stageWidth + 100;
-				//bmp.y = Math.random() * stage.stageHeight + 100;
-			//}
+			/*var source:MovieClip = new TestRole();
+			for (var i:int = 0; i < 100; i += 1 ) {
+				var bmp:JBitmap = JBitmapUtil.createFromMC(source);
+				this.addChild(bmp);
+				bmp.x = Math.random() * stage.stageWidth + 100;
+				bmp.y = Math.random() * stage.stageHeight + 100;
+			}*/
 			
-			//var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(100, 130, source)[0];
-			//var bitmap:JMultiBitmap = new JMultiBitmap(100, 130);
-			//var render:RenderLayer = new RenderLayer();
-			//var renderItem:RenderItem = new RenderItem(null, render);
-			//bitmap.addLayer(render);
-			//this.addChild(bitmap);
-			//renderItem.setBmd(bmdList[0]);
-			//var count:int = 0;
-			//this.addEventListener(Event.ENTER_FRAME, function(evt:Event):void { 
-					//if (count++ == 7) count = 0;
-					//renderItem.setBmd(bmdList[count]);
-				//} );
+			/*var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(100, 130, source)[0];
+			var bitmap:JMultiBitmap = new JMultiBitmap(100, 130);
+			var render:RenderLayer = new RenderLayer();
+			var renderItem:RenderItem = new RenderItem(null, render);
+			bitmap.addLayer(render);
+			this.addChild(bitmap);
+			renderItem.bitmapData = bmdList[0];
+			var count:int = 0;
+			this.addEventListener(flash.events.Event.ENTER_FRAME, function(evt:flash.events.Event):void { 
+					if (count++ == 4) count = 0;
+					renderItem.bitmapData = bmdList[count];
+				} );*/
 		}
 		
 		private function testUI():void {

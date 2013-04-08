@@ -88,12 +88,6 @@ package org.libra.game {
 			if (this.target) updateTargetPosition();
 		}
 		
-		//public function setSceneRectWidth(w:int):void {
-			//this.sceneRect.width = w;
-			//if(this.target)
-				//updateTargetPosition();
-		//}
-		
 		/*-----------------------------------------------------------------------------------------
 		   Private methods
 		-------------------------------------------------------------------------------------------*/

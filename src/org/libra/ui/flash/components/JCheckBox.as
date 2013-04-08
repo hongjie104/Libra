@@ -4,7 +4,6 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseButton;
 	import org.libra.ui.flash.core.state.BaseCheckBoxState;
 	import org.libra.ui.flash.core.state.ISelectState;
-	import org.libra.ui.flash.events.CheckBoxEvent;
 	import org.libra.ui.flash.theme.DefaultBtnTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
@@ -64,7 +63,7 @@ package org.libra.ui.flash.components {
 			super.refreshState();
 			if (selected) {
 				if (this.group) this.group.setCheckBoxUnselected(this);
-				dispatchEvent(new CheckBoxEvent(CheckBoxEvent.SELECTED));
+				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
