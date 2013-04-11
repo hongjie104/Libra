@@ -22,10 +22,6 @@ package org.libra.bmpEngine.multi {
 		
 		protected var $y:int;
 		
-		protected var $width:int;
-		
-		protected var $height:int
-		
 		protected var $scaleX:Number;
 		
 		protected var $scaleY:Number;
@@ -38,7 +34,7 @@ package org.libra.bmpEngine.multi {
 		
 		public function RenderSprite(bitmapData:BitmapData) {
 			$bitmapData = bitmapData;
-			$rect = $bitmapData.rect;
+			$rect = $bitmapData ? $bitmapData.rect : null;
 			$visible = true;
 		}
 		
@@ -96,6 +92,7 @@ package org.libra.bmpEngine.multi {
 		
 		public function set bitmapData(value:BitmapData):void {
 			$bitmapData = value;
+			$rect = $bitmapData.rect;
 			$updated = true;
 		}
 		
@@ -108,11 +105,11 @@ package org.libra.bmpEngine.multi {
 		}
 		
 		public function get width():int {
-			return $width;
+			return $rect ? $rect.width : 0;
 		}
 		
 		public function get height():int {
-			return $height;
+			return $rect ? $rect.height : 0;
 		}
 		
 		public function get visible():Boolean {
@@ -143,7 +140,7 @@ package org.libra.bmpEngine.multi {
 			const matrix:Matrix = new Matrix();
 			matrix.scale(this.$scaleX, this.$scaleY);
 			
-			const scaledBitmapData:BitmapData = new BitmapData($width * $scaleX, $height * $scaleY, true, 0x0);
+			const scaledBitmapData:BitmapData = new BitmapData(width * $scaleX, height * $scaleY, true, 0x0);
 			scaledBitmapData.draw($bitmapData, matrix);
 			bitmapData = scaledBitmapData.clone();
 			scaledBitmapData.dispose();

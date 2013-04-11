@@ -41,6 +41,13 @@ package org.libra.bmpEngine.multi {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		public function setSize(width:int, height:int):void {
+			if($bitmapData) $bitmapData.dispose();
+			$bitmapData = new BitmapData(width, height);
+			$rect = $bitmapData.rect;
+			$updated = true;
+		}
+		
 		public function get visible():Boolean {
 			return $visible;
 		}

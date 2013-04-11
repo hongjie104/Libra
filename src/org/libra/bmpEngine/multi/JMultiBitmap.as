@@ -1,8 +1,11 @@
 package org.libra.bmpEngine.multi {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.geom.Point;
+	
 	import org.libra.tick.ITickable;
+	import org.libra.tick.Tick;
 	
 	/**
 	 * <p>
@@ -40,6 +43,8 @@ package org.libra.bmpEngine.multi {
 			$width = width;
 			$height = height;
 			layerList = new Vector.<RenderLayer>();
+			
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -53,6 +58,8 @@ package org.libra.bmpEngine.multi {
 				$width = width; $height = $height;
 				if (this.bitmapData) bitmapData.dispose();
 				bitmapData = new BitmapData(width, height, true, 0x0);
+				for(var i:int = 0; i < this.$numChildren; i += 1)
+					this.layerList[i].setSize(width, height);
 				$updated = true;
 			}
 		}
@@ -128,6 +135,18 @@ package org.libra.bmpEngine.multi {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
+		
+		protected function onAddToStage(event:Event):void {
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
+			Tick.getInstance().addItem(this);
+		}
+		
+		protected function onRemoveFromStage(event:Event):void {
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
+			Tick.getInstance().removeItem(this);
+		}
 		
 	}
 
