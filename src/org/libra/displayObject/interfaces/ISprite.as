@@ -30,7 +30,11 @@ package org.libra.displayObject.interfaces {
 		
 		function get width():Number;
 		
+		function set width(val:Number):void;
+		
 		function get height():Number;
+		
+		function set height(val:Number):void;
 	}
 	
 }

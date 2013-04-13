@@ -61,24 +61,27 @@ package org.libra.utils.displayObject {
 		 * @param	tileWidth 小菱形的宽度
 		 * @param	color
 		 */
-		public static function drawDiamondNet(g:Graphics, topPoint:Point, rows:int = 10, cols:int = 10, tileWidth:int = 30, color:int = 0xff0000):void { 
+		public static function drawDiamondNet(g:Graphics, topPoint:Point, row:int = 0, col:int = 0,  rows:int = 10, cols:int = 10, tileWidth:int = 30, color:int = 0xff0000):void { 
 			const tileHeight:int = tileWidth >> 1;
 			const p:Point = new Point();
+			const tmpTopPoint:Point = Display45Util.getItemPos(row,col);
+//			rows += row;
+//			cols += col;
 			var endX:Number = cols * tileWidth / 2;
 			var endY:Number = endX / 2;
 			g.clear();
 			g.lineStyle(1, color);
 			for (var i:int = 0; i < rows + 1; i++ ) {
-				p.x = topPoint.x - tileWidth / 2 * i;
-				p.y = topPoint.y + tileHeight / 2 * i;
+				p.x = topPoint.x - tileWidth / 2 * i + tmpTopPoint.x;
+				p.y = topPoint.y + tileHeight / 2 * i + tmpTopPoint.y;
 				g.moveTo(p.x, p.y);
 				g.lineTo(endX + p.x, endY + p.y);
 			}
 			endX = rows * tileWidth / 2;
 			endY = endX / 2;
 			for(i = 0; i < cols + 1; i+=1){
-				p.x = topPoint.x + tileWidth / 2 * i;
-				p.y = topPoint.y + tileHeight / 2 * i;
+				p.x = topPoint.x + tileWidth / 2 * i + tmpTopPoint.x;
+				p.y = topPoint.y + tileHeight / 2 * i + tmpTopPoint.y;
 				g.moveTo(p.x, p.y);
 				g.lineTo(p.x - endX, p.y + endY);
 			}

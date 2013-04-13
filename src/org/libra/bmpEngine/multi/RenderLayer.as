@@ -145,9 +145,11 @@ package org.libra.bmpEngine.multi {
 				for (var i:int = 0; i < $numChildren; i += 1) {
 					item = itemList[i];
 					if (item.visible) {
-						HELP_POINT.x = item.x;
-						HELP_POINT.y = item.y;
-						$bitmapData.copyPixels(item.bitmapData, item.rect, HELP_POINT, null, null, true);
+						if(item.bitmapData){
+							HELP_POINT.x = item.x;
+							HELP_POINT.y = item.y;
+							$bitmapData.copyPixels(item.bitmapData, item.rect, HELP_POINT, null, null, true);
+						}
 					}
 					item.updated = false;
 				}
