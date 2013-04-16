@@ -65,8 +65,6 @@ package org.libra.utils.displayObject {
 			const tileHeight:int = tileWidth >> 1;
 			const p:Point = new Point();
 			const tmpTopPoint:Point = Display45Util.getItemPos(row,col);
-//			rows += row;
-//			cols += col;
 			var endX:Number = cols * tileWidth / 2;
 			var endY:Number = endX / 2;
 			g.clear();

@@ -18,6 +18,10 @@ package org.libra.displayObject.interfaces {
 		
 		function get topY():int;
 		
+		function set topX(val:int):void;
+		
+		function set topY(val:int):void;
+		
 		function get bottomX():int;
 		
 		function get bottomY():int;
