@@ -167,7 +167,7 @@ package org.libra.utils.displayObject {
 				result[j] = new Vector.<BitmapData>(col);
 				for (var i:int = 0; i < col; i += 1) { 
 					rect.x = i * width;
-					result[j][i] = getBitmapData(width, height, rect, source);
+					result[j][i] = getBitmapData(rect, source);
 				}
 			}
 			source.dispose();
@@ -237,15 +237,15 @@ package org.libra.utils.displayObject {
 			return result;
 		}
 		
-		/*-----------------------------------------------------------------------------------------
-		Private methods
-		-------------------------------------------------------------------------------------------*/
-		
-		private static function getBitmapData(w:int, h:int, rect:Rectangle, source:BitmapData):BitmapData { 
-			var bitmapData:BitmapData = new BitmapData(w, h, true, 0);
+		public static function getBitmapData(rect:Rectangle, source:BitmapData):BitmapData { 
+			var bitmapData:BitmapData = new BitmapData(rect.width, rect.height, true, 0);
 			bitmapData.copyPixels(source, rect, ZORE_POINT, null, null, true);
 			return bitmapData;
 		}
+		
+		/*-----------------------------------------------------------------------------------------
+		Private methods
+		-------------------------------------------------------------------------------------------*/
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

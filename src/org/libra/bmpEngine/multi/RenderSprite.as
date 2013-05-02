@@ -92,7 +92,7 @@ package org.libra.bmpEngine.multi {
 		
 		public function set bitmapData(value:BitmapData):void {
 			$bitmapData = value;
-			$rect = $bitmapData.rect;
+			$rect = $bitmapData ? $bitmapData.rect : null;
 			$updated = true;
 		}
 		

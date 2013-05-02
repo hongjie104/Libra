@@ -14,7 +14,7 @@ package org.libra.game.components.animatable {
 	 */
 	public class RenderItem {
 		
-		private var bmd:BitmapData;
+		private var $bitmapData:BitmapData;
 		
 		/**
 		 * 所在的渲染层
@@ -30,8 +30,8 @@ package org.libra.game.components.animatable {
 		
 		private var $y:int;
 		
-		public function RenderItem(bmd:BitmapData, renderLayer:RenderLayer = null) { 
-			this.bmd = bmd;
+		public function RenderItem(bitmapData:BitmapData, renderLayer:RenderLayer = null) { 
+			this.bitmapData = bitmapData;
 			if(renderLayer) renderLayer.addItem(this);
 			visible = true;
 			$x = $y = 0;
@@ -41,8 +41,8 @@ package org.libra.game.components.animatable {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function setBmd(bmd:BitmapData):void {
-			this.bmd = bmd;
+		public function set bitmapData(bmd:BitmapData):void {
+			this.$bitmapData = bmd;
 			setNeedRender(true);
 		}
 		
@@ -50,8 +50,8 @@ package org.libra.game.components.animatable {
 		 * 获取Bitmapdata
 		 * @return
 		 */
-		public function getBmd():BitmapData {
-			return this.bmd;
+		public function get bitmapData():BitmapData {
+			return this.$bitmapData;
 		}
 		
 		public function setRenderLayer(renderLayer:RenderLayer):void {
@@ -67,8 +67,8 @@ package org.libra.game.components.animatable {
 		
 		public function dispose():void {
 			if (this.renderLayer) this.renderLayer.removeItem(this);
-			this.bmd.dispose();
-			this.bmd = null;
+			this.$bitmapData.dispose();
+			this.$bitmapData = null;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

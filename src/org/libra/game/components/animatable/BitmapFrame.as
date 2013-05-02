@@ -166,9 +166,9 @@ package org.libra.game.components.animatable {
 			//}
 		//}
 		//
-		//public function setNeedRender(boolean:Boolean):void {
+		public function setNeedRender(boolean:Boolean):void {
 			//this.needRender = boolean;
-		//}
+		}
 		
 		/**
 		 * 释放
