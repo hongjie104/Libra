@@ -26,22 +26,6 @@ package org.libra.ui.flash.interfaces {
 		
 		function initToolTip():void;
 		
-		function get x():Number;
-		
-		function set x(x:Number):void;
-		
-		function get y():Number;
-		
-		function set y(y:Number):void;
-		
-		function get width():Number;
-		
-		function set width(val:Number):void;
-		
-		function get height():Number;
-		
-		function set height(val:Number):void;
-		
 		function get parent():DisplayObjectContainer;
 		
 		function get stage():Stage;

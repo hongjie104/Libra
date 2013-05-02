@@ -127,6 +127,14 @@ package org.libra.bmpEngine.multi {
 			}
 		}
 		
+		override public function get width():Number{
+			return $width;
+		}
+		
+		override public function get height():Number{
+			return $height;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
