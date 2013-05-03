@@ -155,12 +155,10 @@ package org.libra.bmpEngine.multi {
 				$bitmapData.fillRect($bitmapData.rect, 0x00000000);
 				for (var i:int = 0; i < $numChildren; i += 1) {
 					item = itemList[i];
-					if (item.visible) {
-						if(item.bitmapData){
-							HELP_POINT.x = item.x;
-							HELP_POINT.y = item.y;
-							$bitmapData.copyPixels(item.bitmapData, item.rect, HELP_POINT, null, null, true);
-						}
+					if (item.visible && item.bitmapData) {
+						HELP_POINT.x = item.x;
+						HELP_POINT.y = item.y;
+						$bitmapData.copyPixels(item.bitmapData, item.rect, HELP_POINT, null, null, true);
 					}
 					item.updated = false;
 				}

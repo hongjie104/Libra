@@ -63,7 +63,7 @@ package org.libra.ui.flash.managers {
 			if (index != -1) {
 				panelList.splice(index, 1);
 				if (p.isModel()) {
-					if (panelList[panelList.length - 1].isModel()) {
+					if (panelList.length && panelList[panelList.length - 1].isModel()) {
 						DepthUtil.bringToTop(panelList[panelList.length - 1]);
 					}else {
 						modelSprite.parent.removeChild(modelSprite);	

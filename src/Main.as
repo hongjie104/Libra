@@ -123,7 +123,7 @@ package {
 			var h:int = source.height >> 3;
 			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
 			
-			for (var i:int = 0; i < 10; i += 1) {
+			for (var i:int = 0; i < 500; i += 1) {
 				var bitmap:JMultiBitmap = new JMultiBitmap(w, h);
 				var layer:RenderLayer = new RenderLayer(w, h);
 				var sprite:RenderMovieCelip = new RenderMovieCelip(bmdList);

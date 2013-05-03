@@ -39,10 +39,8 @@ package org.libra.bmpEngine.multi {
 		protected var frameTimer:int;
 		
 		public function RenderMovieCelip(bmdList:Vector.<BitmapData>) {
-			super(bmdList[0]);
-			this.bmdList = bmdList;
-			$totalFrames = bmdList.length - 1;
-			$currentFrame = 0;
+			super(bmdList && bmdList.length ? bmdList[0] : null);
+			setBmdList(bmdList);
 			$loop = -1;
 			frameRate = 10;
 		}
@@ -50,6 +48,12 @@ package org.libra.bmpEngine.multi {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public function setBmdList(bmdList:Vector.<BitmapData>):void {
+			this.bmdList = bmdList;
+			$totalFrames = bmdList && bmdList.length ? bmdList.length - 1 : 0;
+			$currentFrame = 0;
+		}
 		
 		/**
 		 * 指定播放头所处的帧的编号

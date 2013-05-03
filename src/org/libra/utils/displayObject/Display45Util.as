@@ -76,7 +76,6 @@ package org.libra.utils.displayObject {
 		 * @return
 		 */
 		public static function getItemPos(row:int, col:int):Point { 
-			//return new Point((index.x - index.y) * (width * .5), (index.x + index.y) * (height * .5));
 			return new Point((col - row) * (width * .5),(col + row) * (height * .5));
 		}
 		

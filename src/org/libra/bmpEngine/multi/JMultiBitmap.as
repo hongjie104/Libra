@@ -3,7 +3,6 @@ package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Point;
-	
 	import org.libra.tick.ITickable;
 	import org.libra.tick.Tick;
 	

@@ -115,7 +115,7 @@ package org.libra.game.components.animatable {
 					if (item.visible) {
 						renderOffset.x = item.x;
 						renderOffset.y = item.y;
-						bmd = item.getBmd();
+						bmd = item.bitmapData;
 						if(bmd)
 							this.bmd.copyPixels(bmd, bmd.rect, renderOffset, null, null, true);
 						item.setNeedRender(false);

@@ -222,7 +222,7 @@ package org.libra.ui.flash.core {
 		 */
 		protected function initTextField(text:String = ''):void {
 			textField = new TextField();
-			textField.selectable = textField.tabEnabled = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
+			textField.selectable = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
 			textField.multiline = false;
 			setFont(theme.font);
 			textField.filters = theme.filter;
