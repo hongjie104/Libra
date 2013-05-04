@@ -4,6 +4,7 @@ package org.libra.utils.displayObject {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	
 	import org.libra.ui.Constants;
 	/**
 	 * <p>
@@ -156,7 +157,7 @@ package org.libra.utils.displayObject {
 		 * @param height
 		 * @return 
 		 */
-		public static function separateBitmapData(width:int, height:int, source:BitmapData):Vector.<Vector.<BitmapData>> { 
+		public static function separateBitmapData(width:int, height:int, source:BitmapData, dispose:Boolean = true):Vector.<Vector.<BitmapData>> { 
 			var result:Vector.<Vector.<BitmapData>> = new Vector.<Vector.<BitmapData>>();
 			var row:int = int(source.height / height);
 			var col:int = int(source.width / width);
@@ -170,8 +171,10 @@ package org.libra.utils.displayObject {
 					result[j][i] = getBitmapData(rect, source);
 				}
 			}
-			source.dispose();
-			source = null;
+			if(dispose){
+				source.dispose();
+				source = null;
+			}
 			return result;
 		}
 		
