@@ -54,7 +54,7 @@ package org.libra.bmpEngine.multi {
 			//if (this.baseBitmap.bitmapData) baseBitmap.bitmapData.dispose();
 			//baseBitmap.bitmapData = new BitmapData(width, height, true, 0x0);
 			if ($width != width || $height != height) {
-				$width = width; $height = $height;
+				$width = width; $height = height;
 				if (this.bitmapData) bitmapData.dispose();
 				bitmapData = new BitmapData(width, height, true, 0x0);
 				for(var i:int = 0; i < this.$numChildren; i += 1)

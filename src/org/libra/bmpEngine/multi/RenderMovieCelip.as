@@ -1,6 +1,7 @@
 package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import org.libra.tick.ITickable;
+	import org.osflash.signals.Signal;
 	
 	/**
 	 * <p>
@@ -38,11 +39,14 @@ package org.libra.bmpEngine.multi {
 		
 		protected var frameTimer:int;
 		
+		protected var $changedSignal:Signal;
+		
 		public function RenderMovieCelip(bmdList:Vector.<BitmapData>) {
 			super(bmdList && bmdList.length ? bmdList[0] : null);
 			setBmdList(bmdList);
 			$loop = -1;
 			frameRate = 10;
+			$changedSignal = new Signal(int);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -53,6 +57,7 @@ package org.libra.bmpEngine.multi {
 			this.bmdList = bmdList;
 			$totalFrames = bmdList && bmdList.length ? bmdList.length - 1 : 0;
 			$currentFrame = 0;
+			this.$updated = true;
 		}
 		
 		/**
@@ -165,15 +170,26 @@ package org.libra.bmpEngine.multi {
 			}
 		}
 		
+		public function get changedSignal():Signal {
+			return $changedSignal;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
 		private function setCurrentFrame(frame:int):void {
 			if ($currentFrame != frame) {
+				if(frame > this.$totalFrames){
+					frame = 0;
+				}else if(frame < 0){
+					frame = this.$totalFrames;
+				}
 				$bitmapData = bmdList[frame];
+				$rect = $bitmapData.rect;
 				$currentFrame = frame;
 				$updated = true;
+				$changedSignal.dispatch($currentFrame);
 			}
 		}
 		

@@ -2,6 +2,9 @@ package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	
+	import org.libra.utils.MathUtil;
+
 	/**
 	 * <p>
 	 * Description
@@ -36,6 +39,7 @@ package org.libra.bmpEngine.multi {
 			$bitmapData = bitmapData;
 			$rect = $bitmapData ? $bitmapData.rect : null;
 			$visible = true;
+			$scaleX = $scaleY = 1;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -140,7 +144,7 @@ package org.libra.bmpEngine.multi {
 			const matrix:Matrix = new Matrix();
 			matrix.scale(this.$scaleX, this.$scaleY);
 			
-			const scaledBitmapData:BitmapData = new BitmapData(width * $scaleX, height * $scaleY, true, 0x0);
+			const scaledBitmapData:BitmapData = new BitmapData(width * MathUtil.abs($scaleX), height * MathUtil.abs($scaleY), true, 0x0);
 			scaledBitmapData.draw($bitmapData, matrix);
 			bitmapData = scaledBitmapData.clone();
 			scaledBitmapData.dispose();

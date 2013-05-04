@@ -167,7 +167,6 @@ package org.libra.bmpEngine.multi {
 					item.updated = false;
 				}
 				$bitmapData.unlock();
-				
 				$updated = true;
 			}
 		}
