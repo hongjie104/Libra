@@ -79,6 +79,7 @@ package org.libra.bmpEngine.multi {
 			if (itemList.indexOf(item) == -1) {
 				itemList.push(item);
 				$numChildren += 1;
+				$updated = true;
 			}
 		}
 		
@@ -87,6 +88,7 @@ package org.libra.bmpEngine.multi {
 			else if (index > $numChildren) itemList.push(item);
 			else itemList.splice(index, 0, item);
 			$numChildren += 1;
+			$updated = true;
 		}
 		
 		public function removeItem(item:RenderSprite, dispose:Boolean = false):void { 
@@ -95,6 +97,7 @@ package org.libra.bmpEngine.multi {
 				itemList.splice(index, 1);
 				$numChildren--;
 				if (dispose) item.dispose();
+				$updated = true;
 			}
 		}
 		
@@ -105,6 +108,7 @@ package org.libra.bmpEngine.multi {
 			else item = itemList.splice(index, 1)[0];
 			$numChildren--;
 			if (dispose) item.dispose();
+			$updated = true;
 		}
 		
 		public function clearItem(dispose:Boolean = false):void {
@@ -115,6 +119,11 @@ package org.libra.bmpEngine.multi {
 			}
 			this.itemList.length = 0;
 			$numChildren = 0;
+			$updated = true;
+		}
+		
+		public function indexOf(val:RenderSprite, fromIndex:int = 0):int {
+			return this.itemList.indexOf(val, fromIndex);
 		}
 		
 		public function swapDepths(item1:RenderSprite, item2:RenderSprite):void { 
@@ -125,8 +134,14 @@ package org.libra.bmpEngine.multi {
 					// swap their data
 					itemList[index1] = item2;
 					itemList[index2] = item1;
+					$updated = true;
 				}
 			}
+		}
+		
+		public function sort(compareFunction:Function):void{
+			this.itemList.sort(compareFunction);
+			$updated = true;
 		}
 		
 		public function render():void {
