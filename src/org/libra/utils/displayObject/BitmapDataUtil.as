@@ -4,8 +4,8 @@ package org.libra.utils.displayObject {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
-	
 	import org.libra.ui.Constants;
+	
 	/**
 	 * <p>
 	 * Description
