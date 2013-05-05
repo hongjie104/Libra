@@ -213,13 +213,31 @@ package org.libra.utils.displayObject {
 		}
 		
 		/**
+		 * 判断图片是不是全透明的
+		 * @param	source
+		 */
+		public static function isEmpty(source:BitmapData):Boolean{
+			var ba:ByteArray = source.getPixels(source.rect);
+			ba.position = 0;
+			const l:int = ba.length;
+			for (var i:int; i < l; i = i + 4) { 
+				if (ba.bytesAvailable) { 
+					if(ba[i] != 0) return false;
+				}else{
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		/**
 		 * 将图片中白色变成透明
 		 * @param	source
 		 */
 		public static function changeTransparent(source:BitmapData):void {
 			var ba:ByteArray = source.getPixels(source.rect);
 			ba.position = 0;
-			var l:int = ba.length;
+			const l:int = ba.length;
 			for (var i:int; i < l; i = i + 4) { 
 				if (ba.bytesAvailable) { 
 				   //此处做白色颜色改为透明处理
