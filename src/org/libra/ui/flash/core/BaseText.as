@@ -2,8 +2,10 @@ package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.flash.theme.JFont;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
 	 * <p>
@@ -25,6 +27,10 @@ package org.libra.ui.flash.core {
 		 */
 		protected var textField:TextField;
 		
+		protected var $text:String;
+		
+		protected var $htmlText:String;
+		
 		/**
 		 * 主题
 		 * @private
@@ -37,11 +43,12 @@ package org.libra.ui.flash.core {
 		 * @param	y 纵坐标
 		 * @param	text 文本内容
 		 */
-		public function BaseText(theme:DefaultTextTheme, x:int = 0, y:int = 0, text:String = '') { 
+		public function BaseText(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, text:String = '') { 
 			super(x, y);
-			this.theme = theme;
+			this.theme = theme ? theme : UIManager.getInstance().theme.textFieldTheme;
 			this.initTextField(text);
 			this.setSize(theme.width, theme.height);
+			$htmlText = '';
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -122,28 +129,32 @@ package org.libra.ui.flash.core {
 		 * 设置文本
 		 */
 		public function set text(text:String):void {
-			this.textField.text = text;
+			$text = text;
+			if ($text) $htmlText = '';
+			this.invalidate(InvalidationFlag.TEXT);
 		}
 		
 		/**
 		 * 获取文本
 		 */
 		public function get text():String {
-			return this.textField.text;
+			return $text;
 		}
 		
 		/**
 		 * 设置html格式的文本
 		 */
 		public function set htmlText(text:String):void {
-			this.textField.htmlText = text;
+			$htmlText = text;
+			if ($htmlText) $text = '';
+			this.invalidate(InvalidationFlag.TEXT);
 		}
 		
 		/**
 		 * 获取html格式的文本
 		 */
 		public function get htmlText():String {
-			return this.textField.htmlText;
+			return $htmlText;
 		}
 		
 		/**
@@ -183,7 +194,7 @@ package org.libra.ui.flash.core {
 			tf.align = val;
 			this.textField.setTextFormat(tf);
 			this.textField.defaultTextFormat = tf;
-			this.textField.text = this.textField.text;
+			//this.textField.text = this.textField.text;
 		}
 		
 		/**
@@ -230,6 +241,17 @@ package org.libra.ui.flash.core {
 			this.addChild(textField);
 		}
 		
+		override protected function refreshText():void {
+			textField.text = $text ? $text : $htmlText;
+		}
+		
+		/*-----------------------------------------------------------------------------------------
+		Event Handlers
+		-------------------------------------------------------------------------------------------*/
+		protected function onTextChanged(e:Event):void {
+			this.dispatchEvent(e);
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -244,13 +266,6 @@ package org.libra.ui.flash.core {
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
 			this.textField.removeEventListener(Event.CHANGE, onTextChanged);
-		}
-		
-		/*-----------------------------------------------------------------------------------------
-		Event Handlers
-		-------------------------------------------------------------------------------------------*/
-		protected function onTextChanged(e:Event):void {
-			this.dispatchEvent(e);
 		}
 	}
 

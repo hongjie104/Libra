@@ -1,5 +1,6 @@
 package org.libra.ui.flash.components {
 	import flash.text.TextFieldType;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.flash.theme.DefaultTheme;
 	import org.libra.ui.flash.theme.JFont;
@@ -18,8 +19,8 @@ package org.libra.ui.flash.components {
 	 */
 	public class JTextField extends JLabel {
 		
-		public function JTextField(theme:DefaultTextTheme, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme, x, y, text);
+		public function JTextField(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme ? theme : UIManager.getInstance().theme.textFieldTheme, x, y, text);
 			this.mouseChildren = this.mouseEnabled = true;
 		}
 		

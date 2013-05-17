@@ -88,7 +88,8 @@ package {
 			//初始化UI
 			ResManager.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
-			testUI();
+			//testUI();
+			testAutoCreateUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
@@ -97,6 +98,30 @@ package {
 			//testMultiBitmap();
 			
 			addChild(new SystemStatus());
+		}
+		
+		private function testAutoCreateUI():void {
+			var xml:XML = <View>
+			  <Container x="20" y="-10">
+			    <JLabel text="yung" x="103" y="38" textColor="0xffffff" />
+			    <JLabel text="Lv.36" x="206" y="38" textColor="0xffffff" size="12"/>
+			    <JLabel text="银币" x="104" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="6万" x="136" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="100"/>
+			    <JLabel text="金币" x="104" y="84" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="10" x="136" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JLabel text="10" x="223" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JLabel text="礼券" x="191" y="83" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="10/80" x="124" y="108" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JButton text="按钮" x="183" y="110"/>
+			  </Container>
+			</View>;
+			var uiContainer:Container = new Container();
+			uiContainer.setSize(stage.stageWidth, stage.stageHeight);
+			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
+			var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme);
+			panel.createView(xml);
+			panel.show();
+			panel.x = panel.y = 50;
 		}
 		
 		private function testStarlingUI():void {

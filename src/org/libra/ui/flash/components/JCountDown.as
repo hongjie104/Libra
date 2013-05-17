@@ -2,6 +2,7 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import org.libra.tick.ITimerable;
 	import org.libra.tick.MultiTimer;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
@@ -27,8 +28,8 @@ package org.libra.ui.flash.components {
 		
 		protected var prefixText:String;
 		
-		public function JCountDown(theme:DefaultTextTheme, x:int = 0, y:int = 0, prefixText:String = '') { 
-			super(theme, x, y);
+		public function JCountDown(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, prefixText:String = '') { 
+			super(theme ? theme : UIManager.getInstance().theme.labelTheme, x, y);
 			this.prefixText = prefixText;
 		}
 		

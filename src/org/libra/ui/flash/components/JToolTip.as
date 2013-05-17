@@ -46,7 +46,8 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function set text(value:String):void {
-			super.text = value;
+			$text = value;
+			textField.text = $text;
 			this.textField.autoSize = TextFieldAutoSize.LEFT;
 			this.setSize(textField.textWidth + 13, 29);
 		}

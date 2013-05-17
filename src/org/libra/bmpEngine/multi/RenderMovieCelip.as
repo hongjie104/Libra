@@ -41,14 +41,14 @@ package org.libra.bmpEngine.multi {
 		
 		protected var frameTimer:int;
 		
-		protected var $changedSignal:Signal;
+		//protected var $changedSignal:Signal;
 		
 		public function RenderMovieCelip(bmdList:Vector.<BitmapData>) {
 			super(bmdList && bmdList.length ? bmdList[0] : null);
 			setBmdList(bmdList);
 			$loop = -1;
 			frameRate = 10;
-			$changedSignal = new Signal(int);
+			//$changedSignal = new Signal(int);
 			$tickabled = true;
 		}
 		
@@ -183,9 +183,9 @@ package org.libra.bmpEngine.multi {
 			$tickabled = value;
 		}
 		
-		public function get changedSignal():Signal {
-			return $changedSignal;
-		}
+		//public function get changedSignal():Signal {
+			//return $changedSignal;
+		//}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -202,7 +202,7 @@ package org.libra.bmpEngine.multi {
 				$rect = $bitmapData.rect;
 				$currentFrame = frame;
 				$updated = true;
-				$changedSignal.dispatch($currentFrame);
+				//$changedSignal.dispatch($currentFrame);
 			}
 		}
 		

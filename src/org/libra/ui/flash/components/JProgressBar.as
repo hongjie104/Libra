@@ -4,6 +4,7 @@ package org.libra.ui.flash.components {
 	import flash.display.Shape;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Container;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultProgressBarTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.ui.utils.ResManager;
@@ -32,10 +33,10 @@ package org.libra.ui.flash.components {
 		
 		private var progress:Number;
 		
-		public function JProgressBar(theme:DefaultProgressBarTheme, x:int = 0, y:int = 0) { 
+		public function JProgressBar(theme:DefaultProgressBarTheme = null, x:int = 0, y:int = 0) { 
 			super(x, y);
 			progress = .0;
-			this.theme = theme;
+			this.theme = theme ? theme : UIManager.getInstance().theme.progressBarTheme;
 			setSize(theme.width, theme.height);
 		}
 		

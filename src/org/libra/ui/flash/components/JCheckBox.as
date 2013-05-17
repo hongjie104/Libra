@@ -4,6 +4,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseButton;
 	import org.libra.ui.flash.core.state.BaseCheckBoxState;
 	import org.libra.ui.flash.core.state.ISelectState;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultBtnTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
@@ -25,8 +26,8 @@ package org.libra.ui.flash.components {
 		
 		private var group:JCheckBoxGroup;
 		
-		public function JCheckBox(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme, x, y, text);
+		public function JCheckBox(theme:DefaultBtnTheme = null, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme ? theme : UIManager.getInstance().theme.checkBoxTheme, x, y, text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

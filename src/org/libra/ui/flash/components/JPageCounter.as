@@ -2,6 +2,7 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultPageCounterTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.MathUtil;
@@ -34,9 +35,9 @@ package org.libra.ui.flash.components {
 		
 		protected var theme:DefaultPageCounterTheme;
 		
-		public function JPageCounter(theme:DefaultPageCounterTheme, maxVal:int = 100, minVal:int = 0, x:int = 0, y:int = 0) { 
+		public function JPageCounter(theme:DefaultPageCounterTheme = null, maxVal:int = 100, minVal:int = 0, x:int = 0, y:int = 0) { 
 			super(x, y);
-			this.theme = theme;
+			this.theme = theme ? theme : UIManager.getInstance().theme.pageCountTheme;
 			setSize(theme.width, theme.height);
 			this.$maxVal = maxVal;
 			this.$minVal = minVal;

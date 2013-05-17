@@ -1,5 +1,6 @@
 package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseButton;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultBtnTheme;
 	
 	/**
@@ -23,8 +24,8 @@ package org.libra.ui.flash.components {
 		 * @param	text 按钮上的文本
 		 * @param	resName 按钮的皮肤资源
 		 */
-		public function JButton(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme, x, y, text);
+		public function JButton(theme:DefaultBtnTheme = null, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme ? theme : UIManager.getInstance().theme.btnTheme, x, y, text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

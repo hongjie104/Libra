@@ -29,6 +29,7 @@ package org.libra.ui.flash.interfaces {
 		function get parent():DisplayObjectContainer;
 		
 		function get stage():Stage;
+		
 	}
 	
 }

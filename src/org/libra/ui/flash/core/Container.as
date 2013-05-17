@@ -1,8 +1,12 @@
 package org.libra.ui.flash.core {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import org.libra.ui.flash.components.JButton;
+	import org.libra.ui.flash.interfaces.IComponent;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IDragable;
 	import org.libra.ui.flash.interfaces.IDropable;
+	import org.libra.ui.flash.UIClassMap;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
@@ -19,11 +23,13 @@ package org.libra.ui.flash.core {
 	 */
 	public class Container extends Component implements IDropable, IContainer {
 		
+		protected var viewClassMap:Object = {};
+		
 		/**
 		 * 子对象的集合
 		 * @private
 		 */
-		protected var componentList:Vector.<Component>;
+		protected var componentList:Vector.<IComponent>;
 		
 		/**
 		 * 子对象的数量
@@ -44,7 +50,7 @@ package org.libra.ui.flash.core {
 		 */
 		public function Container(x:int = 0, y:int = 0) { 
 			super(x, y);
-			componentList = new Vector.<Component>();
+			componentList = new Vector.<IComponent>();
 			$numComponent = 0;
 		}
 		
@@ -57,7 +63,7 @@ package org.libra.ui.flash.core {
 		 * @param	child 可视对象
 		 * @return 布尔值
 		 */
-		public function hasComponent(child:Component):Boolean {
+		public function hasComponent(child:IComponent):Boolean {
 			return this.componentList.indexOf(child) != -1;
 		}
 		
@@ -66,10 +72,10 @@ package org.libra.ui.flash.core {
 		 * @param	child 控件
 		 * @return 添加成功,返回被添加的控件;添加失败,返回null
 		 */
-		public function append(child:Component):Component {
+		public function append(child:IComponent):IComponent {
 			if (this.componentList.indexOf(child) == -1) {
 				this.componentList[$numComponent++] = child;
-				super.addChild(child);
+				super.addChild(child as DisplayObject);
 				return child;
 			}
 			return null;
@@ -81,10 +87,10 @@ package org.libra.ui.flash.core {
 		 * @param	index 控件所在的显示层
 		 * @return 添加成功,返回被添加的控件;添加失败,返回null
 		 */
-		public function appendAt(child:Component, index:int):Component {
+		public function appendAt(child:IComponent, index:int):IComponent {
 			if (append(child)) {
-				this.setChildIndex(child, index);
-				var tmp:Component = this.componentList[index];
+				this.setChildIndex(child as DisplayObject, index);
+				var tmp:IComponent = this.componentList[index];
 				this.componentList[index] = child;
 				this.componentList[$numComponent - 1] = tmp;
 				return child;
@@ -107,12 +113,12 @@ package org.libra.ui.flash.core {
 		 * @default false
 		 * @return 移除成功,返回被添加的控件;移除失败,返回null
 		 */
-		public function remove(child:Component, destroy:Boolean = false):Component {
+		public function remove(child:IComponent, destroy:Boolean = false):IComponent {
 			var index:int = this.componentList.indexOf(child);
 			if (index == -1) return null;
 			this.componentList.splice(index, 1);
 			$numComponent--;
-			super.removeChild(child);
+			super.removeChild(child as DisplayObject);
 			if(destroy)
 				child.destroy();
 			return child;
@@ -125,7 +131,7 @@ package org.libra.ui.flash.core {
 		 * @default false
 		 * @return 移除成功,返回被添加的控件;移除失败,返回null
 		 */
-		public function removeAt(index:int, destroy:Boolean = false):Component {
+		public function removeAt(index:int, destroy:Boolean = false):IComponent {
 			return index > -1 && index < numChildren ? this.remove(this.componentList[index], destroy) : null;
 		}
 		
@@ -145,7 +151,7 @@ package org.libra.ui.flash.core {
 		public function clear(destroy:Boolean = false):void {
 			for (var i:* in this.componentList) {
 				if (destroy) componentList[i].destroy();
-				this.removeChild(componentList[i]);
+				this.removeChild(componentList[i] as DisplayObject);
 			}
 			componentList.length = 0;
 			this.$numComponent = 0;
@@ -155,7 +161,7 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function addChild(child:DisplayObject):DisplayObject {
-			if (child is Component) throw new Error('组件不能使用addChild，请使用append');
+			if (child is IComponent) throw new Error('组件不能使用addChild，请使用append');
 			return super.addChild(child);
 		}
 		
@@ -163,7 +169,7 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject {
-			if (child is Component) throw new Error('组件不能使用addChildAt，请使用appendAt');
+			if (child is IComponent) throw new Error('组件不能使用addChildAt，请使用appendAt');
 			return super.addChildAt(child, index);
 		}
 		
@@ -171,7 +177,7 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function removeChild(child:DisplayObject):DisplayObject {
-			if (child is Component) throw new Error('组件不能使用removeChild，请使用remove');
+			if (child is IComponent) throw new Error('组件不能使用removeChild，请使用remove');
 			return super.removeChild(child);
 		}
 		
@@ -180,7 +186,7 @@ package org.libra.ui.flash.core {
 		 */
 		override public function removeChildAt(index:int):DisplayObject {
 			var child:DisplayObject = super.removeChildAt(index);
-			if (child is Component) {
+			if (child is IComponent) {
 				var index:int = this.componentList.indexOf(child);
 				if (index != -1) {
 					this.componentList.splice(index, 1);
@@ -275,7 +281,7 @@ package org.libra.ui.flash.core {
 		 */
 		public function addDragComponent(dragEnabled:IDragable):void {
 			dragEnabled.removeFromParent();
-			this.append(dragEnabled as Component);
+			this.append(dragEnabled as IComponent);
 		}
 		
 		/**
@@ -285,9 +291,45 @@ package org.libra.ui.flash.core {
 			return this.$numComponent;
 		}
 		
+		public function createView(xml:XML):void {
+			createComps(xml);
+			this.dispatchEvent(new Event(Event.COMPLETE));
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
+		
+		protected function createComps(xml:XML, root:Boolean = true):IComponent {
+			var comp:IComponent = root ? this : getCompsInstance(xml.name());
+			for each (var attrs:XML in xml.attributes()) {
+				var prop:String = attrs.name().toString();
+				var value:String = attrs;
+				if (Object(comp).hasOwnProperty(prop)) {
+					comp[prop] = (value == "true" ? true : (value == "false" ? false : value))
+				} else if (prop == "var" && hasOwnProperty(value)) {
+					this[value] = comp;
+				}
+			}
+			if (comp is IContainer) {
+				var container:IContainer = comp as IContainer;
+				for (var j:int = 0, n:int = xml.children().length(); j < n; j++) { 
+					var child:IComponent = createComps(xml.children()[j], false);
+					if (child) {
+						container.append(child);
+					}
+				}
+			}
+			return comp;
+		}
+		
+		private function getCompsInstance(name:String):IComponent {
+			var compClass:Class = viewClassMap[name] || UIClassMap.UI_CLASS_MAP[name];
+			if (compClass != null) {
+				return new compClass();
+			}
+			return null;
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

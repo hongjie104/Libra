@@ -1,5 +1,6 @@
 package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseText;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	
 	/**
@@ -16,8 +17,8 @@ package org.libra.ui.flash.components {
 	 */
 	public class JLabel extends BaseText {
 		
-		public function JLabel(theme:DefaultTextTheme, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme, x, y, text);
+		public function JLabel(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, text:String = '') { 
+			super(theme ? theme : UIManager.getInstance().theme.labelTheme, x, y, text);
 			this.mouseChildren = this.mouseEnabled = false;
 		}
 		

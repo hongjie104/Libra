@@ -7,6 +7,7 @@ package org.libra.ui.flash.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultComboBoxTheme;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	
@@ -54,9 +55,9 @@ package org.libra.ui.flash.components {
 		 * @param	x
 		 * @param	y
 		 */
-		public function JComboBox(theme:DefaultComboBoxTheme, orientation:int = 4, defaultText:String = '', x:int = 0, y:int = 0) { 
+		public function JComboBox(theme:DefaultComboBoxTheme = null, orientation:int = 4, defaultText:String = '', x:int = 0, y:int = 0) { 
 			super(x, y);
-			this.theme = theme;
+			this.theme = theme ? theme : UIManager.getInstance().theme.comboBoxTheme;
 			this.orientation = orientation;
 			this.defaultText = defaultText;
 			this.setSize(theme.width, theme.height);

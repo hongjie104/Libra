@@ -388,16 +388,16 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function draw():void {
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.SIZE))
-				resize();
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.TEXT))
+				refreshText();
 			if (this.invalidationFlag.isInvalid(InvalidationFlag.DATA))
 				refreshData();
 			if (this.invalidationFlag.isInvalid(InvalidationFlag.STATE))
 				refreshState();
 			if (this.invalidationFlag.isInvalid(InvalidationFlag.STYLE))
 				refreshStyle();
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.TEXT))
-				refreshText();
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.SIZE))
+				resize();
 		}
 		
 		/**

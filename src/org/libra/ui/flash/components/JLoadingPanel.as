@@ -23,8 +23,8 @@ package org.libra.ui.flash.components {
 		
 		protected var progress:Number;
 		
-		public function JLoadingPanel(owner:IContainer, theme:DefaultPanelTheme, w:int = 300, h:int = 200) { 
-			super(owner, theme, w, h, '', true);
+		public function JLoadingPanel(owner:IContainer, theme:DefaultPanelTheme = null, w:int = 300, h:int = 200) { 
+			super(owner, theme ? theme : UIManager.getInstance().theme.panelTheme, w, h, '', true);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

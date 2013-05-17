@@ -16,17 +16,17 @@ package org.libra.ui.flash.interfaces {
 	 */
 	public interface IContainer {
 		
-		function hasComponent(child:Component):Boolean;
+		function hasComponent(child:IComponent):Boolean;
 		
-		function append(child:Component):Component;
+		function append(child:IComponent):IComponent;
 		
-		function appendAt(child:Component, index:int):Component;
+		function appendAt(child:IComponent, index:int):IComponent;
 		
 		function appendAll(...rest):void;
 		
-		function remove(child:Component, dispose:Boolean = false):Component;
+		function remove(child:IComponent, dispose:Boolean = false):IComponent;
 		
-		function removeAt(index:int, dispose:Boolean = false):Component;
+		function removeAt(index:int, dispose:Boolean = false):IComponent;
 		
 		function removeAll(dispose:Boolean, ...rest):void;
 		

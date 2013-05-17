@@ -39,8 +39,8 @@ package org.libra.ui.flash.components {
 		
 		private var dragBarEnabled:Boolean;
 		
-		public function JFrame(owner:IContainer, theme:DefaultFrameTheme, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, barHeight:int = 25) {
- 			super(owner, theme, w, h, resName, model);
+		public function JFrame(owner:IContainer, theme:DefaultFrameTheme = null, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, barHeight:int = 25) {
+ 			super(owner, theme ? theme : UIManager.getInstance().theme.frameTheme, w, h, resName, model);
 			this.barHeight = barHeight;
 			closeEnabled = true;
 			dragBarEnabled = true;
