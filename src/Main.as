@@ -88,13 +88,13 @@ package {
 			//初始化UI
 			ResManager.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
-			//testUI();
+			testUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
 			//testStarlingUI();
-			testMultiBitmap();
+			//testMultiBitmap();
 			
 			addChild(new SystemStatus());
 		}

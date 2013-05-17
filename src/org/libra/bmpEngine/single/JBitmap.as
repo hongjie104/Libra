@@ -22,6 +22,8 @@ package org.libra.bmpEngine.single {
 	 */
 	public class JBitmap extends JSprite implements ITickable {
 		
+		protected var $tickabled:Boolean;
+		
 		protected var frameList:Vector.<BitmapFrame>;
 		
 		/**
@@ -75,6 +77,7 @@ package org.libra.bmpEngine.single {
 			baseBitmap = new Bitmap();
 			this.addChild(baseBitmap);
 			playing = false;
+			$tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -170,6 +173,14 @@ package org.libra.bmpEngine.single {
 					frameTimer += rateTimer;
 				}
 			}
+		}
+		
+		public function get tickabled():Boolean {
+			return $tickabled;
+		}
+		
+		public function set tickabled(value:Boolean):void {
+			$tickabled = value;
 		}
 		
 		override public function dispatchEvent(event:Event):Boolean {

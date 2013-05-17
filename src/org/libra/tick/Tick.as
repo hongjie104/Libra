@@ -35,7 +35,7 @@ package org.libra.tick {
 		 * 需要注册EnterFrame事件的ITickable的集合
 		 * @private
 		 */
-		private var tickEnabledList:Vector.<ITickable>;
+		private var tickabledList:Vector.<ITickable>;
 		
 		/**
 		 * 最大两帧间隔（防止待机后返回卡死） 
@@ -68,7 +68,7 @@ package org.libra.tick {
 		 */
 		public function Tick(shape:Shape, singleton:Singleton) { 
 			this.shape = shape;
-			tickEnabledList = new Vector.<ITickable>();
+			tickabledList = new Vector.<ITickable>();
 			instance = this;
 			pause = true;
 			setPause(false);
@@ -80,7 +80,7 @@ package org.libra.tick {
 		 */
 		public function addItem(item:ITickable):Boolean {
 			if (hasItem(item)) return false;
-			this.tickEnabledList[this.tickEnabledList.length] = item;
+			this.tickabledList[this.tickabledList.length] = item;
 			return true;
 		}
 		
@@ -89,9 +89,9 @@ package org.libra.tick {
 		 * @param	r ITickable
 		 */
 		public function removeItem(item:ITickable):Boolean {
-			var index:int = this.tickEnabledList.indexOf(item);
+			var index:int = this.tickabledList.indexOf(item);
 			if (index != -1) {
-				this.tickEnabledList.splice(index, 1);
+				this.tickabledList.splice(index, 1);
 				return true;
 			}
 			return false;
@@ -101,7 +101,7 @@ package org.libra.tick {
 		 * 清除对象
 		 */
 		public function clearItem():void {
-			this.tickEnabledList.length = 0;
+			this.tickabledList.length = 0;
 		}
 		
 		/**
@@ -117,7 +117,7 @@ package org.libra.tick {
 		 * @return Boolean
 		 */
 		public function hasItem(i:ITickable):Boolean {
-			return this.tickEnabledList.indexOf(i) != -1;
+			return this.tickabledList.indexOf(i) != -1;
 		}
 		
 		/**
@@ -160,8 +160,8 @@ package org.libra.tick {
 					//e.interval = interval * speed;
 					//dispatchEvent(e);
 					interval *= speed;
-					for each(var r:ITickable in tickEnabledList) {
-						r.tick(interval);
+					for each(var r:ITickable in tickabledList) {
+						if(r.tickabled) r.tick(interval);
 					}
 				}
 			}

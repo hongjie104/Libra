@@ -17,6 +17,8 @@ package org.libra.bmpEngine.multi {
 	 */
 	public class RenderMovieCelip extends RenderSprite implements ITickable {
 		
+		protected var $tickabled:Boolean;
+		
 		protected var bmdList:Vector.<BitmapData>;
 		
 		protected var $totalFrames:int;
@@ -47,6 +49,7 @@ package org.libra.bmpEngine.multi {
 			$loop = -1;
 			frameRate = 10;
 			$changedSignal = new Signal(int);
+			$tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -168,6 +171,16 @@ package org.libra.bmpEngine.multi {
 					frameTimer += rateTimer;
 				}
 			}
+		}
+		
+		/* INTERFACE org.libra.tick.ITickable */
+		
+		public function get tickabled():Boolean {
+			return $tickabled;
+		}
+		
+		public function set tickabled(value:Boolean):void {
+			$tickabled = value;
 		}
 		
 		public function get changedSignal():Signal {

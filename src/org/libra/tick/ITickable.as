@@ -19,6 +19,10 @@ package org.libra.tick {
 		 */
 		function tick(interval:int):void;
 		
+		function get tickabled():Boolean;
+		
+		function set tickabled(value:Boolean):void;
+		
 	}
 	
 }

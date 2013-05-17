@@ -19,12 +19,15 @@ package org.libra.game.objects {
 	 */
 	public class ObjectTickable extends JSprite implements ITickable {
 		
+		protected var $tickabled:Boolean;
+		
 		protected var baseBitmap:Bitmap;
 		
 		public function ObjectTickable() {
 			super();
 			baseBitmap = new Bitmap();
 			this.addChild(baseBitmap);
+			$tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -39,6 +42,14 @@ package org.libra.game.objects {
 		
 		public function tick(interval:int):void {
 			
+		}
+		
+		public function get tickabled():Boolean {
+			return $tickabled;
+		}
+		
+		public function set tickabled(value:Boolean):void {
+			$tickabled = value;
 		}
 		
 		override public function destroy():void {

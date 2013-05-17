@@ -90,6 +90,16 @@ package org.libra.ui.flash.core {
 			return instance ||= new ValidationQueue(new Singleton());
 		}
 		
+		/* INTERFACE org.libra.tick.ITickable */
+		
+		public function get tickabled():Boolean {
+			return true;
+		}
+		
+		public function set tickabled(value:Boolean):void {
+			
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

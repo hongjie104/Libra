@@ -3,6 +3,7 @@ package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Point;
+	
 	import org.libra.tick.ITickable;
 	import org.libra.tick.Tick;
 	
@@ -34,8 +35,11 @@ package org.libra.bmpEngine.multi {
 		
 		protected var $height:int;
 		
+		protected var $tickabled:Boolean;
+		
 		public function JMultiBitmap(width:int, height:int) { 
 			super();
+			$tickabled = true;
 			//baseBitmap = new Bitmap(new BitmapData(width, height, true, 0x0));
 			//this.addChild(baseBitmap);
 			bitmapData = new BitmapData(width, height, true, 0x0);
@@ -97,6 +101,15 @@ package org.libra.bmpEngine.multi {
 			if (dispose) layer.dispose();
 		}
 		
+		public function getRenderSpriteUnderPoint(point:Point):Vector.<RenderSprite>{
+			var list:Vector.<RenderSprite> = new Vector.<RenderSprite>();
+			var i:int = this.$numChildren;
+			while(--i > -1){
+				list = list.concat(this.layerList[i].getRenderSpriteUnderPoint(point));
+			}
+			return list;
+		}
+		
 		/* INTERFACE org.libra.tick.ITickable */
 		
 		public function tick(interval:int):void {
@@ -135,6 +148,14 @@ package org.libra.bmpEngine.multi {
 			return $height;
 		}
 		
+		public function get tickabled():Boolean{
+			return $tickabled;
+		}
+		
+		public function set tickabled(value:Boolean):void{
+			$tickabled = value;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
@@ -154,7 +175,6 @@ package org.libra.bmpEngine.multi {
 			this.removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 			Tick.getInstance().removeItem(this);
 		}
-		
 	}
 
 }

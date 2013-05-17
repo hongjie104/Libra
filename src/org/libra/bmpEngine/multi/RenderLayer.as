@@ -2,6 +2,9 @@ package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	import org.libra.utils.MathUtil;
+
 	/**
 	 * <p>
 	 * Description
@@ -43,7 +46,7 @@ package org.libra.bmpEngine.multi {
 		
 		public function setSize(width:int, height:int):void {
 			if($bitmapData) $bitmapData.dispose();
-			$bitmapData = new BitmapData(width, height);
+			$bitmapData = new BitmapData(width, height,true,0x0);
 			$rect = $bitmapData.rect;
 			$updated = true;
 		}
@@ -122,6 +125,26 @@ package org.libra.bmpEngine.multi {
 			$updated = true;
 		}
 		
+		public function getRenderSpriteUnderPoint(point:Point):Vector.<RenderSprite>{
+			var list:Vector.<RenderSprite> = new Vector.<RenderSprite>();
+			var i:int = this.$numChildren;
+			var sprite:RenderSprite;
+			var index:int = 0;
+			while(--i > -1){
+				sprite = this.itemList[i];
+				if(sprite.x <= point.x){
+					if(sprite.y <= point.y){
+						if(sprite.width + sprite.x >= point.x){
+							if(sprite.height + sprite.y >= point.y){
+								list[index++] = sprite;
+							}
+						}
+					}
+				}
+			}
+			return list;
+		}
+		
 		public function indexOf(val:RenderSprite, fromIndex:int = 0):int {
 			return this.itemList.indexOf(val, fromIndex);
 		}
@@ -139,6 +162,16 @@ package org.libra.bmpEngine.multi {
 			}
 		}
 		
+		public function setChildIndex(child:RenderSprite,newIndex:int):void{
+			const index:int = this.itemList.indexOf(child);
+			if(index != -1){
+				newIndex = MathUtil.min(MathUtil.max(0,newIndex),this.$numChildren);
+				itemList.splice(index,1);
+				itemList.splice(newIndex,0,child);
+				$updated = true;
+			}
+		}
+		
 		public function sort(compareFunction:Function):void{
 			this.itemList.sort(compareFunction);
 			$updated = true;
@@ -153,7 +186,7 @@ package org.libra.bmpEngine.multi {
 					break;
 				}
 			}
-			if (needRender) {
+			if (needRender || $updated) {
 				var item:RenderSprite;
 				$bitmapData.lock();
 				$bitmapData.fillRect($bitmapData.rect, 0x00000000);
