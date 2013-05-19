@@ -138,7 +138,7 @@ package org.libra.ui.flash.core {
 		 * 获取文本
 		 */
 		public function get text():String {
-			return $text;
+			return $text ||= textField.text;
 		}
 		
 		/**
