@@ -2,9 +2,8 @@ package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	
 	import org.libra.utils.MathUtil;
-
+	
 	/**
 	 * <p>
 	 * Description
@@ -23,7 +22,7 @@ package org.libra.bmpEngine.multi {
 		
 		protected var $rect:Rectangle;
 		
-		protected var itemList:Vector.<RenderSprite>;
+		protected var $itemList:Vector.<RenderSprite>;
 		
 		protected var $bitmapData:BitmapData;
 		
@@ -34,7 +33,7 @@ package org.libra.bmpEngine.multi {
 		protected var $visible:Boolean;
 		
 		public function RenderLayer(width:int, height:int) { 
-			itemList = new Vector.<RenderSprite>();
+			$itemList = new Vector.<RenderSprite>();
 			$bitmapData = new BitmapData(width, height, true, 0x0);
 			$rect = $bitmapData.rect;
 			$visible = true;
@@ -79,25 +78,25 @@ package org.libra.bmpEngine.multi {
 		}
 		
 		public function addItem(item:RenderSprite):void {
-			if (itemList.indexOf(item) == -1) {
-				itemList.push(item);
+			if ($itemList.indexOf(item) == -1) {
+				$itemList.push(item);
 				$numChildren += 1;
 				$updated = true;
 			}
 		}
 		
 		public function addItemAt(item:RenderSprite, index:int = -1):void {
-			if (index < 1) itemList.unshift(item);
-			else if (index > $numChildren) itemList.push(item);
-			else itemList.splice(index, 0, item);
+			if (index < 1) $itemList.unshift(item);
+			else if (index > $numChildren) $itemList.push(item);
+			else $itemList.splice(index, 0, item);
 			$numChildren += 1;
 			$updated = true;
 		}
 		
 		public function removeItem(item:RenderSprite, dispose:Boolean = false):void { 
-			const index:int = itemList.indexOf(item);
+			const index:int = $itemList.indexOf(item);
 			if (index != -1) {
-				itemList.splice(index, 1);
+				$itemList.splice(index, 1);
 				$numChildren--;
 				if (dispose) item.dispose();
 				$updated = true;
@@ -106,9 +105,9 @@ package org.libra.bmpEngine.multi {
 		
 		public function removeItemAt(index:int = 0, dispose:Boolean = false):void {
 			var item:RenderSprite;
-			if (index > $numChildren) item = itemList.pop();
-			else if (index < 0) item = itemList.shift();
-			else item = itemList.splice(index, 1)[0];
+			if (index > $numChildren) item = $itemList.pop();
+			else if (index < 0) item = $itemList.shift();
+			else item = $itemList.splice(index, 1)[0];
 			$numChildren--;
 			if (dispose) item.dispose();
 			$updated = true;
@@ -118,9 +117,9 @@ package org.libra.bmpEngine.multi {
 			if (dispose) {
 				const l:int = $numChildren;
 				while (--l > -1)
-					itemList[l].dispose();
+					$itemList[l].dispose();
 			}
-			this.itemList.length = 0;
+			this.$itemList.length = 0;
 			$numChildren = 0;
 			$updated = true;
 		}
@@ -131,7 +130,7 @@ package org.libra.bmpEngine.multi {
 			var sprite:RenderSprite;
 			var index:int = 0;
 			while(--i > -1){
-				sprite = this.itemList[i];
+				sprite = this.$itemList[i];
 				if(sprite.x <= point.x){
 					if(sprite.y <= point.y){
 						if(sprite.width + sprite.x >= point.x){
@@ -146,34 +145,34 @@ package org.libra.bmpEngine.multi {
 		}
 		
 		public function indexOf(val:RenderSprite, fromIndex:int = 0):int {
-			return this.itemList.indexOf(val, fromIndex);
+			return this.$itemList.indexOf(val, fromIndex);
 		}
 		
 		public function swapDepths(item1:RenderSprite, item2:RenderSprite):void { 
-			const index1:int = itemList.indexOf(item1);
+			const index1:int = $itemList.indexOf(item1);
 			if (index1 > -1) {
-				const index2:int = itemList.indexOf(item2);
+				const index2:int = $itemList.indexOf(item2);
 				if (index2 > -1) {
 					// swap their data
-					itemList[index1] = item2;
-					itemList[index2] = item1;
+					$itemList[index1] = item2;
+					$itemList[index2] = item1;
 					$updated = true;
 				}
 			}
 		}
 		
 		public function setChildIndex(child:RenderSprite,newIndex:int):void{
-			const index:int = this.itemList.indexOf(child);
+			const index:int = this.$itemList.indexOf(child);
 			if(index != -1){
 				newIndex = MathUtil.min(MathUtil.max(0,newIndex),this.$numChildren);
-				itemList.splice(index,1);
-				itemList.splice(newIndex,0,child);
+				$itemList.splice(index,1);
+				$itemList.splice(newIndex,0,child);
 				$updated = true;
 			}
 		}
 		
 		public function sort(compareFunction:Function):void{
-			this.itemList.sort(compareFunction);
+			this.$itemList.sort(compareFunction);
 			$updated = true;
 		}
 		
@@ -181,7 +180,7 @@ package org.libra.bmpEngine.multi {
 			var l:int = $numChildren;
 			var needRender:Boolean = false;
 			while (--l > -1) {
-				if (itemList[l].updated) {
+				if ($itemList[l].updated) {
 					needRender = true;
 					break;
 				}
@@ -191,7 +190,7 @@ package org.libra.bmpEngine.multi {
 				$bitmapData.lock();
 				$bitmapData.fillRect($bitmapData.rect, 0x00000000);
 				for (var i:int = 0; i < $numChildren; i += 1) {
-					item = itemList[i];
+					item = $itemList[i];
 					if (item.visible && item.bitmapData) {
 						HELP_POINT.x = item.x;
 						HELP_POINT.y = item.y;

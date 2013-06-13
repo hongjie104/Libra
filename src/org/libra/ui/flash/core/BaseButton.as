@@ -46,25 +46,25 @@ package org.libra.ui.flash.core {
 		 * 按钮当前状态
 		 * @private
 		 */
-		protected var curState:int;
+		protected var $curState:int;
 		
 		/**
 		 * 控制按钮皮肤
 		 * @private
 		 */
-		protected var state:IButtonState;
+		protected var $state:IButtonState;
 		
 		/**
 		 * 按钮文本相对按钮的相对横坐标
 		 * @private
 		 */
-		protected var textX:int;
+		protected var $textX:int;
 		
 		/**
 		 * 按钮文本相对按钮的相对纵坐标
 		 * @private
 		 */
-		protected var textY:int;
+		protected var $textY:int;
 		
 		/**
 		 * 构造函数
@@ -75,7 +75,7 @@ package org.libra.ui.flash.core {
 		 */
 		public function BaseButton(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
 			super(theme, x, y, text);
-			curState = NORMAL;
+			$curState = NORMAL;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -104,58 +104,58 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function initState():void {
-			this.state = new BaseButtonState();
-			this.state.setResName((theme as DefaultBtnTheme).resName);
-			addChildAt(this.state.getDisplayObject(), 0);
+			this.$state = new BaseButtonState();
+			this.$state.resName = ($theme as DefaultBtnTheme).resName;
+			addChildAt(this.$state.displayObject, 0);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function initTextField(text:String = ''):void {
-			textField = new TextField();
-			textField.selectable = textField.tabEnabled = textField.mouseWheelEnabled = textField.mouseEnabled = textField.doubleClickEnabled = false;
-			textField.multiline = false;
-			setFont(theme.font);
-			textField.filters = theme.filter;
+			$textField = new TextField();
+			$textField.selectable = $textField.tabEnabled = $textField.mouseWheelEnabled = $textField.mouseEnabled = $textField.doubleClickEnabled = false;
+			$textField.multiline = false;
+			setFont($theme.font);
+			$textField.filters = $theme.filter;
 			this.textAlign = 'center';
 			this.text = text;
-			this.addChild(textField);
+			this.addChild($textField);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function resize():void {
-			this.state.setSize(actualWidth, actualHeight);
+			this.$state.setSize($actualWidth, $actualHeight);
 			/*//保证按钮中的文本在垂直方向上永远居中
-			//setTextLocation(textX, (actualHeight - textField.textHeight) >> 1);
-			setTextLocation(textX, (actualHeight - 16) >> 1);*/
+			//setTextLocation($textX, ($actualHeight - $textField.textHeight) >> 1);
+			setTextLocation($textX, ($actualHeight - 16) >> 1);*/
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function refreshState():void {
-			if (this.curState == MOUSE_OVER) {
-				this.state.toMouseOver();
-				this.textField.x = textX;
-				this.textField.y = textY;
-			}else if (this.curState == MOUSE_DOWN) {
-				this.state.toMouseDown();
-				this.textField.x = textX + 1;
-				this.textField.y = textY + 1;
+			if (this.$curState == MOUSE_OVER) {
+				this.$state.toMouseOver();
+				this.$textField.x = $textX;
+				this.$textField.y = $textY;
+			}else if (this.$curState == MOUSE_DOWN) {
+				this.$state.toMouseDown();
+				this.$textField.x = $textX + 1;
+				this.$textField.y = $textY + 1;
 			}else {
-				this.state.toNormal();
-				this.textField.x = textX;
-				this.textField.y = textY;
+				this.$state.toNormal();
+				this.$textField.x = $textX;
+				this.$textField.y = $textY;
 			}
 		}
 		
 		override protected function refreshText():void {
 			super.refreshText();
 			//保证按钮中的文本在垂直方向上永远居中
-			setTextLocation(textX, (actualHeight - textField.textHeight) >> 1);
+			setTextLocation($textX, ($actualHeight - $textField.textHeight) >> 1);
 		}
 		
 		/**
@@ -163,8 +163,8 @@ package org.libra.ui.flash.core {
 		 */
 		override public function setTextLocation(x:int, y:int):void {
 			super.setTextLocation(x, y);
-			this.textX = x;
-			this.textY = y;
+			this.$textX = x;
+			this.$textY = y;
 		}
 		
 		/**
@@ -172,9 +172,9 @@ package org.libra.ui.flash.core {
 		 * @private
 		 * @param	state
 		 */
-		protected function setCurState(state:int):void {
-			if (curState != state) {
-				this.curState = state;
+		protected function set curState(state:int):void {
+			if ($curState != state) {
+				this.$curState = state;
 				this.invalidate(InvalidationFlag.STATE);
 			}
 		}
@@ -190,7 +190,7 @@ package org.libra.ui.flash.core {
 		 */
 		private function onMouseUpAndDown(e:MouseEvent):void {
 			if (enabled) {
-				setCurState(e.type == MouseEvent.MOUSE_DOWN ? MOUSE_DOWN : MOUSE_OVER);
+				curState = e.type == MouseEvent.MOUSE_DOWN ? MOUSE_DOWN : MOUSE_OVER;
 			}
 		}
 		
@@ -201,7 +201,7 @@ package org.libra.ui.flash.core {
 		 */
 		private function onRollOverAndOut(e:MouseEvent):void {
 			if (enabled) {
-				setCurState(e.type == MouseEvent.ROLL_OVER ? MOUSE_OVER : NORMAL);
+				curState = e.type == MouseEvent.ROLL_OVER ? MOUSE_OVER : NORMAL;
 			}
 		}
 		

@@ -32,8 +32,8 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function setSize(w:int, h:int):void {
-			this.actualWidth = w;
-			this.actualHeight = h;
+			this.$actualWidth = w;
+			this.$actualHeight = h;
 			invalidate(InvalidationFlag.SIZE);
 		}
 		
@@ -47,9 +47,9 @@ package org.libra.ui.flash.components {
 		
 		override public function set text(value:String):void {
 			$text = value;
-			textField.text = $text;
-			this.textField.autoSize = TextFieldAutoSize.LEFT;
-			this.setSize(textField.textWidth + 13, 29);
+			$textField.text = $text;
+			this.$textField.autoSize = TextFieldAutoSize.LEFT;
+			this.setSize($textField.textWidth + 13, 29);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -62,15 +62,15 @@ package org.libra.ui.flash.components {
 		}
 		
 		override protected function resize():void {
-			if (this.background) {
-				if (this.background is Bitmap) {
-					const bitmap:Bitmap = background as Bitmap;
+			if (this.$background) {
+				if (this.$background is Bitmap) {
+					const bitmap:Bitmap = $background as Bitmap;
 					if (bitmap.bitmapData) bitmap.bitmapData.dispose();
 				}
 			}
-			if(actualWidth > 0 && actualHeight > 0)
-				this.setBackground(new Bitmap(BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData('toolTipBg'), 
-					actualWidth, actualHeight, new Rectangle(5, 4, 1, 20))));
+			if($actualWidth > 0 && $actualHeight > 0)
+				this.background = new Bitmap(BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData('toolTipBg'), 
+					$actualWidth, $actualHeight, new Rectangle(5, 4, 1, 20)));
 		}
 		
 		/*-----------------------------------------------------------------------------------------

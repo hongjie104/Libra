@@ -20,11 +20,11 @@ package org.libra.ui.flash.components {
 		/**
 		 * CheckBox的数组
 		 */
-		private var checkBoxList:Vector.<JCheckBox>;
+		private var $checkBoxList:Vector.<JCheckBox>;
 		
-		private var orientation:int;
+		private var $orientation:int;
 		
-		private var gap:int;
+		private var $gap:int;
 		
 		private var selectedBox:JCheckBox;
 		
@@ -37,9 +37,9 @@ package org.libra.ui.flash.components {
 		 */
 		public function JCheckBoxGroup(x:int = 0, y:int = 0, orientation:int = 0, gap:int = 5) { 
 			super(x, y);
-			this.orientation = orientation;
-			this.gap = gap;
-			checkBoxList = new Vector.<JCheckBox>();
+			this.$orientation = orientation;
+			this.$gap = gap;
+			$checkBoxList = new Vector.<JCheckBox>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -52,12 +52,12 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function appendCheckBox(checkBox:JCheckBox):void {
-			if (this.checkBoxList.indexOf(checkBox) == -1) {
-				var l:int = checkBoxList.length;
+			if (this.$checkBoxList.indexOf(checkBox) == -1) {
+				var l:int = $checkBoxList.length;
 				if (l == 0) this.setSelectedCheckBox(checkBox);
-				checkBoxList[l] = checkBox;
+				$checkBoxList[l] = checkBox;
 				checkBox.setCheckBoxGroup(this);
-				if (checkBox.isSelected()) this.setSelectedCheckBox(checkBox);
+				if (checkBox.selected) this.setSelectedCheckBox(checkBox);
 				this.invalidate(InvalidationFlag.SIZE);
 			}
 		}
@@ -68,21 +68,21 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function removeCheckBox(checkBox:JCheckBox):void {
-			var index:int = this.checkBoxList.indexOf(checkBox);
+			var index:int = this.$checkBoxList.indexOf(checkBox);
 			if (index != -1) {
-				this.checkBoxList.splice(index, 1);
+				this.$checkBoxList.splice(index, 1);
 				this.remove(checkBox);
-				if (selectedBox == checkBox) this.setSelectedCheckBox(checkBoxList.length ? checkBoxList[0] : null);
+				if (selectedBox == checkBox) this.setSelectedCheckBox($checkBoxList.length ? $checkBoxList[0] : null);
 				this.invalidate(InvalidationFlag.SIZE);
 			}
 		}
 		
 		public function clearCheckBox():void {
-			var i:int = checkBoxList.length;
+			var i:int = $checkBoxList.length;
 			while (--i > -1)
-				this.remove(checkBoxList[i]);
+				this.remove($checkBoxList[i]);
 				
-			this.checkBoxList.length = 0;
+			this.$checkBoxList.length = 0;
 			this.selectedBox = null;
 		}
 		
@@ -92,23 +92,23 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function setCheckBoxUnselected(except:JCheckBox):void {
-			var i:int = checkBoxList.length;
+			var i:int = $checkBoxList.length;
 			while (--i > -1) {
-				if (this.checkBoxList[i] == except) continue;
-				this.checkBoxList[i].setSelected(false);
+				if (this.$checkBoxList[i] == except) continue;
+				this.$checkBoxList[i].selected = false;
 			}
 		}
 		
-		public function setGap(val:int):void {
-			this.gap = val;
+		public function set gap(val:int):void {
+			this.$gap = val;
 			this.invalidate(InvalidationFlag.SIZE);
 		}
 		
 		override public function destroy():void {
 			super.destroy();
-			var i:int = checkBoxList.length;
+			var i:int = $checkBoxList.length;
 			while (--i > -1) {
-				checkBoxList[i].destroy();
+				$checkBoxList[i].destroy();
 			}
 		}
 		
@@ -118,15 +118,15 @@ package org.libra.ui.flash.components {
 		
 		override protected function resize():void {
 			var preCheckBox:JCheckBox;
-			for each(var box:JCheckBox in this.checkBoxList) {
-				box.setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + gap : 0) : 0, 
-					orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.height + preCheckBox.y + gap : 0));
+			for each(var box:JCheckBox in this.$checkBoxList) {
+				box.setLocation($orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + $gap : 0) : 0, 
+					$orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.height + preCheckBox.y + $gap : 0));
 				preCheckBox = box;
 			}
 		}
 		
 		override protected function refreshState():void {
-			if(this.selectedBox) this.selectedBox.setSelected(true);
+			if(this.selectedBox) this.selectedBox.selected = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

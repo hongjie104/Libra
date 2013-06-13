@@ -14,7 +14,7 @@ package org.libra.ui.flash.core.state {
 	 */
 	public interface ISelectState extends IButtonState {
 		
-		function setSelected(val:Boolean):void;
+		function set selected(val:Boolean):void;
 		
 		function toSelected():void;
 		

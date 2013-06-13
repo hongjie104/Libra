@@ -17,13 +17,13 @@ package org.libra.ui.flash.core.state {
 	 */
 	public class BaseButtonState extends Bitmap implements IButtonState {
 		
-		protected var getBmd:Function;
+		protected var $getBmd:Function;
 		
-		protected var resName:String;
+		protected var $resName:String;
 		
 		public function BaseButtonState() {
 			super();
-			getBmd = ResManager.getInstance().getBitmapData;
+			$getBmd = ResManager.getInstance().getBitmapData;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -32,8 +32,9 @@ package org.libra.ui.flash.core.state {
 		
 		/* INTERFACE org.libra.ui.base.states.IStatus */
 		
-		public function setResName(val:String):void {
-			this.resName = val;
+		public function set resName(val:String):void {
+			this.$resName = val;
+			toNormal();
 		}
 		
 		public function setSize(w:int, h:int):void {
@@ -41,16 +42,16 @@ package org.libra.ui.flash.core.state {
 			//this.$height = h;
 		}
 		
-		public function getDisplayObject():DisplayObject {
+		public function get displayObject():DisplayObject {
 			return this;
 		}
 		
 		public function toNormal():void {
-			this.bitmapData = getBmd(resName + '_normal');
+			this.bitmapData = $getBmd($resName + '_normal');
 		}
 		
 		public function toMouseOver():void {
-			this.bitmapData = getBmd(resName + '_over');
+			this.bitmapData = $getBmd($resName + '_over');
 		}
 		
 		//public function toMouseOut():void {
@@ -58,7 +59,7 @@ package org.libra.ui.flash.core.state {
 		//}
 		
 		public function toMouseDown():void {
-			this.bitmapData = getBmd(resName + '_down');
+			this.bitmapData = $getBmd($resName + '_down');
 		}
 		
 		//public function toMouseUp():void {

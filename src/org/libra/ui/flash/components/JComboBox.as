@@ -25,28 +25,28 @@ package org.libra.ui.flash.components {
 	 */
 	public class JComboBox extends Component {
 		
-		private var list:JList;
+		private var $list:JList;
 		
-		private var listMask:Shape;
+		private var $listMask:Shape;
 		
-		private var content:JLabel;
+		private var $content:JLabel;
 		
-		private var pressBtn:JButton;
+		private var $pressBtn:JButton;
 		
-		private var orientation:int;
+		private var $orientation:int;
 		
-		private var defaultText:String;
+		private var $defaultText:String;
 		
 		/**
 		 * 是否折叠着。。。
 		 */
-		private var fold:Boolean;
+		private var $fold:Boolean;
 		
-		private var unfoldTweenLite:TweenLite;
+		private var $unfoldTweenLite:TweenLite;
 		
-		private var foldTweenLite:TweenLite;
+		private var $foldTweenLite:TweenLite;
 		
-		private var theme:DefaultComboBoxTheme;
+		private var $theme:DefaultComboBoxTheme;
 		
 		/**
 		 * 构造函数
@@ -57,23 +57,23 @@ package org.libra.ui.flash.components {
 		 */
 		public function JComboBox(theme:DefaultComboBoxTheme = null, orientation:int = 4, defaultText:String = '', x:int = 0, y:int = 0) { 
 			super(x, y);
-			this.theme = theme ? theme : UIManager.getInstance().theme.comboBoxTheme;
-			this.orientation = orientation;
-			this.defaultText = defaultText;
-			this.setSize(theme.width, theme.height);
-			fold = true;
+			this.$theme = theme ? theme : UIManager.getInstance().theme.comboBoxTheme;
+			this.$orientation = orientation;
+			this.$defaultText = defaultText;
+			this.setSize($theme.width, $theme.height);
+			$fold = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function setDataList(val:Vector.<Object>):void {
-			list.setDataList(val);
+		public function set dataList(val:Vector.<Object>):void {
+			$list.dataList = val;
 		}
 		
-		public function getDataList():Vector.<Object> {
-			return list.getDataList();
+		public function get dataList():Vector.<Object> {
+			return $list.dataList;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -83,44 +83,44 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			
-			content = new JLabel(theme.contentTheme, 0, 0, defaultText);
-			pressBtn = new JButton(theme.pressBtnTheme, 0, 0);
-			this.addChildAll(content, pressBtn);
+			$content = new JLabel($theme.contentTheme, 0, 0, $defaultText);
+			$pressBtn = new JButton($theme.pressBtnTheme, 0, 0);
+			this.addChildAll($content, $pressBtn);
 			
-			list = new JList();
-			listMask = new Shape();
-			GraphicsUtil.drawRect(listMask.graphics, 0, 0, 1, 1, 0, 0);
+			$list = new JList();
+			$listMask = new Shape();
+			GraphicsUtil.drawRect($listMask.graphics, 0, 0, 1, 1, 0, 0);
 		}
 		
 		override protected function resize():void {
-			content.setSize(actualWidth, actualHeight);
-			pressBtn.setLocation(actualWidth - pressBtn.width - 2, (actualHeight - pressBtn.height) >> 1);
-			list.setSize(actualWidth, 160);
-			listMask.width = actualWidth;
-			listMask.height = list.height;
+			$content.setSize($actualWidth, $actualHeight);
+			$pressBtn.setLocation($actualWidth - $pressBtn.width - 2, ($actualHeight - $pressBtn.height) >> 1);
+			$list.setSize($actualWidth, 160);
+			$listMask.width = $actualWidth;
+			$listMask.height = $list.height;
 		}
 		
 		/**
 		 * 展开
 		 */
 		private function toUnfold():void {
-			if (fold) {
-				this.fold = false;
-				this.addChild(list);
-				this.addChild(listMask);
-				list.mask = listMask;
-				if (orientation == Constants.DOWN) {
+			if ($fold) {
+				this.$fold = false;
+				this.addChild($list);
+				this.addChild($listMask);
+				$list.mask = $listMask;
+				if ($orientation == Constants.DOWN) {
 					//加1，让下拉菜单和文本之间留出1像素的空隙，仅仅是为了美观。
-					listMask.y = actualHeight + 1;
-					list.setLocation(0, listMask.y - list.height);
+					$listMask.y = $actualHeight + 1;
+					$list.setLocation(0, $listMask.y - $list.height);
 					
 				}else {
-					listMask.y = 0 - 1 - listMask.height;
-					list.setLocation(0, -1);
+					$listMask.y = 0 - 1 - $listMask.height;
+					$list.setLocation(0, -1);
 				}
 				stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-				if (unfoldTweenLite) unfoldTweenLite.restart();
-				else unfoldTweenLite = TweenLite.to(list, .2, { y:listMask.y } );
+				if ($unfoldTweenLite) $unfoldTweenLite.restart();
+				else $unfoldTweenLite = TweenLite.to($list, .2, { y:$listMask.y } );
 			}
 		}
 		
@@ -128,13 +128,13 @@ package org.libra.ui.flash.components {
 		 * 折叠
 		 */
 		private function toFold():void {
-			if (!fold) {
-				this.fold = true;
+			if (!$fold) {
+				this.$fold = true;
 				stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-				if (foldTweenLite) foldTweenLite.restart();
-				else foldTweenLite = TweenLite.to(list, .2, { y:orientation == Constants.DOWN ? actualHeight + 1 - list.height : -1, onComplete:function():void { 
-						removeChild(list);
-						removeChild(listMask);
+				if ($foldTweenLite) $foldTweenLite.restart();
+				else $foldTweenLite = TweenLite.to($list, .2, { y:$orientation == Constants.DOWN ? $actualHeight + 1 - $list.height : -1, onComplete:function():void { 
+						removeChild($list);
+						removeChild($listMask);
 					}} );
 			}
 		}
@@ -145,18 +145,18 @@ package org.libra.ui.flash.components {
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			this.pressBtn.addEventListener(MouseEvent.CLICK, onPressClicked);
-			this.list.addEventListener(Event.SELECT, onItemSelected);
+			this.$pressBtn.addEventListener(MouseEvent.CLICK, onPressClicked);
+			this.$list.addEventListener(Event.SELECT, onItemSelected);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			this.pressBtn.removeEventListener(MouseEvent.CLICK, onPressClicked);
-			this.list.removeEventListener(Event.SELECT, onItemSelected);
+			this.$pressBtn.removeEventListener(MouseEvent.CLICK, onPressClicked);
+			this.$list.removeEventListener(Event.SELECT, onItemSelected);
 		}
 		
 		private function onPressClicked(e:MouseEvent):void {
-			fold ? toUnfold() : toFold();
+			$fold ? toUnfold() : toFold();
 			if(e) e.stopPropagation();
 		}
 		
@@ -165,8 +165,7 @@ package org.libra.ui.flash.components {
 		 * @param	e
 		 */
 		private function onItemSelected(e:Event):void {
-			const selectedItem:JListItem = list.getSelectedItem();
-			this.content.text = selectedItem.getData();
+			this.$content.text = $list.selectedItem.data;
 			onPressClicked(null);
 		}
 		
@@ -175,9 +174,9 @@ package org.libra.ui.flash.components {
 		 * @param	e
 		 */
 		private function onStageMouseUp(e:MouseEvent):void {
-			if (e.target == pressBtn) return;
-			const p:Point = localToGlobal(new Point(list.x, list.y));
-			if (!new Rectangle(p.x, p.y, list.width, list.height).contains(e.stageX, e.stageY)) this.toFold();
+			if (e.target == $pressBtn) return;
+			const p:Point = localToGlobal(new Point($list.x, $list.y));
+			if (!new Rectangle(p.x, p.y, $list.width, $list.height).contains(e.stageX, e.stageY)) this.toFold();
 		}
 		
 	}

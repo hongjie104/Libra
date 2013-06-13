@@ -18,8 +18,10 @@ package org.libra.ui.flash.core.state {
 	 */
 	public class BaseListItemState extends Shape implements ISelectState {
 		
-		private var selected:Boolean;
+		private var $selected:Boolean;
+		
 		private var $width:int;
+		
 		private var $height:int;
 		
 		public function BaseListItemState() {
@@ -32,8 +34,8 @@ package org.libra.ui.flash.core.state {
 		
 		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
 		
-		public function setSelected(val:Boolean):void {
-			this.selected = val;
+		public function set selected(val:Boolean):void {
+			this.$selected = val;
 			val ? toSelected() : toNormal();
 		}
 		
@@ -46,16 +48,16 @@ package org.libra.ui.flash.core.state {
 			this.$height = h;
 		}
 		
-		public function setResName(val:String):void {
+		public function set resName(val:String):void {
 			
 		}
 		
-		public function getDisplayObject():DisplayObject {
+		public function get displayObject():DisplayObject {
 			return this;
 		}
 		
 		public function toNormal():void {
-			selected ? toSelected() : GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, DefaultTheme.LIST_DEFAULT);
+			$selected ? toSelected() : GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, DefaultTheme.LIST_DEFAULT);
 		}
 		
 		public function toMouseOver():void {

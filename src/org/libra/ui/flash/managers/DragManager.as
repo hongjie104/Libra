@@ -25,25 +25,25 @@ package org.libra.ui.flash.managers {
 		/**
 		 * 只有Sprite才有startDrag stopDrag方法，所以申明为Sprite类型
 		 */
-		private static var dragSprite:Sprite;
+		private static var $dragSprite:Sprite;
 		
 		/**
 		 * 拖动组件时呈现的Bitmap,放在dragSprite里
 		 * 只要修改其bitmapData，就能呈现出不同的图案
 		 */
-		private static var dragBitmap:Bitmap;
+		private static var $dragBitmap:Bitmap;
 		
 		/**
 		 * 被拖放的组件
 		 */
-		private static var dragComponent:IDragable;
+		private static var $dragComponent:IDragable;
 		
-		static private var dropComponent:IDropable;
+		static private var $dropComponent:IDropable;
 		
 		/**
 		 * 开始拖动组件时的坐标
 		 */
-		private static var startPoint:Point;
+		private static var $startPoint:Point;
 		
 		public function DragManager() {
 			throw new Error('DragManager类不能实例化!');
@@ -53,26 +53,26 @@ package org.libra.ui.flash.managers {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public static function startDrag(dragComponent:IDragable):void {
-			if (!dragBitmap) {
-				dragBitmap = new Bitmap();
-				dragSprite = new Sprite();
-				dragSprite.addChild(dragBitmap);
+		public static function startDrag($dragComponent:IDragable):void {
+			if (!$dragBitmap) {
+				$dragBitmap = new Bitmap();
+				$dragSprite = new Sprite();
+				$dragSprite.addChild($dragBitmap);
 			}
 			
-			DragManager.dragComponent = dragComponent;
+			DragManager.$dragComponent = $dragComponent;
 			
 			//获取组件拖动时的bitmapdata
-			if (dragBitmap.bitmapData) dragBitmap.bitmapData.dispose();
-			dragBitmap.bitmapData = dragComponent.getDragBmd();
+			if ($dragBitmap.bitmapData) $dragBitmap.bitmapData.dispose();
+			$dragBitmap.bitmapData = $dragComponent.dragBmd;
 			
 			const stage:Stage = UIManager.getInstance().stage;
-			startPoint = dragComponent.parent.localToGlobal(new Point(dragComponent.x, dragComponent.y));
-			dragSprite.x = startPoint.x;
-			dragSprite.y = startPoint.y;
-			stage.addChild(dragSprite);
+			$startPoint = $dragComponent.parent.localToGlobal(new Point($dragComponent.x, $dragComponent.y));
+			$dragSprite.x = $startPoint.x;
+			$dragSprite.y = $startPoint.y;
+			stage.addChild($dragSprite);
 			
-			dragSprite.startDrag();
+			$dragSprite.startDrag();
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 		}
@@ -95,7 +95,7 @@ package org.libra.ui.flash.managers {
 					con = targets[l] as IDropable;
 					//先判断一下，鼠标点是否点击到了容器上。
 					//if (con.isMouseHitMe(pos)) {
-						if (con.isDropAccept(dragComponent)) {
+						if (con.isDropAccept($dragComponent)) {
 							return con;
 						}
 					//}
@@ -110,7 +110,7 @@ package org.libra.ui.flash.managers {
 		public static function stopDrag():void {
 			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
-			dragSprite.stopDrag();
+			$dragSprite.stopDrag();
 			playMotion();
 		}
 		
@@ -118,18 +118,18 @@ package org.libra.ui.flash.managers {
 		 * 播放动画
 		 */
 		static private function playMotion():void {
-			if (dropComponent) {
+			if ($dropComponent) {
 				//拖拽成功
 				//dragInitiator.dragSuccess();
 				//如果成功拖放了，就直接移除拖放图案的托
-				dragSprite.parent.removeChild(dragSprite);
-				dropComponent.addDragComponent(dragComponent);
+				$dragSprite.parent.removeChild($dragSprite);
+				$dropComponent.addDragComponent($dragComponent);
 			}else {
 				//拖拽失败
 				//dragInitiator.dragFail();
 				//如果组件不被容器所接受，那么播放失败动画
-				var t:TweenLite = TweenLite.to(dragSprite, .5, { x:startPoint.x, y:startPoint.y, ease:Linear.easeNone, 
-					onComplete:function():void { t.kill(); dragSprite.parent.removeChild(dragSprite); }} );
+				var t:TweenLite = TweenLite.to($dragSprite, .5, { x:$startPoint.x, y:$startPoint.y, ease:Linear.easeNone, 
+					onComplete:function():void { t.kill(); $dragSprite.parent.removeChild($dragSprite); }} );
 			}
 		}
 		
@@ -137,7 +137,7 @@ package org.libra.ui.flash.managers {
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
 		static private function onMouseMoveHandler(e:MouseEvent):void {
-			dropComponent = getAcceptContainer(new Point(e.stageX, e.stageY));
+			$dropComponent = getAcceptContainer(new Point(e.stageX, e.stageY));
 		}
 		
 		static private function onMouseUpHandler(e:MouseEvent):void {

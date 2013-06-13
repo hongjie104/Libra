@@ -1,7 +1,6 @@
 package org.libra.tick {
 	import flash.display.Shape;
 	import flash.events.Event;
-	import flash.sampler.NewObjectSample;
 	import flash.utils.getTimer;
 	import org.libra.utils.MathUtil;
 	

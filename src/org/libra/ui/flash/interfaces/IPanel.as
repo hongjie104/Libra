@@ -20,7 +20,7 @@ package org.libra.ui.flash.interfaces {
 		
 		function showSwitch():void;
 		
-		function isShowing():Boolean;
+		function get showing():Boolean;
 	}
 	
 }

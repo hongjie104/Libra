@@ -1,7 +1,6 @@
 package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import org.libra.tick.ITickable;
-	import org.osflash.signals.Signal;
 	
 	/**
 	 * <p>
@@ -19,13 +18,13 @@ package org.libra.bmpEngine.multi {
 		
 		protected var $tickabled:Boolean;
 		
-		protected var bmdList:Vector.<BitmapData>;
+		protected var $bmdList:Vector.<BitmapData>;
 		
 		protected var $totalFrames:int;
 		
 		protected var $currentFrame:int;
 		
-		protected var playing:Boolean;
+		protected var $playing:Boolean;
 		
 		protected var $loop:int;
 		
@@ -37,15 +36,15 @@ package org.libra.bmpEngine.multi {
 		/**
 		 * 每帧需要的毫秒数
 		 */
-		protected var rateTimer:int;
+		protected var $rateTimer:int;
 		
-		protected var frameTimer:int;
+		protected var $frameTimer:int;
 		
 		//protected var $changedSignal:Signal;
 		
 		public function RenderMovieCelip(bmdList:Vector.<BitmapData>) {
 			super(bmdList && bmdList.length ? bmdList[0] : null);
-			setBmdList(bmdList);
+			this.bmdList = bmdList;
 			$loop = -1;
 			frameRate = 10;
 			//$changedSignal = new Signal(int);
@@ -56,9 +55,9 @@ package org.libra.bmpEngine.multi {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function setBmdList(bmdList:Vector.<BitmapData>):void {
-			this.bmdList = bmdList;
-			$totalFrames = bmdList && bmdList.length ? bmdList.length - 1 : 0;
+		public function set bmdList(bmdList:Vector.<BitmapData>):void {
+			this.$bmdList = bmdList;
+			$totalFrames = $bmdList && $bmdList.length ? $bmdList.length - 1 : 0;
 			$currentFrame = 0;
 			this.$updated = true;
 		}
@@ -77,8 +76,8 @@ package org.libra.bmpEngine.multi {
 			return $totalFrames;
 		}
 		
-		public function get isPlaying():Boolean {
-			return playing;
+		public function get playing():Boolean {
+			return $playing;
 		}
 		
 		public function get loop():int {
@@ -95,7 +94,7 @@ package org.libra.bmpEngine.multi {
 		
 		public function set frameRate(frameRate:int):void {
 			this.$frameRate = frameRate;
-			this.rateTimer = 1000 / $frameRate;
+			this.$rateTimer = 1000 / $frameRate;
 		}
 		
 		/**
@@ -136,30 +135,30 @@ package org.libra.bmpEngine.multi {
 		 * 移动播放头
 		 */
 		public function play():void {
-			playing = true;
+			$playing = true;
 		}
 		
 		/**
 		 * 停止影片剪辑中的播放头
 		 */
 		public function stop():void {
-			playing = false;
+			$playing = false;
 		}
 		
 		/* INTERFACE org.libra.tick.ITickable */
 		
 		public function tick(interval:int):void {
-			if (playing) {
+			if ($playing) {
 				if ($loop == 0) {
 					stop();
 					return;
 				}
-				frameTimer -= interval;
-				while (frameTimer < 0) {
+				$frameTimer -= interval;
+				while ($frameTimer < 0) {
 					if (this.$currentFrame == $totalFrames) {
 						if ($loop > 0) $loop--;
 						if ($loop == 0) {
-							this.frameTimer = 0;
+							this.$frameTimer = 0;
 							stop();
 							return;
 						}else {
@@ -168,7 +167,7 @@ package org.libra.bmpEngine.multi {
 					}else {
 						this.setCurrentFrame($currentFrame + 1);
 					}
-					frameTimer += rateTimer;
+					$frameTimer += $rateTimer;
 				}
 			}
 		}
@@ -198,7 +197,7 @@ package org.libra.bmpEngine.multi {
 				}else if(frame < 0){
 					frame = this.$totalFrames;
 				}
-				$bitmapData = bmdList[frame];
+				$bitmapData = $bmdList[frame];
 				$rect = $bitmapData.rect;
 				$currentFrame = frame;
 				$updated = true;

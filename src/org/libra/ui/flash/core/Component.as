@@ -33,18 +33,18 @@ package org.libra.ui.flash.core {
 		 * 宽度
 		 * @private
 		 */
-		protected var actualWidth:Number;
+		protected var $actualWidth:Number;
 		
 		/**
 		 * 高度
 		 * @private
 		 */
-		protected var actualHeight:Number;
+		protected var $actualHeight:Number;
 		
 		/**
 		 * @private
 		 */
-		protected var enabled:Boolean;
+		protected var $enabled:Boolean;
 		
 		/**
 		 * 是否已经绘制过了。
@@ -52,13 +52,13 @@ package org.libra.ui.flash.core {
 		 * 在每次被添加到舞台上调用。
 		 * @private
 		 */
-		protected var inited:Boolean;
+		protected var $inited:Boolean;
 		
 		/**
 		 * 背景，永远在最底层
 		 * @private
 		 */
-		protected var background:DisplayObject;
+		protected var $background:DisplayObject;
 		
 		/**
 		 * 遮罩
@@ -69,34 +69,34 @@ package org.libra.ui.flash.core {
 		/**
 		 * @private
 		 */
-		private var dragEnabled:Boolean;
+		private var $dragEnabled:Boolean;
 		
 		/**
 		 * @private
 		 */
-		protected var toolTipText:String;
+		protected var $toolTipText:String;
 		
 		/**
 		 * 渲染队列的引用
 		 * 渲染队列是单例
 		 * @private
 		 */
-		protected var validationQueue:ValidationQueue;
+		protected var $validationQueue:ValidationQueue;
 		
 		/**
 		 * @private
 		 */
-		private var invalidationFlag:InvalidationFlag;
+		private var $invalidationFlag:InvalidationFlag;
 		
 		public function Component(x:int = 0, y:int = 0) { 
 			super();
 			
 			//取消flash默认的焦点边框
 			this.focusRect = false;
-			this.enabled = true;
+			this.$enabled = true;
 			setLocation(x, y);
 			
-			invalidationFlag = new InvalidationFlag();
+			$invalidationFlag = new InvalidationFlag();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -124,8 +124,8 @@ package org.libra.ui.flash.core {
 		 * @return 被添加的可视对象
 		 */
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject {
-			if (index == 0 && this.background) {
-				index = child == background ? 0 : 1;
+			if (index == 0 && this.$background) {
+				index = child == $background ? 0 : 1;
 			}
 			return super.addChildAt(child, index);
 		}
@@ -163,9 +163,9 @@ package org.libra.ui.flash.core {
 		 * @see #height
 		 */
 		public function setSize(w:int, h:int):void {
-			if (actualWidth != w || actualHeight != h) {
-				this.actualWidth = w;
-				this.actualHeight = h;
+			if ($actualWidth != w || $actualHeight != h) {
+				this.$actualWidth = w;
+				this.$actualHeight = h;
 				invalidate(InvalidationFlag.SIZE);
 			}
 		}
@@ -189,8 +189,8 @@ package org.libra.ui.flash.core {
 		 * 设置该控件是否可用
 		 * @param	val
 		 */
-		public function setEnabled(val:Boolean):void {
-			this.enabled = val;
+		public function set enabled(val:Boolean):void {
+			this.$enabled = val;
 			this.tabEnabled = this.mouseChildren = this.mouseEnabled = val;
 			invalidate(InvalidationFlag.STATE);
 		}
@@ -199,16 +199,16 @@ package org.libra.ui.flash.core {
 		 * 获取该控件是否可用
 		 * @return 布尔值
 		 */
-		public function isEnabled():Boolean {
-			return this.enabled;
+		public function get enabled():Boolean {
+			return this.$enabled;
 		}
 		
 		/**
 		 * 设置tip里的文本
 		 * @param	text 文本内容
 		 */
-		public function setToolTipText(text:String):void {
-			this.toolTipText = text;
+		public function set toolTipText(text:String):void {
+			this.$toolTipText = text;
 			ToolTipManager.getInstance().setToolTip(this, text ? JToolTip.getInstance() : null);
 		}
 		
@@ -217,17 +217,17 @@ package org.libra.ui.flash.core {
 		 * @see org.libra.ui.flash.managers.ToolTipManager
 		 */
 		public function initToolTip():void {
-			JToolTip.getInstance().text = this.toolTipText;
+			JToolTip.getInstance().text = this.$toolTipText;
 		}
 		
 		/**
 		 * 设置背景
 		 * @param	bg 一个可视对象
 		 */
-		public function setBackground(bg:DisplayObject):void {
-			if (this.background && background.parent == this) this.removeChild(this.background);
-			this.background = bg;
-			super.addChildAt(bg, 0);
+		public function set background(bg:DisplayObject):void {
+			if (this.$background && $background.parent == this) this.removeChild(this.$background);
+			this.$background = bg;
+			super.addChildAt($background, 0);
 		}
 		
 		/**
@@ -251,7 +251,7 @@ package org.libra.ui.flash.core {
 		 */
 		override public function destroy():void {
 			super.destroy();
-			setDragEnabled(false);
+			dragEnabled = false;
 		}
 		
 		/**
@@ -284,10 +284,10 @@ package org.libra.ui.flash.core {
 		 * 当可以被拖拽时,响应鼠标按下事件,触发拖拽事件
 		 * @param	val
 		 */
-		public function setDragEnabled(val:Boolean):void {
-			if (this.dragEnabled != val) {
-				this.dragEnabled = val;
-				if (dragEnabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+		public function set dragEnabled(val:Boolean):void {
+			if (this.$dragEnabled != val) {
+				this.$dragEnabled = val;
+				if ($dragEnabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 				else this.removeEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 			}
 		}
@@ -296,8 +296,8 @@ package org.libra.ui.flash.core {
 		 * 获取被拖拽时需要显示的BitmapData
 		 * @return
 		 */
-		public function getDragBmd():BitmapData {
-			var bmd:BitmapData = new BitmapData(actualWidth, actualHeight, true, 0);
+		public function get dragBmd():BitmapData {
+			var bmd:BitmapData = new BitmapData($actualWidth, $actualHeight, true, 0);
 			bmd.draw(this);
 			return bmd;
 		}
@@ -317,7 +317,7 @@ package org.libra.ui.flash.core {
 		 */
 		public function validate():void {
 			draw();
-			this.invalidationFlag.reset();
+			this.$invalidationFlag.reset();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -328,28 +328,28 @@ package org.libra.ui.flash.core {
 		 * 获取控件的宽度
 		 */
 		override public function get width():Number {
-			return actualWidth;
+			return $actualWidth;
 		}
 		
 		/**
 		 * 设置控件的宽度
 		 */
 		override public function set width(value:Number):void {
-			setSize(value, actualHeight);
+			setSize(value, $actualHeight);
 		}
 		
 		/**
 		 * 获取控件的高度
 		 */
 		override public function get height():Number {
-			return actualHeight;
+			return $actualHeight;
 		}
 		
 		/**
 		 * 设置控件的高度
 		 */
 		override public function set height(value:Number):void {
-			setSize(actualWidth, value);
+			setSize($actualWidth, value);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -363,10 +363,10 @@ package org.libra.ui.flash.core {
 		 * @param	flag
 		 * @see org.libra.ui.invalidation.InvalidationFlag
 		 */
-		protected function invalidate(invalidationFlag:int = -1):void {
-			this.invalidationFlag.setInvalid(invalidationFlag);
-			if(inited)
-				validationQueue.addControl(this, false);
+		protected function invalidate($invalidationFlag:int = -1):void {
+			this.$invalidationFlag.setInvalid($invalidationFlag);
+			if($inited)
+				$validationQueue.addControl(this, false);
 		}
 		
 		/**
@@ -376,8 +376,8 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function init():void {
-			inited = true;
-			validationQueue = ValidationQueue.getInstance();
+			$inited = true;
+			$validationQueue = ValidationQueue.getInstance();
 			this.invalidate();
 		}
 		
@@ -388,15 +388,15 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function draw():void {
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.SIZE))
+			if (this.$invalidationFlag.isInvalid(InvalidationFlag.SIZE))
 				resize();
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.TEXT))
+			if (this.$invalidationFlag.isInvalid(InvalidationFlag.TEXT))
 				refreshText();
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.DATA))
+			if (this.$invalidationFlag.isInvalid(InvalidationFlag.DATA))
 				refreshData();
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.STATE))
+			if (this.$invalidationFlag.isInvalid(InvalidationFlag.STATE))
 				refreshState();
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.STYLE))
+			if (this.$invalidationFlag.isInvalid(InvalidationFlag.STYLE))
 				refreshStyle();
 		}
 		
@@ -442,7 +442,7 @@ package org.libra.ui.flash.core {
 		 */
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			if (!inited) init();
+			if (!$inited) init();
 		}
 		
 		/**

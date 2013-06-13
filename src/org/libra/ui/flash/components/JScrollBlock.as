@@ -24,21 +24,21 @@ package org.libra.ui.flash.components {
 		/**
 		 * 背景层
 		 */
-		private var back:Bitmap;
+		private var $back:Bitmap;
 		
 		/**
 		 * 前景层
 		 */
-		private var fore:Bitmap;
+		private var $fore:Bitmap;
 		
 		/**
 		 * 方向。水平的还是垂直的
 		 */
-		private var orientation:int;
+		private var $orientation:int;
 		
 		public function JScrollBlock(orientation:int = 1, x:int = 0, y:int = 0) {
 			super(x, y);
-			this.orientation = orientation;
+			this.$orientation = orientation;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -52,23 +52,23 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			
-			back = new Bitmap();
-			this.addChild(back);
-			fore = new Bitmap(ResManager.getInstance().getBitmapData(orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.scrollBlockTheme.hScrollThumb : UIManager.getInstance().theme.scrollBlockTheme.vScrollThumb));
-			this.addChild(fore);
+			$back = new Bitmap();
+			this.addChild($back);
+			$fore = new Bitmap(ResManager.getInstance().getBitmapData($orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.scrollBlockTheme.hScrollThumb : UIManager.getInstance().theme.scrollBlockTheme.vScrollThumb));
+			this.addChild($fore);
 		}
 		
 		override protected function resize():void {
-			if (back.bitmapData) back.bitmapData.dispose();
-			if (orientation == Constants.HORIZONTAL) {
+			if ($back.bitmapData) $back.bitmapData.dispose();
+			if ($orientation == Constants.HORIZONTAL) {
 				var source:BitmapData = ResManager.getInstance().getBitmapData(UIManager.getInstance().theme.scrollBlockTheme.hScrollBtnBg);
-				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, UIManager.getInstance().theme.scrollBlockTheme.hScrollBtnScale9Rect);
+				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().theme.scrollBlockTheme.hScrollBtnScale9Rect);
 			}else {
 				source = ResManager.getInstance().getBitmapData(UIManager.getInstance().theme.scrollBlockTheme.vScrollBtnBg);
-				back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, actualWidth, actualHeight, UIManager.getInstance().theme.scrollBlockTheme.vScrollBtnScale9Rect);
+				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().theme.scrollBlockTheme.vScrollBtnScale9Rect);
 			}
-			fore.x = (actualWidth - fore.width) >> 1;
-			fore.y = (actualHeight - fore.height) >> 1;
+			$fore.x = ($actualWidth - $fore.width) >> 1;
+			$fore.y = ($actualHeight - $fore.height) >> 1;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

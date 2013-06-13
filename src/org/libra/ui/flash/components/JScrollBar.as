@@ -35,61 +35,62 @@ package org.libra.ui.flash.components {
 	public class JScrollBar extends Component {
 		
 		private const DELAY_TIME:int = 500;
+		
 		private const REPEAT_TIME:int = 100; 
 		
 		/**
 		 * 是否自动隐藏
 		 */
-		protected var autoHide:Boolean;
+		protected var $autoHide:Boolean;
 		
 		/**
 		 * 向上的按钮
 		 */
-		protected var upBtn:JButton;
+		protected var $upBtn:JButton;
 		
 		/**
 		 * 向下的按钮
 		 */
-		protected var downBtn:JButton;
+		protected var $downBtn:JButton;
 		
 		/**
 		 * 滑动条，不包含上下两个按钮的
 		 */
-		protected var scrollSlider:JScrollSlider;
+		protected var $scrollSlider:JScrollSlider;
 		
 		/**
 		 * 滚动条的方向，水平还是垂直
 		 */
-		protected var orientation:int;
+		protected var $orientation:int;
 		
 		/**
 		 * 滑动条滑动了一个单位时，滚动区域中滚动多少个单位
 		 * 默认是1
 		 */
-		protected var lineSize:int;
+		protected var $lineSize:int;
 		
-		protected var delayTimer:Timer;
+		protected var $delayTimer:Timer;
 		
-		protected var repeatTimer:Timer;
+		protected var $repeatTimer:Timer;
 		
 		/**
 		 * 上按钮还是下按钮
 		 */
-		protected var direction:int;
+		protected var $direction:int;
 		
-		protected var shouldRepeat:Boolean;
+		protected var $shouldRepeat:Boolean;
 		
 		public function JScrollBar(orientation:int = 1, x:int = 0, y:int = 0) { 
 			super(x, y);
-			this.orientation = orientation;
-			shouldRepeat = autoHide = false;
-			lineSize = 1;
-			orientation == Constants.HORIZONTAL ? setSize(132, 16) : setSize(16, 132);
+			this.$orientation = orientation;
+			$shouldRepeat = $autoHide = false;
+			$lineSize = 1;
+			$orientation == Constants.HORIZONTAL ? setSize(132, 16) : setSize(16, 132);
 			
-			delayTimer = new Timer(DELAY_TIME, 1);
-			delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayComplete);
-			repeatTimer = new Timer(REPEAT_TIME);
-			repeatTimer.addEventListener(TimerEvent.TIMER, onRepeat);
+			$delayTimer = new Timer(DELAY_TIME, 1);
+			$delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayComplete);
+			$repeatTimer = new Timer(REPEAT_TIME);
+			$repeatTimer.addEventListener(TimerEvent.TIMER, onRepeat);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -97,59 +98,59 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function setSliderParams(min:Number, max:Number, value:Number):void {
-			this.scrollSlider.setSliderParams(min, max, value);
+			this.$scrollSlider.setSliderParams(min, max, value);
 		}
 		
-		public function setThumbPercent(value:Number):void {
-			this.scrollSlider.setThumbPercent(value);
-			visible = autoHide ? scrollSlider.getThumbPercent() < 1.0 : true;
+		public function set thumbPercent(value:Number):void {
+			this.$scrollSlider.thumbPercent = value;
+			visible = $autoHide ? $scrollSlider.thumbPercent < 1.0 : true;
 		}
 		
-		public function setAutoHide(value:Boolean):void {
-            autoHide = value;
+		public function set autoHide(value:Boolean):void {
+            $autoHide = value;
             invalidate(InvalidationFlag.STATE);
         }
 		
-		public function setValue(v:Number):void {
-			scrollSlider.setValue(v);
+		public function set value(v:Number):void {
+			$scrollSlider.value = v;
 		}
 		
-		public function getValue():Number {
-			return scrollSlider.getValue();
+		public function get value():Number {
+			return $scrollSlider.value;
 		}
 		
-		public function setMin(v:Number):void {
-			scrollSlider.setMin(v);
+		public function set min(v:Number):void {
+			$scrollSlider.min = v;
 		}
 		
-		public function getMin():Number {
-			return scrollSlider.getMin();
+		public function get min():Number {
+			return $scrollSlider.min;
 		}
 		
-		public function setMax(v:Number):void {
-			this.scrollSlider.setMax(v);
+		public function set max(v:Number):void {
+			this.$scrollSlider.max = v;
 		}
 		
-		public function getMax():Number {
-			return this.scrollSlider.getMax();
+		public function get max():Number {
+			return this.$scrollSlider.max
 		}
 		
 		/**
 		 * Sets the amount the value will change when up or down buttons are pressed.
 		 */
-		public function setLineSize(value:int):void {
-			lineSize = value;
+		public function set lineSize(value:int):void {
+			$lineSize = value;
 		}
 		
 		/**
 		 * Sets the amount the value will change when the back is clicked.
 		 */
-		public function setPageSize(value:int):void {
-			scrollSlider.setPageSize(value);
+		public function set pageSize(value:int):void {
+			$scrollSlider.pageSize = value;
 		}
 		
 		public function changeValue(add:Number):void {
-			this.scrollSlider.changeValue(add);
+			this.$scrollSlider.changeValue(add);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -159,46 +160,46 @@ package org.libra.ui.flash.components {
 			super.init();
 			
 			//滑动条
-			this.scrollSlider = new JScrollSlider(this.orientation, 0, 16);
-			this.addChild(scrollSlider);
+			this.$scrollSlider = new JScrollSlider(this.$orientation, 0, 16);
+			this.addChild($scrollSlider);
 			
 			//上下两个按钮
-			upBtn = new JButton(orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollRightBtnTheme : UIManager.getInstance().theme.vScrollUpBtnTheme);
-			this.addChild(upBtn);
-			downBtn = new JButton(orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollLefttBtnTheme : UIManager.getInstance().theme.vScrollDownBtnTheme);
-			this.addChild(downBtn);
+			$upBtn = new JButton($orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollRightBtnTheme : UIManager.getInstance().theme.vScrollUpBtnTheme);
+			this.addChild($upBtn);
+			$downBtn = new JButton($orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollLefttBtnTheme : UIManager.getInstance().theme.vScrollDownBtnTheme);
+			this.addChild($downBtn);
 		}
 		
 		override protected function resize():void {
-			if(orientation == Constants.VERTICAL) {
-				scrollSlider.x = 0;
-				scrollSlider.y = upBtn.height;
-				scrollSlider.width = actualWidth;
-				scrollSlider.height = actualHeight - (upBtn.height << 1);
-				downBtn.x = 0;
-				downBtn.y = actualHeight - downBtn.height;
+			if($orientation == Constants.VERTICAL) {
+				$scrollSlider.x = 0;
+				$scrollSlider.y = $upBtn.height;
+				$scrollSlider.width = $actualWidth;
+				$scrollSlider.height = $actualHeight - ($upBtn.height << 1);
+				$downBtn.x = 0;
+				$downBtn.y = $actualHeight - $downBtn.height;
 			} else {
-				scrollSlider.x = downBtn.width;
-				scrollSlider.y = 0;
-				scrollSlider.width = actualWidth - (downBtn.width << 1);
-				scrollSlider.height = actualHeight;
-				downBtn.x = actualWidth - downBtn.width;
-				downBtn.y = 0;
+				$scrollSlider.x = $downBtn.width;
+				$scrollSlider.y = 0;
+				$scrollSlider.width = $actualWidth - ($downBtn.width << 1);
+				$scrollSlider.height = $actualHeight;
+				$downBtn.x = $actualWidth - $downBtn.width;
+				$downBtn.y = 0;
 			}
 			refreshState();
 		}
 		
 		override protected function refreshState():void {
-			visible = autoHide ? scrollSlider.getThumbPercent() < 1.0 : true;
+			visible = $autoHide ? $scrollSlider.thumbPercent < 1.0 : true;
 		}
 		
 		protected function goUp():void {
-			scrollSlider.changeValue(0 - lineSize);
+			$scrollSlider.changeValue(0 - $lineSize);
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		protected function goDown():void {
-			this.scrollSlider.changeValue(lineSize);
+			this.$scrollSlider.changeValue($lineSize);
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
@@ -208,38 +209,38 @@ package org.libra.ui.flash.components {
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			this.scrollSlider.addEventListener(Event.CHANGE, onChange);
-			this.upBtn.addEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
-			this.downBtn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
+			this.$scrollSlider.addEventListener(Event.CHANGE, onChange);
+			this.$upBtn.addEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
+			this.$downBtn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			this.scrollSlider.removeEventListener(Event.CHANGE, onChange);
-			this.upBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
-			this.downBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
+			this.$scrollSlider.removeEventListener(Event.CHANGE, onChange);
+			this.$upBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
+			this.$downBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		protected function onUpBtnDown(event:MouseEvent):void {
 			goUp();
-			shouldRepeat = true;
-			direction = Constants.UP;
-			delayTimer.start();
+			$shouldRepeat = true;
+			$direction = Constants.UP;
+			$delayTimer.start();
 		}
 		
 		protected function onDownBtnDown(event:MouseEvent):void {
 			goDown();
-			shouldRepeat = true;
-			direction = Constants.DOWN;
-			delayTimer.start();
+			$shouldRepeat = true;
+			$direction = Constants.DOWN;
+			$delayTimer.start();
 		}
 		
 		protected function onMouseUp(event:MouseEvent):void{
-			delayTimer.stop();
-			repeatTimer.stop();
-			shouldRepeat = false;
+			$delayTimer.stop();
+			$repeatTimer.stop();
+			$shouldRepeat = false;
 		}
 		
 		protected function onChange(event:Event):void {
@@ -247,13 +248,13 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function onDelayComplete(event:TimerEvent):void {
-			if(shouldRepeat) {
-				repeatTimer.start();
+			if($shouldRepeat) {
+				$repeatTimer.start();
 			}
 		}
 		
 		protected function onRepeat(event:TimerEvent):void {
-			direction == Constants.UP ? goUp() : goDown();
+			$direction == Constants.UP ? goUp() : goDown();
 		}
 		
 	}

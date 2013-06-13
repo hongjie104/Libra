@@ -47,7 +47,7 @@ package org.libra.ui.flash.managers {
 		/**
 		 * 加载进度面板
 		 */
-		private var loadingPanel:JLoadingPanel;
+		private var $loadingPanel:JLoadingPanel;
 		
 		/**
 		 * 按键管理器
@@ -80,7 +80,7 @@ package org.libra.ui.flash.managers {
 			LayoutManager.getInstance().resize(stage.stageWidth, stage.stageHeight);
 			$keyPoll = new KeyPoll(stage);
 			
-			this.loadingPanel = new JLoadingPanel(uiContainer, theme.panelTheme);
+			this.$loadingPanel = new JLoadingPanel(uiContainer, theme.panelTheme);
 		}
 		
 		public function get theme():DefaultTheme {
@@ -104,15 +104,15 @@ package org.libra.ui.flash.managers {
 		}
 		
 		public function showLoading():void {
-			this.loadingPanel.show();
+			this.$loadingPanel.show();
 		}
 		
 		public function setLoadingProgress(val:Number):void {
-			this.loadingPanel.setProgress(val);
+			this.$loadingPanel.progress = val;
 		}
 		
 		public function closeLoading():void {
-			this.loadingPanel.close();
+			this.$loadingPanel.close();
 		}
 		
 		/**

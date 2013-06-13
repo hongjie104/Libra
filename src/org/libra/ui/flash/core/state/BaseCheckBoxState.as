@@ -14,7 +14,7 @@ package org.libra.ui.flash.core.state {
 	 */
 	public class BaseCheckBoxState extends BaseButtonState implements ISelectState {
 		
-		protected var selected:Boolean;
+		protected var $selected:Boolean;
 		
 		public function BaseCheckBoxState() {
 			super();
@@ -25,11 +25,11 @@ package org.libra.ui.flash.core.state {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function toNormal():void {
-			selected ? toSelected() : super.toNormal();
+			$selected ? toSelected() : super.toNormal();
 		}
 		
 		override public function toMouseOver():void {
-			selected ? toSelected() : super.toMouseOver();
+			$selected ? toSelected() : super.toMouseOver();
 		}
 		
 		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
@@ -38,8 +38,8 @@ package org.libra.ui.flash.core.state {
 			toMouseDown();
 		}
 		
-		public function setSelected(val:Boolean):void {
-			selected = val;
+		public function set selected(val:Boolean):void {
+			$selected = val;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

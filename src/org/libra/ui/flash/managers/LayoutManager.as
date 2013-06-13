@@ -29,13 +29,13 @@ package org.libra.ui.flash.managers {
 		 */
 		public static var stageHeight:int;
 		
-		private var panelList:Vector.<JPanel>;
+		private var $panelList:Vector.<JPanel>;
 		
-		private var modelSprite:Sprite;
+		private var $modelSprite:Sprite;
 		
 		public function LayoutManager(singleton:Singleton) {
-			panelList = new Vector.<JPanel>();
-			modelSprite = new Sprite();
+			$panelList = new Vector.<JPanel>();
+			$modelSprite = new Sprite();
 			resize(800, 600);
 		}
 		
@@ -44,29 +44,29 @@ package org.libra.ui.flash.managers {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function addPanel(p:JPanel):void {
-			if (panelList.indexOf(p) == -1) {
-				panelList[panelList.length] = p;
-				if(p.isAutoCenter())
+			if ($panelList.indexOf(p) == -1) {
+				$panelList[$panelList.length] = p;
+				if(p.autoCenter)
 					toCenter(p);
-				if (p.isModel()) {
-					if (modelSprite.parent == p.parent)
-						DepthUtil.bringToTop(modelSprite);
+				if (p.model) {
+					if ($modelSprite.parent == p.parent)
+						DepthUtil.bringToTop($modelSprite);
 					else
-						p.parent.addChild(modelSprite);
+						p.parent.addChild($modelSprite);
 					DepthUtil.bringToTop(p);
 				}
 			}
 		}
 		
 		public function removePanel(p:JPanel):void {
-			var index:int = panelList.indexOf(p);
+			var index:int = $panelList.indexOf(p);
 			if (index != -1) {
-				panelList.splice(index, 1);
-				if (p.isModel()) {
-					if (panelList.length && panelList[panelList.length - 1].isModel()) {
-						DepthUtil.bringToTop(panelList[panelList.length - 1]);
+				$panelList.splice(index, 1);
+				if (p.model) {
+					if ($panelList.length && $panelList[$panelList.length - 1].model) {
+						DepthUtil.bringToTop($panelList[$panelList.length - 1]);
 					}else {
-						modelSprite.parent.removeChild(modelSprite);	
+						$modelSprite.parent.removeChild($modelSprite);	
 					}
 				}
 			}
@@ -75,7 +75,7 @@ package org.libra.ui.flash.managers {
 		public function resize(w:int, h:int):void { 
 			stageWidth = w;
 			stageHeight = h;
-			GraphicsUtil.drawRect(modelSprite.graphics, 0, 0, w, h, 0x000000, 0);
+			GraphicsUtil.drawRect($modelSprite.graphics, 0, 0, w, h, 0x000000, 0);
 		}
 		
 		public static function getInstance():LayoutManager {

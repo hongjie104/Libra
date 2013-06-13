@@ -1,7 +1,6 @@
 package org.libra.ui.flash.core {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
-	import org.libra.ui.flash.components.JButton;
 	import org.libra.ui.flash.interfaces.IComponent;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IDragable;
@@ -23,13 +22,13 @@ package org.libra.ui.flash.core {
 	 */
 	public class Container extends Component implements IDropable, IContainer {
 		
-		protected var viewClassMap:Object = {};
+		protected var $viewClassMap:Object = {};
 		
 		/**
 		 * 子对象的集合
 		 * @private
 		 */
-		protected var componentList:Vector.<IComponent>;
+		protected var $componentList:Vector.<IComponent>;
 		
 		/**
 		 * 子对象的数量
@@ -41,7 +40,7 @@ package org.libra.ui.flash.core {
 		 * 拖拽时,可放进该容器的控件集合
 		 * @private
 		 */
-		private var dropAcceptList:Vector.<IDragable>;
+		private var $dropAcceptList:Vector.<IDragable>;
 		
 		/**
 		 * 构造函数
@@ -50,7 +49,7 @@ package org.libra.ui.flash.core {
 		 */
 		public function Container(x:int = 0, y:int = 0) { 
 			super(x, y);
-			componentList = new Vector.<IComponent>();
+			$componentList = new Vector.<IComponent>();
 			$numComponent = 0;
 		}
 		
@@ -64,7 +63,7 @@ package org.libra.ui.flash.core {
 		 * @return 布尔值
 		 */
 		public function hasComponent(child:IComponent):Boolean {
-			return this.componentList.indexOf(child) != -1;
+			return this.$componentList.indexOf(child) != -1;
 		}
 		
 		/**
@@ -73,8 +72,8 @@ package org.libra.ui.flash.core {
 		 * @return 添加成功,返回被添加的控件;添加失败,返回null
 		 */
 		public function append(child:IComponent):IComponent {
-			if (this.componentList.indexOf(child) == -1) {
-				this.componentList[$numComponent++] = child;
+			if (this.$componentList.indexOf(child) == -1) {
+				this.$componentList[$numComponent++] = child;
 				super.addChild(child as DisplayObject);
 				return child;
 			}
@@ -90,9 +89,9 @@ package org.libra.ui.flash.core {
 		public function appendAt(child:IComponent, index:int):IComponent {
 			if (append(child)) {
 				this.setChildIndex(child as DisplayObject, index);
-				var tmp:IComponent = this.componentList[index];
-				this.componentList[index] = child;
-				this.componentList[$numComponent - 1] = tmp;
+				const tmp:IComponent = this.$componentList[index];
+				this.$componentList[index] = child;
+				this.$componentList[$numComponent - 1] = tmp;
 				return child;
 			}
 			return null;
@@ -114,9 +113,9 @@ package org.libra.ui.flash.core {
 		 * @return 移除成功,返回被添加的控件;移除失败,返回null
 		 */
 		public function remove(child:IComponent, destroy:Boolean = false):IComponent {
-			var index:int = this.componentList.indexOf(child);
+			var index:int = this.$componentList.indexOf(child);
 			if (index == -1) return null;
-			this.componentList.splice(index, 1);
+			this.$componentList.splice(index, 1);
 			$numComponent--;
 			super.removeChild(child as DisplayObject);
 			if(destroy)
@@ -132,7 +131,7 @@ package org.libra.ui.flash.core {
 		 * @return 移除成功,返回被添加的控件;移除失败,返回null
 		 */
 		public function removeAt(index:int, destroy:Boolean = false):IComponent {
-			return index > -1 && index < numChildren ? this.remove(this.componentList[index], destroy) : null;
+			return index > -1 && index < numChildren ? this.remove(this.$componentList[index], destroy) : null;
 		}
 		
 		/**
@@ -149,11 +148,11 @@ package org.libra.ui.flash.core {
 		 * @param	destroy 移除后是否将控件销毁
 		 */
 		public function clear(destroy:Boolean = false):void {
-			for each(var i:IComponent in this.componentList) {
-				if (destroy) componentList[i].destroy();
-				this.removeChild(componentList[i] as DisplayObject);
+			for each(var i:IComponent in this.$componentList) {
+				if (destroy) $componentList[i].destroy();
+				this.removeChild($componentList[i] as DisplayObject);
 			}
-			componentList.length = 0;
+			$componentList.length = 0;
 			this.$numComponent = 0;
 		}
 		
@@ -187,9 +186,9 @@ package org.libra.ui.flash.core {
 		override public function removeChildAt(index:int):DisplayObject {
 			var child:DisplayObject = super.removeChildAt(index);
 			if (child is IComponent) {
-				var index:int = this.componentList.indexOf(child);
+				var index:int = this.$componentList.indexOf(child);
 				if (index != -1) {
-					this.componentList.splice(index, 1);
+					this.$componentList.splice(index, 1);
 					$numComponent--;
 				}
 			}
@@ -214,8 +213,8 @@ package org.libra.ui.flash.core {
 		public function bringToBottom(child:DisplayObject):void {
 			if (this.contains(child)) {
 				var index:int = 0;
-				if(background){
-					if(background != child){
+				if($background){
+					if($background != child){
 						index = 1;
 					}
 				}
@@ -227,7 +226,7 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function setSize(w:int, h:int):void {
-			if (actualWidth != w || actualHeight != h) {
+			if ($actualWidth != w || $actualHeight != h) {
 				super.setSize(w, h);
 				GraphicsUtil.drawRect(this.graphics, 0, 0, w, h, 0xff0000, .0);
 			}
@@ -238,10 +237,10 @@ package org.libra.ui.flash.core {
 		 */
 		override public function destroy():void {
 			super.destroy();
-			for each(var i:IComponent in this.componentList) {
+			for each(var i:IComponent in this.$componentList) {
 				i.destroy();
 			}
-			this.componentList = null;
+			this.$componentList = null;
 			$numComponent = 0;
 		}
 		
@@ -252,9 +251,9 @@ package org.libra.ui.flash.core {
 		 * @param	dragable 可以拖拽进该容器的控件
 		 */
 		public function addDropAccept(dragable:IDragable):void {
-			if (!dropAcceptList) dropAcceptList = new Vector.<IDragable>();
-			if(this.dropAcceptList.indexOf(dragable) == -1)
-				dropAcceptList.push(dragable);
+			if (!$dropAcceptList) $dropAcceptList = new Vector.<IDragable>();
+			if(this.$dropAcceptList.indexOf(dragable) == -1)
+				$dropAcceptList.push(dragable);
 		}
 		
 		/**
@@ -262,9 +261,9 @@ package org.libra.ui.flash.core {
 		 * @param	dragEnabled 可以拖拽进该容器的控件
 		 */
 		public function removeDropAccept(dragEnabled:IDragable):void {
-			if (this.dropAcceptList) {
-				var index:int = this.dropAcceptList.indexOf(dragEnabled);
-				if (index != -1) this.dropAcceptList.splice(index, 1);
+			if (this.$dropAcceptList) {
+				var index:int = this.$dropAcceptList.indexOf(dragEnabled);
+				if (index != -1) this.$dropAcceptList.splice(index, 1);
 			}
 		}
 		
@@ -274,7 +273,7 @@ package org.libra.ui.flash.core {
 		 * @return 布尔值
 		 */
 		public function isDropAccept(dragEnabled:IDragable):Boolean {
-			return this.dropAcceptList ? this.dropAcceptList.indexOf(dragEnabled) != -1 : false;
+			return this.$dropAcceptList ? this.$dropAcceptList.indexOf(dragEnabled) != -1 : false;
 		}
 		
 		/**
@@ -326,7 +325,7 @@ package org.libra.ui.flash.core {
 		}
 		
 		private function getCompsInstance(name:String):IComponent {
-			var compClass:Class = viewClassMap[name] || UIClassMap.UI_CLASS_MAP[name];
+			var compClass:Class = $viewClassMap[name] || UIClassMap.UI_CLASS_MAP[name];
 			if (compClass != null) {
 				return new compClass();
 			}

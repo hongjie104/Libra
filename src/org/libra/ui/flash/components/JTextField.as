@@ -33,11 +33,11 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function set restrict(val:String):void {
-			this.textField.restrict = val;
+			this.$textField.restrict = val;
 		}
 		
 		public function set displayAsPassword(val:Boolean):void {
-			this.textField.displayAsPassword = val;
+			this.$textField.displayAsPassword = val;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -45,12 +45,12 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
-			this.setFont(theme.font);
+			this.setFont($theme.font);
 			this.text = text;
-			textField.selectable = textField.mouseEnabled = true;
-			this.textField.type = TextFieldType.INPUT;
-			textField.background = true;
-			textField.backgroundColor = DefaultTheme.BACKGROUND;
+			$textField.selectable = $textField.mouseEnabled = true;
+			this.$textField.type = TextFieldType.INPUT;
+			$textField.background = true;
+			$textField.backgroundColor = DefaultTheme.BACKGROUND;
 		}
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

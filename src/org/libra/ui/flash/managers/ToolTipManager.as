@@ -28,29 +28,29 @@ package org.libra.ui.flash.managers {
 		/**
 		 * 存放组件对应的提示组件的集合
 		 */
-		private var tiggerToolTipMap:Dictionary;
+		private var $tiggerToolTipMap:Dictionary;
 		
 		/**
 		 * 当前提示组件
 		 */
-		private var currentToolTip:IComponent;
+		private var $currentToolTip:IComponent;
 		
 		/**
 		 * 时间类，用于计算鼠标进入组件多少时间后开始显示提示框
 		 */
-		private var timer:Timer;
+		private var $timer:Timer;
 		
 		/**
 		 * 显示ToolTip的目标组件
 		 */
-		private var toolTipTarget:IComponent;
+		private var $toolTipTarget:IComponent;
 		
 		public function ToolTipManager(singleton:Singleton) {
-			tiggerToolTipMap = new Dictionary(true);
+			$tiggerToolTipMap = new Dictionary(true);
 			//鼠标进入组件后，间隔一段时间后，显示toolTip
 			//默认是200毫秒
-			timer = new Timer(200, 1);
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerCompleted);
+			$timer = new Timer(200, 1);
+			$timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerCompleted);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -59,23 +59,23 @@ package org.libra.ui.flash.managers {
 		
 		/**
 		 * 设置组件的提示组件
-		 * @param	toolTipTarget 组件
+		 * @param	$toolTipTarget 组件
 		 * @param	toolTip 提示组件，若为null，则删除组件的提示组件
 		 */
-		public function setToolTip(toolTipTarget:IComponent, toolTip:IComponent):void { 
+		public function setToolTip($toolTipTarget:IComponent, toolTip:IComponent):void { 
 			if (toolTip) {
-				if (!tiggerToolTipMap[toolTipTarget]) {
-					toolTipTarget.addEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler, false, 0, true);
-					toolTipTarget.addEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler, false, 0, true);
-					toolTipTarget.addEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler, false, 0, true);
+				if (!$tiggerToolTipMap[$toolTipTarget]) {
+					$toolTipTarget.addEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler, false, 0, true);
+					$toolTipTarget.addEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler, false, 0, true);
+					$toolTipTarget.addEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler, false, 0, true);
 				}
-				tiggerToolTipMap[toolTipTarget] = toolTip;
+				$tiggerToolTipMap[$toolTipTarget] = toolTip;
 			}else {
-				if (tiggerToolTipMap[toolTipTarget]) {
-					toolTipTarget.removeEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler);
-					toolTipTarget.removeEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler);
-					toolTipTarget.removeEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler);
-					tiggerToolTipMap[toolTipTarget] = null;
+				if ($tiggerToolTipMap[$toolTipTarget]) {
+					$toolTipTarget.removeEventListener(MouseEvent.ROLL_OVER, onTriggerOverHandler);
+					$toolTipTarget.removeEventListener(MouseEvent.ROLL_OUT, onTriggerOutHandler);
+					$toolTipTarget.removeEventListener(MouseEvent.MOUSE_DOWN, onTriggerOutHandler);
+					$tiggerToolTipMap[$toolTipTarget] = null;
 				}
 			}
 		}
@@ -96,20 +96,20 @@ package org.libra.ui.flash.managers {
 		 * 显示提示框
 		 */
 		private function showCustomToolTip():void {
-			UIManager.getInstance().stage.addChild(currentToolTip as DisplayObject);
+			UIManager.getInstance().stage.addChild($currentToolTip as DisplayObject);
 			onMouseMove(null);
 			UIManager.getInstance().stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			
 			/*
 			//让ToolTip出现在物品的下方，且居中显示
-			var targetPoint:Point = toolTipTarget.localToGlobal(new Point(toolTipTarget.x, toolTipTarget.y));
-			currentToolTip.x = targetPoint.x + (toolTipTarget.getWidth() >> 1) - (currentToolTip.getWidth() >> 1);
-			currentToolTip.y = targetPoint.y + toolTipTarget.getHeight() + 2;
-			if (currentToolTip.x < 0) currentToolTip.x = 0;
-			else if (currentToolTip.x + currentToolTip.getWidth() > main.stage.stageWidth)
-				currentToolTip.x = main.stage.stageWidth - currentToolTip.getWidth();
-			if (currentToolTip.y + currentToolTip.getHeight() > main.stage.stageHeight) {
-				currentToolTip.y = main.stage.stageHeight - currentToolTip.getHeight();
+			var targetPoint:Point = $toolTipTarget.localToGlobal(new Point($toolTipTarget.x, $toolTipTarget.y));
+			$currentToolTip.x = targetPoint.x + ($toolTipTarget.getWidth() >> 1) - ($currentToolTip.getWidth() >> 1);
+			$currentToolTip.y = targetPoint.y + $toolTipTarget.getHeight() + 2;
+			if ($currentToolTip.x < 0) $currentToolTip.x = 0;
+			else if ($currentToolTip.x + $currentToolTip.getWidth() > main.stage.stageWidth)
+				$currentToolTip.x = main.stage.stageWidth - $currentToolTip.getWidth();
+			if ($currentToolTip.y + $currentToolTip.getHeight() > main.stage.stageHeight) {
+				$currentToolTip.y = main.stage.stageHeight - $currentToolTip.getHeight();
 			}*/
 		}
 		
@@ -118,12 +118,12 @@ package org.libra.ui.flash.managers {
 		 */
 		private function hideCustomToolTip():void {
 			UIManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			if (!this.timer.running) {
-				if(currentToolTip.parent)
-					currentToolTip.parent.removeChild(currentToolTip as DisplayObject);
+			if (!this.$timer.running) {
+				if($currentToolTip.parent)
+					$currentToolTip.parent.removeChild($currentToolTip as DisplayObject);
 			}
-			this.timer.reset();
-			currentToolTip = null;
+			this.$timer.reset();
+			$currentToolTip = null;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -144,9 +144,9 @@ package org.libra.ui.flash.managers {
 		 * @param	e
 		 */
 		private function onTriggerOutHandler(e:MouseEvent):void {
-			var toolTip:IComponent = tiggerToolTipMap[e.currentTarget] as IComponent;
+			var toolTip:IComponent = $tiggerToolTipMap[e.currentTarget] as IComponent;
 			if(toolTip){
-				if (toolTip == currentToolTip) {
+				if (toolTip == $currentToolTip) {
 					hideCustomToolTip();
 				}
 			}
@@ -157,33 +157,33 @@ package org.libra.ui.flash.managers {
 		 * @param	e
 		 */
 		private function onTriggerOverHandler(e:MouseEvent):void {
-			this.toolTipTarget = e.currentTarget as IComponent;
-			if (toolTipTarget) {
+			this.$toolTipTarget = e.currentTarget as IComponent;
+			if ($toolTipTarget) {
 				//初始化一下ToolTip
-				var toolTip:IComponent = tiggerToolTipMap[toolTipTarget] as IComponent;
+				var toolTip:IComponent = $tiggerToolTipMap[$toolTipTarget] as IComponent;
 				if (toolTip) { 
-					toolTipTarget.initToolTip();
-					if (currentToolTip) {
-						if (currentToolTip != toolTip) {
-							if (currentToolTip.parent)
-								currentToolTip.parent.removeChild(currentToolTip as DisplayObject);
+					$toolTipTarget.initToolTip();
+					if ($currentToolTip) {
+						if ($currentToolTip != toolTip) {
+							if ($currentToolTip.parent)
+								$currentToolTip.parent.removeChild($currentToolTip as DisplayObject);
 						}
 					}
-					currentToolTip = toolTip;
-					this.timer.start();
+					$currentToolTip = toolTip;
+					this.$timer.start();
 				}
 			}
 		}
 		
 		private function onMouseMove(e:MouseEvent):void {
 			const stage:Stage = UIManager.getInstance().stage;
-			currentToolTip.x = stage.mouseX + 10;
-			currentToolTip.y = stage.mouseY;
-			if (currentToolTip.x + currentToolTip.width > stage.stageWidth - 10) {
-				currentToolTip.x = stage.stageWidth - currentToolTip.width - 10;
+			$currentToolTip.x = stage.mouseX + 10;
+			$currentToolTip.y = stage.mouseY;
+			if ($currentToolTip.x + $currentToolTip.width > stage.stageWidth - 10) {
+				$currentToolTip.x = stage.stageWidth - $currentToolTip.width - 10;
 			}
-			if (currentToolTip.y + currentToolTip.height > stage.stageHeight - 10) {
-				currentToolTip.y = stage.stageHeight - currentToolTip.height - 10;
+			if ($currentToolTip.y + $currentToolTip.height > stage.stageHeight - 10) {
+				$currentToolTip.y = stage.stageHeight - $currentToolTip.height - 10;
 			}
 		}
 	}

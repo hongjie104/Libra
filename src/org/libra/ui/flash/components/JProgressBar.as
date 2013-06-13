@@ -25,19 +25,19 @@ package org.libra.ui.flash.components {
 	 */
 	public class JProgressBar extends Container {
 		
-		private var theme:DefaultProgressBarTheme;
+		private var $theme:DefaultProgressBarTheme;
 		
-		private var maskShape:Shape;
+		private var $maskShape:Shape;
 		
-		private var barShape:Shape;
+		private var $barShape:Shape;
 		
-		private var progress:Number;
+		private var $progress:Number;
 		
 		public function JProgressBar(theme:DefaultProgressBarTheme = null, x:int = 0, y:int = 0) { 
 			super(x, y);
-			progress = .0;
-			this.theme = theme ? theme : UIManager.getInstance().theme.progressBarTheme;
-			setSize(theme.width, theme.height);
+			$progress = .0;
+			this.$theme = theme ? theme : UIManager.getInstance().theme.progressBarTheme;
+			setSize($theme.width, $theme.height);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -46,23 +46,23 @@ package org.libra.ui.flash.components {
 		
 		override protected function init():void {
 			super.init();
-			maskShape = createShape();
-			barShape = createShape();
-			this.addChild(maskShape);
-			this.addChild(barShape);
-			barShape.mask = maskShape;
+			$maskShape = createShape();
+			$barShape = createShape();
+			this.addChild($maskShape);
+			this.addChild($barShape);
+			$barShape.mask = $maskShape;
 			
 			function createShape():Shape {
 				var s:Shape = new Shape();
 				s.cacheAsBitmap = true;
-				s.x = theme.barX;
-				s.y = theme.barY;
+				s.x = $theme.barX;
+				s.y = $theme.barY;
 				return s;
 			}
 		}
 		
 		public function setProgress(val:Number):void {
-			progress = val;
+			$progress = val;
 			invalidate(InvalidationFlag.DATA);
 		}
 		
@@ -71,21 +71,21 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function resize():void {
-			if (background && background is Bitmap) {
-				if ((background as Bitmap).bitmapData) {
-					(background as Bitmap).bitmapData.dispose();
+			if ($background && $background is Bitmap) {
+				if (($background as Bitmap).bitmapData) {
+					($background as Bitmap).bitmapData.dispose();
 				}
 			}
-			if (actualWidth > 0 && actualHeight > 0) {
-				setBackground(new Bitmap(BitmapDataUtil.getScale3BitmapData(ResManager.getInstance().getBitmapData(theme.barBgResName), actualWidth, theme.barBgScale9Rect, Constants.HORIZONTAL)));
-				var barBmd:BitmapData = BitmapDataUtil.getScale3BitmapData(ResManager.getInstance().getBitmapData(theme.barResName), theme.barWidth, theme.barScale9Rect, Constants.HORIZONTAL);
-				GraphicsUtil.drawRectWithBmd(maskShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
-				GraphicsUtil.drawRectWithBmd(barShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
+			if ($actualWidth > 0 && $actualHeight > 0) {
+				background = new Bitmap(BitmapDataUtil.getScale3BitmapData(ResManager.getInstance().getBitmapData($theme.barBgResName), $actualWidth, $theme.barBgScale9Rect, Constants.HORIZONTAL));
+				var barBmd:BitmapData = BitmapDataUtil.getScale3BitmapData(ResManager.getInstance().getBitmapData($theme.barResName), $theme.barWidth, $theme.barScale9Rect, Constants.HORIZONTAL);
+				GraphicsUtil.drawRectWithBmd($maskShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
+				GraphicsUtil.drawRectWithBmd($barShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
 			}
 		}
 		
 		override protected function refreshData():void {
-			maskShape.x = this.progress * theme.barWidth - theme.barWidth + theme.barX;
+			$maskShape.x = this.$progress * $theme.barWidth - $theme.barWidth + $theme.barX;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

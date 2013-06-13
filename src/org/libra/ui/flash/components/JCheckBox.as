@@ -22,9 +22,9 @@ package org.libra.ui.flash.components {
 	 */
 	public class JCheckBox extends BaseButton {
 		
-		private var selected:Boolean;
+		private var $selected:Boolean;
 		
-		private var group:JCheckBoxGroup;
+		private var $group:JCheckBoxGroup;
 		
 		public function JCheckBox(theme:DefaultBtnTheme = null, x:int = 0, y:int = 0, text:String = '') { 
 			super(theme ? theme : UIManager.getInstance().theme.checkBoxTheme, x, y, text);
@@ -34,38 +34,58 @@ package org.libra.ui.flash.components {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function isSelected():Boolean {
-			return this.selected;
+		public function get selected():Boolean {
+			return this.$selected;
 		}
 		
-		public function setSelected(val:Boolean):void {
-			if (this.selected != val) {
-				this.selected = val;
+		public function set selected(val:Boolean):void {
+			if (this.$selected != val) {
+				this.$selected = val;
 				this.invalidate(InvalidationFlag.STATE);
 			}
 		}
 		
-		public function setCheckBoxGroup(group:JCheckBoxGroup):void {
-			if (this.group && this.group != group) this.group.removeCheckBox(this);
-			this.group = group;
-			this.group.append(this);
+		public function setCheckBoxGroup($group:JCheckBoxGroup):void {
+			if (this.$group && this.$group != $group) this.$group.removeCheckBox(this);
+			this.$group = $group;
+			this.$group.append(this);
 		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		override protected function initState():void {
-			this.state = new BaseCheckBoxState();
-			this.state.setResName((theme as DefaultBtnTheme).resName);
-			this.addChildAt(this.state.getDisplayObject(), 0);
+			this.$state = new BaseCheckBoxState();
+			this.$state.resName = ($theme as DefaultBtnTheme).resName;
+			this.addChildAt(this.$state.displayObject, 0);
 		}
 		
 		override protected function refreshState():void {
-			(this.state as ISelectState).setSelected(selected);
+			(this.$state as ISelectState).selected = $selected;
 			super.refreshState();
-			if (selected) {
-				if (this.group) this.group.setCheckBoxUnselected(this);
+			if ($selected) {
+				if (this.$group) this.$group.setCheckBoxUnselected(this);
 				dispatchEvent(new Event(Event.CHANGE));
 			}
+		}
+		
+		protected function toSelected():void {
+			this.$selected = true;
+			this.invalidate(InvalidationFlag.STATE);
+		}
+		
+		protected function toUnSelected():void {
+			if (this.$group) return;
+			this.$selected = false;
+			this.invalidate(InvalidationFlag.STATE);
+		}
+		
+		/*-----------------------------------------------------------------------------------------
+		Event Handlers
+		-------------------------------------------------------------------------------------------*/
+		private function onClicked(e:MouseEvent):void {
+			$selected ? toUnSelected() : toSelected();
+			e.stopPropagation();
 		}
 		
 		override protected function onAddToStage(e:Event):void {
@@ -76,14 +96,6 @@ package org.libra.ui.flash.components {
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
 			this.removeEventListener(MouseEvent.CLICK, onClicked);
-		}
-		
-		/*-----------------------------------------------------------------------------------------
-		Event Handlers
-		-------------------------------------------------------------------------------------------*/
-		private function onClicked(e:MouseEvent):void {
-			this.setSelected(!selected);
-			e.stopPropagation();
 		}
 	}
 

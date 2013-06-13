@@ -17,9 +17,9 @@ package org.libra.ui.flash.core.state {
 		
 		function setSize(w:int, h:int):void;
 		
-		function setResName(val:String):void;
+		function set resName(val:String):void;
 		
-		function getDisplayObject():DisplayObject;
+		function get displayObject():DisplayObject;
 		
 		function toNormal():void;
 		

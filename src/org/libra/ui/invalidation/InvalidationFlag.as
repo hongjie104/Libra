@@ -49,17 +49,17 @@ package org.libra.ui.invalidation {
 		 * @private
 		 * @default [false, false, false, false, false]
 		 */
-		private var invalidationList:Array;
+		private var $invalidationList:Array;
 		
-		private var length:int;
+		private var $length:int;
 		
 		/**
 		 * 构造函数
 		 * @private
 		 */
 		public function InvalidationFlag() {
-			invalidationList = [false, false, false, false, false];
-			length = invalidationList.length;
+			$invalidationList = [false, false, false, false, false];
+			$length = $invalidationList.$length;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -72,10 +72,10 @@ package org.libra.ui.invalidation {
 		 */
 		public function setInvalid(invalidationFlag:int):void {
 			if(invalidationFlag > -1)
-				this.invalidationList[invalidationFlag] = true;
+				this.$invalidationList[invalidationFlag] = true;
 			else {
-				for (var i:int = 0; i < length; i += 1) 
-					this.invalidationList[i] = true;
+				for (var i:int = 0; i < $length; i += 1) 
+					this.$invalidationList[i] = true;
 			}
 		}
 		
@@ -85,15 +85,15 @@ package org.libra.ui.invalidation {
 		 * @return 布尔值
 		 */
 		public function isInvalid(invalidationFlag:int):Boolean {
-			return this.invalidationList[invalidationFlag];
+			return this.$invalidationList[invalidationFlag];
 		}
 		
 		/**
 		 * 重置，将所有渲染类别设置为不需要渲染
 		 */
 		public function reset():void {
-			for (var i:int = 0; i < length; i += 1) 
-				this.invalidationList[i] = false;
+			for (var i:int = 0; i < $length; i += 1) 
+				this.$invalidationList[i] = false;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

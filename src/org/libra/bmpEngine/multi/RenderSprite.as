@@ -2,9 +2,8 @@ package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	
 	import org.libra.utils.MathUtil;
-
+	
 	/**
 	 * <p>
 	 * Description

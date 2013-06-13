@@ -54,10 +54,10 @@ package {
 		
 		private var frame:JFrame;
 		
-		/*[Embed(source="../asset/walk.png")]
+		[Embed(source="../asset/walk.png")]
 		private var BMP:Class;
 		
-		private var starling:Starling;*/
+		//private var starling:Starling;
 		private var loader:Loader;
 		
 		public function Main():void {
@@ -88,14 +88,14 @@ package {
 			//初始化UI
 			ResManager.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
-			testUI();
+			//testUI();
 			//testAutoCreateUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
 			//testStarlingUI();
-			//testMultiBitmap();
+			testMultiBitmap();
 			
 			addChild(new SystemStatus());
 		}
@@ -142,7 +142,7 @@ package {
 			//this.addChild(map);
 		//}
 		
-		/*private function testMultiBitmap():void {
+		private function testMultiBitmap():void {
 			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
 			var w:int = source.width >> 3;
 			var h:int = source.height >> 3;
@@ -162,7 +162,7 @@ package {
 				Tick.getInstance().addItem(bitmap);
 				Tick.getInstance().addItem(sprite);
 			}
-		}*/
+		}
 		
 		//private function testBmpEngine():void {
 			//var source:BitmapData = (new BMP() as Bitmap).bitmapData;
@@ -239,7 +239,7 @@ package {
 			pw.displayAsPassword = true;
 			panel.appendAll(label, tf, pw);
 			var btn0:JButton = new JButton(UIManager.getInstance().theme.btnTheme, 250, 50, '开关');
-			btn0.setToolTipText('开关');
+			btn0.toolTipText = '开关';
 			panel.append(btn0);
 			btn0.addEventListener(MouseEvent.CLICK, onCliked);
 			
@@ -251,7 +251,7 @@ package {
 				new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 30, 90, '按钮1'), new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 30, 90, '按钮2'));
 			frame.append(checkBoxGroup);
 			
-			btn.setToolTipText('我是按钮ToolTip');
+			btn.toolTipText = '我是按钮ToolTip';
 			
 			var progressBar:JProgressBar = new JProgressBar(UIManager.getInstance().theme.progressBarTheme);
 			frame.append(progressBar);
@@ -260,7 +260,7 @@ package {
 			frame.append(slider);
 			var sliderLabel:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 330, 240, '0');
 			frame.append(sliderLabel);
-			slider.addEventListener(flash.events.Event.CHANGE, function(evt:flash.events.Event):void { sliderLabel.text = slider.getValue().toFixed(2); progressBar.setProgress(slider.getValue() / 100); } );
+			slider.addEventListener(flash.events.Event.CHANGE, function(evt:flash.events.Event):void { sliderLabel.text = slider.value.toFixed(2); progressBar.setProgress(slider.value / 100); } );
 			
 			var textArea:JTextArea = new JTextArea(UIManager.getInstance().theme.textAreaTheme, 50, 160, '请输入：');
 			frame.append(textArea);
@@ -271,11 +271,11 @@ package {
 			var data:Vector.<Object> = new Vector.<Object>();
 			for (var i:int = 0; i < 100;i += 1)
 				data[i] = 'item' + i;
-			list.setDataList(data);
+			list.dataList = data;
 			
 			var comboBox:JComboBox = new JComboBox(UIManager.getInstance().theme.comboBoxTheme, Constants.DOWN, '下拉框', 50, 100);
 			panel.append(comboBox);
-			comboBox.setDataList(data);
+			comboBox.dataList = data;
 			
 			var pageCounter:JPageCounter = new JPageCounter(UIManager.getInstance().theme.pageCountTheme, 10, 3, 50, 50);
 			frame.append(pageCounter);

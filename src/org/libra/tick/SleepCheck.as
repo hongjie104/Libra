@@ -1,7 +1,7 @@
 package org.libra.tick {
 	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	import flash.utils.getTimer;
+	import flash.utils.Timer;
 	
 	/**
 	 * 检测是否睡眠

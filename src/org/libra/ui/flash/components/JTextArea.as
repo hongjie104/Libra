@@ -24,13 +24,13 @@ package org.libra.ui.flash.components {
 	 */
 	public class JTextArea extends BaseText {
 		
-		private var scrollBar:JScrollBar;
+		private var $scrollBar:JScrollBar;
 		
-		private var scrollBarAutoHide:Boolean;
+		private var $scrollBarAutoHide:Boolean;
 		
 		public function JTextArea(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, text:String = '') { 
 			super(theme ? theme : UIManager.getInstance().theme.textAreaTheme, x, y, text);
-			scrollBarAutoHide = true;
+			$scrollBarAutoHide = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -39,29 +39,29 @@ package org.libra.ui.flash.components {
 		
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
-			textField.wordWrap = textField.multiline = true;
+			$textField.wordWrap = $textField.multiline = true;
 			this.setFont(JFont.FONT_INPUT);
 			this.text = text;
-			textField.selectable = textField.mouseEnabled = true;
-			this.textField.type = TextFieldType.INPUT;
-			textField.background = true;
-			textField.backgroundColor = DefaultTheme.BACKGROUND;
+			$textField.selectable = $textField.mouseEnabled = true;
+			this.$textField.type = TextFieldType.INPUT;
+			$textField.background = true;
+			$textField.backgroundColor = DefaultTheme.BACKGROUND;
 		}
 		
 		/**
 		 * Changes the thumb percent of the scrollbar based on how much text is shown in the text area.
 		 */
 		protected function updateScrollBar():void {
-			var visibleLines:int = textField.numLines - textField.maxScrollV + 1;
-			var percent:Number = visibleLines / textField.numLines;
-			scrollBar.setSliderParams(1, textField.maxScrollV, textField.scrollV);
-			scrollBar.setThumbPercent(percent);
-			scrollBar.setPageSize(visibleLines);
+			var visibleLines:int = $textField.numLines - $textField.maxScrollV + 1;
+			var percent:Number = visibleLines / $textField.numLines;
+			$scrollBar.setSliderParams(1, $textField.maxScrollV, $textField.scrollV);
+			$scrollBar.thumbPercent = percent;
+			$scrollBar.pageSize = visibleLines;
 		}
 		
-		public function setAutoHideScrollBar(value:Boolean):void {
-		   if (scrollBarAutoHide != value) {
-			   this.scrollBarAutoHide = value;
+		public function set autoHideScrollBar(value:Boolean):void {
+		   if ($scrollBarAutoHide != value) {
+			   this.$scrollBarAutoHide = value;
 			   invalidate(InvalidationFlag.STATE);
 		   }
         }
@@ -73,34 +73,34 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			
-			scrollBar = new JScrollBar(Constants.VERTICAL);
-			scrollBar.setAutoHide(scrollBarAutoHide);
-			this.addChild(scrollBar);
+			$scrollBar = new JScrollBar(Constants.VERTICAL);
+			$scrollBar.autoHide = $scrollBarAutoHide;
+			this.addChild($scrollBar);
 		}
 		
 		override protected function resize():void {
-			textField.width = actualWidth - scrollBar.width - 4;
-			scrollBar.x = actualWidth - scrollBar.width;
-			scrollBar.height = actualHeight;
+			$textField.width = $actualWidth - $scrollBar.width - 4;
+			$scrollBar.x = $actualWidth - $scrollBar.width;
+			$scrollBar.height = $actualHeight;
 			updateScrollBar();
 		}
 		
 		override protected function refreshState():void {
-			scrollBar.setAutoHide(this.scrollBarAutoHide);
+			$scrollBar.autoHide = this.$scrollBarAutoHide;
 		}
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
 			this.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			this.scrollBar.addEventListener(Event.CHANGE, onScrollBarScroll);
-			textField.addEventListener(Event.SCROLL, onTextScroll);
+			this.$scrollBar.addEventListener(Event.CHANGE, onScrollBarScroll);
+			$textField.addEventListener(Event.SCROLL, onTextScroll);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
 			this.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			this.scrollBar.removeEventListener(Event.CHANGE, onScrollBarScroll);
-			textField.removeEventListener(Event.SCROLL, onTextScroll);
+			this.$scrollBar.removeEventListener(Event.CHANGE, onScrollBarScroll);
+			$textField.removeEventListener(Event.SCROLL, onTextScroll);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ package org.libra.ui.flash.components {
 		//}
 		
 		private function onScrollBarScroll(e:Event):void {
-			textField.scrollV = Math.round(scrollBar.getValue());
+			$textField.scrollV = Math.round($scrollBar.value);
 		}
 		
 		private function onTextScroll(e:Event):void {
@@ -121,8 +121,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		private function onMouseWheel(e:MouseEvent):void {
-			scrollBar.changeValue(0 - e.delta);
-			textField.scrollV = Math.round(scrollBar.getValue());
+			$scrollBar.changeValue(0 - e.delta);
+			$textField.scrollV = Math.round($scrollBar.value);
 		}
 		
 	}

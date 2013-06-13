@@ -18,14 +18,14 @@ package org.libra.ui.flash.components {
 	 */
 	public class JImage extends Component {
 		
-		protected var bitmap:Bitmap;
+		protected var $bitmap:Bitmap;
 		
 		protected var $bitmapData:BitmapData;
 		
 		public function JImage(bitmapData:BitmapData = null, x:int = 0, y:int = 0) { 
 			super(x, y);
-			bitmap = new Bitmap(bitmapData);
-			addChild(bitmap);
+			$bitmap = new Bitmap(bitmapData);
+			addChild($bitmap);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function refreshData():void {
-			bitmap.bitmapData = $bitmapData;
+			$bitmap.bitmapData = $bitmapData;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

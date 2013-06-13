@@ -3,7 +3,6 @@ package org.libra.bmpEngine.multi {
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Point;
-	
 	import org.libra.tick.ITickable;
 	import org.libra.tick.Tick;
 	
@@ -27,7 +26,7 @@ package org.libra.bmpEngine.multi {
 		
 		protected var $numChildren:int;
 		
-		private var layerList:Vector.<RenderLayer>;
+		private var $layerList:Vector.<RenderLayer>;
 		
 		protected var $updated:Boolean;
 		
@@ -45,7 +44,7 @@ package org.libra.bmpEngine.multi {
 			bitmapData = new BitmapData(width, height, true, 0x0);
 			$width = width;
 			$height = height;
-			layerList = new Vector.<RenderLayer>();
+			$layerList = new Vector.<RenderLayer>();
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
@@ -62,29 +61,29 @@ package org.libra.bmpEngine.multi {
 				if (this.bitmapData) bitmapData.dispose();
 				bitmapData = new BitmapData(width, height, true, 0x0);
 				for(var i:int = 0; i < this.$numChildren; i += 1)
-					this.layerList[i].setSize(width, height);
+					this.$layerList[i].setSize(width, height);
 				$updated = true;
 			}
 		}
 		
 		public function addLayer(layer:RenderLayer):void {
-			this.layerList.push(layer);
+			this.$layerList.push(layer);
 			$updated = true;
 			$numChildren += 1;
 		}
 		
 		public function addLayerAt(layer:RenderLayer, index:int = -1):void {
-			if (index < 0) layerList.unshift(layer);
-			else if (index > $numChildren) layerList.push(layer);
-			else layerList.splice(index, 0, layer);
+			if (index < 0) $layerList.unshift(layer);
+			else if (index > $numChildren) $layerList.push(layer);
+			else $layerList.splice(index, 0, layer);
 			$numChildren += 1;
 			$updated = true;
 		}
 		
 		public function removeLayer(layer:RenderLayer, dispose:Boolean = false):void { 
-			const index:int = this.layerList.indexOf(layer);
+			const index:int = this.$layerList.indexOf(layer);
 			if (index != -1) {
-				layerList.splice(index, 1);
+				$layerList.splice(index, 1);
 				$numChildren--;
 				$updated = true;
 				if (dispose) layer.dispose();
@@ -93,9 +92,9 @@ package org.libra.bmpEngine.multi {
 		
 		public function removeLayerAt(index:int, dispose:Boolean = false):void { 
 			var layer:RenderLayer;
-			if (index > $numChildren) layer = layerList.pop();
-			else if (index < 0) layer = layerList.shift();
-			else layer = layerList.splice(index, 1)[0];
+			if (index > $numChildren) layer = $layerList.pop();
+			else if (index < 0) layer = $layerList.shift();
+			else layer = $layerList.splice(index, 1)[0];
 			$numChildren--;
 			$updated = true;
 			if (dispose) layer.dispose();
@@ -105,7 +104,7 @@ package org.libra.bmpEngine.multi {
 			var list:Vector.<RenderSprite> = new Vector.<RenderSprite>();
 			var i:int = this.$numChildren;
 			while(--i > -1){
-				list = list.concat(this.layerList[i].getRenderSpriteUnderPoint(point));
+				list = list.concat(this.$layerList[i].getRenderSpriteUnderPoint(point));
 			}
 			return list;
 		}
@@ -117,7 +116,7 @@ package org.libra.bmpEngine.multi {
 			var l:int = $numChildren;
 			var layer:RenderLayer;
 			while (--l > -1) {
-				layer = this.layerList[l];
+				layer = this.$layerList[l];
 				layer.render();
 				if (layer.updated) {
 					needRender = true;
@@ -127,15 +126,15 @@ package org.libra.bmpEngine.multi {
 				bitmapData.lock();
 				bitmapData.fillRect(bitmapData.rect, 0x00000000);
 				for (var i:int = 0; i < $numChildren; i += 1) {
-					layer = layerList[i];
+					layer = $layerList[i];
 					if (layer.visible) {
 						bitmapData.copyPixels(layer.bitmapData, layer.rect, ZERO_POINT, null, null, true);
 						layer.updated = false;
 					}
 				}
 				bitmapData.unlock();
-				/*baseBitmap.bitmapData = layerList[0].bitmapData;
-				layerList[0].updated = false;*/
+				/*baseBitmap.bitmapData = $layerList[0].bitmapData;
+				$layerList[0].updated = false;*/
 				$updated = false;
 			}
 		}

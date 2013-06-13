@@ -1,8 +1,8 @@
 package org.libra.tick {
 	import flash.events.EventDispatcher;
 	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	import flash.utils.getTimer;
+	import flash.utils.Timer;
 	
 	/**
 	 * 扩展的Timer，会修正省电模式Timer次数减少的问题
