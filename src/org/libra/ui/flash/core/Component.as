@@ -388,6 +388,8 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function draw():void {
+			if (this.invalidationFlag.isInvalid(InvalidationFlag.SIZE))
+				resize();
 			if (this.invalidationFlag.isInvalid(InvalidationFlag.TEXT))
 				refreshText();
 			if (this.invalidationFlag.isInvalid(InvalidationFlag.DATA))
@@ -396,50 +398,38 @@ package org.libra.ui.flash.core {
 				refreshState();
 			if (this.invalidationFlag.isInvalid(InvalidationFlag.STYLE))
 				refreshStyle();
-			if (this.invalidationFlag.isInvalid(InvalidationFlag.SIZE))
-				resize();
 		}
 		
 		/**
 		 * 更新控件的文本内容
 		 * @private
 		 */
-		protected function refreshText():void {
-			
-		}
+		protected function refreshText():void { }
 		
 		/**
 		 * 更新控件的表现风格
 		 * 一般很少用到
 		 * @private
 		 */
-		protected function refreshStyle():void {
-			
-		}
+		protected function refreshStyle():void { }
 		
 		/**
 		 * 更新控件的状态
 		 * @private
 		 */
-		protected function refreshState():void {
-			
-		}
+		protected function refreshState():void { }
 		
 		/**
 		 * 更新控件里的数据内容
 		 * @private
 		 */
-		protected function refreshData():void {
-			
-		}
+		protected function refreshData():void { }
 		
 		/**
 		 * 更新控件大小
 		 * @private
 		 */
-		protected function resize():void {
-			
-		}
+		protected function resize():void { }
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

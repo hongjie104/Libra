@@ -3,6 +3,7 @@ package org.libra.ui.starling.managers {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getQualifiedClassName;
+	import org.libra.log4a.Logger;
 	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.starling.core.IDragable;
 	import org.libra.ui.starling.core.IDropable;
@@ -97,14 +98,14 @@ package org.libra.ui.starling.managers {
 				//如果成功拖放了，就直接移除拖放图案的托
 				/*dragSprite.parent.removeChild(dragSprite);
 				dropComponent.addDragComponent(dragComponent);*/
-				trace('拖拽成功');
+				Logger.info('拖拽成功');
 			}else {
 				//拖拽失败
 				//dragInitiator.dragFail();
 				//如果组件不被容器所接受，那么播放失败动画
 				/*var t:TweenLite = TweenLite.to(dragSprite, .5, { x:startPoint.x, y:startPoint.y, ease:Linear.easeNone, 
 					onComplete:function():void { t.kill(); dragSprite.parent.removeChild(dragSprite); }} );*/
-				trace('拖拽失败');
+				Logger.info('拖拽失败');
 			}
 		}
 		

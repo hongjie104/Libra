@@ -103,7 +103,6 @@ package org.libra.utils.maxRects
 				return newNode;
 			
 			placeRectangle(newNode);
-			trace(newNode);
 			return newNode;
 		}
 		
@@ -330,7 +329,6 @@ package org.libra.utils.maxRects
 					}
 				}
 			}
-			trace(bestNode);
 			return bestNode;
 		}
 		

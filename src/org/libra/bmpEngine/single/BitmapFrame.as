@@ -104,7 +104,8 @@ package org.libra.bmpEngine.single {
 		public function doFun():void {
 			if (this.funList) {
 				var list:Vector.<FrameFun> = this.funList.slice();
-				for (var i:* in list) {
+				const l:int = list.length;
+				for (var i:int =  0; i < l; i += 1) {
 					list[i].doFun();
 					if (list[i].isDisposeEnabled()) {
 						this.funList.splice(i, 1);
@@ -180,9 +181,9 @@ package org.libra.bmpEngine.single {
 			}
 			bmd = null;
 			label = null;
-			for (var i:* in this.funList) {
+			var i:int = funList.length;
+			while (--i > -1)
 				funList[i].dispose();
-			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------

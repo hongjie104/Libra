@@ -71,8 +71,8 @@ package org.libra.ui.starling.component {
 		 * @param	...rest
 		 */
 		public function appendAllCheckBox(...rest):void {
-			for (var i:* in rest) 
-				this.appendCheckBox(rest[i]);
+			for each(var i:JCheckBox in rest) 
+				this.appendCheckBox(i);
 		}
 		
 		/**
@@ -95,8 +95,8 @@ package org.libra.ui.starling.component {
 		 * @param	...rest
 		 */
 		public function removeAllCheckBox(...rest):void {
-			for(var i:* in rest)
-				this.removeCheckBox(rest[i]);
+			for each(var i:JCheckBox in rest)
+				this.removeCheckBox(i);
 		}
 		
 		/**
@@ -117,8 +117,8 @@ package org.libra.ui.starling.component {
 		 * 清除所有的JCheckBox
 		 */
 		public function clearCheckBox():void {
-			for (var i:* in this.checkBoxList)
-				this.removeChild(checkBoxList[i]);
+			for each(var i:JCheckBox in this.checkBoxList)
+				this.removeChild(i);
 			this.checkBoxList.length = 0;
 			this.selectedBox = null;
 		}
@@ -137,9 +137,9 @@ package org.libra.ui.starling.component {
 		 * @param	except 不被设置为非选中状态的JCheckBox
 		 */
 		public function setCheckBoxUnselected(except:JCheckBox):void {
-			for (var i:* in this.checkBoxList) {
-				if (this.checkBoxList[i] == except) continue;
-				this.checkBoxList[i].setSelected(false, true);
+			for each(var i:JCheckBox in this.checkBoxList) {
+				if (i == except) continue;
+				i.setSelected(false, true);
 			}
 		}
 		
@@ -161,10 +161,10 @@ package org.libra.ui.starling.component {
 		 */
 		override protected function resize():void {
 			var preCheckBox:JCheckBox;
-			for (var i:* in this.checkBoxList) {
-				checkBoxList[i].setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + gap : 0) : 0, 
+			for each(var i:JCheckBox in this.checkBoxList) {
+				i.setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + gap : 0) : 0, 
 					orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.height + preCheckBox.y + gap : 0));
-				preCheckBox = checkBoxList[i];
+				preCheckBox = i;
 			}
 		}
 		

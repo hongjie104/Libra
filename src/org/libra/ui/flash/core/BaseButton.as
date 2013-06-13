@@ -128,8 +128,9 @@ package org.libra.ui.flash.core {
 		 */
 		override protected function resize():void {
 			this.state.setSize(actualWidth, actualHeight);
-			//保证按钮中的文本在垂直方向上永远居中
-			setTextLocation(textX, (actualHeight - textField.textHeight) >> 1);
+			/*//保证按钮中的文本在垂直方向上永远居中
+			//setTextLocation(textX, (actualHeight - textField.textHeight) >> 1);
+			setTextLocation(textX, (actualHeight - 16) >> 1);*/
 		}
 		
 		/**
@@ -149,6 +150,12 @@ package org.libra.ui.flash.core {
 				this.textField.x = textX;
 				this.textField.y = textY;
 			}
+		}
+		
+		override protected function refreshText():void {
+			super.refreshText();
+			//保证按钮中的文本在垂直方向上永远居中
+			setTextLocation(textX, (actualHeight - textField.textHeight) >> 1);
 		}
 		
 		/**

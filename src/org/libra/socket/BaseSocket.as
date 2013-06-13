@@ -68,8 +68,8 @@ package org.libra.socket {
 			var temp:ByteArray = new ByteArray();
 			this._socket.readBytes(temp, 0, _socket.bytesAvailable);
 			var result:Array = buff.add(temp);
-			for (var i:* in result) {
-				putOutMsg(result[i]);
+			for each(var str:String in result) {
+				putOutMsg(str);
 			}
 		}
 		

@@ -251,8 +251,9 @@ package org.libra.utils.displayObject {
 		}
 		
 		static public function flipHorizontalList(list:Vector.<BitmapData>):Vector.<BitmapData> {
-			var result:Vector.<BitmapData> = new Vector.<BitmapData>(list.length);
-			for (var i:* in list) {
+			const l:int = list.length;
+			var result:Vector.<BitmapData> = new Vector.<BitmapData>(l);
+			for (var i:int = 0; i < l; i += 1) {
 				result[i] = flipHorizontal(list[i]);
 			}
 			return result;

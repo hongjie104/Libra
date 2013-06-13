@@ -68,6 +68,7 @@ package org.libra.ui.flash.components {
 		
 		override protected function refreshData():void {
 			text = this.prefixText + toStr(hour) + ':' + toStr(minute) + ':' + toStr(second);
+			refreshText();
 		}
 		
 		protected function toStr(val:int):String {

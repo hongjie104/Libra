@@ -41,8 +41,8 @@ package org.libra.ui.starling.core {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		public function addChildAll(...rest):void {
-			for (var i:* in rest) {
-				this.addChild(rest[i]);
+			for each(var i:flash.display.DisplayObject in rest) {
+				this.addChild(i);
 			}
 		}
 		

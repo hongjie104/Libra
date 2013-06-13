@@ -678,7 +678,6 @@ package com.as3xls.xls {
 		}
 		
 		private function get_continuation_data():ByteArray {
-//			trace("Getting continuation data");
 			var ba:ByteArray;
 			var pos:uint = br.stream.position;
 			var r:Record = br.readTag();

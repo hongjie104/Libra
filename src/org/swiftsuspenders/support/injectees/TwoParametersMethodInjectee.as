@@ -40,7 +40,7 @@ package org.swiftsuspenders.support.injectees
 		}
 		[Inject(name="dada")]
 		public function testInject(haha:Sprite):void{
-			trace("{{{{{{{{{{{{{{{{{{{{{{{{{inject",haha)
+			//trace("{{{{{{{{{{{{{{{{{{{{{{{{{inject",haha)
 		}
 		public function getDependency() : Clazz
 		{
@@ -56,11 +56,11 @@ package org.swiftsuspenders.support.injectees
 		}
 		[PostConstruct(order="2")]
 		public function post2():void{
-			trace("post2");
+			//trace("post2");
 		}
 		[PostConstruct(order="1")]
 		public function post1():void{
-			trace("post1");
+			//trace("post1");
 		}
 	}
 }

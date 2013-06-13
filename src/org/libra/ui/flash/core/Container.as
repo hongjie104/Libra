@@ -103,7 +103,7 @@ package org.libra.ui.flash.core {
 		 * @param	...rest n个控件
 		 */
 		public function appendAll(...rest):void {
-			for (var i:* in rest) this.append(rest[i]);
+			for each(var i:IComponent in rest) this.append(i);
 		}
 		
 		/**
@@ -141,7 +141,7 @@ package org.libra.ui.flash.core {
 		 * @param	...rest n个将要被移除的控件
 		 */
 		public function removeAll(destroy:Boolean, ...rest):void { 
-			for (var i:* in rest) this.remove(rest[i], destroy);
+			for each(var i:IComponent in rest) this.remove(i, destroy);
 		}
 		
 		/**
@@ -149,7 +149,7 @@ package org.libra.ui.flash.core {
 		 * @param	destroy 移除后是否将控件销毁
 		 */
 		public function clear(destroy:Boolean = false):void {
-			for (var i:* in this.componentList) {
+			for each(var i:IComponent in this.componentList) {
 				if (destroy) componentList[i].destroy();
 				this.removeChild(componentList[i] as DisplayObject);
 			}
@@ -227,8 +227,10 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function setSize(w:int, h:int):void {
-			super.setSize(w, h);
-			GraphicsUtil.drawRect(this.graphics, 0, 0, w, h, 0xff0000, .0);
+			if (actualWidth != w || actualHeight != h) {
+				super.setSize(w, h);
+				GraphicsUtil.drawRect(this.graphics, 0, 0, w, h, 0xff0000, .0);
+			}
 		}
 		
 		/**
@@ -236,8 +238,8 @@ package org.libra.ui.flash.core {
 		 */
 		override public function destroy():void {
 			super.destroy();
-			for (var i:* in this.componentList) {
-				this.componentList[i].destroy();
+			for each(var i:IComponent in this.componentList) {
+				i.destroy();
 			}
 			this.componentList = null;
 			$numComponent = 0;

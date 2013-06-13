@@ -137,12 +137,11 @@ package org.libra.ui.flash.components {
 		
 		override protected function resize():void {
 			scrollBar.x = actualWidth - scrollBar.width;
-			for (var j:* in itemList) {
-				this.removeChild(itemList[j]);
+			for each(var item:JListItem in itemList) {
+				this.removeChild(item);
 			}
 			var itemPool:Vector.<JListItem> = this.itemList.slice();
 			itemList.length = 0;
-			var item:JListItem;
 			const numItems:int = Math.ceil(actualHeight / itemHeight);
 			for(var i:int = 0; i < numItems; i++) {
 				item = itemPool.length ? itemPool.shift() : new JListItem();
@@ -159,18 +158,18 @@ package org.libra.ui.flash.components {
 			super.onAddToStage(e);
 			scrollBar.addEventListener(Event.CHANGE, onScrollBarScroll);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			for (var i:* in itemList) {
+			var i:int = itemList.length;
+			while (--i > -1) 
 				itemList[i].addEventListener(MouseEvent.CLICK, onSelect);
-			}
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
 			scrollBar.removeEventListener(Event.CHANGE, onScrollBarScroll);
 			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			for (var i:* in itemList) {
+			var i:int = itemList.length;
+			while (--i > -1) 
 				itemList[i].removeEventListener(MouseEvent.CLICK, onSelect);
-			}
 		}
 		
 		protected function updateItems():void {
@@ -217,7 +216,7 @@ package org.libra.ui.flash.components {
 			
 			var target:JListItem = event.target as JListItem;
 			var offset:int = scrollBar.getValue();
-			var l:int = itemList.length;
+			const l:int = itemList.length;
 			for(var i:int = 0; i < l; i++) {
 				if (itemList[i] == target) this.selectedIndex = i + offset;
 				itemList[i].setSelected(false);

@@ -47,8 +47,8 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function appendAllCheckBox(...rest):void {
-			for (var i:* in rest) 
-				this.appendCheckBox(rest[i]);
+			for each(var box:JCheckBox in rest) 
+				this.appendCheckBox(box);
 		}
 		
 		public function appendCheckBox(checkBox:JCheckBox):void {
@@ -63,8 +63,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function removeAllCheckBox(...rest):void {
-			for(var i:* in rest)
-				this.removeCheckBox(rest[i]);
+			for each(var box:JCheckBox in rest) 
+				this.removeCheckBox(box);
 		}
 		
 		public function removeCheckBox(checkBox:JCheckBox):void {
@@ -78,8 +78,10 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function clearCheckBox():void {
-			for (var i:* in this.checkBoxList)
+			var i:int = checkBoxList.length;
+			while (--i > -1)
 				this.remove(checkBoxList[i]);
+				
 			this.checkBoxList.length = 0;
 			this.selectedBox = null;
 		}
@@ -90,7 +92,8 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function setCheckBoxUnselected(except:JCheckBox):void {
-			for (var i:* in this.checkBoxList) {
+			var i:int = checkBoxList.length;
+			while (--i > -1) {
 				if (this.checkBoxList[i] == except) continue;
 				this.checkBoxList[i].setSelected(false);
 			}
@@ -103,7 +106,8 @@ package org.libra.ui.flash.components {
 		
 		override public function destroy():void {
 			super.destroy();
-			for (var i:* in this.checkBoxList) {
+			var i:int = checkBoxList.length;
+			while (--i > -1) {
 				checkBoxList[i].destroy();
 			}
 		}
@@ -114,10 +118,10 @@ package org.libra.ui.flash.components {
 		
 		override protected function resize():void {
 			var preCheckBox:JCheckBox;
-			for (var i:* in this.checkBoxList) {
-				checkBoxList[i].setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + gap : 0) : 0, 
+			for each(var box:JCheckBox in this.checkBoxList) {
+				box.setLocation(orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.width + preCheckBox.x + gap : 0) : 0, 
 					orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.height + preCheckBox.y + gap : 0));
-				preCheckBox = checkBoxList[i];
+				preCheckBox = box;
 			}
 		}
 		
