@@ -34,7 +34,7 @@ package org.libra.bmpEngine.multi {
 		
 		protected var $updated:Boolean;
 		
-		public function RenderSprite(bitmapData:BitmapData) {
+		public function RenderSprite(bitmapData:BitmapData = null) {
 			$bitmapData = bitmapData;
 			$rect = $bitmapData ? $bitmapData.rect : null;
 			$visible = true;
