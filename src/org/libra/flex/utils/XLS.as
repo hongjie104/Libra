@@ -3,7 +3,6 @@ package org.libra.flex.utils {
 	import com.as3xls.xls.ExcelFile;
 	import com.as3xls.xls.Sheet;
 	
-	import flash.events.*;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	

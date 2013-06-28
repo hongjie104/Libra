@@ -92,28 +92,21 @@ package org.libra.displayObject {
 		
 		/**
 		 * 从父容器中移除自己
-		 * @param	destroy 移除时是否销毁自己,默认为false
+		 * @param	dispose 移除时是否销毁自己,默认为false
 		 * @default false
 		 */
-		public function removeFromParent(destroy:Boolean = false):void {
+		public function removeFromParent(dispose:Boolean = false):void {
 			if (this.parent) {
 				this.parent.removeChild(this);
-				if (destroy) this.destroy();
+				if (dispose) this.dispose();
 			}
-		}
-		
-		/**
-		 * 自杀
-		 */
-		public function destroy():void {
-			removeAllEventListener();
 		}
 		
 		/**
 		 * 释放内存
 		 */
 		public function dispose():void {
-			
+			removeAllEventListener();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

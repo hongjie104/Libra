@@ -12,7 +12,7 @@ package org.libra.displayObject.interfaces {
 	 * @version 1.0
 	 * @see
 	 */
-	public interface ISprite45 {
+	public interface ISprite45 extends ISprite {
 		
 		function get topX():int;
 		

@@ -1,5 +1,4 @@
 package org.libra.flex.spark.components {
-	import mx.controls.Image;
 	import flash.events.Event;
 	import mx.controls.Image;
 	import mx.core.mx_internal;

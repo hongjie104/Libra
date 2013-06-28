@@ -1,4 +1,5 @@
 package org.libra.displayObject.interfaces {
+	import flash.events.IEventDispatcher;
 	
 	/**
 	 * <p>
@@ -12,13 +13,9 @@ package org.libra.displayObject.interfaces {
 	 * @version 1.0
 	 * @see
 	 */
-	public interface ISprite {
+	public interface ISprite extends IEventDispatcher {
 		
 		function removeFromParent(destroy:Boolean = false):void;
-		
-		function destroy():void;
-		
-		function dispose():void;
 		
 		function get x():Number;
 		
@@ -31,6 +28,8 @@ package org.libra.displayObject.interfaces {
 		function get width():Number;
 		
 		function get height():Number;
+		
+		function dispose():void;
 	}
 	
 }

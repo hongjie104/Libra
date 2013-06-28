@@ -78,8 +78,8 @@ package org.libra.ui.flash.components {
 			this.$title.text = val;
 		}
 		
-		override public function destroy():void {
-			super.destroy();
+		override public function dispose():void {
+			super.dispose();
 			removeBarDragListeners();
 		}
 		

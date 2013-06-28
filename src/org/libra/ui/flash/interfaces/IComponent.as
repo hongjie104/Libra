@@ -18,10 +18,11 @@ package org.libra.ui.flash.interfaces {
 	 */
 	public interface IComponent extends ISprite {
 		
-		function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void;
-		
-		function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void;
-		
+		/**
+		 * 强制性地发出事件，不管是否有此类事件的监听
+		 * @param	event
+		 * @return
+		 */
 		function dispatchEventForce(event:Event):Boolean;
 		
 		function initToolTip():void;

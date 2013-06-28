@@ -140,7 +140,7 @@ package org.libra.ui.flash.core {
 				}else {
 					parent.removeChild(this);
 					if(destroy)
-						this.destroy();	
+						this.dispose();	
 				}
 			}
         }
@@ -249,9 +249,9 @@ package org.libra.ui.flash.core {
 		/**
 		 * @inheritDoc
 		 */
-		override public function destroy():void {
-			super.destroy();
+		override public function dispose():void {
 			dragEnabled = false;
+			super.dispose();
 		}
 		
 		/**

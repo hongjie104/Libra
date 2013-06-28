@@ -90,8 +90,11 @@ package org.libra.ui.flash.components {
 			return $min;
 		}
 		
-		override public function destroy():void {
-			super.destroy();
+		/**
+		 * @inheritDoc
+		 */
+		override public function dispose():void {
+			super.dispose();
 			if (this.$background.hasEventListener(MouseEvent.MOUSE_DOWN))
 				this.$background.removeEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
 		}

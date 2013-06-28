@@ -119,7 +119,7 @@ package org.libra.ui.flash.core {
 			$numComponent--;
 			super.removeChild(child as DisplayObject);
 			if(destroy)
-				child.destroy();
+				child.dispose();
 			return child;
 		}
 		
@@ -145,11 +145,11 @@ package org.libra.ui.flash.core {
 		
 		/**
 		 * 清空所有的控件
-		 * @param	destroy 移除后是否将控件销毁
+		 * @param	dispose 移除后是否将控件销毁
 		 */
-		public function clear(destroy:Boolean = false):void {
+		public function clear(dispose:Boolean = false):void {
 			for each(var i:IComponent in this.$componentList) {
-				if (destroy) $componentList[i].destroy();
+				if (dispose) $componentList[i].dispose();
 				this.removeChild($componentList[i] as DisplayObject);
 			}
 			$componentList.length = 0;
@@ -232,13 +232,10 @@ package org.libra.ui.flash.core {
 			}
 		}
 		
-		/**
-		 * @inheritDoc
-		 */
-		override public function destroy():void {
-			super.destroy();
+		override public function dispose():void {
+			super.dispose();
 			for each(var i:IComponent in this.$componentList) {
-				i.destroy();
+				i.dispose();
 			}
 			this.$componentList = null;
 			$numComponent = 0;

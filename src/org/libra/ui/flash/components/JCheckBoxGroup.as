@@ -104,11 +104,11 @@ package org.libra.ui.flash.components {
 			this.invalidate(InvalidationFlag.SIZE);
 		}
 		
-		override public function destroy():void {
-			super.destroy();
+		override public function dispose():void {
+			super.dispose();
 			var i:int = $checkBoxList.length;
 			while (--i > -1) {
-				$checkBoxList[i].destroy();
+				$checkBoxList[i].dispose();
 			}
 		}
 		
