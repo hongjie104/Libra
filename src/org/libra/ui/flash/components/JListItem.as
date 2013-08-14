@@ -94,18 +94,6 @@ package org.libra.ui.flash.components {
 			$curState == NORMAL ? $state.toNormal() : $state.toMouseOver();
 		}
 		
-		override protected function onAddToStage(e:Event):void {
-			super.onAddToStage(e);
-			this.addEventListener(MouseEvent.ROLL_OVER, onMouseRoll);
-			this.addEventListener(MouseEvent.ROLL_OUT, onMouseRoll);
-		}
-		
-		override protected function onRemoveFromStage(e:Event):void {
-			super.onRemoveFromStage(e);
-			this.removeEventListener(MouseEvent.ROLL_OVER, onMouseRoll);
-			this.removeEventListener(MouseEvent.ROLL_OUT, onMouseRoll);
-		}
-		
 		private function set curState(state:int):void {
 			if ($curState != state) {
 				$curState = state;
@@ -118,6 +106,18 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		private function onMouseRoll(e:MouseEvent):void {
 			curState = e.type == MouseEvent.ROLL_OVER ? MOUSE_OVER : NORMAL;
+		}
+		
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
+			this.addEventListener(MouseEvent.ROLL_OVER, onMouseRoll);
+			this.addEventListener(MouseEvent.ROLL_OUT, onMouseRoll);
+		}
+		
+		override protected function onRemoveFromStage(e:Event):void {
+			super.onRemoveFromStage(e);
+			this.removeEventListener(MouseEvent.ROLL_OVER, onMouseRoll);
+			this.removeEventListener(MouseEvent.ROLL_OUT, onMouseRoll);
 		}
 		
 	}

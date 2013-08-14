@@ -93,7 +93,7 @@ package org.libra.ui.flash.components {
 		 */
 		protected var $autoCenter:Boolean;
 		
-		public function JPanel(owner:IContainer, theme:DefaultPanelTheme = null, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false) { 
+		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, theme:DefaultPanelTheme = null) { 
 			super();
 			this.$theme = theme ? theme : UIManager.getInstance().theme.panelTheme;
 			this.setSize(w, h);

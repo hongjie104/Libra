@@ -148,7 +148,7 @@ package {
 			var h:int = source.height >> 3;
 			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
 			
-			for (var i:int = 0; i < 500; i += 1) {
+			for (var i:int = 0; i < 1100; i += 1) {
 				var bitmap:JMultiBitmap = new JMultiBitmap(w, h);
 				var layer:RenderLayer = new RenderLayer(w, h);
 				var sprite:RenderMovieCelip = new RenderMovieCelip(bmdList);
@@ -224,12 +224,12 @@ package {
 			
 			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
 			
-			frame = new JFrame(uiContainer, UIManager.getInstance().theme.frameTheme, 400, 300);
+			frame = new JFrame(uiContainer, 400, 300, '', false, 25, UIManager.getInstance().theme.frameTheme);
 			//frame.setCloseEnabled(false);
 			//frame.setDragBarEnabled(false);
 			frame.show();
 			
-			var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme, 300, 200);
+			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().theme.panelTheme);
 			panel.show();
 			
 			

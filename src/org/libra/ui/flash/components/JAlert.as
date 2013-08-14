@@ -55,8 +55,8 @@ package org.libra.ui.flash.components {
 		
 		private var $clickedHandler:Function;
 		
-		public function JAlert(owner:IContainer, theme:DefaultFrameTheme, w:int = 300, h:int = 200, resName:String = '', barHeight:int = 25) { 
-			super(owner, theme, w, h, resName, true, barHeight);
+		public function JAlert(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', barHeight:int = 25, theme:DefaultFrameTheme = null) { 
+			super(owner, w, h, resName, true, barHeight, theme);
 			
 			const uiTheme:DefaultTheme = UIManager.getInstance().theme;
 			const btnY:int = h - uiTheme.btnTheme.height - 36;
@@ -78,7 +78,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public static function show(msg:String, finishHandler:Function = null, buttons:int = OK):void { 
-			const alert:JAlert = new JAlert(UIManager.getInstance().uiContainer, UIManager.getInstance().theme.frameTheme, 260, 200);
+			const alert:JAlert = new JAlert(UIManager.getInstance().uiContainer, 260, 200, '', 25, UIManager.getInstance().theme.frameTheme);
 			alert.$msgLabel.text = msg;
 			alert.append(alert.$msgLabel);
 			alert.$clickedHandler = finishHandler;
