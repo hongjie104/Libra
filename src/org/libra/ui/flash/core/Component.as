@@ -262,6 +262,23 @@ package org.libra.ui.flash.core {
 		}
 		
 		/**
+		 * 生成xml
+		 * 在自动创建ui时调用，得到xml配置文件
+		 * @return
+		 */
+		public function toXML():XML {
+			const tmpAry:Array = toString().split('::');
+			return new XML('<' + tmpAry[tmpAry.length - 1] + ' ' + 
+							(x ? 'x="' + x + '" ' : '') + 
+							(y ? 'y="' + y + '" ' : '') + 
+							($actualWidth ? 'width="' + $actualWidth + '" ' : '') + 
+							($actualHeight ? 'height="' + $actualHeight + '" ' : '') + 
+							($enabled ? '' : 'enabled="false" ') + 
+							($toolTipText ? 'toolTipText="' + $toolTipText + '" ' : '') + 
+						   '/>');
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		override public function dispatchEvent(event:Event):Boolean {

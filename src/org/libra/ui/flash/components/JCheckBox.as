@@ -85,7 +85,8 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		private function onClicked(e:MouseEvent):void {
 			$selected ? toUnSelected() : toSelected();
-			e.stopPropagation();
+			if(UIManager.stopPropagation)
+				e.stopPropagation();
 		}
 		
 		override protected function onAddToStage(e:Event):void {

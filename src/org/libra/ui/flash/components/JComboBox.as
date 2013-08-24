@@ -157,7 +157,9 @@ package org.libra.ui.flash.components {
 		
 		private function onPressClicked(e:MouseEvent):void {
 			$fold ? toUnfold() : toFold();
-			if(e) e.stopPropagation();
+			if (UIManager.stopPropagation) {
+				if(e) e.stopPropagation();
+			}
 		}
 		
 		/**

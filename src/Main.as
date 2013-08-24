@@ -7,17 +7,10 @@ package {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.Point;
 	import flash.net.URLRequest;
-	import org.libra.aStar.AStarTest;
 	import org.libra.bmpEngine.multi.JMultiBitmap;
 	import org.libra.bmpEngine.multi.RenderLayer;
 	import org.libra.bmpEngine.multi.RenderMovieCelip;
-	import org.libra.bmpEngine.single.JBitmap;
-	import org.libra.bmpEngine.utils.JBitmapUtil;
-	import org.libra.game.components.animatable.BitmapAnimatable;
-	import org.libra.game.components.animatable.BitmapFrame;
-	import org.libra.game.objects.Avatar;
 	import org.libra.tick.Tick;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.components.JAlert;
@@ -40,10 +33,8 @@ package {
 	import org.libra.ui.flash.theme.DefaultTheme;
 	import org.libra.ui.utils.ResManager;
 	import org.libra.utils.displayObject.BitmapDataUtil;
-	import org.libra.utils.displayObject.GraphicsUtil;
 	import org.libra.utils.MathUtil;
 	import org.libra.utils.SystemStatus;
-	import starling.core.Starling;
 	import starling.events.Event;
 	
 	/**
@@ -89,40 +80,52 @@ package {
 			ResManager.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
 			//testUI();
-			//testAutoCreateUI();
+			testAutoCreateUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
 			//testStarlingUI();
-			testMultiBitmap();
+			//testMultiBitmap();
 			
 			addChild(new SystemStatus());
 		}
 		
-		//private function testAutoCreateUI():void {
-			//var xml:XML = <View>
-			  //<Container x="20" y="-10">
-			    //<JLabel text="yung" x="103" y="38" textColor="0xffffff" />
-			    //<JLabel text="Lv.36" x="206" y="38" textColor="0xffffff" size="12"/>
-			    //<JLabel text="银币" x="104" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2"/>
-			    //<JLabel text="6万" x="136" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="100"/>
-			    //<JLabel text="金币" x="104" y="84" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
-			    //<JLabel text="10" x="136" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    //<JLabel text="10" x="223" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    //<JLabel text="礼券" x="191" y="83" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
-			    //<JLabel text="10/80" x="124" y="108" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    //<JButton text="按钮" x="183" y="110"/>
-			  //</Container>
-			//</View>;
-			//var uiContainer:Container = new Container();
-			//uiContainer.setSize(stage.stageWidth, stage.stageHeight);
-			//UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
-			//var panel:JPanel = new JPanel(uiContainer, UIManager.getInstance().theme.panelTheme);
-			//panel.createView(xml);
-			//panel.show();
-			//panel.x = panel.y = 50;
-		//}
+		private function testAutoCreateUI():void {
+			/*var xml:XML = <View>
+			  <Container x="20" y="-10">
+			    <JLabel text="yung" x="103" y="38" textColor="0xffffff" />
+			    <JLabel text="Lv.36" x="206" y="38" textColor="0xffffff" size="12"/>
+			    <JLabel text="银币" x="104" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="6万" x="136" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="100"/>
+			    <JLabel text="金币" x="104" y="84" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="10" x="136" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JLabel text="10" x="223" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JLabel text="礼券" x="191" y="83" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="10/80" x="124" y="108" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JButton text="按钮" x="183" y="110"/>
+			  </Container>
+			</View>;*/
+			/*var xml:XML = <View>
+			<Container width="300" height="200">
+			  <JButton width="43" height="26" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center"/>
+			  <JLabel width="120" height="20" text="org.libra.ui.flash.components::JLabel" textColor="16777215" textAlign="left"/>
+			</Container>
+			</View>;*/
+			var xml:XML = <View>
+			 <JButton width="43" height="26" text="确定" textColor="16759090" textAlign="center" x="193" y="176"/>
+  <JLabel width="130" height="20" text="改变世界,下一个就是U" textColor="16777215" textAlign="left" x="167" y="94"/>
+  <JCheckBox width="54" height="20" text="拉了" textColor="16759090" textAlign="center" x="62" y="84"/>
+  <JCheckBox width="54" height="20" text="似懂非懂" textColor="16759090" textAlign="center" x="121" y="85"/>
+			</View>;
+			var uiContainer:Container = new Container();
+			uiContainer.setSize(stage.stageWidth, stage.stageHeight);
+			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
+			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().theme.panelTheme);
+			panel.createView(xml);
+			panel.show();
+			panel.x = panel.y = 50;
+		}
 		
 		//private function testStarlingUI():void {
 			///*starling = new starling.core.Starling(Game, stage);

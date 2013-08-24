@@ -105,6 +105,7 @@ package org.libra.ui.flash.core {
 		 */
 		protected function initState():void {
 			this.$state = new BaseButtonState();
+			$state.setSize($actualWidth, $actualHeight);
 			this.$state.resName = ($theme as DefaultBtnTheme).resName;
 			addChildAt(this.$state.displayObject, 0);
 		}

@@ -3,6 +3,7 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.displayObject.DepthUtil;
 	import org.libra.utils.MathUtil;
@@ -222,7 +223,7 @@ package org.libra.ui.flash.components {
 			}
 			target.selected = true;
 			this.selectedItem = target;
-			event.stopPropagation();
+			if (UIManager.stopPropagation) event.stopPropagation();
 		}
 		
 	}

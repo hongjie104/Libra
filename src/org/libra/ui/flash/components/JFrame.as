@@ -167,7 +167,7 @@ package org.libra.ui.flash.components {
 		
 		private function onCloseBtnClikced(e:MouseEvent):void {
 			this.close();
-			e.stopPropagation();
+			if (UIManager.stopPropagation) e.stopPropagation();
 		}
 	}
 

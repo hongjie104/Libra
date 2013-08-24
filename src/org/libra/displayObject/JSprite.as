@@ -1,4 +1,5 @@
 package org.libra.displayObject {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
@@ -34,13 +35,6 @@ package org.libra.displayObject {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		/**
-		 * 清除容器里所有的子对象
-		 */
-		public function clearChildren():void {
-			while (this.numChildren > 0) this.removeChildAt(0);
-		}
 		
 		/**
 		 * @inheritDoc
@@ -102,11 +96,23 @@ package org.libra.displayObject {
 			}
 		}
 		
+		override public function removeChild(child:DisplayObject):DisplayObject {
+			if(child.parent == this)
+				return super.removeChild(child);
+			return null;
+		}
+		
+		override public function removeChildAt(index:int):DisplayObject {
+			if (index > this.numChildren - 1) return null;
+			return super.removeChildAt(index);
+		}
+		
 		/**
 		 * 释放内存
 		 */
 		public function dispose():void {
 			removeAllEventListener();
+			removeChildren();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

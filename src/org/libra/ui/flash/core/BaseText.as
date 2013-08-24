@@ -197,6 +197,10 @@ package org.libra.ui.flash.core {
 			//this.$textField.text = this.$textField.text;
 		}
 		
+		public function get textAlign():String {
+			return $textField.defaultTextFormat.align;
+		}
+		
 		/**
 		 * 设置文本的最大字数
 		 */
@@ -218,6 +222,23 @@ package org.libra.ui.flash.core {
 		override public function set height(value:Number):void {
 			super.height = value;
 			this.$textField.height = value - $textField.y;
+		}
+		
+		override public function toXML():XML {
+			const tmpAry:Array = toString().split('::');
+			return new XML('<' + tmpAry[tmpAry.length - 1] + ' ' + 
+							(x ? 'x="' + x + '" ' : '') + 
+							(y ? 'y="' + y + '" ' : '') + 
+							($actualWidth ? 'width="' + $actualWidth + '" ' : '') + 
+							($actualHeight ? 'height="' + $actualHeight + '" ' : '') + 
+							($enabled ? '' : 'enabled="false" ') + 
+							($toolTipText ? 'toolTipText="' + $toolTipText + '" ' : '') + 
+							($textField.wordWrap ? 'wordWrap="true" ' : '') + 
+							($text ? 'text="' + $text + '" ' : '') + 
+							($htmlText ? 'htmlText="' + $htmlText + '" ' : '') + 
+							'textColor="' + $textField.textColor + '" ' + 
+							'textAlign="' + $textField.defaultTextFormat.align + '" ' + 
+						   '/>');
 		}
 		
 		/*-----------------------------------------------------------------------------------------

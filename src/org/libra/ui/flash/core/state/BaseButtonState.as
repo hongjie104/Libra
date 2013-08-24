@@ -21,6 +21,10 @@ package org.libra.ui.flash.core.state {
 		
 		protected var $resName:String;
 		
+		protected var $actualWidth:int;
+		
+		protected var $actualHeight:int;
+		
 		public function BaseButtonState() {
 			super();
 			$getBmd = ResManager.getInstance().getBitmapData;
@@ -38,8 +42,8 @@ package org.libra.ui.flash.core.state {
 		}
 		
 		public function setSize(w:int, h:int):void {
-			//this.$width = w;
-			//this.$height = h;
+			$actualWidth = w;
+			$actualHeight = h;
 		}
 		
 		public function get displayObject():DisplayObject {
@@ -54,17 +58,9 @@ package org.libra.ui.flash.core.state {
 			this.bitmapData = $getBmd($resName + '_over');
 		}
 		
-		//public function toMouseOut():void {
-			//toNormal();
-		//}
-		
 		public function toMouseDown():void {
 			this.bitmapData = $getBmd($resName + '_down');
 		}
-		
-		//public function toMouseUp():void {
-			//toMouseOver();
-		//}
 		
 		public function dispose():void {
 			
