@@ -1,4 +1,5 @@
 package org.libra.utils {
+	import flash.net.LocalConnection;
 	import flash.system.System;
 	import org.libra.log4a.Logger;
 	/**

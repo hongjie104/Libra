@@ -1,7 +1,7 @@
-package org.libra.copGameEngine.scene {
+package org.libra.copGameEngine.view.scene {
 	import flash.display.DisplayObject;
-	import org.libra.copGameEngine.core.JContainerObject;
 	import org.libra.displayObject.JSprite;
+	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
 	 * <p>
@@ -15,7 +15,7 @@ package org.libra.copGameEngine.scene {
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseScene extends JContainerObject implements IScene {
+	public class BaseScene extends JSprite implements IScene {
 		
 		protected var $showing:Boolean;
 		
@@ -27,6 +27,8 @@ package org.libra.copGameEngine.scene {
 			super();
 			$tickabled = true;
 			$layerList = new Vector.<ILayer>();
+			
+			GraphicsUtil.drawRect(this.graphics, 50, 50, 50, 100);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -72,9 +74,9 @@ package org.libra.copGameEngine.scene {
 		}
 		
 		public function removeLayer(layer:ILayer):void {
-			var index:int = layerList.indexOf(layer);
+			var index:int = $layerList.indexOf(layer);
 			if (index != -1)
-				layerList.splice(index, 1);
+				$layerList.splice(index, 1);
 			this.removeChild(layer as DisplayObject);
 		}
 		

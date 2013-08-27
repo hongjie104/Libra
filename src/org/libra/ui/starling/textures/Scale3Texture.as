@@ -52,7 +52,7 @@ package org.libra.ui.starling.textures {
 		 */
 		private var thirdTexture:Texture;
 		
-		public function Scale3Texture(texture:Texture, firstSize:int, secondSize:int, direction:int = Constants.HORIZONTAL) { 
+		public function Scale3Texture(texture:Texture, firstSize:int, secondSize:int, direction:int = 0) { 
 			this.texture = texture;
 			this.firstSize = firstSize;
 			this.secondSize = secondSize;

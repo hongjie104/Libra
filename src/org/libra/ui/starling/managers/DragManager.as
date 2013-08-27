@@ -4,7 +4,6 @@ package org.libra.ui.starling.managers {
 	import flash.geom.Rectangle;
 	import flash.utils.getQualifiedClassName;
 	import org.libra.log4a.Logger;
-	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.starling.core.IDragable;
 	import org.libra.ui.starling.core.IDropable;
 	import starling.display.DisplayObject;

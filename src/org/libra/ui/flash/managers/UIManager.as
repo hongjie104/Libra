@@ -92,7 +92,7 @@ package org.libra.ui.flash.managers {
 		}
 		
 		public function get theme():DefaultTheme {
-			return $theme;
+			return $theme ||= new DefaultTheme();
 		}
 		
 		public function get keyPoll():KeyPoll {

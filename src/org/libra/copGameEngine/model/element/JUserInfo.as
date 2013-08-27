@@ -1,4 +1,5 @@
 package org.libra.copGameEngine.model.element {
+	import org.libra.copGameEngine.basic.GameObject;
 	/**
 	 * <p>
 	 * Description

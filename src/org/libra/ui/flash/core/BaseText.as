@@ -1,9 +1,11 @@
 package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import flash.text.TextField;
+	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
+	import org.libra.ui.flash.theme.Filter;
 	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
@@ -38,6 +40,13 @@ package org.libra.ui.flash.core {
 		protected var $theme:DefaultTextTheme;
 		
 		/**
+		 * 是否使用默认的滤镜
+		 * @private
+		 * @default true
+		 */
+		protected var $defaultFilter:Boolean;
+		
+		/**
 		 * 构造函数
 		 * @param	x 横坐标
 		 * @param	y 纵坐标
@@ -49,6 +58,7 @@ package org.libra.ui.flash.core {
 			this.initTextField(text);
 			this.setSize($theme.width, $theme.height);
 			$htmlText = '';
+			$defaultFilter = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -99,7 +109,8 @@ package org.libra.ui.flash.core {
 		 * @param	font
 		 */
 		public function setFont(font:JFont):void {
-			var newTf:TextFormat = font.getTextFormat();
+			const newTf:TextFormat = font.getTextFormat();
+			newTf.align = this.textAlign;
 			this.$textField.setTextFormat(newTf);
 			this.$textField.defaultTextFormat = newTf;
 		}
@@ -171,11 +182,19 @@ package org.libra.ui.flash.core {
 			this.$textField.wordWrap = val;
 		}
 		
+		public function get wordWrap():Boolean {
+			return $textField.wordWrap;
+		}
+		
 		/**
 		 * 设置文本的字体颜色
 		 */
-		public function set textColor(color:int):void {
+		public function set textColor(color:uint):void {
 			this.$textField.textColor = color;
+		}
+		
+		public function get textColor():uint {
+			return $textField.textColor;
 		}
 		
 		/**
@@ -183,6 +202,10 @@ package org.libra.ui.flash.core {
 		 */
 		public function set textFilter(filter:Array):void {
 			this.$textField.filters = filter;
+		}
+		
+		public function get textFilter():Array {
+			return $textField.filters;
 		}
 		
 		/**
@@ -194,7 +217,6 @@ package org.libra.ui.flash.core {
 			tf.align = val;
 			this.$textField.setTextFormat(tf);
 			this.$textField.defaultTextFormat = tf;
-			//this.$textField.text = this.$textField.text;
 		}
 		
 		public function get textAlign():String {
@@ -224,6 +246,48 @@ package org.libra.ui.flash.core {
 			this.$textField.height = value - $textField.y;
 		}
 		
+		public function get font():String {
+			return this.$textField.defaultTextFormat.font;
+		}
+		
+		public function set font(val:String):void {
+			const tf:TextFormat = this.$textField.defaultTextFormat;
+			tf.font = val;
+			this.$textField.defaultTextFormat = tf;
+			this.$textField.setTextFormat(tf);
+		}
+		
+		public function get fontSize():int {
+			return int(this.$textField.defaultTextFormat.size);
+		}
+		
+		public function set fontSize(val:int):void {
+			const tf:TextFormat = this.$textField.defaultTextFormat;
+			tf.size = val;
+			this.$textField.defaultTextFormat = tf;
+			this.$textField.setTextFormat(tf);
+		}
+		
+		public function get fontBold():Boolean {
+			return this.$textField.defaultTextFormat.bold;
+		}
+		
+		public function set fontBold(val:Boolean):void {
+			const tf:TextFormat = this.$textField.defaultTextFormat;
+			tf.bold = val;
+			this.$textField.defaultTextFormat = tf;
+			this.$textField.setTextFormat(tf);
+		}
+		
+		public function get defaultFilter():String {
+			return $defaultFilter.toString();
+		}
+		
+		public function set defaultFilter(value:String):void {
+			$defaultFilter = value == 'true';
+			this.textFilter = $defaultFilter ? Filter.BLACK : null;
+		}
+		
 		override public function toXML():XML {
 			const tmpAry:Array = toString().split('::');
 			return new XML('<' + tmpAry[tmpAry.length - 1] + ' ' + 
@@ -238,6 +302,10 @@ package org.libra.ui.flash.core {
 							($htmlText ? 'htmlText="' + $htmlText + '" ' : '') + 
 							'textColor="' + $textField.textColor + '" ' + 
 							'textAlign="' + $textField.defaultTextFormat.align + '" ' + 
+							(font != 'simsun' ? 'font="' + font + '" ' : '') + 
+							(fontSize != 12 ? 'fontSize="' + fontSize + '" ' : '') + 
+							(fontBold ? 'fontBold="true" ' : '') + 
+							(!$defaultFilter ? 'defaultFilter="false" ' : '') + 
 						   '/>');
 		}
 		

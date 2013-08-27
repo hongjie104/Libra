@@ -28,6 +28,12 @@ package org.libra.ui.flash.components {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		override public function toXML():XML {
+			const xml:XML = super.toXML();
+			if (this.displayAsPassword) xml.@displayAsPassword = true;
+			return xml;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Getters and setter
 		-------------------------------------------------------------------------------------------*/
@@ -38,6 +44,10 @@ package org.libra.ui.flash.components {
 		
 		public function set displayAsPassword(val:Boolean):void {
 			this.$textField.displayAsPassword = val;
+		}
+		
+		public function get displayAsPassword():Boolean {
+			return $textField.displayAsPassword;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

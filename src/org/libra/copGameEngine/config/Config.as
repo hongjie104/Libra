@@ -1,22 +1,23 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.component.IBitmapDataRender;
-	
+package org.libra.copGameEngine.config {
+	import org.libra.URI;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JAnimationProp
+	 * @class Config
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 08/27/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JAnimationProp extends JLoaderProp {
+	public class Config {
 		
-		public function JAnimationProp(bitmapDataRender:IBitmapDataRender = null) {
-			super(bitmapDataRender);
+		public static const LOGIN_MODULE:String = URI.MODULE_URL + 'Login.swf';
+		
+		public function Config() {
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------

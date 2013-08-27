@@ -58,6 +58,8 @@ package org.libra.ui.flash.components {
 			this.$state = new BaseCheckBoxState();
 			this.$state.resName = ($theme as DefaultBtnTheme).resName;
 			this.addChildAt(this.$state.displayObject, 0);
+			
+			setTextLocation(18, 0);
 		}
 		
 		override protected function refreshState():void {

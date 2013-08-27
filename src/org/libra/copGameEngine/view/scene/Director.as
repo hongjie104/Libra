@@ -1,4 +1,4 @@
-package org.libra.copGameEngine.scene {
+package org.libra.copGameEngine.view.scene {
 	import org.libra.tick.ITickable;
 	import org.libra.tick.Tick;
 	/**
@@ -72,8 +72,8 @@ package org.libra.copGameEngine.scene {
 			if ($currentScene) $currentScene.show();
 		}
 		
-		public function get currentScene():IScene {
-			return $currentScene;
+		public function get currentScene():String {
+			return $currentScene.name;
 		}
 		
 		/* INTERFACE org.libra.tick.ITickable */

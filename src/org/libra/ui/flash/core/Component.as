@@ -212,6 +212,10 @@ package org.libra.ui.flash.core {
 			ToolTipManager.getInstance().setToolTip(this, text ? JToolTip.getInstance() : null);
 		}
 		
+		public function get toolTipText():String {
+			return $toolTipText;
+		}
+		
 		/**
 		 * 初始化Tip,当该控件要显示Tip时被ToolTipManager调用
 		 * @see org.libra.ui.flash.managers.ToolTipManager

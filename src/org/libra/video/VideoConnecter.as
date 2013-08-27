@@ -123,24 +123,3 @@ package org.libra.video {
 		}
 	}
 }
-import cn.flashk.video.VideoConnecter;
-import flash.events.Event;
-
-class CustomClient {
-	private var _tar:VideoConnecter;
-	
-	public function CustomClient(tar:VideoConnecter) {
-		_tar = tar;
-	}
-	
-	public function onMetaData(info:Object):void {
-		_tar.videoWidth = info.width;
-		_tar.videoHeight = info.height;
-		_tar.dispatchEvent(new Event("videoInfoGet"));
-		// info.duration info.width info.height  info.framerate;
-	}
-	
-	public function onCuePoint(info:Object):void {
-		//info.time  info.name  info.type;
-	}
-}

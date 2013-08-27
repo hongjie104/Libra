@@ -27,7 +27,7 @@ package org.libra.copGameEngine.basic {
 		public function JBitmapObject(bitmapDataRender:IBitmapDataRender = null) {
 			super();
 			$bitmapDataRender = bitmapDataRender;
-			if ($bitmapDataRender) addComponent($bitmapDataRender);
+			if ($bitmapDataRender) addComponent($bitmapDataRender, $bitmapDataRender.name);
 			$bitmap = new Bitmap();
 			$bitmap.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -57,13 +57,13 @@ package org.libra.copGameEngine.basic {
 		protected function onAddedToStage(e:Event):void {
 			$bitmap.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			$bitmap.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().addItem(this.$bitmapDataRender);
+			//if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().addItem(this.$bitmapDataRender);
 		}
 		
 		protected function onRemovedFromStage(e:Event):void {
 			$bitmap.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			$bitmap.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().removeItem(this.$bitmapDataRender);
+			//if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().removeItem(this.$bitmapDataRender);
 		}
 	}
 

@@ -66,9 +66,9 @@ package org.libra.ui.starling.managers {
 			$starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
 		}
 		
-		public function get theme():DefaultTheme {
-			return $theme;
-		}
+		//public function get theme():DefaultTheme {
+			//return $theme;
+		//}
 		
 		/**
 		 * 获取传统显示列表中的stage
@@ -78,9 +78,9 @@ package org.libra.ui.starling.managers {
 			return this.$stage;
 		}
 		
-		public function get uiContainer():Container {
-			return $uiContainer;
-		}
+		//public function get uiContainer():Container {
+			//return $uiContainer;
+		//}
 		
 		/**
 		 * 获取starling的根容器

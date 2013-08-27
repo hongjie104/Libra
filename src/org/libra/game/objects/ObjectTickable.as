@@ -52,8 +52,8 @@ package org.libra.game.objects {
 			$tickabled = value;
 		}
 		
-		override public function destroy():void {
-			super.destroy();
+		override public function dispose():void {
+			super.dispose();
 			onRemoveFromStage(null);
 		}
 		

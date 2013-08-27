@@ -23,6 +23,16 @@ package org.libra.ui.flash.theme {
 		
 		public static const FONT_TOOL_TIP:JFont = new JFont('simsun', 12, 0xcccccc);
 		
+		public static const FONT_12:JFont = new JFont('simsun', 12, 0xffffff);
+		
+		public static const FONT_12_BOLD:JFont = new JFont('simsun', 12, 0xffffff, true);
+		
+		public static const FONT_14:JFont = new JFont('simsun', 14, 0xffffff);
+		
+		public static const FONT_14_BOLD:JFont = new JFont('simsun', 14, 0xffffff, true);
+		
+		//private static const FONT_LIST:Vector.<JFont> = new Vector.<JFont>;
+		
 		private var name:String;
 		
 		private var size:int;
@@ -54,9 +64,14 @@ package org.libra.ui.flash.theme {
 			return this.textFormat;
 		}
 		
+		public function clone():JFont {
+			return new JFont(name, size, color, bold, italic, underline);
+		}
+		
 		public function toString():String{
 			return "JFont[" 
 				+ "name : " + name 
+				+ "color : " + color 
 				+ ", size : " + size 
 				+ ", bold : " + bold 
 				+ ", italic : " + italic 
@@ -64,25 +79,27 @@ package org.libra.ui.flash.theme {
 				+ "]";
 		}
 		
-		//public function getSize():int {
-			//return size;
-		//}
-		//
-		//public function getColor():int {
-			//return this.color;
-		//}
-		//
-		//public function isBold():Boolean {
-			//return this.bold;
-		//}
-		//
-		//public function isItalic():Boolean {
-			//return this.italic;
-		//}
-		//
-		//public function isUnderline():Boolean {
-			//return this.underline;
-		//}
+		/*public static function getFont(name:String, size:int, color:int, bold:Boolean, italic:Boolean, underline:Boolean):JFont {
+			var i:int = FONT_LIST.length;
+			while (--i > -1) {
+				if (FONT_LIST[i].name == name) {
+					if (FONT_LIST[i].size == size) {
+						if (FONT_LIST[i].color == color) {
+							if (FONT_LIST[i].bold == bold) {
+								if (FONT_LIST[i].italic == italic) {
+									if (FONT_LIST[i].underline == underline) {
+										return FONT_LIST[i];
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			const font:JFont = new JFont(name, size, color, bold, italic, underline);
+			FONT_LIST.push(font);
+			return font;
+		}*/
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

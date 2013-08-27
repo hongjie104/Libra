@@ -21,10 +21,13 @@ package org.libra.ui.utils {
 		
 		private var resMap:HashMap;
 		
+		private var objMap:HashMap;
+		
 		private var uiLoader:Loader;
 		
 		public function ResManager(singleton:Singleton) {
 			resMap = new HashMap();
+			objMap = new HashMap();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -35,13 +38,23 @@ package org.libra.ui.utils {
 			this.uiLoader = uiLoader;
 		}
 		
-		public function getBitmapData(bmdName:String):BitmapData {
+		public function getBitmapData(bmdName:String, add:Boolean = true):BitmapData { 
 			var bmd:BitmapData = resMap.get(bmdName);
 			if (bmd) return bmd;
 			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, uiLoader) as Class;
 			bmd = c ? new c() : null;
-			resMap.put(bmdName, bmd);
+			if (add) {
+				resMap.put(bmdName, bmd);
+			}
 			return bmd;
+		}
+		
+		public function getObj(key:*):*{
+			return this.objMap.get(key);
+		}
+		
+		public function putObj(key:*, obj:*):void {
+			this.objMap.put(key, obj);
 		}
 		
 		public static function getInstance():ResManager {

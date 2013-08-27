@@ -20,8 +20,11 @@ package org.libra.game.layers {
 		
 		private var camera:Camera;
 		
+		private var $tickabled:Boolean;
+		
 		public function BaseLayer() {
 			super();
+			$tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -32,6 +35,16 @@ package org.libra.game.layers {
 		
 		public function tick(interval:int):void {
 			if (camera) camera.render();
+		}
+		
+		/* INTERFACE org.libra.tick.ITickable */
+		
+		public function get tickabled():Boolean {
+			return $tickabled;
+		}
+		
+		public function set tickabled(value:Boolean):void {
+			$tickabled = value;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

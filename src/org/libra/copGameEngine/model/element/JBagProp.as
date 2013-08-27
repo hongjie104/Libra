@@ -1,6 +1,5 @@
 package org.libra.copGameEngine.model.element {
 	import org.libra.copGameEngine.component.IBitmapDataRender;
-	import org.libra.copGameEngine.core.JLoaderObject;
 	
 	/**
 	 * <p>
@@ -14,7 +13,7 @@ package org.libra.copGameEngine.model.element {
 	 * @version 1.0
 	 * @see
 	 */
-	public class JBagProp extends JLoaderObject {
+	public class JBagProp extends JLoaderProp {
 		
 		public function JBagProp() {
 			super();

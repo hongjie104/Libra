@@ -1,4 +1,4 @@
-package org.libra.copGameEngine.scene {
+package org.libra.copGameEngine.view.scene {
 	import org.libra.tick.ITickable;
 	
 	/**

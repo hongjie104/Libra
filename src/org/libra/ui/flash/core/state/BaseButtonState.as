@@ -1,6 +1,7 @@
 package org.libra.ui.flash.core.state {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import org.libra.ui.flash.core.state.ctrl.BaseButtonStateCtrl;
 	import org.libra.ui.utils.ResManager;
 	
 	/**
@@ -25,9 +26,10 @@ package org.libra.ui.flash.core.state {
 		
 		protected var $actualHeight:int;
 		
+		protected var btnStatsCtrl:BaseButtonStateCtrl;
+		
 		public function BaseButtonState() {
 			super();
-			$getBmd = ResManager.getInstance().getBitmapData;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -38,6 +40,12 @@ package org.libra.ui.flash.core.state {
 		
 		public function set resName(val:String):void {
 			this.$resName = val;
+			btnStatsCtrl = ResManager.getInstance().getObj(val) as BaseButtonStateCtrl;
+			if (!btnStatsCtrl) {
+				btnStatsCtrl = new BaseButtonStateCtrl();
+				btnStatsCtrl.resName = val;
+				ResManager.getInstance().putObj(val, btnStatsCtrl);
+			}
 			toNormal();
 		}
 		
@@ -51,15 +59,15 @@ package org.libra.ui.flash.core.state {
 		}
 		
 		public function toNormal():void {
-			this.bitmapData = $getBmd($resName + '_normal');
+			this.bitmapData = btnStatsCtrl.normalBmd;
 		}
 		
 		public function toMouseOver():void {
-			this.bitmapData = $getBmd($resName + '_over');
+			this.bitmapData = btnStatsCtrl.overBmd;
 		}
 		
 		public function toMouseDown():void {
-			this.bitmapData = $getBmd($resName + '_down');
+			this.bitmapData = btnStatsCtrl.downBmd;
 		}
 		
 		public function dispose():void {

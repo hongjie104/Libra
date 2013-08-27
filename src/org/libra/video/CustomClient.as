@@ -1,44 +1,38 @@
-package org.libra.copGameEngine.scene {
-	import org.libra.copGameEngine.core.JContainerObject;
-	import org.libra.displayObject.JSprite;
-	import org.libra.tick.ITickable;
+package org.libra.video {
+	import flash.events.Event;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class BaseLayer
+	 * @class CustomClient
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/19/2013
+	 * @date 08/27/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseLayer extends JContainerObject implements ILayer, ITickable {
+	public class CustomClient {
 		
-		private var $tickabled:Boolean;
+		private var $tar:VideoConnecter;
 		
-		public function BaseLayer() {
-			super();
-			$tickabled = true;
+		public function CustomClient(tar:VideoConnecter) {
+			$tar = tar;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		/* INTERFACE org.libra.tick.ITickable */
-		
-		public function tick(interval:int):void {
-			
+		public function onMetaData(info:Object):void {
+			$tar.videoWidth = info.width;
+			$tar.videoHeight = info.height;
+			$tar.dispatchEvent(new Event("videoInfoGet"));
+			// info.duration info.width info.height  info.framerate;
 		}
 		
-		public function get tickabled():Boolean {
-			return $tickabled;
-		}
-		
-		public function set tickabled(value:Boolean):void {
-			$tickabled = value;
+		public function onCuePoint(info:Object):void {
+			//info.time  info.name  info.type;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

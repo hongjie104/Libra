@@ -23,7 +23,7 @@ package org.libra.utils {
 		-------------------------------------------------------------------------------------------*/
 		
 		public static function getBeizerPoint(arr:Array, per:Number):Point { 
-			var n = arr.length;
+			const n:int = arr.length;
 			switch(n) { 
                 case 0:
 					return null;
@@ -32,11 +32,11 @@ package org.libra.utils {
 					return arr[0];
 					break;
 				case 2 :
-					return Point.interpolate(arr[0],arr[1],per);
+					return Point.interpolate(arr[0], arr[1], per);
 					break;
 				default :
-					var newArr = [];
-					for (var i = 0; i < n - 1; i++) { 
+					const newArr:Array = [];
+					for (var i:int = 0; i < n - 1; i++) { 
 						newArr[i] = Point.interpolate(arr[i], arr[i + 1], per);
 					}
 					return getBeizerPoint(newArr, per);

@@ -1,4 +1,4 @@
-package org.libra.copGameEngine.model {
+package org.libra.copGameEngine.model.bitmapDataCollection {
 	
 	/**
 	 * <p>

@@ -66,8 +66,8 @@ package org.libra.game.components.animatable {
 			if (this.layerList.indexOf(l) == -1) {
 				index = index < 0 ? this.layerList.length : (index > layerList.length ? layerList.length : index);
 				this.layerList.splice(index, 0, l);
-				l.setMultiBitmap(this);
-				l.setSize($width, $height);
+				//l.setMultiBitmap(this);
+				l.setSize(width, height);
 				needRender = true;
 			}
 		}

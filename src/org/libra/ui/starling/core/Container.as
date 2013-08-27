@@ -1,4 +1,5 @@
 package org.libra.ui.starling.core {
+	import flash.display.DisplayObject;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;

@@ -1,4 +1,4 @@
-package org.libra.copGameEngine.model {
+package org.libra.copGameEngine.model.bitmapDataCollection {
 	/**
 	 * <p>
 	 * Description
@@ -33,7 +33,7 @@ package org.libra.copGameEngine.model {
 						return bmdList[i];
 				}
 			}
-			var bmd:classType = new classType(type);
+			var bmd:Object = new classType(type);
 			bmdList.push(bmd);
 			return bmd as IBmdCollection;
 		}

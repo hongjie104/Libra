@@ -1,27 +1,44 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.component.IBitmapDataRender;
-	
+package org.libra.copGameEngine.view.scene {
+	import org.libra.displayObject.JSprite;
+	import org.libra.tick.ITickable;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JAnimationProp
+	 * @class BaseLayer
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 08/19/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JAnimationProp extends JLoaderProp {
+	public class BaseLayer extends JSprite implements ILayer, ITickable {
 		
-		public function JAnimationProp(bitmapDataRender:IBitmapDataRender = null) {
-			super(bitmapDataRender);
+		private var $tickabled:Boolean;
+		
+		public function BaseLayer() {
+			super();
+			$tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		/* INTERFACE org.libra.tick.ITickable */
+		
+		public function tick(interval:int):void {
+			
+		}
+		
+		public function get tickabled():Boolean {
+			return $tickabled;
+		}
+		
+		public function set tickabled(value:Boolean):void {
+			$tickabled = value;
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

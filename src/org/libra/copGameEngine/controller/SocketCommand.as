@@ -1,7 +1,7 @@
 package org.libra.copGameEngine.controller {
-	import com.apowo.dreamer.constant.URI;
 	import org.libra.copGameEngine.events.SocketEvent;
 	import org.libra.copGameEngine.service.SocketService;
+	import org.libra.URI;
 	import org.robotlegs.mvcs.Command;
 	
 	/**

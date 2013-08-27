@@ -204,7 +204,8 @@ package org.libra.bmpEngine.single {
 			return bitmap;
 		}
 		
-		override public function destroy():void {
+		override public function dispose():void {
+			super.dispose();
 			this.baseBitmap.bitmapData = null;
 			var l:int = frameList.length;
 			for (var i:int = 0; i < l; i += 1)

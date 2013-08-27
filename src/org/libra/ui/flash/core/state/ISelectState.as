@@ -16,8 +16,6 @@ package org.libra.ui.flash.core.state {
 		
 		function set selected(val:Boolean):void;
 		
-		function toSelected():void;
-		
 	}
 	
 }

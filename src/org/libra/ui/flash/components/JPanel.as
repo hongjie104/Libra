@@ -157,15 +157,6 @@ package org.libra.ui.flash.components {
 			return this.$showing;
 		}
 		
-		override public function setSize(w:int, h:int):void {
-			const OLD_W:int = $actualWidth;
-			const OLD_H:int = $actualHeight;
-			super.setSize(w, h);
-			if (OLD_W != 0 && OLD_H != 0) {
-				initBackground();	
-			}
-		}
-		
 		public function set defaultBtn(btn:JButton):void {
 			if (btn) {
 				if (this.hasComponent(btn)) {
@@ -221,14 +212,8 @@ package org.libra.ui.flash.components {
 			}
 		}
 		
-		override protected function onAddToStage(e:Event):void {
-			super.onAddToStage(e);
-			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-		}
-		
-		override protected function onRemoveFromStage(e:Event):void {
-			super.onRemoveFromStage(e);
-			this.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		override protected function resize():void {
+			initBackground();
 		}
 		
 		protected function getBmdFromLoader(bmdName:String):BitmapData {
@@ -239,6 +224,16 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
+		
+		override protected function onAddToStage(e:Event):void {
+			super.onAddToStage(e);
+			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		}
+		
+		override protected function onRemoveFromStage(e:Event):void {
+			super.onRemoveFromStage(e);
+			this.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		}
 		
 		/**
 		 * 鼠标按钮按下时，将面板放置顶层

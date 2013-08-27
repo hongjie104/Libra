@@ -15,6 +15,8 @@ package org.libra {
 		
 		public static const RES_URL:String = '../asset/';
 		
+		public static const MODULE_URL:String = '../module/';
+		
 		static public var ip:String;
 		
 		static public var port:int;

@@ -168,7 +168,7 @@ package org.libra.video {
 				this.height = this.videoHeight * _scale;
 			}
 			this.dispatchEvent(new Event(VideoDisplay.WIDTH_HEIGHT_ALLOWED_GET));
-			setVideoColor(50, 0, 0, 0);
+			//setVideoColor(50, 0, 0, 0);
 		}
 		
 		private function disEventLater(event:Event):void {

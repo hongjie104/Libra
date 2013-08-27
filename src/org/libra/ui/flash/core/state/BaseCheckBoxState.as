@@ -1,4 +1,6 @@
 package org.libra.ui.flash.core.state {
+	import org.libra.ui.flash.core.state.ctrl.BaseCheckBoxStateCtrl;
+	import org.libra.ui.utils.ResManager;
 	
 	/**
 	 * <p>
@@ -16,6 +18,8 @@ package org.libra.ui.flash.core.state {
 		
 		protected var $selected:Boolean;
 		
+		protected var $checkBoxStateCtrl:BaseCheckBoxStateCtrl;
+		
 		public function BaseCheckBoxState() {
 			super();
 		}
@@ -25,21 +29,32 @@ package org.libra.ui.flash.core.state {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function toNormal():void {
-			$selected ? toSelected() : super.toNormal();
+			this.bitmapData = $selected ? $checkBoxStateCtrl.normalSelectedBmd : $checkBoxStateCtrl.normalBmd;
 		}
 		
 		override public function toMouseOver():void {
-			$selected ? toSelected() : super.toMouseOver();
+			this.bitmapData = $selected ? $checkBoxStateCtrl.overSelectedBmd : $checkBoxStateCtrl.overBmd;
+		}
+		
+		override public function toMouseDown():void {
+			this.bitmapData = $selected ? $checkBoxStateCtrl.downSelectedBmd : $checkBoxStateCtrl.downBmd;
 		}
 		
 		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
 		
-		public function toSelected():void {
-			toMouseDown();
-		}
-		
 		public function set selected(val:Boolean):void {
 			$selected = val;
+		}
+		
+		override public function set resName(value:String):void {
+			this.$resName = value;
+			$checkBoxStateCtrl = ResManager.getInstance().getObj(value) as BaseCheckBoxStateCtrl;
+			if (!$checkBoxStateCtrl) {
+				$checkBoxStateCtrl = new BaseCheckBoxStateCtrl();
+				$checkBoxStateCtrl.resName = value;
+				ResManager.getInstance().putObj(value, $checkBoxStateCtrl);
+			}
+			toNormal();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

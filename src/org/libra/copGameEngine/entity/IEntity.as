@@ -22,7 +22,7 @@ package org.libra.copGameEngine.entity {
 		
 		function getComponentsByType(componentType:Class):Vector.<IEntityComponent>;
 		
-		function lookupComponentByName(componentName:String):IEntityComponent;
+		function getComponentByName(componentName:String):IEntityComponent;
 		
 		function dispose():void;
 		

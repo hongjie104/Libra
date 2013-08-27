@@ -24,6 +24,11 @@ package org.libra.copGameEngine.events {
 		static public const DYNAMIC_LOAD:String = "dynamicLoad";
 		
 		/**
+		 * 加载一个模块
+		 */
+		//public static const LOAD_MODULE:String = 'loadModule';
+		
+		/**
 		 * 开始加载配置文件
 		 */
 		//static public const LOAD_CONFIG:String = "loadConfig";

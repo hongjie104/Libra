@@ -3,7 +3,6 @@ package org.libra.ui.starling.managers {
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
-	import org.libra.ui.managers.UIManager;
 	import org.libra.ui.starling.core.IComponent;
 	import starling.display.DisplayObject;
 	import starling.display.Stage;

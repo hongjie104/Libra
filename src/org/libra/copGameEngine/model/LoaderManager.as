@@ -1,6 +1,15 @@
 package org.libra.copGameEngine.model {
+	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.SWFLoader;
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
+	import flash.events.Event;
+	import flash.net.URLRequest;
+	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import org.libra.copGameEngine.model.element.ILoaderProp;
+	import org.libra.log4a.Logger;
 	import org.robotlegs.mvcs.Actor;
 	
 	/**
@@ -45,21 +54,30 @@ package org.libra.copGameEngine.model {
 			//loaderMax.load();
 		//}
 		
-		//public function dynamicLoad(list:Vector.<ILoaderProp>):void {
-			//var l:int = list.length;
-			//var url:String;
-			//var load:Boolean = false;
-			//while (--l > -1) {
-				//url = list[l].url;
-				//if (loaderMax.getLoader(url)) {
-					//continue;
-				//}
-				//loaderMax.append(new SWFLoader(list[l].url, { name:list[l].url, autoDispose:true, onComplete:dynamicLoadComplete } ));
-				//dynamicLoadList.push(list[l]);
-				//load = true;
-			//}
-			//if (load) loaderMax.load();
-		//}
+		public function dynamicLoad(list:Vector.<ILoaderProp>):void {
+			var l:int = list.length;
+			var url:String;
+			var load:Boolean = false;
+			while (--l > -1) {
+				url = list[l].url;
+				if (loaderMax.getLoader(url)) {
+					continue;
+				}
+				loaderMax.append(new SWFLoader(list[l].url, { name:list[l].url, autoDispose:true, onComplete:dynamicLoadComplete } ));
+				dynamicLoadList.push(list[l]);
+				load = true;
+			}
+			if (load) loaderMax.load();
+		}
+		
+		/*public function loadModule(url:String):void {
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadModuleComplete);
+			var context:LoaderContext = new LoaderContext();
+			//context.applicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
+			context.applicationDomain = ApplicationDomain.currentDomain;
+			loader.load(new URLRequest(url), context);
+		}*/
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -82,7 +100,7 @@ package org.libra.copGameEngine.model {
 			dispatch(new LoadingEvent(LoadingEvent.CLOSE_LOADING));
 			dispatch(new SceneEvent(SceneEvent.DRAW_ROOM));
 		}
-		
+		*/
 		private function dynamicLoadComplete(evt:LoaderEvent):void {
 			const swfLoader:SWFLoader = evt.target as SWFLoader;
 			var i:int = dynamicLoadList.length;
@@ -93,6 +111,18 @@ package org.libra.copGameEngine.model {
 					return;
 				}
 			}
+		}
+		
+		/**
+		 * 加载好了某一个模块
+		 * @param	evt
+		 */
+		/*private function onLoadModuleComplete(evt:Event):void {
+			const loaderInfo:LoaderInfo = evt.target as LoaderInfo;
+			loaderInfo.removeEventListener(Event.COMPLETE, onLoadModuleComplete);
+			//UIManager.getInstance().stage.addChild(loaderInfo.content);
+			//org.libra.copEngine.view.login.Login
+			Logger.info('模块加载完毕');
 		}*/
 	}
 

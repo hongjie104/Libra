@@ -58,7 +58,7 @@ package org.libra.ui.flash.theme {
 		
 		public function DefaultTheme() {
 			$btnTheme = new DefaultBtnTheme(43, 26, JFont.FONT_BTN, Filter.BLACK, 'btn');
-			$checkBoxTheme = new DefaultBtnTheme(54, 20, JFont.FONT_BTN, Filter.BLACK, 'checkBtn');
+			$checkBoxTheme = new DefaultBtnTheme(54, 20, JFont.FONT_BTN, Filter.BLACK, 'checkBox');
 			$vScrollDownBtnTheme = new DefaultBtnTheme(16, 16, JFont.FONT_BTN, Filter.BLACK, 'vScrollDownBtn');
 			$vScrollUpBtnTheme = new DefaultBtnTheme(16, 16, JFont.FONT_BTN, Filter.BLACK, 'vScrollUpBtn');
 			$hScrollRightBtnTheme = new DefaultBtnTheme(16, 16, JFont.FONT_BTN, Filter.BLACK, 'hScrollRightBtn');
