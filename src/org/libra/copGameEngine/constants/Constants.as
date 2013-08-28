@@ -1,37 +1,25 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.model.basic.JBitmapObject;
-	
+package org.libra.copGameEngine.constants {
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JBagProp
+	 * @class Constants
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 08/28/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JBagProp extends JBitmapObject {
+	public final class Constants {
 		
-		protected var $count:int;
-		
-		public function JBagProp() {
-			super();
+		public function Constants() {
+			throw new Error('Constants类无法被实例化');
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		public function get count():int {
-			return $count;
-		}
-		
-		public function set count(value:int):void {
-			$count = value;
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

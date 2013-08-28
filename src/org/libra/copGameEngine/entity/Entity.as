@@ -97,6 +97,10 @@ package org.libra.copGameEngine.entity {
 			return false;
 		}
 		
+		public function get eventDispatcher():EventDispatcher {
+			return $eventDispatcher ||= new EventDispatcher();
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

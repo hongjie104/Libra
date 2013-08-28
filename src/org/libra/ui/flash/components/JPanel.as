@@ -4,9 +4,11 @@ package org.libra.ui.flash.components {
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
+	import flash.ui.Keyboard;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IPanel;
@@ -93,6 +95,8 @@ package org.libra.ui.flash.components {
 		 */
 		protected var $autoCenter:Boolean;
 		
+		protected var $activated:Boolean;
+		
 		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, theme:DefaultPanelTheme = null) { 
 			super();
 			this.$theme = theme ? theme : UIManager.getInstance().theme.panelTheme;
@@ -125,6 +129,7 @@ package org.libra.ui.flash.components {
 				this.$owner.append(this);
 				$showing = true;
 				LayoutManager.getInstance().addPanel(this);
+				UIManager.getInstance().keyPoll.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			}
 		}
 		
@@ -139,6 +144,7 @@ package org.libra.ui.flash.components {
 				}else {
 					LayoutManager.getInstance().removePanel(this);
 					removeFromParent(destroy);
+					UIManager.getInstance().keyPoll.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 				}
 			}
 		}
@@ -185,6 +191,14 @@ package org.libra.ui.flash.components {
 		
 		public function get autoCenter():Boolean {
 			return $autoCenter;
+		}
+		
+		public function get activated():Boolean {
+			return $activated;
+		}
+		
+		public function set activated(value:Boolean):void {
+			$activated = value;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -253,6 +267,14 @@ package org.libra.ui.flash.components {
 			$loaded = true;
 			UIManager.getInstance().closeLoading();
 			show();
+		}
+		
+		private function onKeyUp(e:KeyboardEvent):void {
+			if (this.$activated) {
+				if (e.keyCode == Keyboard.ENTER || e.keyCode == Keyboard.SPACE) {
+					if (this.$defaultBtn) $defaultBtn.doClick();
+				}
+			}
 		}
 	}
 

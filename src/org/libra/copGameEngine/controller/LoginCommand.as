@@ -1,37 +1,39 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.model.basic.JBitmapObject;
+package org.libra.copGameEngine.controller {
+	import org.libra.copGameEngine.events.LoginEvent;
+	import org.libra.copGameEngine.view.login.Login;
+	import org.robotlegs.mvcs.Command;
 	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JBagProp
+	 * @class LoginCommand
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 08/28/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JBagProp extends JBitmapObject {
+	
+	public class LoginCommand extends Command {
 		
-		protected var $count:int;
+		[Inject]
+		public var event:LoginEvent;
 		
-		public function JBagProp() {
-			super();
-		}
+		[Inject]
+		public var login:Login;
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		public function get count():int {
-			return $count;
-		}
-		
-		public function set count(value:int):void {
-			$count = value;
-		}
+        override public function execute():void {
+			switch(event.subType) {
+				case LoginEvent.SHOW:
+					login.show();
+					break;
+			}
+        }
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -40,7 +42,6 @@ package org.libra.copGameEngine.model.element {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		
-	}
-
+    }
+	
 }

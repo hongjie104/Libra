@@ -1,6 +1,6 @@
 package org.libra.copGameEngine.controller {
 	import org.libra.copGameEngine.events.LoaderEvent;
-	import org.libra.copGameEngine.model.element.ILoaderProp;
+	import org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection;
 	import org.libra.copGameEngine.model.LoaderManager;
 	import org.robotlegs.mvcs.Command;
 	
@@ -37,7 +37,7 @@ package org.libra.copGameEngine.controller {
 					this.loaderManager.loadModule(event.data.toString());
 					break;*/
 				case LoaderEvent.DYNAMIC_LOAD:
-					this.loaderManager.dynamicLoad(event.data as Vector.<ILoaderProp>);
+					this.loaderManager.dynamicLoad(event.data as Vector.<IBmdCollection>);
 					break;
 			}
 		}

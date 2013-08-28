@@ -1,6 +1,7 @@
 package org.libra.copGameEngine.view.scene {
 	import org.libra.copGameEngine.config.Config;
 	import org.libra.copGameEngine.events.LoaderEvent;
+	import org.libra.copGameEngine.events.LoginEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	/**
@@ -19,7 +20,7 @@ package org.libra.copGameEngine.view.scene {
 	public class SceneMediator extends Mediator {
 		
 		[Inject]
-		public var view:BaseScene;
+		public var view:IScene;
 		
 		/**
 		 * Constructor
@@ -35,6 +36,8 @@ package org.libra.copGameEngine.view.scene {
 			//eventMap.mapListener(eventDispatcher, StringEvent.RESIZE, _onResize, Event, false, 0, true);
 			//加载登录模块
 			//this.dispatch(new LoaderEvent(LoaderEvent.LOAD_MODULE, Config.LOGIN_MODULE));
+			//弹出登录面板
+			this.dispatch(new LoginEvent(LoginEvent.SHOW));
 		}
 		
 		override public function onRemove():void {

@@ -31,6 +31,8 @@ package org.libra.ui.flash.managers {
 		
 		private var $panelList:Vector.<JPanel>;
 		
+		private var $activatedPanel:JPanel;
+		
 		private var $modelSprite:Sprite;
 		
 		public function LayoutManager(singleton:Singleton) {
@@ -46,6 +48,9 @@ package org.libra.ui.flash.managers {
 		public function addPanel(p:JPanel):void {
 			if ($panelList.indexOf(p) == -1) {
 				$panelList[$panelList.length] = p;
+				p.activated = true;
+				if ($activatedPanel) $activatedPanel.activated = false;
+				$activatedPanel = p;
 				if(p.autoCenter)
 					toCenter(p);
 				if (p.model) {
@@ -62,6 +67,16 @@ package org.libra.ui.flash.managers {
 			var index:int = $panelList.indexOf(p);
 			if (index != -1) {
 				$panelList.splice(index, 1);
+				if (p.activated) {
+					p.activated = false;
+					const l:int = $panelList.length;
+					if (l) {
+						this.$activatedPanel = $panelList[l - 1];
+						this.$activatedPanel.activated = true;
+					}else {
+						$activatedPanel = null;
+					}
+				}
 				if (p.model) {
 					if ($panelList.length && $panelList[$panelList.length - 1].model) {
 						DepthUtil.bringToTop($panelList[$panelList.length - 1]);

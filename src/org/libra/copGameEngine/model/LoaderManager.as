@@ -8,7 +8,7 @@ package org.libra.copGameEngine.model {
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
-	import org.libra.copGameEngine.model.element.ILoaderProp;
+	import org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection;
 	import org.libra.log4a.Logger;
 	import org.robotlegs.mvcs.Actor;
 	
@@ -28,12 +28,12 @@ package org.libra.copGameEngine.model {
 		
 		protected var loaderMax:LoaderMax;
 		
-		protected var dynamicLoadList:Vector.<ILoaderProp>;
+		protected var dynamicLoadList:Vector.<IBmdCollection>;
 		
 		public function LoaderManager() {
 			super();
 			loaderMax = new LoaderMax();
-			dynamicLoadList = new Vector.<ILoaderProp>();
+			dynamicLoadList = new Vector.<IBmdCollection>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ package org.libra.copGameEngine.model {
 			//loaderMax.load();
 		//}
 		
-		public function dynamicLoad(list:Vector.<ILoaderProp>):void {
+		public function dynamicLoad(list:Vector.<IBmdCollection>):void {
 			var l:int = list.length;
 			var url:String;
 			var load:Boolean = false;
@@ -106,8 +106,8 @@ package org.libra.copGameEngine.model {
 			var i:int = dynamicLoadList.length;
 			while (--i > -1) {
 				if (dynamicLoadList[i].url == swfLoader.url) {
-					const prop:ILoaderProp = dynamicLoadList.splice(i, 1)[0];
-					prop.doSthAfterLoad(prop, swfLoader);
+					const prop:IBmdCollection = dynamicLoadList.splice(i, 1)[0];
+					prop.doSthAfterLoad(swfLoader);
 					return;
 				}
 			}

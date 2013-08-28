@@ -3,7 +3,9 @@ package org.libra.copGameEngine {
 	import org.libra.copGameEngine.controller.startup.CreateMediatorsCommand;
 	import org.libra.copGameEngine.controller.startup.CreateModelsCommand;
 	import org.robotlegs.base.ContextEvent;
+	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.mvcs.Context;
+	import org.robotlegs.utilities.lazy.LazyMediatorMap;
 	
 	/**
 	 * <p>
@@ -33,6 +35,10 @@ package org.libra.copGameEngine {
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateModelsCommand, ContextEvent);
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateMediatorsCommand, ContextEvent);
 			super.startup();
+		}
+		
+		override protected function get mediatorMap():IMediatorMap {
+			return _mediatorMap ||= new LazyMediatorMap(contextView, createChildInjector(), reflector);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

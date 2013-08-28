@@ -1,52 +1,57 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.basic.JBitmapObject;
-	import org.libra.copGameEngine.component.IBitmapDataRender;
+package org.libra.copGameEngine.model.basic {
+	import org.libra.copGameEngine.entity.Entity;
 	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JLoaderObject
+	 * @class GameObject
 	 * @author 鸿杰
 	 * @qq 32968210
 	 * @date 08/22/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JLoaderProp extends JBitmapObject {//implements ILoaderProp {
+	public class GameObject extends Entity {
 		
-		private var $loaded:Boolean;
+		protected var $id:String;
 		
-		private var $doSthAfterLoad:Function;
+		protected var $type:int;
 		
-		private var $url:String;
+		protected var $des:String;
 		
-		public function JLoaderProp(bitmapDataRender:IBitmapDataRender = null) {
-			super(bitmapDataRender);
+		public function GameObject() {
+			super(null);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		/* INTERFACE org.libra.copGameEngine.model.ILoaderObject */
-		
-		/*public function get url():String {
-			return $url;
+		public function get id():String {
+			return $id;
 		}
 		
-		public function get doSthAfterLoad():Function {
-			return $doSthAfterLoad;
+		public function set id(value:String):void {
+			$id = value;
 		}
 		
-		public function set doSthAfterLoad(value:Function):void {
-			$doSthAfterLoad = value;
+		public function get type():int {
+			return $type;
 		}
 		
-		public function get loaded():Boolean {
-			return $loaded;
-		}*/
+		public function set type(value:int):void {
+			$type = value;
+		}
+		
+		public function get des():String {
+			return $des;
+		}
+		
+		public function set des(value:String):void {
+			$des = value;
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

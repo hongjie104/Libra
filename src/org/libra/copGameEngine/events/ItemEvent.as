@@ -1,36 +1,33 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.model.basic.JBitmapObject;
+package org.libra.copGameEngine.events {
+	import flash.events.Event;
+	import org.libra.events.BaseEvent;
 	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JBagProp
+	 * @class ItemEvent
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 08/28/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JBagProp extends JBitmapObject {
+	public class ItemEvent extends BaseEvent {
 		
-		protected var $count:int;
+		public static const ITEM_EVENT:String = 'itemEvent';
 		
-		public function JBagProp() {
-			super();
+		public function ItemEvent(subType:String, data:Object = null, bubbles:Boolean = false, cancelable:Boolean = false) {
+			super(ITEM_EVENT, subType, data, bubbles, cancelable);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function get count():int {
-			return $count;
-		}
-		
-		public function set count(value:int):void {
-			$count = value;
+		override public function clone():Event {
+			return new ItemEvent(subType, data, bubbles, cancelable);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

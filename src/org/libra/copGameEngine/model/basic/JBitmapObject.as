@@ -1,9 +1,11 @@
-package org.libra.copGameEngine.basic {
+package org.libra.copGameEngine.model.basic {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import org.libra.copGameEngine.component.IBitmapDataRender;
+	import org.libra.copGameEngine.model.bitmapDataCollection.BaseBmdCollection;
+	import org.libra.copGameEngine.model.bitmapDataCollection.BmdCollectionFactory;
+	import org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection;
 	import org.libra.tick.ITickable;
 	import org.libra.tick.Tick;
 	/**
@@ -22,7 +24,11 @@ package org.libra.copGameEngine.basic {
 		
 		protected var $bitmap:Bitmap;
 		
+		protected var $bmdClass:String;
+		
 		protected var $bitmapDataRender:IBitmapDataRender;
+		
+		protected var $bmdCollection:IBmdCollection;
 		
 		public function JBitmapObject(bitmapDataRender:IBitmapDataRender = null) {
 			super();
@@ -46,9 +52,23 @@ package org.libra.copGameEngine.basic {
 			return $bitmap;
 		}
 		
+		public function get bmdCollection():IBmdCollection {
+			return this.$bmdCollection;
+		}
+		
+		override public function set type(value:int):void {
+			super.type = value;
+			//设置Type时，需要读取配置文件，取出配置信息后将bmdClass进行赋值
+			resetBmdCollection();
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
+		
+		protected function resetBmdCollection():void {
+			$bmdCollection = BmdCollectionFactory.getInstance().getBmdCollection($type, $bmdClass, BaseBmdCollection);
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
@@ -57,13 +77,13 @@ package org.libra.copGameEngine.basic {
 		protected function onAddedToStage(e:Event):void {
 			$bitmap.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			$bitmap.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			//if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().addItem(this.$bitmapDataRender);
+			if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().addItem(this.$bitmapDataRender as ITickable);
 		}
 		
 		protected function onRemovedFromStage(e:Event):void {
 			$bitmap.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			$bitmap.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			//if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().removeItem(this.$bitmapDataRender);
+			if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().removeItem(this.$bitmapDataRender as ITickable);
 		}
 	}
 

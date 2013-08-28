@@ -1,36 +1,33 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.model.basic.JBitmapObject;
+package org.libra.copGameEngine.events {
+	import flash.events.Event;
+	import org.libra.events.BaseEvent;
 	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JBagProp
+	 * @class MissionEvent
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 08/28/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JBagProp extends JBitmapObject {
+	public class MissionEvent extends BaseEvent {
 		
-		protected var $count:int;
+		public static const MISSION_EVENT:String = 'missionEvent';
 		
-		public function JBagProp() {
-			super();
+		public function MissionEvent(subType:String, data:Object = null, bubbles:Boolean = false, cancelable:Boolean = false) {
+			super(MISSION_EVENT, subType, data, bubbles, cancelable);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function get count():int {
-			return $count;
-		}
-		
-		public function set count(value:int):void {
-			$count = value;
+		override public function clone():Event {
+			return new MissionEvent(subType, data, bubbles, cancelable);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

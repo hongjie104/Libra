@@ -2,6 +2,7 @@ package org.libra.copGameEngine.view.scene {
 	import flash.display.DisplayObject;
 	import org.libra.displayObject.JSprite;
 	import org.libra.utils.displayObject.GraphicsUtil;
+	import org.robotlegs.utilities.lazy.LazyMediatorActivator;
 	
 	/**
 	 * <p>
@@ -25,6 +26,7 @@ package org.libra.copGameEngine.view.scene {
 		
 		public function BaseScene() {
 			super();
+			new LazyMediatorActivator(this);
 			$tickabled = true;
 			$layerList = new Vector.<ILayer>();
 			

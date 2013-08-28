@@ -79,6 +79,7 @@ package org.libra.ui.flash.components {
 		
 		public static function show(msg:String, finishHandler:Function = null, buttons:int = OK):void { 
 			const alert:JAlert = new JAlert(UIManager.getInstance().uiContainer, 260, 200, '', 25, UIManager.getInstance().theme.frameTheme);
+			alert.closeEnabled = false;
 			alert.$msgLabel.text = msg;
 			alert.append(alert.$msgLabel);
 			alert.$clickedHandler = finishHandler;
@@ -104,6 +105,7 @@ package org.libra.ui.flash.components {
 				alert.append(alert.$closeButton);
 				btnList.push(alert.$closeButton);
 			}
+			alert.defaultBtn = btnList.length ? btnList[0] : null;
 			//所有按钮自动居中显示
 			//各个按钮之间的水平间距
 			const btnGapH:int = 20;

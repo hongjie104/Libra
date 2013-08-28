@@ -1,4 +1,4 @@
-package org.libra.copGameEngine.basic {
+package org.libra.copGameEngine.model.basic {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import org.libra.copGameEngine.component.IBitmapDataRender;

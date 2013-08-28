@@ -1,37 +1,37 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.model.basic.JBitmapObject;
+package org.libra.copGameEngine.controller {
+	import org.libra.copGameEngine.events.MissionEvent;
+	import org.libra.copGameEngine.model.MissionManager;
+	import org.robotlegs.mvcs.Command;
 	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JBagProp
+	 * @class MissionCommand
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 08/28/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JBagProp extends JBitmapObject {
+	
+	public class MissionCommand extends Command {
 		
-		protected var $count:int;
+		[Inject]
+		public var event:MissionEvent;
 		
-		public function JBagProp() {
-			super();
-		}
+		[Inject]
+		public var missionManager:MissionManager;
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		public function get count():int {
-			return $count;
-		}
-		
-		public function set count(value:int):void {
-			$count = value;
-		}
+        override public function execute():void {
+			switch(event.subType) {
+				
+			}
+        }
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -40,7 +40,6 @@ package org.libra.copGameEngine.model.element {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		
-	}
-
+    }
+	
 }
