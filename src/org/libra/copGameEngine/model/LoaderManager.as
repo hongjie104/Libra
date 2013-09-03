@@ -8,7 +8,6 @@ package org.libra.copGameEngine.model {
 	import flash.events.Event;
 	import flash.sampler.getSize;
 	import flash.utils.ByteArray;
-	import flash.utils.Dictionary;
 	import org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection;
 	import org.libra.log4a.Logger;
 	import org.libra.URI;

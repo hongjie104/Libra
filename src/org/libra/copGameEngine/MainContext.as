@@ -1,8 +1,5 @@
 package org.libra.copGameEngine {
 	import flash.display.DisplayObjectContainer;
-	import org.libra.copGameEngine.controller.startup.CreateMediatorsCommand;
-	import org.libra.copGameEngine.controller.startup.CreateModelsCommand;
-	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.mvcs.Context;
 	import org.robotlegs.utilities.lazy.LazyMediatorMap;
@@ -31,11 +28,11 @@ package org.libra.copGameEngine {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		override public function startup():void { 
+		/*override public function startup():void { 
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateModelsCommand, ContextEvent);
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateMediatorsCommand, ContextEvent);
 			super.startup();
-		}
+		}*/
 		
 		override protected function get mediatorMap():IMediatorMap {
 			return _mediatorMap ||= new LazyMediatorMap(contextView, createChildInjector(), reflector);

@@ -1,6 +1,7 @@
 package org.libra.copGameEngine.model.bitmapDataCollection {
 	import com.greensock.loading.SWFLoader;
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	/**
 	 * <p>
 	 * Description
@@ -21,10 +22,10 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 		
 		protected var $loaded:Boolean;
 		
-		protected var $bmdClass:String;
+		protected var $id:String;
 		
-		public function BaseBmdCollection(bmdClass:String) {
-			$bmdClass = bmdClass;
+		public function BaseBmdCollection(id:String) {
+			$id = id;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -46,13 +47,19 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 		}
 		
 		public function doSthAfterLoad(swfLoader:SWFLoader):void {
-			const c:Class = swfLoader.getClass($bmdClass);
+			const c:Class = swfLoader.getClass($id);
 			$bitmapData = c ? new c() : null;
 			$loaded = true;
 		}
 		
-		public function get bmdClass():String {
-			return $bmdClass;
+		/* INTERFACE org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection */
+		
+		public function get id():String {
+			return $id;
+		}
+		
+		public function dispose():void {
+			
 		}
 		
 		/*-----------------------------------------------------------------------------------------
