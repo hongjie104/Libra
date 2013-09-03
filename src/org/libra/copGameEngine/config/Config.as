@@ -1,5 +1,4 @@
 package org.libra.copGameEngine.config {
-	import org.libra.URI;
 	/**
 	 * <p>
 	 * Description
@@ -13,8 +12,6 @@ package org.libra.copGameEngine.config {
 	 * @see
 	 */
 	public class Config {
-		
-		public static const LOGIN_MODULE:String = URI.MODULE_URL + 'Login.swf';
 		
 		public function Config() {
 			

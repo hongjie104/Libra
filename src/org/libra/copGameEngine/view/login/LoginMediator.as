@@ -1,10 +1,10 @@
 package org.libra.copGameEngine.view.login {
 	import flash.events.Event;
 	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
+	import org.libra.copGameEngine.events.LoaderEvent;
 	import org.libra.copGameEngine.events.LoginEvent;
 	import org.libra.copGameEngine.view.login.Login;
 	import org.libra.ui.flash.components.JAlert;
@@ -82,6 +82,7 @@ package org.libra.copGameEngine.view.login {
 								view.close();
 							}
 						} );
+					this.dispatch(new LoaderEvent(LoaderEvent.LOAD_CONFIG));
 					break;
 				case -1:
 					//账号不存在

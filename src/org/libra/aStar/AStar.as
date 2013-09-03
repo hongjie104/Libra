@@ -231,4 +231,4 @@ package org.libra.aStar {
 	
 	}
 }
-class Singleton{}
+final class Singleton { }

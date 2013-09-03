@@ -31,7 +31,7 @@ package org.libra.copGameEngine.events {
 		/**
 		 * 开始加载配置文件
 		 */
-		//static public const LOAD_CONFIG:String = "loadConfig";
+		static public const LOAD_CONFIG:String = "loadConfig";
 		
 		public function LoaderEvent(subType:String, data:Object = null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(LOADER_EVENT, subType, data, bubbles, cancelable);

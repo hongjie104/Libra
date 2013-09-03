@@ -1,5 +1,4 @@
 package org.libra.copGameEngine.view.login {
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.libra.copGameEngine.events.LoginEvent;
 	import org.libra.ui.flash.components.JButton;

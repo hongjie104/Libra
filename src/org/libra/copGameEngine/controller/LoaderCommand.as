@@ -30,9 +30,9 @@ package org.libra.copGameEngine.controller {
 		
 		override public function execute():void {
 			switch(event.subType) {
-				//case LoaderEvent.LOAD_CONFIG:
-					//loaderManager.loadConfig();
-					//break;
+				case LoaderEvent.LOAD_CONFIG:
+					loaderManager.loadConfig();
+					break;
 				/*case LoaderEvent.LOAD_MODULE:
 					this.loaderManager.loadModule(event.data.toString());
 					break;*/

@@ -1,5 +1,6 @@
 package org.libra.copGameEngine.model {
 	import org.libra.copGameEngine.model.element.JItem;
+	import org.libra.copGameEngine.model.element.JUserInfo;
 	import org.robotlegs.mvcs.Actor;
 	
 	/**
@@ -20,7 +21,7 @@ package org.libra.copGameEngine.model {
 		
 		public function ItemManager() {
 			super();
-			$itemList = new Vector.<JItem>();
+			$itemList = JUserInfo.getInstance().itemList;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

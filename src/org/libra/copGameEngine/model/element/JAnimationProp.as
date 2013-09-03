@@ -1,5 +1,6 @@
 package org.libra.copGameEngine.model.element {
 	import org.libra.copGameEngine.component.IBitmapDataRender;
+	import org.libra.copGameEngine.model.basic.JBitmapObject;
 	
 	/**
 	 * <p>
@@ -13,7 +14,7 @@ package org.libra.copGameEngine.model.element {
 	 * @version 1.0
 	 * @see
 	 */
-	public class JAnimationProp extends JLoaderProp {
+	public class JAnimationProp extends JBitmapObject {
 		
 		public function JAnimationProp(bitmapDataRender:IBitmapDataRender = null) {
 			super(bitmapDataRender);
