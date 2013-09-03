@@ -55,7 +55,7 @@ package org.libra.ui.flash.components {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		override protected function initState():void {
-			this.$state = new BaseCheckBoxState();
+			this.$state = new BaseCheckBoxState($loader);
 			this.$state.resName = ($theme as DefaultBtnTheme).resName;
 			this.addChildAt(this.$state.displayObject, 0);
 			

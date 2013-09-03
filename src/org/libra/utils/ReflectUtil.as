@@ -292,10 +292,12 @@ package org.libra.utils {
 		 * @return  类
 		 */
 		public static function getDefinitionByNameFromLoader(className:String, loader:Loader):Object {
-			try {
-				return loader.contentLoaderInfo.applicationDomain.hasDefinition(className) ? loader.contentLoaderInfo.applicationDomain.getDefinition(className) : null;
-			}catch (e:Error) {
-				Logger.error(loader + '里的独有资源中获取' + className + '时出错了');
+			if (loader) {
+				try {
+					return loader.contentLoaderInfo.applicationDomain.hasDefinition(className) ? loader.contentLoaderInfo.applicationDomain.getDefinition(className) : null;
+				}catch (e:Error) {
+					Logger.error(loader + '里的独有资源中获取' + className + '时出错了');
+				}
 			}
 			return null;
 		}

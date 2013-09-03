@@ -1,4 +1,5 @@
 package org.libra.ui.flash.interfaces {
+	import flash.display.Loader;
 	
 	/**
 	 * <p>
@@ -21,6 +22,8 @@ package org.libra.ui.flash.interfaces {
 		function showSwitch():void;
 		
 		function get showing():Boolean;
+		
+		function get loader():Loader;
 	}
 	
 }

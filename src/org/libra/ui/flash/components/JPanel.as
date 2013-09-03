@@ -62,12 +62,6 @@ package org.libra.ui.flash.components {
 		protected var $resName:String;
 		
 		/**
-		 * 加载资源库的loader
-		 * @private
-		 */
-		protected var $loader:Loader;
-		
-		/**
 		 * 是否加载了资源库
 		 * @private
 		 * @default false
@@ -157,6 +151,12 @@ package org.libra.ui.flash.components {
 		
 		public function showSwitch():void {
 			$showing ? close() : show();
+		}
+		
+		/* INTERFACE org.libra.ui.flash.interfaces.IPanel */
+		
+		public function get loader():Loader {
+			return $loader;
 		}
 		
 		public function get showing():Boolean {

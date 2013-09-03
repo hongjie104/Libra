@@ -38,10 +38,10 @@ package org.libra.ui.utils {
 			this.uiLoader = uiLoader;
 		}
 		
-		public function getBitmapData(bmdName:String, add:Boolean = true):BitmapData { 
+		public function getBitmapData(bmdName:String, loader:Loader = null, add:Boolean = true):BitmapData { 
 			var bmd:BitmapData = resMap.get(bmdName);
 			if (bmd) return bmd;
-			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, uiLoader) as Class;
+			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, loader ? loader : uiLoader) as Class;
 			bmd = c ? new c() : null;
 			if (add) {
 				resMap.put(bmdName, bmd);

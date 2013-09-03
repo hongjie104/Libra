@@ -1,6 +1,8 @@
 package org.libra.ui.flash.core {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Loader;
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -10,6 +12,7 @@ package org.libra.ui.flash.core {
 	import org.libra.ui.flash.components.JToolTip;
 	import org.libra.ui.flash.interfaces.IComponent;
 	import org.libra.ui.flash.interfaces.IDragable;
+	import org.libra.ui.flash.interfaces.IPanel;
 	import org.libra.ui.flash.managers.DragManager;
 	import org.libra.ui.flash.managers.ToolTipManager;
 	import org.libra.ui.invalidation.InvalidationFlag;
@@ -87,6 +90,12 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		private var $invalidationFlag:InvalidationFlag;
+		
+		/**
+		 * 加载资源库的loader
+		 * @private
+		 */
+		protected var $loader:Loader;
 		
 		public function Component(x:int = 0, y:int = 0) { 
 			super();
@@ -298,31 +307,6 @@ package org.libra.ui.flash.core {
 			return super.dispatchEvent(event);
 		}
 		
-		/* INTERFACE org.libra.ui.interfaces.IDragable */
-		
-		/**
-		 * 设置是否可以被拖拽
-		 * 当可以被拖拽时,响应鼠标按下事件,触发拖拽事件
-		 * @param	val
-		 */
-		public function set dragEnabled(val:Boolean):void {
-			if (this.$dragEnabled != val) {
-				this.$dragEnabled = val;
-				if ($dragEnabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
-				else this.removeEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
-			}
-		}
-		
-		/**
-		 * 获取被拖拽时需要显示的BitmapData
-		 * @return
-		 */
-		public function get dragBmd():BitmapData {
-			var bmd:BitmapData = new BitmapData($actualWidth, $actualHeight, true, 0);
-			bmd.draw(this);
-			return bmd;
-		}
-		
 		/**
 		 * 添加所有的可视对象
 		 * @param	...rest N个可视对象
@@ -339,6 +323,14 @@ package org.libra.ui.flash.core {
 		public function validate():void {
 			draw();
 			this.$invalidationFlag.reset();
+		}
+		
+		public function getRoot():IPanel {
+			var p:DisplayObjectContainer = this.parent;
+			while (p && !(p is IPanel)) {
+				p = p.parent;
+			}
+			return p ? p as IPanel : null;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -373,6 +365,43 @@ package org.libra.ui.flash.core {
 			setSize($actualWidth, value);
 		}
 		
+		/* INTERFACE org.libra.ui.interfaces.IDragable */
+		
+		/**
+		 * 设置是否可以被拖拽
+		 * 当可以被拖拽时,响应鼠标按下事件,触发拖拽事件
+		 * @param	val
+		 */
+		public function set dragEnabled(val:Boolean):void {
+			if (this.$dragEnabled != val) {
+				this.$dragEnabled = val;
+				if ($dragEnabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+				else this.removeEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+			}
+		}
+		
+		/**
+		 * 获取被拖拽时需要显示的BitmapData
+		 * @return
+		 */
+		public function get dragBmd():BitmapData {
+			var bmd:BitmapData = new BitmapData($actualWidth, $actualHeight, true, 0);
+			bmd.draw(this);
+			return bmd;
+		}
+		
+		/**
+		 * 控件的图片资源是否从所在根容器的loader中获得
+		 */
+		public function get useRootLoader():Boolean {
+			return false;
+		}
+		
+		public function set useRootLoader(val:Boolean):void {
+			const root:IPanel = getRoot();
+			$loader = root ? root.loader : null;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
@@ -400,6 +429,7 @@ package org.libra.ui.flash.core {
 			$inited = true;
 			$validationQueue = ValidationQueue.getInstance();
 			this.invalidate();
+			$loader = null;
 		}
 		
 		/**

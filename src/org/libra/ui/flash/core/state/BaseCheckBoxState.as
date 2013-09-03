@@ -1,4 +1,5 @@
 package org.libra.ui.flash.core.state {
+	import flash.display.Loader;
 	import org.libra.ui.flash.core.state.ctrl.BaseCheckBoxStateCtrl;
 	import org.libra.ui.utils.ResManager;
 	
@@ -20,8 +21,8 @@ package org.libra.ui.flash.core.state {
 		
 		protected var $checkBoxStateCtrl:BaseCheckBoxStateCtrl;
 		
-		public function BaseCheckBoxState() {
-			super();
+		public function BaseCheckBoxState(loader:Loader) {
+			super(loader);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -50,7 +51,7 @@ package org.libra.ui.flash.core.state {
 			this.$resName = value;
 			$checkBoxStateCtrl = ResManager.getInstance().getObj(value) as BaseCheckBoxStateCtrl;
 			if (!$checkBoxStateCtrl) {
-				$checkBoxStateCtrl = new BaseCheckBoxStateCtrl();
+				$checkBoxStateCtrl = new BaseCheckBoxStateCtrl($loader);
 				$checkBoxStateCtrl.resName = value;
 				ResManager.getInstance().putObj(value, $checkBoxStateCtrl);
 			}
