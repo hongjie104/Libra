@@ -1,4 +1,6 @@
 package {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -7,11 +9,20 @@ package {
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.system.Security;
+	import org.libra.bmpEngine.multi.JMultiBitmap;
+	import org.libra.bmpEngine.multi.RenderLayer;
+	import org.libra.bmpEngine.multi.RenderMovieCelip;
+	import org.libra.copGameEngine.component.JMultiBitmapDataRender;
 	import org.libra.copGameEngine.MainContext;
+	import org.libra.copGameEngine.model.element.JAnimationProp;
+	import org.libra.tick.Tick;
+	import org.libra.ui.flash.components.JPanel;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTheme;
-	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.asset.AssetsStorage;
+	import org.libra.utils.displayObject.BitmapDataUtil;
+	import org.libra.utils.MathUtil;
 	
 	/**
 	 * ...
@@ -21,8 +32,8 @@ package {
 		
 		//private var frame:JFrame;
 		
-		//[Embed(source="../asset/walk.png")]
-		//private var BMP:Class;
+		[Embed(source="../asset/walk.png")]
+		private var BMP:Class;
 		
 		//private var starling:Starling;
 		private var loader:Loader;
@@ -55,7 +66,7 @@ package {
 		 */
 		private function onLoadUIComplete(evt:flash.events.Event):void {
 			//初始化UI
-			ResManager.getInstance().init(loader);
+			AssetsStorage.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
 			//testUI();
 			//testAutoCreateUI();
@@ -65,52 +76,77 @@ package {
 			//testDiamond();
 			//testStarlingUI();
 			//testMultiBitmap();
-			testCopGame();
+			//testCopGame();
+			test()
 			
 			//addChild(new SystemStatus());
 		}
 		
+		private function test():void {
+			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
+			var w:int = source.width >> 3;
+			var h:int = source.height >> 3;
+			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
+			
+			for (var i:int = 0; i < 1000; i += 1) {
+				var render:JMultiBitmapDataRender = new JMultiBitmapDataRender();
+				var bitmap:JAnimationProp = new JAnimationProp(w, h, render);
+			
+				var layer:RenderLayer = new RenderLayer(w, h);
+				var sprite:RenderMovieCelip = new RenderMovieCelip(bmdList);
+				//sprite.frameRate = 12;
+				sprite.play();
+				layer.addItem(sprite);
+				render.addLayer(layer);
+				this.addChild(bitmap.bitmap);
+				bitmap.bitmap.x = MathUtil.random(0, stage.stageWidth);
+				bitmap.bitmap.y = MathUtil.random(0, stage.stageHeight);
+				//Tick.getInstance().addItem(bitmap);
+				Tick.getInstance().addItem(sprite);
+			}
+		}
+		
 		private function testCopGame():void {
-			Security.allowDomain('*');
+			//Security.allowDomain('*');
 			const uiContainer:Container = new Container();
 			UIManager.getInstance().init(stage, uiContainer, new DefaultTheme());
 			myContent = new MainContext(this);
 		}
 		
-		//private function testAutoCreateUI():void {
-			///*var xml:XML = <View>
-			  //<Container x="20" y="-10">
-			    //<JLabel text="yung" x="103" y="38" textColor="0xffffff" />
-			    //<JLabel text="Lv.36" x="206" y="38" textColor="0xffffff" size="12"/>
-			    //<JLabel text="银币" x="104" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2"/>
-			    //<JLabel text="6万" x="136" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="100"/>
-			    //<JLabel text="金币" x="104" y="84" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
-			    //<JLabel text="10" x="136" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    //<JLabel text="10" x="223" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    //<JLabel text="礼券" x="191" y="83" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
-			    //<JLabel text="10/80" x="124" y="108" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    //<JButton text="按钮" x="183" y="110"/>
-			  //</Container>
-			//</View>;*/
-			///*var xml:XML = <View>
-			//<Container width="300" height="200">
-			  //<JButton width="43" height="26" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center"/>
-			  //<JLabel width="120" height="20" text="org.libra.ui.flash.components::JLabel" textColor="16777215" textAlign="left"/>
-			//</Container>
-			//</View>;*/
-			//var xml:XML = <View>
-			     //<JButton width="43" height="26" toolTipText="这是按钮" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center" x="110" y="105"/>
-				 //<JTextField width="120" height="20" text="org.libra.ui.flash.components::JTextField" textColor="3355443" textAlign="left" displayAsPassword="true" x="60" y="71"/>
-			//</View>;
-			//
-			//var uiContainer:Container = new Container();
-			//uiContainer.setSize(stage.stageWidth, stage.stageHeight);
-			//UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
-			//var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().theme.panelTheme);
-			//panel.createView(xml);
-			//panel.show();
-			//panel.x = panel.y = 50;
-		//}
+		private function testAutoCreateUI():void {
+			/*var xml:XML = <View>
+			  <Container x="20" y="-10">
+			    <JLabel text="yung" x="103" y="38" textColor="0xffffff" />
+			    <JLabel text="Lv.36" x="206" y="38" textColor="0xffffff" size="12"/>
+			    <JLabel text="银币" x="104" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="6万" x="136" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="100"/>
+			    <JLabel text="金币" x="104" y="84" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="10" x="136" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JLabel text="10" x="223" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JLabel text="礼券" x="191" y="83" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    <JLabel text="10/80" x="124" y="108" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    <JButton text="按钮" x="183" y="110"/>
+			  </Container>
+			</View>;*/
+			/*var xml:XML = <View>
+			<Container width="300" height="200">
+			  <JButton width="43" height="26" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center"/>
+			  <JLabel width="120" height="20" text="org.libra.ui.flash.components::JLabel" textColor="16777215" textAlign="left"/>
+			</Container>
+			</View>;*/
+			var xml:XML = <View>
+			     <JButton width="43" height="26" toolTipText="这是按钮" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center" x="110" y="105"/>
+				 <JTextField width="120" height="20" text="org.libra.ui.flash.components::JTextField" textColor="3355443" textAlign="left" displayAsPassword="true" x="60" y="71"/>
+			</View>;
+			
+			var uiContainer:Container = new Container();
+			uiContainer.setSize(stage.stageWidth, stage.stageHeight);
+			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
+			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().theme.panelTheme);
+			panel.createView(xml);
+			panel.show();
+			panel.x = panel.y = 50;
+		}
 		
 		//private function testStarlingUI():void {
 			///*starling = new starling.core.Starling(Game, stage);
@@ -136,7 +172,7 @@ package {
 			var h:int = source.height >> 3;
 			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
 			
-			for (var i:int = 0; i < 1100; i += 1) {
+			for (var i:int = 0; i < 1000; i += 1) {
 				var bitmap:JMultiBitmap = new JMultiBitmap(w, h);
 				var layer:RenderLayer = new RenderLayer(w, h);
 				var sprite:RenderMovieCelip = new RenderMovieCelip(bmdList);

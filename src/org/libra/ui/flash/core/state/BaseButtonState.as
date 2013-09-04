@@ -3,7 +3,7 @@ package org.libra.ui.flash.core.state {
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import org.libra.ui.flash.core.state.ctrl.BaseButtonStateCtrl;
-	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.asset.AssetsStorage;
 	
 	/**
 	 * <p>
@@ -44,11 +44,11 @@ package org.libra.ui.flash.core.state {
 		
 		public function set resName(val:String):void {
 			this.$resName = val;
-			$btnStatsCtrl = ResManager.getInstance().getObj(val) as BaseButtonStateCtrl;
+			$btnStatsCtrl = AssetsStorage.getInstance().getObj(val) as BaseButtonStateCtrl;
 			if (!$btnStatsCtrl) {
 				$btnStatsCtrl = new BaseButtonStateCtrl($loader);
 				$btnStatsCtrl.resName = val;
-				ResManager.getInstance().putObj(val, $btnStatsCtrl);
+				AssetsStorage.getInstance().putObj(val, $btnStatsCtrl);
 			}
 			toNormal();
 		}

@@ -28,11 +28,6 @@ package org.libra.copGameEngine {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		/*override public function startup():void { 
-			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateModelsCommand, ContextEvent);
-			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, CreateMediatorsCommand, ContextEvent);
-			super.startup();
-		}*/
 		
 		override protected function get mediatorMap():IMediatorMap {
 			return _mediatorMap ||= new LazyMediatorMap(contextView, createChildInjector(), reflector);

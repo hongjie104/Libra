@@ -21,6 +21,12 @@ package org.libra {
 		
 		static public var port:int;
 		
+		public static const UI_URL:String = RES_URL + 'ui/';
+		
+		static public const CONFIG_URL:String = RES_URL + 'config/';
+		
+		static public const AVATAR_URL:String = RES_URL + 'avatar/';
+		
 		public function URI() {
 			throw new Error('URI类不允许被实例化');
 		}

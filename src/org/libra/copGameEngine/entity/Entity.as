@@ -25,6 +25,7 @@ package org.libra.copGameEngine.entity {
 		public function Entity(name:String) { 
 			super();
 			this.$name = name;
+			$componentList = new Vector.<IEntityComponent>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

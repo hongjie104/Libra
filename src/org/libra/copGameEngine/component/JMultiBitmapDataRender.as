@@ -26,7 +26,7 @@ package org.libra.copGameEngine.component {
 		
 		protected var $numChildren:int;
 		
-		private var $layerList:Vector.<RenderLayer>;
+		protected var $layerList:Vector.<RenderLayer>;
 		
 		protected var $updated:Boolean;
 		
@@ -38,7 +38,12 @@ package org.libra.copGameEngine.component {
 		
 		public function JMultiBitmapDataRender() {
 			super();
+			//bitmapData = new BitmapData(width, height, true, 0x0);
+			//$width = width;
+			//$height = height;
+			$layerList = new Vector.<RenderLayer>();
 			$tickabled = true;
+			$name = 'JMultiBitmapDataRender';
 		}
 		
 		/*-----------------------------------------------------------------------------------------

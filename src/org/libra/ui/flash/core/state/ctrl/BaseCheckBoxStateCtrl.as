@@ -1,7 +1,7 @@
 package org.libra.ui.flash.core.state.ctrl {
 	import flash.display.BitmapData;
 	import flash.display.Loader;
-	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.asset.AssetsStorage;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	/**
 	 * <p>
@@ -41,7 +41,7 @@ package org.libra.ui.flash.core.state.ctrl {
 		
 		override public function set resName(resName:String):void {
 			this.$resName = resName;
-			const source:BitmapData = ResManager.getInstance().getBitmapData(resName, $loader, false);
+			const source:BitmapData = AssetsStorage.getInstance().getBitmapData(resName, $loader, false);
 			const bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width >> 1, source.height / 3, source);
 			$normalBmd = bmdList[0][0];
 			$overBmd = bmdList[1][0];

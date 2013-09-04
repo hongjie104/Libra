@@ -12,7 +12,19 @@ package org.libra.copGameEngine.model.element {
 	 * @version 1.0
 	 * @see
 	 */
-	public class JUserInfo extends GameObject {
+	public class JUserInfo {
+		
+		protected var $account:String;
+		
+		protected var $password:String;
+		
+		protected var $id:String;
+		
+		protected var $type:int;
+		
+		protected var $name:String;
+		
+		protected var $gender:int;
 		
 		private static var instance:JUserInfo;
 		
@@ -22,7 +34,6 @@ package org.libra.copGameEngine.model.element {
 		protected var $itemList:Vector.<JItem>;
 		
 		public function JUserInfo(singleton:Singleton) {
-			super();
 			$itemList = new Vector.<JItem>();
 		}
 		
@@ -30,8 +41,56 @@ package org.libra.copGameEngine.model.element {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		public function get id():String {
+			return $id;
+		}
+		
+		public function set id(value:String):void {
+			$id = value;
+		}
+		
+		public function get type():int {
+			return $type;
+		}
+		
+		public function set type(value:int):void {
+			$type = value;
+		}
+		
 		public function get itemList():Vector.<JItem> {
 			return $itemList;
+		}
+		
+		public function get name():String {
+			return $name;
+		}
+		
+		public function set name(value:String):void {
+			$name = value;
+		}
+		
+		public function get gender():int {
+			return $gender;
+		}
+		
+		public function set gender(value:int):void {
+			$gender = value;
+		}
+		
+		public function get account():String {
+			return $account;
+		}
+		
+		public function set account(value:String):void {
+			$account = value;
+		}
+		
+		public function get password():String {
+			return $password;
+		}
+		
+		public function set password(value:String):void {
+			$password = value;
 		}
 		
 		public function getItemCount(type:int):int {

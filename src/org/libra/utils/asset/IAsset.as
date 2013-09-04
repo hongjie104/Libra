@@ -1,4 +1,4 @@
-package org.libra.copGameEngine.asset {
+package org.libra.utils.asset {
 
 	public interface IAsset {
 		

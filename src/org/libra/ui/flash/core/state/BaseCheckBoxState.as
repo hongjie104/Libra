@@ -1,7 +1,7 @@
 package org.libra.ui.flash.core.state {
 	import flash.display.Loader;
 	import org.libra.ui.flash.core.state.ctrl.BaseCheckBoxStateCtrl;
-	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.asset.AssetsStorage;
 	
 	/**
 	 * <p>
@@ -49,11 +49,11 @@ package org.libra.ui.flash.core.state {
 		
 		override public function set resName(value:String):void {
 			this.$resName = value;
-			$checkBoxStateCtrl = ResManager.getInstance().getObj(value) as BaseCheckBoxStateCtrl;
+			$checkBoxStateCtrl = AssetsStorage.getInstance().getObj(value) as BaseCheckBoxStateCtrl;
 			if (!$checkBoxStateCtrl) {
 				$checkBoxStateCtrl = new BaseCheckBoxStateCtrl($loader);
 				$checkBoxStateCtrl.resName = value;
-				ResManager.getInstance().putObj(value, $checkBoxStateCtrl);
+				AssetsStorage.getInstance().putObj(value, $checkBoxStateCtrl);
 			}
 			toNormal();
 		}

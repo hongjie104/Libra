@@ -42,8 +42,8 @@ package org.libra.copGameEngine.view.login {
 							  <JButton width="43" height="26" text="登录" textColor="16759090" textAlign="center" x="128" y="159" var="loginBtn"/>
 							  <JLabel width="32" height="20" text="账号：" textColor="16777215" textAlign="left" x="53" y="70"/>
 							  <JLabel width="32" height="20" text="密码：" textColor="16777215" textAlign="left" x="53" y="109"/>
-							  <JTextField width="120" height="20" textColor="3355443" textAlign="left" x="109" y="68" var="account"/>
-							  <JTextField width="120" height="20" textColor="3355443" textAlign="left" displayAsPassword="true" x="109" y="107" var="password"/>
+							  <JTextField width="120" height="20" textColor="3355443" textAlign="left" x="109" y="68" var="account" text="test"/>
+							  <JTextField width="120" height="20" textColor="3355443" textAlign="left" displayAsPassword="true" x="109" y="107" var="password" text="123456"/>
 							</JPanel>;
 			this.createView(xml);
 			this.defaultBtn = this.loginBtn;
@@ -51,7 +51,9 @@ package org.libra.copGameEngine.view.login {
 		
 		override public function show():void {
 			super.show();
-			loginBtn.addEventListener(MouseEvent.CLICK, onLogin);
+			if ($showing) {
+				loginBtn.addEventListener(MouseEvent.CLICK, onLogin);
+			}
 		}
 		
 		override public function close(tween:Boolean = true, destroy:Boolean = false):void {
@@ -67,7 +69,8 @@ package org.libra.copGameEngine.view.login {
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
 		
-		private function onLogin(e:MouseEvent):void {
+		protected function onLogin(e:MouseEvent):void {
+			if (e) e.stopPropagation();
 			const a:String = account.text;
 			if (a) {
 				const p:String = this.password.text;

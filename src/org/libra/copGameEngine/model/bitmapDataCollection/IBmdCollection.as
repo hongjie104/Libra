@@ -1,7 +1,7 @@
 package org.libra.copGameEngine.model.bitmapDataCollection {
 	import com.greensock.loading.SWFLoader;
 	import flash.display.BitmapData;
-	import org.libra.copGameEngine.asset.IAsset;
+	import org.libra.utils.asset.IAsset;
 	
 	/**
 	 * <p>

@@ -1,29 +1,46 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.component.IBitmapDataRender;
-	import org.libra.copGameEngine.model.basic.JBitmapObject;
-	
+package org.libra.copGameEngine.model.element.animation {
+	import flash.geom.Point;
 	/**
 	 * <p>
-	 * Description
+	 * 一帧中某个部位的信息
 	 * </p>
 	 *
-	 * @class JAnimationProp
-	 * @author 鸿杰
+	 * @class FrameInfo
+	 * @author Eddie
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 04/30/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JAnimationProp extends JBitmapObject {
+	public final class FrameVO {
 		
-		public function JAnimationProp(width:int, height:int, bitmapDataRender:IBitmapDataRender = null) {
-			super(width, height, bitmapDataRender);
+		private var $x:int;
+		
+		private var $y:int;
+		
+		private var $frame:int;
+		
+		public function FrameVO(x:int, y:int, frame:int) { 
+			$x = x;
+			$y = y;
+			$frame = frame;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		public function frame():int {
+			return this.$frame;
+		}
+		
+		public function get x():int {
+			return $x;
+		}
+		
+		public function get y():int {
+			return $y;
+		}
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

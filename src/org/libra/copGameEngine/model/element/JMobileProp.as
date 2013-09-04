@@ -1,19 +1,22 @@
-package org.libra.copGameEngine.config {
+package org.libra.copGameEngine.model.element {
+	import org.libra.copGameEngine.component.IBitmapDataRender;
+	
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class Config
+	 * @class JMobileProp
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/27/2013
+	 * @date 09/04/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class Config {
+	public class JMobileProp extends JAnimationProp {
 		
-		public function Config() {
+		public function JMobileProp(bitmapDataRender:IBitmapDataRender=null) {
+			super(bitmapDataRender);
 			
 		}
 		

@@ -1,7 +1,6 @@
 package org.libra.copGameEngine.view.scene {
 	import flash.display.DisplayObject;
 	import org.libra.displayObject.JSprite;
-	import org.libra.utils.displayObject.GraphicsUtil;
 	import org.robotlegs.utilities.lazy.LazyMediatorActivator;
 	
 	/**
@@ -29,8 +28,6 @@ package org.libra.copGameEngine.view.scene {
 			new LazyMediatorActivator(this);
 			$tickabled = true;
 			$layerList = new Vector.<ILayer>();
-			
-			GraphicsUtil.drawRect(this.graphics, 50, 50, 50, 100);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

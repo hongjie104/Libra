@@ -7,7 +7,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultProgressBarTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.asset.AssetsStorage;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	
@@ -77,8 +77,8 @@ package org.libra.ui.flash.components {
 				}
 			}
 			if ($actualWidth > 0 && $actualHeight > 0) {
-				background = new Bitmap(BitmapDataUtil.getScale3BitmapData(ResManager.getInstance().getBitmapData($theme.barBgResName), $actualWidth, $theme.barBgScale9Rect, Constants.HORIZONTAL));
-				var barBmd:BitmapData = BitmapDataUtil.getScale3BitmapData(ResManager.getInstance().getBitmapData($theme.barResName), $theme.barWidth, $theme.barScale9Rect, Constants.HORIZONTAL);
+				background = new Bitmap(BitmapDataUtil.getScale3BitmapData(AssetsStorage.getInstance().getBitmapData($theme.barBgResName), $actualWidth, $theme.barBgScale9Rect, Constants.HORIZONTAL));
+				var barBmd:BitmapData = BitmapDataUtil.getScale3BitmapData(AssetsStorage.getInstance().getBitmapData($theme.barResName), $theme.barWidth, $theme.barScale9Rect, Constants.HORIZONTAL);
 				GraphicsUtil.drawRectWithBmd($maskShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
 				GraphicsUtil.drawRectWithBmd($barShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
 			}

@@ -30,12 +30,16 @@ package org.libra.copGameEngine.model.basic {
 		
 		protected var $bmdCollection:IBmdCollection;
 		
-		public function JBitmapObject(bitmapDataRender:IBitmapDataRender = null) {
+		public function JBitmapObject(width:int, height:int, bitmapDataRender:IBitmapDataRender = null) {
 			super();
-			$bitmapDataRender = bitmapDataRender;
-			if ($bitmapDataRender) addComponent($bitmapDataRender, $bitmapDataRender.name);
-			$bitmap = new Bitmap();
+			$bitmap = new Bitmap(new BitmapData(width, height, true, 0x0));
 			$bitmap.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			$bitmapDataRender = bitmapDataRender;
+			if ($bitmapDataRender) {
+				$bitmapDataRender.bitmapData = $bitmap.bitmapData;
+				addComponent($bitmapDataRender, $bitmapDataRender.name);
+			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------

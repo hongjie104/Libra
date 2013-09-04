@@ -15,8 +15,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.managers.LayoutManager;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultPanelTheme;
-	import org.libra.ui.utils.ResManager;
 	import org.libra.URI;
+	import org.libra.utils.asset.AssetsStorage;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.displayObject.DepthUtil;
 	import org.libra.utils.ReflectUtil;
@@ -117,7 +117,7 @@ package org.libra.ui.flash.components {
 				$loader = new Loader();
 				$loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onResLoaded);
 				$loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
-				$loader.load(new URLRequest(URI.RES_URL + this.$resName + '.swf'));
+				$loader.load(new URLRequest(URI.UI_URL + this.$resName + '.swf'));
 			}else {
 				if ($showing) return;
 				this.$owner.append(this);
@@ -215,7 +215,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function initBackground():void {
-			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData($theme.resName), 
+			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(AssetsStorage.getInstance().getBitmapData($theme.resName), 
 				$actualWidth, $actualHeight, $theme.scale9Rect);
 			if (this.$background && this.$background is Bitmap) {
 				const bitmap:Bitmap = $background as Bitmap;
@@ -257,11 +257,11 @@ package org.libra.ui.flash.components {
 			if($autoUp) DepthUtil.bringToTop(this);
 		}
 		
-		private function onResLoadProgress(e:ProgressEvent):void {
+		protected function onResLoadProgress(e:ProgressEvent):void {
 			UIManager.getInstance().setLoadingProgress(e.bytesLoaded / e.bytesTotal);
 		}
 		
-		private function onResLoaded(e:Event):void {
+		protected function onResLoaded(e:Event):void {
 			$loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onResLoaded);
 			$loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
 			$loaded = true;
@@ -269,9 +269,9 @@ package org.libra.ui.flash.components {
 			show();
 		}
 		
-		private function onKeyUp(e:KeyboardEvent):void {
+		protected function onKeyUp(e:KeyboardEvent):void {
 			if (this.$activated) {
-				if (e.keyCode == Keyboard.ENTER || e.keyCode == Keyboard.SPACE) {
+				if (e.keyCode == Keyboard.ENTER) {
 					if (this.$defaultBtn) $defaultBtn.doClick();
 				}
 			}

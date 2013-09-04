@@ -5,7 +5,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
-	import org.libra.ui.utils.ResManager;
+	import org.libra.utils.asset.AssetsStorage;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	/**
 	 * <p>
@@ -69,7 +69,7 @@ package org.libra.ui.flash.components {
 				}
 			}
 			if($actualWidth > 0 && $actualHeight > 0)
-				this.background = new Bitmap(BitmapDataUtil.getScale9BitmapData(ResManager.getInstance().getBitmapData('toolTipBg'), 
+				this.background = new Bitmap(BitmapDataUtil.getScale9BitmapData(AssetsStorage.getInstance().getBitmapData('toolTipBg'), 
 					$actualWidth, $actualHeight, new Rectangle(5, 4, 1, 20)));
 		}
 		

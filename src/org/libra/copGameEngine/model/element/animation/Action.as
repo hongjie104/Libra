@@ -1,28 +1,43 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.component.IBitmapDataRender;
-	import org.libra.copGameEngine.model.basic.JBitmapObject;
+package org.libra.copGameEngine.model.element.animation {
 	
 	/**
 	 * <p>
-	 * Description
+	 * 人物动作控制器
 	 * </p>
 	 *
-	 * @class JAnimationProp
-	 * @author 鸿杰
+	 * @class Action
+	 * @author Eddie
 	 * @qq 32968210
-	 * @date 08/22/2013
+	 * @date 04/30/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JAnimationProp extends JBitmapObject {
+	public class Action {
 		
-		public function JAnimationProp(width:int, height:int, bitmapDataRender:IBitmapDataRender = null) {
-			super(width, height, bitmapDataRender);
+		/**
+		 * 本类实例
+		 */
+		private static var instance:Action;
+		
+		/**
+		 * 站立的动作
+		 */
+		private var stand:ActionInfo;
+		
+		/**
+		 * Constructor
+		 */
+		public function Action(singleton:Singleton) {
+			//{1:{head:{x:0,y:0:frame:0},body:{}}}
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public static function getInstance():Action {
+			return instance ||= new Action(new Singleton);
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -33,5 +48,6 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 	}
-
 }
+
+final class Singleton{}

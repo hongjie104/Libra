@@ -28,7 +28,7 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 		public function getBmdCollection(type:int, bmdClass:String, classType:Class):IBmdCollection {
 			var i:int = this.bmdList.length;
 			while (--i > -1) {
-				if (bmdList[i].bmdClass == bmdClass) {
+				if (bmdList[i].id == bmdClass) {
 					if(bmdList[i] is classType)
 						return bmdList[i];
 				}
