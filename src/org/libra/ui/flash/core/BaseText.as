@@ -79,7 +79,8 @@ package org.libra.ui.flash.core {
 		 * @param	text 文本
 		 */
 		public function appendText(text:String):void {
-			this.$textField.appendText(text);
+			this.text += text;
+			this.invalidate(InvalidationFlag.TEXT);
 		}
 		
 		/**
