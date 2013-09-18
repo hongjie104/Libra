@@ -22,12 +22,13 @@ package org.libra.aStar {
 		private var _grid:Grid;
 		private var _endNode:Node;
 		private var _startNode:Node;
-		private var _path:Array;
+		private var _path:Vector.<Node>;
 		private var _heuristic:Function = diagonal;
 		private var _straightCost:Number = 1.0;
 		private var _diagCost:Number = Math.SQRT2;
 		
-		private var _floydPath:Array;
+		//private var _floydPath:Array;
+		private var _floydPath:Vector.<Node>;
 		
 		/**
 		 * 多少方向寻路，默认是八方向
@@ -221,11 +222,11 @@ package org.libra.aStar {
 		
 		//---------------------------------------get/set functions-----------------------------//
 		
-		public function get path():Array {
+		public function get path():Vector.<Node> {
 			return _path;
 		}
 		
-		public function get floydPath():Array {
+		public function get floydPath():Vector.<Node> {
 			return _floydPath;
 		}
 	

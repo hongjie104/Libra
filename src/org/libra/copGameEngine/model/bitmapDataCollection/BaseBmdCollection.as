@@ -1,7 +1,7 @@
 package org.libra.copGameEngine.model.bitmapDataCollection {
 	import com.greensock.loading.SWFLoader;
 	import flash.display.BitmapData;
-	import flash.events.Event;
+	import org.libra.utils.asset.IAsset;
 	/**
 	 * <p>
 	 * Description
@@ -14,7 +14,7 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseBmdCollection implements IBmdCollection {
+	public class BaseBmdCollection implements IAsset {
 		
 		protected var $url:String;
 		

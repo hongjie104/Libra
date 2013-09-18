@@ -21,7 +21,7 @@ package org.libra.ui.flash.core.state {
 		
 		protected var $getBmd:Function;
 		
-		protected var $resName:String;
+		protected var $skin:String;
 		
 		protected var $actualWidth:int;
 		
@@ -42,12 +42,12 @@ package org.libra.ui.flash.core.state {
 		
 		/* INTERFACE org.libra.ui.base.states.IStatus */
 		
-		public function set resName(val:String):void {
-			this.$resName = val;
+		public function set skin(val:String):void {
+			this.$skin = val;
 			$btnStatsCtrl = AssetsStorage.getInstance().getObj(val) as BaseButtonStateCtrl;
 			if (!$btnStatsCtrl) {
 				$btnStatsCtrl = new BaseButtonStateCtrl($loader);
-				$btnStatsCtrl.resName = val;
+				$btnStatsCtrl.skin = val;
 				AssetsStorage.getInstance().putObj(val, $btnStatsCtrl);
 			}
 			toNormal();

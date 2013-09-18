@@ -39,9 +39,9 @@ package org.libra.ui.flash.core.state.ctrl {
 			return $downSelectedBmd;
 		}
 		
-		override public function set resName(resName:String):void {
-			this.$resName = resName;
-			const source:BitmapData = AssetsStorage.getInstance().getBitmapData(resName, $loader, false);
+		override public function set skin(val:String):void {
+			this.$skin = val;
+			const source:BitmapData = AssetsStorage.getInstance().getBitmapData($skin, $loader, false);
 			const bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width >> 1, source.height / 3, source);
 			$normalBmd = bmdList[0][0];
 			$overBmd = bmdList[1][0];

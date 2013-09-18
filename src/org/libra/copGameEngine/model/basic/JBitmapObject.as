@@ -1,13 +1,12 @@
 package org.libra.copGameEngine.model.basic {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.events.Event;
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import org.libra.copGameEngine.component.IBitmapDataRender;
 	import org.libra.copGameEngine.model.bitmapDataCollection.BaseBmdCollection;
 	import org.libra.copGameEngine.model.bitmapDataCollection.BmdCollectionFactory;
-	import org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection;
-	import org.libra.tick.ITickable;
-	import org.libra.tick.Tick;
+	import org.libra.utils.asset.IAsset;
 	/**
 	 * <p>
 	 * Description
@@ -22,18 +21,22 @@ package org.libra.copGameEngine.model.basic {
 	 */
 	public class JBitmapObject extends GameObject {
 		
+		protected var $sprite:Sprite;
+		
 		protected var $bitmap:Bitmap;
 		
 		protected var $bmdClass:String;
 		
 		protected var $bitmapDataRender:IBitmapDataRender;
 		
-		protected var $bmdCollection:IBmdCollection;
+		protected var $bmdCollection:IAsset;
 		
 		public function JBitmapObject(width:int, height:int, bitmapDataRender:IBitmapDataRender = null) {
 			super();
 			$bitmap = new Bitmap(new BitmapData(width, height, true, 0x0));
-			$bitmap.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			$sprite = new Sprite();
+			$sprite.mouseChildren = $sprite.mouseEnabled = false;
+			$sprite.addChild($bitmap);
 			
 			$bitmapDataRender = bitmapDataRender;
 			if ($bitmapDataRender) {
@@ -52,12 +55,16 @@ package org.libra.copGameEngine.model.basic {
 			if ($bitmapDataRender) this.$bitmapDataRender.bitmapData = $bitmap.bitmapData;
 		}
 		
-		public function get bitmap():Bitmap {
-			return $bitmap;
+		public function get displayObject():DisplayObject {
+			return $sprite;
 		}
 		
-		public function get bmdCollection():IBmdCollection {
+		public function get bmdCollection():IAsset {
 			return this.$bmdCollection;
+		}
+		
+		public function set bmdCollection(val:IAsset):void {
+			$bmdCollection = val;
 		}
 		
 		override public function set type(value:int):void {
@@ -66,29 +73,34 @@ package org.libra.copGameEngine.model.basic {
 			resetBmdCollection();
 		}
 		
+		public function get x():Number {
+			return $sprite.x;
+		}
+		
+		public function set x(val:Number):void {
+			$sprite.x = val;
+		}
+		
+		public function get y():Number {
+			return $sprite.y;
+		}
+		
+		public function set y(val:Number):void {
+			$sprite.y = val;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
 		protected function resetBmdCollection():void {
-			$bmdCollection = BmdCollectionFactory.getInstance().getBmdCollection($type, $bmdClass, BaseBmdCollection);
+			$bmdCollection = BmdCollectionFactory.getInstance().getBmdCollection($bmdClass, BaseBmdCollection);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
 		
-		protected function onAddedToStage(e:Event):void {
-			$bitmap.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			$bitmap.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().addItem(this.$bitmapDataRender as ITickable);
-		}
-		
-		protected function onRemovedFromStage(e:Event):void {
-			$bitmap.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			$bitmap.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			if ($bitmapDataRender && $bitmapDataRender is ITickable) Tick.getInstance().removeItem(this.$bitmapDataRender as ITickable);
-		}
 	}
 
 }

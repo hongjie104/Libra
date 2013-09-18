@@ -2,6 +2,7 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import org.libra.tick.ITimerable;
 	import org.libra.tick.MultiTimer;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
@@ -60,6 +61,10 @@ package org.libra.ui.flash.components {
 				}
 			}
 			invalidate(InvalidationFlag.DATA);
+		}
+		
+		override public function clone():Component {
+			return new JCountDown($theme, x, y, $prefixText);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

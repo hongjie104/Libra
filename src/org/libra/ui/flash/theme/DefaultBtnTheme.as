@@ -13,19 +13,19 @@ package org.libra.ui.flash.theme {
 	 */
 	public class DefaultBtnTheme extends DefaultTextTheme {
 		
-		protected var $resName:String;
+		protected var $skin:String;
 		
-		public function DefaultBtnTheme(w:int, h:int, font:JFont, filter:Array, resName:String) { 
+		public function DefaultBtnTheme(w:int, h:int, font:JFont, filter:Array, skin:String) { 
 			super(w, h, font, filter);
-			$resName = resName;
+			$skin = skin;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function get resName():String {
-			return $resName;
+		public function get skin():String {
+			return $skin;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

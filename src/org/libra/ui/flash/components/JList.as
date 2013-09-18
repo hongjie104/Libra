@@ -116,6 +116,10 @@ package org.libra.ui.flash.components {
 			$scrollBar.autoHide = value ;
 		}
 		
+		override public function clone():Component {
+			return new JList(x, y, $itemHeight, $dataList);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

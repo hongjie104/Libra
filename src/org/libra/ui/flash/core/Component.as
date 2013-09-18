@@ -4,6 +4,7 @@ package org.libra.ui.flash.core {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
@@ -97,6 +98,26 @@ package org.libra.ui.flash.core {
 		 */
 		protected var $loader:Loader;
 		
+		/**
+		 * 九宫格参考，用于UI编辑器中
+		 * @private
+		 */
+		private var $scaleGrid:ScaleGrid;
+		
+		protected var $id:String;
+		
+		/**
+		 * 绘制边框的Shape
+		 * @private
+		 */
+		private var $border:Shape;
+		
+		/**
+		 * 边框的颜色
+		 * @private
+		 */
+		private var $borderColor:int;
+		
 		public function Component(x:int = 0, y:int = 0) { 
 			super();
 			
@@ -104,7 +125,8 @@ package org.libra.ui.flash.core {
 			this.focusRect = false;
 			this.$enabled = true;
 			setLocation(x, y);
-			
+			//<0,默认不要边框
+			$borderColor = -1;
 			$invalidationFlag = new InvalidationFlag();
 		}
 		
@@ -175,6 +197,12 @@ package org.libra.ui.flash.core {
 			if ($actualWidth != w || $actualHeight != h) {
 				this.$actualWidth = w;
 				this.$actualHeight = h;
+				if ($scaleGrid) {
+					dispatchEvent(new Event(Event.RESIZE));
+				}
+				if (this.$borderColor > -1) {
+					this.borderColor = $borderColor;
+				}
 				invalidate(InvalidationFlag.SIZE);
 			}
 		}
@@ -271,7 +299,15 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function toString():String {
-			return getQualifiedClassName(this);
+			return name ||= getQualifiedClassName(this);
+		}
+		
+		/**
+		 * 克隆一个对象，主要用于UI编辑器
+		 * @return
+		 */
+		public function clone():Component {
+			return new Component();
 		}
 		
 		/**
@@ -280,7 +316,7 @@ package org.libra.ui.flash.core {
 		 * @return
 		 */
 		public function toXML():XML {
-			const tmpAry:Array = toString().split('::');
+			const tmpAry:Array = getQualifiedClassName(this).split('::');
 			return new XML('<' + tmpAry[tmpAry.length - 1] + ' ' + 
 							(x ? 'x="' + x + '" ' : '') + 
 							(y ? 'y="' + y + '" ' : '') + 
@@ -400,6 +436,38 @@ package org.libra.ui.flash.core {
 		public function set useRootLoader(val:Boolean):void {
 			const root:IPanel = getRoot();
 			$loader = root ? root.loader : null;
+		}
+		
+		/**
+		 * 是否显示九宫格参考，主要用在UI编辑器中
+		 */
+		public function set showScaleGrid(val:Boolean):void {
+			if (val) {
+				if (!$scaleGrid) $scaleGrid = new ScaleGrid();
+				$scaleGrid.component = this;
+			}else {
+				$scaleGrid.component = null;
+			}
+		}
+		
+		public function get id():String {
+			return $id;
+		}
+		
+		public function set id(value:String):void {
+			$id = value;
+		}
+		
+		public function set borderColor(value:int):void {
+			this.$borderColor = value;
+			if (value > -1) {
+				if (!$border) $border = new Shape();
+				GraphicsUtil.lineRect($border.graphics, 0, 0, $actualWidth, $actualHeight, value);
+				if (!$border.parent) addChild($border);
+			}else {
+				$border.graphics.clear();
+				removeChild($border);
+			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------

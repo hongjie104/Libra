@@ -44,7 +44,9 @@ package org.libra.ui.flash.theme {
 		
 		protected var $textFieldTheme:DefaultTextTheme;
 		
-		protected var $panelTheme:DefaultPanelTheme;
+		protected var $containerTheme:DefaultContainerTheme;
+		
+		protected var $panelTheme:DefaultContainerTheme;
 		
 		protected var $frameTheme:DefaultFrameTheme;
 		
@@ -66,7 +68,8 @@ package org.libra.ui.flash.theme {
 			$labelTheme = new DefaultTextTheme(120, 20, JFont.FONT_LABEL, Filter.BLACK);
 			$textAreaTheme = new DefaultTextTheme(200, 100, JFont.FONT_LABEL, Filter.BLACK);
 			$textFieldTheme = new DefaultTextTheme(120, 20, JFont.FONT_INPUT, Filter.BLACK);
-			$panelTheme = new DefaultPanelTheme('PanelBg', new Rectangle(3, 3, 11, 6));
+			$containerTheme = new DefaultContainerTheme(null, null);
+			$panelTheme = new DefaultContainerTheme('PanelBg', new Rectangle(3, 3, 11, 6));
 			$frameTheme = new DefaultFrameTheme('frameBg', new Rectangle(12, 60, 1, 1));
 			$scrollBlockTheme = new DefaultScrollBlockTheme('vScrollThumb', 'vScrollBtnBg', new Rectangle(2, 2, 11, 1), 'hScrollThumb', 'hScrollBtnBg', new Rectangle(2, 2, 1, 11));
 			$comboBoxTheme = new DefaultComboBoxTheme($labelTheme, $vScrollDownBtnTheme);
@@ -114,7 +117,11 @@ package org.libra.ui.flash.theme {
 			return $textFieldTheme;
 		}
 		
-		public function get panelTheme():DefaultPanelTheme {
+		public function get containerTheme():DefaultContainerTheme {
+			return $containerTheme;
+		}
+		
+		public function get panelTheme():DefaultContainerTheme {
 			return $panelTheme;
 		}
 		

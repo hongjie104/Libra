@@ -3,6 +3,7 @@ package org.libra.ui.flash.components {
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.core.Container;
 	
 	/**
@@ -26,12 +27,16 @@ package org.libra.ui.flash.components {
 		protected var $borderBmd:BitmapData;
 		
 		public function JCell(x:int = 0, y:int = 0) { 
-			super(x, y);
+			super(null, x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		override public function clone():Component {
+			return new JCell(x, y);
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

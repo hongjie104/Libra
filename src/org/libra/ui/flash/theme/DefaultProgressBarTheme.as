@@ -14,9 +14,9 @@ package org.libra.ui.flash.theme {
 	 */
 	public class DefaultProgressBarTheme {
 		
-		protected var $barResName:String;
+		protected var $barSkin:String;
 		
-		protected var $barBgResName:String;
+		protected var $barBgSkin:String;
 		
 		protected var $barScale9Rect:Rectangle;
 		
@@ -32,10 +32,10 @@ package org.libra.ui.flash.theme {
 		
 		protected var $height:int;
 		
-		public function DefaultProgressBarTheme(barResName:String, barScale9Rect:Rectangle, barBgResName:String, barBgScale9Rect:Rectangle, barX:int = 29, barY:int = 1, barWidth:int = 142, w:int = 200, h:int = 18) { 
-			this.$barResName = barResName;
+		public function DefaultProgressBarTheme(barskin:String, barScale9Rect:Rectangle, barBgskin:String, barBgScale9Rect:Rectangle, barX:int = 29, barY:int = 1, barWidth:int = 142, w:int = 200, h:int = 18) { 
+			this.$barSkin = barskin;
 			this.$barScale9Rect = barScale9Rect;
-			this.$barBgResName = barBgResName;
+			this.$barBgSkin = barBgskin;
 			this.$barBgScale9Rect = barBgScale9Rect;
 			$barX = barX;
 			$barY = barY;
@@ -48,16 +48,16 @@ package org.libra.ui.flash.theme {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function get barResName():String {
-			return $barResName;
+		public function get barSkin():String {
+			return $barSkin;
 		}
 		
 		public function get barScale9Rect():Rectangle {
 			return $barScale9Rect;
 		}
 		
-		public function get barBgResName():String {
-			return $barBgResName;
+		public function get barBgSkin():String {
+			return $barBgSkin;
 		}
 		
 		public function get barBgScale9Rect():Rectangle {

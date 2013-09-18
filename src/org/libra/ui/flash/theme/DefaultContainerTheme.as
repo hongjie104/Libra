@@ -1,27 +1,39 @@
-package org.libra.copGameEngine.model.element {
-	import org.libra.copGameEngine.component.IBitmapDataRender;
-	
+package org.libra.ui.flash.theme {
+	import flash.geom.Rectangle;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class JUser
+	 * @class DefaultPanelTheme
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 09/04/2013
+	 * @date 03/27/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class JUser extends JAvatarProp {
+	public class DefaultContainerTheme {
 		
-		public function JUser(bitmapDataRender:IBitmapDataRender=null) {
-			super(bitmapDataRender);
+		protected var $skin:String;
+		
+		protected var $scale9Rect:Rectangle;
+		
+		public function DefaultContainerTheme(skin:String, scale9Rect:Rectangle) { 
+			this.$skin = skin;
+			this.$scale9Rect = scale9Rect;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		public function get skin():String {
+			return $skin;
+		}
+		
+		public function get scale9Rect():Rectangle {
+			return $scale9Rect;
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

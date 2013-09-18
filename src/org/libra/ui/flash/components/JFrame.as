@@ -4,6 +4,7 @@ package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultFrameTheme;
@@ -76,6 +77,10 @@ package org.libra.ui.flash.components {
 		
 		public function setTitle(val:String):void {
 			this.$title.text = val;
+		}
+		
+		override public function clone():Component {
+			return new JFrame($owner, $actualWidth, $actualHeight, $resName, $model, $barHeight, $theme as DefaultFrameTheme);
 		}
 		
 		override public function dispose():void {

@@ -3,7 +3,6 @@ package org.libra.utils.displayObject {
 	import flash.display.Graphics;
 	import flash.geom.Point;
 	
-	import org.libra.utils.MathUtil;
 
 	/**
 	 * <p>
@@ -83,6 +82,16 @@ package org.libra.utils.displayObject {
 				g.moveTo(p.x, p.y);
 				g.lineTo(p.x - endX, p.y + endY);
 			}
+		}
+		
+		public static function lineRect(g:Graphics, x:int, y:int, width:int, height:int, color:int = 0xff0000):void {
+			g.clear();
+			g.lineStyle(1, color);
+			g.moveTo(x, y);
+			g.lineTo(width, y);
+			g.lineTo(width, height);
+			g.lineTo(0, height);
+			g.lineTo(0, 0);
 		}
 		
 		/**

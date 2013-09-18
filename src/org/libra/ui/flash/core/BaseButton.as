@@ -5,6 +5,7 @@ package org.libra.ui.flash.core {
 	import org.libra.ui.flash.core.state.BaseButtonState;
 	import org.libra.ui.flash.core.state.IButtonState;
 	import org.libra.ui.flash.theme.DefaultBtnTheme;
+	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
@@ -94,6 +95,16 @@ package org.libra.ui.flash.core {
 			this.initState();
 		}
 		
+		override public function clone():Component {
+			return new BaseButton(this.$theme as DefaultBtnTheme, this.x, this.y, this.text);
+		}
+		
+		override public function set theme(value:DefaultTextTheme):void {
+			if (value is DefaultBtnTheme) {
+				super.theme = value;
+			}
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
@@ -106,7 +117,7 @@ package org.libra.ui.flash.core {
 		protected function initState():void {
 			this.$state = new BaseButtonState($loader);
 			$state.setSize($actualWidth, $actualHeight);
-			this.$state.resName = ($theme as DefaultBtnTheme).resName;
+			this.$state.skin = ($theme as DefaultBtnTheme).skin;
 			addChildAt(this.$state.displayObject, 0);
 		}
 		
@@ -157,6 +168,11 @@ package org.libra.ui.flash.core {
 			super.refreshText();
 			//保证按钮中的文本在垂直方向上永远居中
 			setTextLocation($textX, ($actualHeight - $textField.textHeight) >> 1);
+		}
+		
+		override protected function refreshStyle():void {
+			super.refreshStyle();
+			this.$state.skin = ($theme as DefaultBtnTheme).skin;
 		}
 		
 		/**

@@ -6,10 +6,10 @@ package org.libra.aStar {
 	public class Node {
 		
 		/** 节点列号 */
-		internal var x:int;
+		public var x:int;
 		
 		/** 节点行号 */
-		internal var y:int;
+		public var y:int;
 		
 		internal var f:Number;
 		internal var g:Number;

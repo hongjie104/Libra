@@ -47,12 +47,12 @@ package org.libra.ui.flash.core.state {
 			$selected = val;
 		}
 		
-		override public function set resName(value:String):void {
-			this.$resName = value;
+		override public function set skin(value:String):void {
+			this.$skin = value;
 			$checkBoxStateCtrl = AssetsStorage.getInstance().getObj(value) as BaseCheckBoxStateCtrl;
 			if (!$checkBoxStateCtrl) {
 				$checkBoxStateCtrl = new BaseCheckBoxStateCtrl($loader);
-				$checkBoxStateCtrl.resName = value;
+				$checkBoxStateCtrl.skin = value;
 				AssetsStorage.getInstance().putObj(value, $checkBoxStateCtrl);
 			}
 			toNormal();

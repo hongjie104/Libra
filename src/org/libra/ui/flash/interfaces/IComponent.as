@@ -33,6 +33,8 @@ package org.libra.ui.flash.interfaces {
 		
 		function get stage():Stage;
 		
+		function get id():String;
+		
 	}
 	
 }

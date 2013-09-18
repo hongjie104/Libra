@@ -1,6 +1,5 @@
 package org.libra.ui.flash.components {
 	import com.greensock.TweenLite;
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.Event;
@@ -9,17 +8,18 @@ package org.libra.ui.flash.components {
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.ui.Keyboard;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IPanel;
 	import org.libra.ui.flash.managers.LayoutManager;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultPanelTheme;
+	import org.libra.ui.flash.theme.DefaultContainerTheme;
 	import org.libra.URI;
-	import org.libra.utils.asset.AssetsStorage;
-	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.displayObject.DepthUtil;
 	import org.libra.utils.ReflectUtil;
+	
+	
 	
 	/**
 	 * <p>
@@ -36,8 +36,6 @@ package org.libra.ui.flash.components {
 	public class JPanel extends Container implements IPanel {
 		
 		protected var $owner:IContainer;
-		
-		protected var $theme:DefaultPanelTheme;
 		
 		/**
 		 * 当该面试显示时，其他面板是否需要是不能响应鼠标事件
@@ -91,9 +89,8 @@ package org.libra.ui.flash.components {
 		
 		protected var $activated:Boolean;
 		
-		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, theme:DefaultPanelTheme = null) { 
-			super();
-			this.$theme = theme ? theme : UIManager.getInstance().theme.panelTheme;
+		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, theme:DefaultContainerTheme = null) { 
+			super(theme ? theme : UIManager.getInstance().theme.panelTheme);
 			this.setSize(w, h);
 			this.$owner = owner;
 			this.$model = model;
@@ -193,6 +190,10 @@ package org.libra.ui.flash.components {
 			return $autoCenter;
 		}
 		
+		public function set autoCenter(val:Boolean):void{
+			$autoCenter = val;
+		}
+		
 		public function get activated():Boolean {
 			return $activated;
 		}
@@ -201,33 +202,35 @@ package org.libra.ui.flash.components {
 			$activated = value;
 		}
 		
+		override public function clone():Component {
+			return new JPanel(this.$owner, $actualWidth, $actualHeight, $resName, $model, $theme);
+		}
+		
+		override public function toXML():XML {
+			const xml:XML = super.toXML();
+			if (this.$id.indexOf('component') == -1) {
+				xml["@var"] = this.$id;
+			}
+			for (var i:int = 0; i < $numComponent; i += 1) {
+				var tmpXML:XML = this.$componentList[i].toXML();
+				if($componentList[i].id.indexOf('component') == -1){
+					tmpXML["@var"] = $componentList[i].id;
+				}
+				xml.appendChild(tmpXML);
+			}
+			return xml;
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function init():void {
 			super.init();
-			initBackground();
 			if ($loader) {
 				$loader.unloadAndStop();
 				$loader = null;
 			}
-		}
-		
-		protected function initBackground():void {
-			var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(AssetsStorage.getInstance().getBitmapData($theme.resName), 
-				$actualWidth, $actualHeight, $theme.scale9Rect);
-			if (this.$background && this.$background is Bitmap) {
-				const bitmap:Bitmap = $background as Bitmap;
-				if (bitmap.bitmapData) bitmap.bitmapData.dispose();
-				bitmap.bitmapData = bmd;
-			}else {
-				background = new Bitmap(bmd);
-			}
-		}
-		
-		override protected function resize():void {
-			initBackground();
 		}
 		
 		protected function getBmdFromLoader(bmdName:String):BitmapData {

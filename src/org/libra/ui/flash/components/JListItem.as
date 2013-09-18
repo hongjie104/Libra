@@ -1,6 +1,7 @@
 package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.core.state.BaseListItemState;
 	import org.libra.ui.flash.core.state.ISelectState;
@@ -35,7 +36,7 @@ package org.libra.ui.flash.components {
 		private var $curState:int;
 		
 		public function JListItem(x:int = 0, y:int = 0) { 
-			super(x, y);
+			super(null, x, y);
 			this.mouseChildren = this.mouseEnabled = true;
 			initStatue();
 			this.setSize(100, 20);
@@ -63,6 +64,10 @@ package org.libra.ui.flash.components {
 		
 		public function get data():*{
 			return this.$data;
+		}
+		
+		override public function clone():Component {
+			return new JListItem(x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

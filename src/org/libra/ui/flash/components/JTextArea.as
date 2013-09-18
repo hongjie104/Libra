@@ -4,6 +4,7 @@ package org.libra.ui.flash.components {
 	import flash.text.TextFieldType;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.BaseText;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.flash.theme.DefaultTheme;
@@ -65,6 +66,13 @@ package org.libra.ui.flash.components {
 			   invalidate(InvalidationFlag.STATE);
 		   }
         }
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function clone():Component {
+			return new JTextArea($theme, x, y, $text);
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

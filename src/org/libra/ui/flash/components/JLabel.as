@@ -1,5 +1,6 @@
 package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseText;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	
@@ -34,6 +35,10 @@ package org.libra.ui.flash.components {
 			super.initTextField(text);
 			this.textAlign = 'left';
 			this.text = text;
+		}
+		
+		override public function clone():Component {
+			return new JLabel($theme, x, y, $text);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

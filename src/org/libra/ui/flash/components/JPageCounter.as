@@ -96,6 +96,10 @@ package org.libra.ui.flash.components {
 			return $val;
 		}
 		
+		override public function clone():Component {
+			return new JPageCounter($theme, $maxVal, $minVal, x, y);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

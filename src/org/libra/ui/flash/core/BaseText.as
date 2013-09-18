@@ -3,6 +3,7 @@ package org.libra.ui.flash.core {
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
+	import flash.utils.getQualifiedClassName;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.flash.theme.Filter;
@@ -136,6 +137,11 @@ package org.libra.ui.flash.core {
 		/*-----------------------------------------------------------------------------------------
 		Getters and setter
 		-------------------------------------------------------------------------------------------*/
+		
+		public function set theme(theme:DefaultTextTheme):void {
+			$theme = theme;
+			this.invalidate(InvalidationFlag.STYLE);
+		}
 		
 		/**
 		 * 设置文本
@@ -281,17 +287,21 @@ package org.libra.ui.flash.core {
 			this.$textField.setTextFormat(tf);
 		}
 		
-		public function get defaultFilter():String {
-			return $defaultFilter.toString();
+		public function get defaultFilter():Boolean {
+			return $defaultFilter;
 		}
 		
-		public function set defaultFilter(value:String):void {
-			$defaultFilter = value == 'true';
+		public function set defaultFilter(value:Boolean):void {
+			$defaultFilter = value;
 			this.textFilter = $defaultFilter ? Filter.BLACK : null;
 		}
 		
+		override public function clone():Component {
+			return new BaseText($theme, x, y, $text);
+		}
+		
 		override public function toXML():XML {
-			const tmpAry:Array = toString().split('::');
+			const tmpAry:Array = getQualifiedClassName(this).split('::');
 			return new XML('<' + tmpAry[tmpAry.length - 1] + ' ' + 
 							(x ? 'x="' + x + '" ' : '') + 
 							(y ? 'y="' + y + '" ' : '') + 
@@ -334,6 +344,12 @@ package org.libra.ui.flash.core {
 		
 		override protected function refreshText():void {
 			$textField.text = $text ? $text : $htmlText;
+		}
+		
+		override protected function refreshStyle():void {
+			this.setSize($theme.width, $theme.height);
+			setFont($theme.font);
+			$textField.filters = $theme.filter;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

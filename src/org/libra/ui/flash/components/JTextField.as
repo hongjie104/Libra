@@ -1,5 +1,6 @@
 package org.libra.ui.flash.components {
 	import flash.text.TextFieldType;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.flash.theme.DefaultTheme;
@@ -48,6 +49,12 @@ package org.libra.ui.flash.components {
 		
 		public function get displayAsPassword():Boolean {
 			return $textField.displayAsPassword;
+		}
+		
+		override public function clone():Component {
+			const tf:JTextField = new JTextField($theme, x, y, $text);
+			tf.displayAsPassword = this.displayAsPassword;
+			return tf;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

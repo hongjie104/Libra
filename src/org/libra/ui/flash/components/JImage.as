@@ -41,6 +41,10 @@ package org.libra.ui.flash.components {
 			this.invalidate(InvalidationFlag.DATA);
 		}
 		
+		override public function clone():Component {
+			return new JImage($bitmapData, x, y);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

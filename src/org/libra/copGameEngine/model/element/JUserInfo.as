@@ -18,13 +18,13 @@ package org.libra.copGameEngine.model.element {
 		
 		protected var $password:String;
 		
-		protected var $id:String;
-		
-		protected var $type:int;
-		
-		protected var $name:String;
-		
-		protected var $gender:int;
+		//protected var $id:String;
+		//
+		//protected var $type:int;
+		//
+		//protected var $name:String;
+		//
+		//protected var $gender:int;
 		
 		private static var instance:JUserInfo;
 		
@@ -41,41 +41,41 @@ package org.libra.copGameEngine.model.element {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function get id():String {
-			return $id;
-		}
-		
-		public function set id(value:String):void {
-			$id = value;
-		}
-		
-		public function get type():int {
-			return $type;
-		}
-		
-		public function set type(value:int):void {
-			$type = value;
-		}
+		//public function get id():String {
+			//return $id;
+		//}
+		//
+		//public function set id(value:String):void {
+			//$id = value;
+		//}
+		//
+		//public function get type():int {
+			//return $type;
+		//}
+		//
+		//public function set type(value:int):void {
+			//$type = value;
+		//}
 		
 		public function get itemList():Vector.<JItem> {
 			return $itemList;
 		}
 		
-		public function get name():String {
-			return $name;
-		}
-		
-		public function set name(value:String):void {
-			$name = value;
-		}
-		
-		public function get gender():int {
-			return $gender;
-		}
-		
-		public function set gender(value:int):void {
-			$gender = value;
-		}
+		//public function get name():String {
+			//return $name;
+		//}
+		//
+		//public function set name(value:String):void {
+			//$name = value;
+		//}
+		//
+		//public function get gender():int {
+			//return $gender;
+		//}
+		//
+		//public function set gender(value:int):void {
+			//$gender = value;
+		//}
 		
 		public function get account():String {
 			return $account;

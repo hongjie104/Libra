@@ -3,8 +3,10 @@ package org.libra.ui.flash.components {
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import org.libra.ui.Constants;
+	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.managers.UIManager;
+	import org.libra.ui.flash.theme.DefaultContainerTheme;
 	import org.libra.ui.flash.theme.DefaultProgressBarTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.asset.AssetsStorage;
@@ -25,19 +27,19 @@ package org.libra.ui.flash.components {
 	 */
 	public class JProgressBar extends Container {
 		
-		private var $theme:DefaultProgressBarTheme;
-		
 		private var $maskShape:Shape;
 		
 		private var $barShape:Shape;
 		
 		private var $progress:Number;
 		
+		protected var $progressBarTheme:DefaultProgressBarTheme;
+		
 		public function JProgressBar(theme:DefaultProgressBarTheme = null, x:int = 0, y:int = 0) { 
-			super(x, y);
+			super(null, x, y);
 			$progress = .0;
-			this.$theme = theme ? theme : UIManager.getInstance().theme.progressBarTheme;
-			setSize($theme.width, $theme.height);
+			$progressBarTheme = theme ? theme : UIManager.getInstance().theme.progressBarTheme;
+			setSize($progressBarTheme.width, $progressBarTheme.height);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -55,8 +57,8 @@ package org.libra.ui.flash.components {
 			function createShape():Shape {
 				var s:Shape = new Shape();
 				s.cacheAsBitmap = true;
-				s.x = $theme.barX;
-				s.y = $theme.barY;
+				s.x = $progressBarTheme.barX;
+				s.y = $progressBarTheme.barY;
 				return s;
 			}
 		}
@@ -64,6 +66,14 @@ package org.libra.ui.flash.components {
 		public function setProgress(val:Number):void {
 			$progress = val;
 			invalidate(InvalidationFlag.DATA);
+		}
+		
+		override public function clone():Component {
+			return new JProgressBar($progressBarTheme, x, y);
+		}
+		
+		override public function set theme(value:DefaultContainerTheme):void {
+			throw new Error('JProgressBar的主题无法使用该属性赋值');
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -77,15 +87,15 @@ package org.libra.ui.flash.components {
 				}
 			}
 			if ($actualWidth > 0 && $actualHeight > 0) {
-				background = new Bitmap(BitmapDataUtil.getScale3BitmapData(AssetsStorage.getInstance().getBitmapData($theme.barBgResName), $actualWidth, $theme.barBgScale9Rect, Constants.HORIZONTAL));
-				var barBmd:BitmapData = BitmapDataUtil.getScale3BitmapData(AssetsStorage.getInstance().getBitmapData($theme.barResName), $theme.barWidth, $theme.barScale9Rect, Constants.HORIZONTAL);
+				background = new Bitmap(BitmapDataUtil.getScale3BitmapData(AssetsStorage.getInstance().getBitmapData($progressBarTheme.barBgSkin), $actualWidth, $progressBarTheme.barBgScale9Rect, Constants.HORIZONTAL));
+				var barBmd:BitmapData = BitmapDataUtil.getScale3BitmapData(AssetsStorage.getInstance().getBitmapData($progressBarTheme.barSkin), $progressBarTheme.barWidth, $progressBarTheme.barScale9Rect, Constants.HORIZONTAL);
 				GraphicsUtil.drawRectWithBmd($maskShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
 				GraphicsUtil.drawRectWithBmd($barShape.graphics, 0, 0, barBmd.width, barBmd.height, barBmd);
 			}
 		}
 		
 		override protected function refreshData():void {
-			$maskShape.x = this.$progress * $theme.barWidth - $theme.barWidth + $theme.barX;
+			$maskShape.x = this.$progress * $progressBarTheme.barWidth - $progressBarTheme.barWidth + $progressBarTheme.barX;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

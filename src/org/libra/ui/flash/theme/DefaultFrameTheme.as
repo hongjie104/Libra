@@ -13,12 +13,12 @@ package org.libra.ui.flash.theme {
 	 * @version 1.0
 	 * @see
 	 */
-	public class DefaultFrameTheme extends DefaultPanelTheme {
+	public class DefaultFrameTheme extends DefaultContainerTheme {
 		
 		private var $closeBtnTheme:DefaultBtnTheme;
 		
-		public function DefaultFrameTheme(resName:String, scale9Rect:Rectangle) {
-			super(resName, scale9Rect);
+		public function DefaultFrameTheme(skin:String, scale9Rect:Rectangle) {
+			super(skin, scale9Rect);
 			$closeBtnTheme = new DefaultBtnTheme(21, 19, JFont.FONT_BTN, Filter.BLACK, 'btnClose');
 		}
 		

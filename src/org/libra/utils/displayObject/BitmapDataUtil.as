@@ -4,6 +4,8 @@ package org.libra.utils.displayObject {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	
+	import org.libra.log4a.Logger;
 	import org.libra.ui.Constants;
 	
 	/**
@@ -39,7 +41,15 @@ package org.libra.utils.displayObject {
          * @param scaleInfo scale9定义矩形
          * @return 处理后的位图数据
          */        
-		public static function getScale9BitmapData(source:BitmapData, w:int, h:int, scaleInfo:Rectangle):BitmapData { 
+		public static function getScale9BitmapData(source:BitmapData, w:int, h:int, scaleInfo:Rectangle):BitmapData {
+			if(!source){
+				Logger.error('getScale9BitmapData()中source是null');
+				return null;
+			}
+			if(w < 1 || h < 1){
+				Logger.error('getScale9BitmapData()中w或者h是非法值');
+				return null;
+			}
 			var sourceImgWidth:int = source.width;
 			var sourceImgHeight:int = source.height;
 			var bmpData:BitmapData = new BitmapData(w, h, true, 0x000000);

@@ -7,14 +7,14 @@ package org.libra.bmpEngine.multi {
 	 * Description
 	 * </p>
 	 *
-	 * @class RenderMovieCelip
+	 * @class RenderMovieClip
 	 * @author 鸿杰
 	 * @qq 32968210
 	 * @date 04/03/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class RenderMovieCelip extends RenderSprite implements ITickable {
+	public class RenderMovieClip extends RenderSprite implements ITickable {
 		
 		protected var $tickabled:Boolean;
 		
@@ -42,7 +42,7 @@ package org.libra.bmpEngine.multi {
 		
 		//protected var $changedSignal:Signal;
 		
-		public function RenderMovieCelip(bmdList:Vector.<BitmapData>) {
+		public function RenderMovieClip(bmdList:Vector.<BitmapData>) {
 			super(bmdList && bmdList.length ? bmdList[0] : null);
 			this.bmdList = bmdList;
 			$loop = -1;

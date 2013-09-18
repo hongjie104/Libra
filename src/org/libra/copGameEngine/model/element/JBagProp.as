@@ -18,7 +18,7 @@ package org.libra.copGameEngine.model.element {
 		protected var $count:int;
 		
 		public function JBagProp() {
-			super();
+			super(40, 40);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

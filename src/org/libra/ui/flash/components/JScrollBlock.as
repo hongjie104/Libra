@@ -45,6 +45,13 @@ package org.libra.ui.flash.components {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * @inheritDoc
+		 */
+		override public function clone():Component {
+			return new JScrollBlock($orientation, x, y);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

@@ -76,6 +76,10 @@ package org.libra.ui.flash.components {
 			return $list.dataList;
 		}
 		
+		override public function clone():Component {
+			return new JComboBox($theme, $orientation, $defaultText, x, y);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

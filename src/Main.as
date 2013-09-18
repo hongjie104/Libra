@@ -11,11 +11,12 @@ package {
 	import flash.system.Security;
 	import org.libra.bmpEngine.multi.JMultiBitmap;
 	import org.libra.bmpEngine.multi.RenderLayer;
-	import org.libra.bmpEngine.multi.RenderMovieCelip;
+	import org.libra.bmpEngine.multi.RenderMovieClip;
 	import org.libra.copGameEngine.component.JMultiBitmapDataRender;
 	import org.libra.copGameEngine.MainContext;
 	import org.libra.copGameEngine.model.element.JAnimationProp;
 	import org.libra.tick.Tick;
+	import org.libra.ui.flash.components.JCheckBoxGroup;
 	import org.libra.ui.flash.components.JPanel;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.managers.UIManager;
@@ -69,7 +70,7 @@ package {
 			AssetsStorage.getInstance().init(loader);
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
 			//testUI();
-			//testAutoCreateUI();
+			testAutoCreateUI();
 			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
@@ -77,7 +78,7 @@ package {
 			//testStarlingUI();
 			//testMultiBitmap();
 			//testCopGame();
-			test()
+			//test()
 			
 			//addChild(new SystemStatus());
 		}
@@ -91,16 +92,16 @@ package {
 			for (var i:int = 0; i < 1000; i += 1) {
 				var render:JMultiBitmapDataRender = new JMultiBitmapDataRender();
 				var bitmap:JAnimationProp = new JAnimationProp(w, h, render);
-			
+				
 				var layer:RenderLayer = new RenderLayer(w, h);
-				var sprite:RenderMovieCelip = new RenderMovieCelip(bmdList);
+				var sprite:RenderMovieClip = new RenderMovieClip(bmdList);
 				//sprite.frameRate = 12;
 				sprite.play();
 				layer.addItem(sprite);
 				render.addLayer(layer);
-				this.addChild(bitmap.bitmap);
-				bitmap.bitmap.x = MathUtil.random(0, stage.stageWidth);
-				bitmap.bitmap.y = MathUtil.random(0, stage.stageHeight);
+				this.addChild(bitmap.displayObject);
+				bitmap.x = MathUtil.random(0, stage.stageWidth);
+				bitmap.y = MathUtil.random(0, stage.stageHeight);
 				//Tick.getInstance().addItem(bitmap);
 				Tick.getInstance().addItem(sprite);
 			}
@@ -134,11 +135,13 @@ package {
 			  <JLabel width="120" height="20" text="org.libra.ui.flash.components::JLabel" textColor="16777215" textAlign="left"/>
 			</Container>
 			</View>;*/
-			var xml:XML = <View>
-			     <JButton width="43" height="26" toolTipText="这是按钮" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center" x="110" y="105"/>
-				 <JTextField width="120" height="20" text="org.libra.ui.flash.components::JTextField" textColor="3355443" textAlign="left" displayAsPassword="true" x="60" y="71"/>
-			</View>;
-			
+			var xml:XML = <JPanel x="159" y="94" width="300" height="200">
+						  <JCheckBoxGroup x="35" y="74" width="200" height="20">
+							<JCheckBox width="54" height="20" text="勾选框" textColor="16759090" textAlign="center"/>
+							<JCheckBox x="59" width="54" height="20" text="勾选框" textColor="16759090" textAlign="center"/>
+							<JCheckBox x="118" width="54" height="20" text="勾选框" textColor="16759090" textAlign="center" selected="true"/>
+						  </JCheckBoxGroup>
+						</JPanel>;
 			var uiContainer:Container = new Container();
 			uiContainer.setSize(stage.stageWidth, stage.stageHeight);
 			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());

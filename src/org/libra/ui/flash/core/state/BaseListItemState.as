@@ -48,7 +48,7 @@ package org.libra.ui.flash.core.state {
 			this.$height = h;
 		}
 		
-		public function set resName(val:String):void {
+		public function set skin(val:String):void {
 			
 		}
 		

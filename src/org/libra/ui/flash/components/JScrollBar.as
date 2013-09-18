@@ -153,6 +153,13 @@ package org.libra.ui.flash.components {
 			this.$scrollSlider.changeValue(add);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
+		override public function clone():Component {
+			return new JScrollBar($orientation, x, y);
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

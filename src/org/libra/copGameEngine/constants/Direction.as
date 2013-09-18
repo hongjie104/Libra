@@ -1,43 +1,41 @@
-package org.libra.copGameEngine.model.element.animation {
-	
+package org.libra.copGameEngine.constants {
 	/**
 	 * <p>
-	 * 人物动作控制器
+	 * Description
 	 * </p>
 	 *
-	 * @class Action
-	 * @author Eddie
+	 * @class Direction
+	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 04/30/2013
+	 * @date 09/06/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class Action {
+	public final class Direction {
 		
-		/**
-		 * 本类实例
-		 */
-		private static var instance:Action;
+		public static const UP:int = 0;
 		
-		/**
-		 * 站立的动作
-		 */
-		private var stand:ActionInfo;
+		public static const LEFT_UP:int = 1;
 		
-		/**
-		 * Constructor
-		 */
-		public function Action(singleton:Singleton) {
-			//{1:{head:{x:0,y:0:frame:0},body:{}}}
+		public static const LEFT:int = 2;
+		
+		public static const LEFT_DOWN:int = 3;
+		
+		public static const DOWN:int = 4;
+		
+		public static const RIGHT_DOWN:int = 5;
+		
+		public static const RIGHT:int = 6;
+		
+		public static const RIGHT_UP:int = 7;
+		
+		public function Direction() {
+			throw new Error('Direction无法实例化')
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		public static function getInstance():Action {
-			return instance ||= new Action(new Singleton);
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -48,6 +46,5 @@ package org.libra.copGameEngine.model.element.animation {
 		-------------------------------------------------------------------------------------------*/
 		
 	}
-}
 
-final class Singleton{}
+}

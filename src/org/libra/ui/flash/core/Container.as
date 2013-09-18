@@ -1,11 +1,17 @@
 package org.libra.ui.flash.core {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import org.libra.ui.flash.interfaces.IComponent;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IDragable;
 	import org.libra.ui.flash.interfaces.IDropable;
+	import org.libra.ui.flash.managers.UIManager;
+	import org.libra.ui.flash.theme.DefaultContainerTheme;
 	import org.libra.ui.flash.UIClassMap;
+	import org.libra.utils.asset.AssetsStorage;
+	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
@@ -42,15 +48,18 @@ package org.libra.ui.flash.core {
 		 */
 		private var $dropAcceptList:Vector.<IDragable>;
 		
+		protected var $theme:DefaultContainerTheme;
+		
 		/**
 		 * 构造函数
 		 * @param	x 横坐标
 		 * @param	y 纵坐标
 		 */
-		public function Container(x:int = 0, y:int = 0) { 
+		public function Container(theme:DefaultContainerTheme = null, x:int = 0, y:int = 0) { 
 			super(x, y);
 			$componentList = new Vector.<IComponent>();
 			$numComponent = 0;
+			this.$theme = theme ? theme : UIManager.getInstance().theme.containerTheme;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -154,6 +163,10 @@ package org.libra.ui.flash.core {
 			}
 			$componentList.length = 0;
 			this.$numComponent = 0;
+		}
+		
+		public function get componentList():Vector.<IComponent> {
+			return $componentList;
 		}
 		
 		/**
@@ -294,9 +307,40 @@ package org.libra.ui.flash.core {
 			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
+		override public function clone():Component {
+			return new Container($theme, x, y);
+		}
+		
+		public function set theme(val:DefaultContainerTheme):void {
+			
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
+		
+		override protected function init():void {
+			super.init();
+			initBackground();
+		}
+		
+		override protected function resize():void {
+			initBackground();
+		}
+		
+		protected function initBackground():void {
+			if ($theme.skin) {
+				var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(AssetsStorage.getInstance().getBitmapData($theme.skin), 
+					$actualWidth, $actualHeight, $theme.scale9Rect);
+				if (this.$background && this.$background is Bitmap) {
+					const bitmap:Bitmap = $background as Bitmap;
+					if (bitmap.bitmapData) bitmap.bitmapData.dispose();
+					bitmap.bitmapData = bmd;
+				}else {
+					background = new Bitmap(bmd);
+				}
+			}
+		}
 		
 		protected function createComps(xml:XML, root:Boolean = true):IComponent {
 			var comp:IComponent = root ? this : getCompsInstance(xml.name());
