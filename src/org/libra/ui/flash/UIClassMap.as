@@ -15,7 +15,7 @@ package org.libra.ui.flash {
 	 */
 	public final class UIClassMap {
 		
-		public static const UI_CLASS_MAP:Object = { "JButton": JButton, 'JCell':JCell, 'JCheckBox':JCheckBox, 'JCheckBoxGroup':JCheckBoxGroup, 'JComboBox':JComboBox, 
+		public static const UI_CLASS_MAP:Object = { "JButton": JButton, 'JCheckBox':JCheckBox, 'JCheckBoxGroup':JCheckBoxGroup, 'JComboBox':JComboBox, 
 			'JCountDown':JCountDown, 'JFrame':JFrame, 'JImage':JImage, 'JLabel':JLabel, 'JList':JList, 'JListItem':JListItem, 'JPageCounter':JPageCounter, 'JPanel:':JPanel, 
 			'JProgressBar':JProgressBar, 'JScrollBar':JScrollBar, 'JScrollBlock':JScrollBlock, 'JScrollSlider':JScrollSlider, 'JSlider':JSlider, 'JTextArea':JTextArea, 
 			'JTextField':JTextField, 'Container':Container };

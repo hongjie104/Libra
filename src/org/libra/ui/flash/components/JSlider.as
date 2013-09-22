@@ -5,7 +5,7 @@ package org.libra.ui.flash.components {
 	import flash.geom.Rectangle;
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
-	import org.libra.ui.flash.theme.DefaultTheme;
+	import org.libra.ui.flash.theme.Skin;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	import org.libra.utils.MathUtil;
 	
@@ -125,14 +125,14 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function renderBack():void {
-			GraphicsUtil.drawRect(($background as Sprite).graphics, 0, 0, $actualWidth, $actualHeight, DefaultTheme.BACKGROUND);
+			GraphicsUtil.drawRect(($background as Sprite).graphics, 0, 0, $actualWidth, $actualHeight, Skin.BACKGROUND);
 		}
 		
 		protected function renderBlock():void {
 			if (this.$orientation == Constants.HORIZONTAL)
-				GraphicsUtil.drawRect($block.graphics, 1, 1, $actualHeight - 2, $actualHeight - 2, DefaultTheme.BUTTON_FACE);
+				GraphicsUtil.drawRect($block.graphics, 1, 1, $actualHeight - 2, $actualHeight - 2, Skin.BUTTON_FACE);
 			else 
-				GraphicsUtil.drawRect($block.graphics, 1, 1, $actualWidth - 2, $actualWidth - 2, DefaultTheme.BUTTON_FACE);
+				GraphicsUtil.drawRect($block.graphics, 1, 1, $actualWidth - 2, $actualWidth - 2, Skin.BUTTON_FACE);
 			positionBlock();
 		}
 		

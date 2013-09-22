@@ -15,7 +15,7 @@ package org.libra.ui.flash.theme {
 	 */
 	public final class Filter {
 		
-		public static const SHADOW_FILTER:Array = [new DropShadowFilter(2, 45, DefaultTheme.DROPSHADOW, 1, 4, 4, .3, 1)];
+		public static const SHADOW_FILTER:Array = [new DropShadowFilter(2, 45, Skin.DROPSHADOW, 1, 4, 4, .3, 1)];
 		
 		/**
 		 * 黑色字体描边

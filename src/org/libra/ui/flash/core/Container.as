@@ -8,7 +8,7 @@ package org.libra.ui.flash.core {
 	import org.libra.ui.flash.interfaces.IDragable;
 	import org.libra.ui.flash.interfaces.IDropable;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultContainerTheme;
+	import org.libra.ui.flash.theme.ContainerSkin;
 	import org.libra.ui.flash.UIClassMap;
 	import org.libra.utils.asset.AssetsStorage;
 	import org.libra.utils.displayObject.BitmapDataUtil;
@@ -48,18 +48,18 @@ package org.libra.ui.flash.core {
 		 */
 		private var $dropAcceptList:Vector.<IDragable>;
 		
-		protected var $theme:DefaultContainerTheme;
+		protected var $skin:ContainerSkin;
 		
 		/**
 		 * 构造函数
 		 * @param	x 横坐标
 		 * @param	y 纵坐标
 		 */
-		public function Container(theme:DefaultContainerTheme = null, x:int = 0, y:int = 0) { 
+		public function Container(x:int = 0, y:int = 0, skin:ContainerSkin = null) { 
 			super(x, y);
 			$componentList = new Vector.<IComponent>();
 			$numComponent = 0;
-			this.$theme = theme ? theme : UIManager.getInstance().theme.containerTheme;
+			this.$skin = skin ? skin : UIManager.getInstance().skin.containerSkin;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -308,11 +308,11 @@ package org.libra.ui.flash.core {
 		}
 		
 		override public function clone():Component {
-			return new Container($theme, x, y);
+			return new Container(x, y, $skin);
 		}
 		
-		public function set theme(val:DefaultContainerTheme):void {
-			
+		public function set skin(val:ContainerSkin):void {
+			initBackground();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -329,9 +329,9 @@ package org.libra.ui.flash.core {
 		}
 		
 		protected function initBackground():void {
-			if ($theme.skin) {
-				var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(AssetsStorage.getInstance().getBitmapData($theme.skin), 
-					$actualWidth, $actualHeight, $theme.scale9Rect);
+			if ($skin.skin) {
+				var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(AssetsStorage.getInstance().getBitmapData($skin.skin), 
+					$actualWidth, $actualHeight, $skin.scale9Rect);
 				if (this.$background && this.$background is Bitmap) {
 					const bitmap:Bitmap = $background as Bitmap;
 					if (bitmap.bitmapData) bitmap.bitmapData.dispose();

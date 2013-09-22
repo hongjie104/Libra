@@ -6,7 +6,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.state.BaseCheckBoxState;
 	import org.libra.ui.flash.core.state.ISelectState;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultBtnTheme;
+	import org.libra.ui.flash.theme.BtnSkin;
+	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
@@ -35,8 +36,8 @@ package org.libra.ui.flash.components {
 		 */
 		private var $group:JCheckBoxGroup;
 		
-		public function JCheckBox(theme:DefaultBtnTheme = null, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme ? theme : UIManager.getInstance().theme.checkBoxTheme, x, y, text);
+		public function JCheckBox(x:int = 0, y:int = 0, skin:BtnSkin = null, text:String = null, font:JFont = null, filters:Array = null) { 
+			super(x, y, skin ? skin : UIManager.getInstance().skin.checkBoxSkin, text, font ? font : JFont.FONT_LABEL, filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -60,7 +61,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		override public function clone():Component {
-			return new JCheckBox($theme as DefaultBtnTheme, x, y, $text);
+			return new JCheckBox(x, y, $skin, $text, $font, $filters);
 		}
 		
 		override public function toXML():XML {
@@ -72,9 +73,10 @@ package org.libra.ui.flash.components {
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
+		
 		override protected function initState():void {
 			this.$state = new BaseCheckBoxState($loader);
-			this.$state.skin = ($theme as DefaultBtnTheme).skin;
+			this.$state.skin = $skin.skin;
 			this.addChildAt(this.$state.displayObject, 0);
 			
 			setTextLocation(18, 0);
@@ -87,6 +89,10 @@ package org.libra.ui.flash.components {
 				if (this.$group) this.$group.setCheckBoxUnselected(this);
 				dispatchEvent(new Event(Event.SELECT));
 			}
+		}
+		
+		override protected function refreshStyle():void {
+			this.$state.skin = $skin.skin;
 		}
 		
 		protected function toSelected():void {

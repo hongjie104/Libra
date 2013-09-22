@@ -1,23 +1,26 @@
 package org.libra.ui.flash.theme {
+	import flash.geom.Rectangle;
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class DefaultBtnTheme
+	 * @class ContainerSkin
 	 * @author 鸿杰
 	 * @qq 32968210
 	 * @date 03/27/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class DefaultBtnTheme extends DefaultTextTheme {
+	public class ContainerSkin {
 		
 		protected var $skin:String;
 		
-		public function DefaultBtnTheme(w:int, h:int, font:JFont, filter:Array, skin:String) { 
-			super(w, h, font, filter);
-			$skin = skin;
+		protected var $scale9Rect:Rectangle;
+		
+		public function ContainerSkin(skin:String, scale9Rect:Rectangle) { 
+			this.$skin = skin;
+			this.$scale9Rect = scale9Rect;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -26,6 +29,10 @@ package org.libra.ui.flash.theme {
 		
 		public function get skin():String {
 			return $skin;
+		}
+		
+		public function get scale9Rect():Rectangle {
+			return $scale9Rect;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

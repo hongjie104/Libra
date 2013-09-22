@@ -14,7 +14,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.interfaces.IPanel;
 	import org.libra.ui.flash.managers.LayoutManager;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultContainerTheme;
+	import org.libra.ui.flash.theme.ContainerSkin;
 	import org.libra.URI;
 	import org.libra.utils.displayObject.DepthUtil;
 	import org.libra.utils.ReflectUtil;
@@ -89,8 +89,8 @@ package org.libra.ui.flash.components {
 		
 		protected var $activated:Boolean;
 		
-		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, theme:DefaultContainerTheme = null) { 
-			super(theme ? theme : UIManager.getInstance().theme.panelTheme);
+		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, skin:ContainerSkin = null) { 
+			super(0, 0, skin ? skin : UIManager.getInstance().skin.panelSkin);
 			this.setSize(w, h);
 			this.$owner = owner;
 			this.$model = model;
@@ -203,7 +203,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		override public function clone():Component {
-			return new JPanel(this.$owner, $actualWidth, $actualHeight, $resName, $model, $theme);
+			return new JPanel(this.$owner, $actualWidth, $actualHeight, $resName, $model, $skin);
 		}
 		
 		override public function toXML():XML {

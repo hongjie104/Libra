@@ -2,7 +2,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.managers.LayoutManager;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultContainerTheme;
+	import org.libra.ui.flash.theme.ContainerSkin;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
@@ -23,8 +23,8 @@ package org.libra.ui.flash.components {
 		
 		protected var $progress:Number;
 		
-		public function JLoadingPanel(owner:IContainer, theme:DefaultContainerTheme = null, w:int = 300, h:int = 200) { 
-			super(owner, w, h, '', true, theme ? theme : UIManager.getInstance().theme.panelTheme);
+		public function JLoadingPanel(owner:IContainer, skin:ContainerSkin = null, w:int = 300, h:int = 200) { 
+			super(owner, w, h, '', true, skin ? skin : UIManager.getInstance().skin.panelSkin);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ package org.libra.ui.flash.components {
 		
 		override protected function init():void {
 			super.init();
-			$progressBar = new JProgressBar(UIManager.getInstance().theme.progressBarTheme);
+			$progressBar = new JProgressBar(0, 0, UIManager.getInstance().skin.progressBarSkin);
 			this.append($progressBar);
 		}
 		

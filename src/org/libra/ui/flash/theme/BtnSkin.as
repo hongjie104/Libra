@@ -4,47 +4,33 @@ package org.libra.ui.flash.theme {
 	 * Description
 	 * </p>
 	 *
-	 * @class DefaultPageCounterTheme
-	 * @author Eddie
+	 * @class BtnSkin
+	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 03/31/2013
+	 * @date 03/27/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class DefaultPageCounterTheme {
+	public class BtnSkin {
 		
-		protected var $prevBtnTheme:DefaultBtnTheme;
-		
-		protected var $nextBtnTheme:DefaultBtnTheme;
-		
-		protected var $countLabelTheme:DefaultTextTheme;
+		protected var $skin:String;
 		
 		protected var $width:int;
 		
 		protected var $height:int;
 		
-		public function DefaultPageCounterTheme(prevBtnTheme:DefaultBtnTheme, nextBtnTheme:DefaultBtnTheme, countLabelTheme:DefaultTextTheme, width:int = 80, height:int = 20) { 
-			$prevBtnTheme = prevBtnTheme;
-			$nextBtnTheme = nextBtnTheme;
-			$countLabelTheme = countLabelTheme;
-			$width = width;
-			$height = height;
+		public function BtnSkin(w:int, h:int, skin:String) { 
+			$width = w;
+			$height = h;
+			$skin = skin;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public function get prevBtnTheme():DefaultBtnTheme {
-			return $prevBtnTheme;
-		}
-		
-		public function get nextBtnTheme():DefaultBtnTheme {
-			return $nextBtnTheme;
-		}
-		
-		public function get countLabelTheme():DefaultTextTheme {
-			return $countLabelTheme;
+		public function get skin():String {
+			return $skin;
 		}
 		
 		public function get width():int {

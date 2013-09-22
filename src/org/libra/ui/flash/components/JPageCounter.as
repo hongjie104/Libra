@@ -3,7 +3,6 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultPageCounterTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.MathUtil;
 	
@@ -33,12 +32,9 @@ package org.libra.ui.flash.components {
 		
 		protected var $counterLabel:JLabel;
 		
-		protected var $theme:DefaultPageCounterTheme;
-		
-		public function JPageCounter(theme:DefaultPageCounterTheme = null, maxVal:int = 100, minVal:int = 0, x:int = 0, y:int = 0) { 
+		public function JPageCounter(maxVal:int = 100, minVal:int = 0, x:int = 0, y:int = 0) { 
 			super(x, y);
-			this.$theme = theme ? theme : UIManager.getInstance().theme.pageCountTheme;
-			setSize($theme.width, $theme.height);
+			setSize(80, 20);
 			this.maxVal = maxVal;
 			this.minVal = minVal;
 			value = minVal;
@@ -51,9 +47,9 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			
-			this.$prevBtn = new JButton($theme.prevBtnTheme);
-			this.$nextBtn = new JButton($theme.nextBtnTheme);
-			this.$counterLabel = new JLabel($theme.countLabelTheme);
+			this.$prevBtn = new JButton(0, 0, UIManager.getInstance().skin.hScrollLefttBtnSkin);
+			this.$nextBtn = new JButton(0, 0, UIManager.getInstance().skin.hScrollRightBtnSkin);
+			this.$counterLabel = new JLabel();
 			$counterLabel.textAlign = 'center';
 			this.addChild($prevBtn);
 			this.addChild($nextBtn);
@@ -97,19 +93,25 @@ package org.libra.ui.flash.components {
 		}
 		
 		override public function clone():Component {
-			return new JPageCounter($theme, $maxVal, $minVal, x, y);
+			return new JPageCounter($maxVal, $minVal, x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function resize():void {
 			this.$nextBtn.x = $actualWidth - $nextBtn.width;
 			this.$counterLabel.width = $actualWidth - $prevBtn.width - $nextBtn.width;
 			this.$counterLabel.x = $prevBtn.width;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function refreshData():void {
 			this.$counterLabel.text = $val + '/' + $maxVal;
 			dispatchEvent(new Event(Event.CHANGE));

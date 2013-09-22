@@ -61,18 +61,18 @@ package org.libra.ui.flash.components {
 			
 			$back = new Bitmap();
 			this.addChild($back);
-			$fore = new Bitmap(AssetsStorage.getInstance().getBitmapData($orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.scrollBlockTheme.hScrollThumb : UIManager.getInstance().theme.scrollBlockTheme.vScrollThumb));
+			$fore = new Bitmap(AssetsStorage.getInstance().getBitmapData($orientation == Constants.HORIZONTAL ? UIManager.getInstance().skin.scrollBlockSkin.hScrollThumb : UIManager.getInstance().skin.scrollBlockSkin.vScrollThumb));
 			this.addChild($fore);
 		}
 		
 		override protected function resize():void {
 			if ($back.bitmapData) $back.bitmapData.dispose();
 			if ($orientation == Constants.HORIZONTAL) {
-				var source:BitmapData = AssetsStorage.getInstance().getBitmapData(UIManager.getInstance().theme.scrollBlockTheme.hScrollBtnBg);
-				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().theme.scrollBlockTheme.hScrollBtnScale9Rect);
+				var source:BitmapData = AssetsStorage.getInstance().getBitmapData(UIManager.getInstance().skin.scrollBlockSkin.hScrollBtnBg);
+				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().skin.scrollBlockSkin.hScrollBtnScale9Rect);
 			}else {
-				source = AssetsStorage.getInstance().getBitmapData(UIManager.getInstance().theme.scrollBlockTheme.vScrollBtnBg);
-				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().theme.scrollBlockTheme.vScrollBtnScale9Rect);
+				source = AssetsStorage.getInstance().getBitmapData(UIManager.getInstance().skin.scrollBlockSkin.vScrollBtnBg);
+				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().skin.scrollBlockSkin.vScrollBtnScale9Rect);
 			}
 			$fore.x = ($actualWidth - $fore.width) >> 1;
 			$fore.y = ($actualHeight - $fore.height) >> 1;

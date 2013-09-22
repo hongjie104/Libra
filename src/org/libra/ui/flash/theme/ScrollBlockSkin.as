@@ -12,7 +12,7 @@ package org.libra.ui.flash.theme {
 	 * @version 1.0
 	 * @see
 	 */
-	public class DefaultScrollBlockTheme {
+	public class ScrollBlockSkin {
 		
 		protected var $hScrollThumb:String;
 		
@@ -26,7 +26,7 @@ package org.libra.ui.flash.theme {
 		
 		private var $vScrollBtnScale9Rect:Rectangle;
 		
-		public function DefaultScrollBlockTheme(vScrollThumb:String, vScrollBtnBg:String, vScrollBtnScale9Rect:Rectangle, hScrollThumb:String = '', hScrollBtnBg:String = '', hScrollBtnScale9Rect:Rectangle = null) { 
+		public function ScrollBlockSkin(vScrollThumb:String, vScrollBtnBg:String, vScrollBtnScale9Rect:Rectangle, hScrollThumb:String = '', hScrollBtnBg:String = '', hScrollBtnScale9Rect:Rectangle = null) { 
 			this.$vScrollBtnBg = vScrollBtnBg;
 			this.$vScrollThumb = vScrollThumb;
 			this.$vScrollBtnScale9Rect = vScrollBtnScale9Rect;

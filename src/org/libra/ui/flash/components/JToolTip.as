@@ -2,7 +2,6 @@ package org.libra.ui.flash.components {
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldAutoSize;
-	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.asset.AssetsStorage;
@@ -24,7 +23,7 @@ package org.libra.ui.flash.components {
 		private static var instance:JLabel;
 		
 		public function JToolTip(singleton:Singleton) {
-			super(UIManager.getInstance().theme.labelTheme);
+			super();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

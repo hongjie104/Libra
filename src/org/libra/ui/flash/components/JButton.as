@@ -2,7 +2,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.BaseButton;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultBtnTheme;
+	import org.libra.ui.flash.theme.BtnSkin;
+	import org.libra.ui.flash.theme.JFont;
 	
 	/**
 	 * <p>
@@ -25,8 +26,8 @@ package org.libra.ui.flash.components {
 		 * @param	y
 		 * @param	text
 		 */
-		public function JButton(theme:DefaultBtnTheme = null, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme ? theme : UIManager.getInstance().theme.btnTheme, x, y, text);
+		public function JButton(x:int = 0, y:int = 0, skin:BtnSkin = null, text:String = null, font:JFont = null, filters:Array = null) { 
+			super(x, y, skin ? skin : UIManager.getInstance().skin.btnSkin, text, font, filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function clone():Component {
-			return new JButton($theme as DefaultBtnTheme, x, y, $text);
+			return new JButton(x, y, $skin as BtnSkin, $text, $font, $filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

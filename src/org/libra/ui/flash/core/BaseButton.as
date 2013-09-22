@@ -2,10 +2,13 @@ package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	import org.libra.log4a.Logger;
 	import org.libra.ui.flash.core.state.BaseButtonState;
 	import org.libra.ui.flash.core.state.IButtonState;
-	import org.libra.ui.flash.theme.DefaultBtnTheme;
-	import org.libra.ui.flash.theme.DefaultTextTheme;
+	import org.libra.ui.flash.managers.UIManager;
+	import org.libra.ui.flash.theme.BtnSkin;
+	import org.libra.ui.flash.theme.Filter;
+	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
@@ -67,16 +70,20 @@ package org.libra.ui.flash.core {
 		 */
 		protected var $textY:int;
 		
+		protected var $skin:BtnSkin;
+		
 		/**
 		 * 构造函数
-		 * @param   theme 按钮主题
+		 * @param   skin 按钮主题
 		 * @param	x 横坐标
 		 * @param	y 纵坐标
 		 * @param	text 按钮文本
 		 */
-		public function BaseButton(theme:DefaultBtnTheme, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme, x, y, text);
+		public function BaseButton(x:int = 0, y:int = 0, skin:BtnSkin = null, text:String = null, font:JFont = null, filters:Array = null) { 
+			super(x, y, text, font ? font : JFont.FONT_BTN, filters ? filters : Filter.BLACK);
+			$skin = skin;
 			$curState = NORMAL;
+			setSize(skin.width, skin.height);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -95,14 +102,29 @@ package org.libra.ui.flash.core {
 			this.initState();
 		}
 		
-		override public function clone():Component {
-			return new BaseButton(this.$theme as DefaultBtnTheme, this.x, this.y, this.text);
+		override public function toXML():XML {
+			const xml:XML = super.toXML();
+			xml.@skinStr = this.$skin.width + '&' + this.$skin.height + '&' + this.$skin.skin;
+			return xml;
 		}
 		
-		override public function set theme(value:DefaultTextTheme):void {
-			if (value is DefaultBtnTheme) {
-				super.theme = value;
+		override public function clone():Component {
+			return new BaseButton(this.x, this.y, this.$skin, this.text, $font, $filters);
+		}
+		
+		public function set skinStr(val:String):void {
+			const ary:Array = val.split('&');
+			if (ary.length == 3) {
+				this.skin = new BtnSkin(ary[0], ary[1], ary[2]);
+			}else {
+				this.skin = UIManager.getInstance().skin.btnSkin;
+				Logger.error('按钮的皮肤配置格式有误:' + ary);
 			}
+		}
+		
+		public function set skin(value:BtnSkin):void {
+			$skin = value;
+			this.invalidate(InvalidationFlag.STYLE);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -117,7 +139,7 @@ package org.libra.ui.flash.core {
 		protected function initState():void {
 			this.$state = new BaseButtonState($loader);
 			$state.setSize($actualWidth, $actualHeight);
-			this.$state.skin = ($theme as DefaultBtnTheme).skin;
+			this.$state.skin = $skin.skin;
 			addChildAt(this.$state.displayObject, 0);
 		}
 		
@@ -128,8 +150,8 @@ package org.libra.ui.flash.core {
 			$textField = new TextField();
 			$textField.selectable = $textField.tabEnabled = $textField.mouseWheelEnabled = $textField.mouseEnabled = $textField.doubleClickEnabled = false;
 			$textField.multiline = false;
-			setFont($theme.font);
-			$textField.filters = $theme.filter;
+			setFont($font);
+			textFilter = $filters;
 			this.textAlign = 'center';
 			this.text = text;
 			this.addChild($textField);
@@ -171,8 +193,8 @@ package org.libra.ui.flash.core {
 		}
 		
 		override protected function refreshStyle():void {
-			super.refreshStyle();
-			this.$state.skin = ($theme as DefaultBtnTheme).skin;
+			setSize($skin.width, $skin.height);
+			this.$state.skin = $skin.skin;
 		}
 		
 		/**

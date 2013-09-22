@@ -8,7 +8,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultComboBoxTheme;
+	import org.libra.ui.flash.theme.BtnSkin;
+	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	
 	/**
@@ -46,7 +47,7 @@ package org.libra.ui.flash.components {
 		
 		private var $foldTweenLite:TweenLite;
 		
-		private var $theme:DefaultComboBoxTheme;
+		private var $pressBtnSkin:BtnSkin;
 		
 		/**
 		 * 构造函数
@@ -55,12 +56,12 @@ package org.libra.ui.flash.components {
 		 * @param	x
 		 * @param	y
 		 */
-		public function JComboBox(theme:DefaultComboBoxTheme = null, orientation:int = 4, defaultText:String = '', x:int = 0, y:int = 0) { 
+		public function JComboBox(x:int = 0, y:int = 0, defaultText:String = '', orientation:int = 4, pressBtnSkin:BtnSkin = null) { 
 			super(x, y);
-			this.$theme = theme ? theme : UIManager.getInstance().theme.comboBoxTheme;
 			this.$orientation = orientation;
 			this.$defaultText = defaultText;
-			this.setSize($theme.width, $theme.height);
+			this.$pressBtnSkin = pressBtnSkin ? pressBtnSkin : (orientation == Constants.DOWN ? UIManager.getInstance().skin.vScrollDownBtnSkin : UIManager.getInstance().skin.vScrollUpBtnSkin);
+			this.setSize(100, 20);
 			$fold = true;
 		}
 		
@@ -76,19 +77,27 @@ package org.libra.ui.flash.components {
 			return $list.dataList;
 		}
 		
+		public function set skin(value:BtnSkin):void {
+			$pressBtnSkin = value;
+			this.invalidate(InvalidationFlag.STYLE);
+		}
+		
 		override public function clone():Component {
-			return new JComboBox($theme, $orientation, $defaultText, x, y);
+			return new JComboBox(x, y, $defaultText, $orientation, $pressBtnSkin);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function init():void {
 			super.init();
 			
-			$content = new JLabel($theme.contentTheme, 0, 0, $defaultText);
-			$pressBtn = new JButton($theme.pressBtnTheme, 0, 0);
+			$content = new JLabel(0, 0, $defaultText);
+			$pressBtn = new JButton(0, 0, $pressBtnSkin);
 			this.addChildAll($content, $pressBtn);
 			
 			$list = new JList();
@@ -96,6 +105,9 @@ package org.libra.ui.flash.components {
 			GraphicsUtil.drawRect($listMask.graphics, 0, 0, 1, 1, 0, 0);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function resize():void {
 			$content.setSize($actualWidth, $actualHeight);
 			$pressBtn.setLocation($actualWidth - $pressBtn.width - 2, ($actualHeight - $pressBtn.height) >> 1);
@@ -105,7 +117,15 @@ package org.libra.ui.flash.components {
 		}
 		
 		/**
+		 * @inheritDoc
+		 */
+		override protected function refreshStyle():void {
+			$pressBtn.skin = $pressBtnSkin;
+		}
+		
+		/**
 		 * 展开
+		 * @private
 		 */
 		private function toUnfold():void {
 			if ($fold) {
@@ -130,6 +150,7 @@ package org.libra.ui.flash.components {
 		
 		/**
 		 * 折叠
+		 * @private
 		 */
 		private function toFold():void {
 			if (!$fold) {

@@ -5,14 +5,14 @@ package org.libra.ui.flash.theme {
 	 * Description
 	 * </p>
 	 *
-	 * @class DafaultProgressBarTheme
+	 * @class ProgressBarSkin
 	 * @author 鸿杰
 	 * @qq 32968210
 	 * @date 03/27/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class DefaultProgressBarTheme {
+	public class ProgressBarSkin {
 		
 		protected var $barSkin:String;
 		
@@ -32,7 +32,7 @@ package org.libra.ui.flash.theme {
 		
 		protected var $height:int;
 		
-		public function DefaultProgressBarTheme(barskin:String, barScale9Rect:Rectangle, barBgskin:String, barBgScale9Rect:Rectangle, barX:int = 29, barY:int = 1, barWidth:int = 142, w:int = 200, h:int = 18) { 
+		public function ProgressBarSkin(barskin:String, barScale9Rect:Rectangle, barBgskin:String, barBgScale9Rect:Rectangle, barX:int = 29, barY:int = 1, barWidth:int = 142, w:int = 200, h:int = 18) { 
 			this.$barSkin = barskin;
 			this.$barScale9Rect = barScale9Rect;
 			this.$barBgSkin = barBgskin;

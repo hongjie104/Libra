@@ -5,10 +5,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.Constants;
 	import org.libra.ui.flash.core.BaseText;
 	import org.libra.ui.flash.core.Component;
-	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultTextTheme;
-	import org.libra.ui.flash.theme.DefaultTheme;
 	import org.libra.ui.flash.theme.JFont;
+	import org.libra.ui.flash.theme.Skin;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
@@ -29,8 +27,8 @@ package org.libra.ui.flash.components {
 		
 		private var $scrollBarAutoHide:Boolean;
 		
-		public function JTextArea(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, text:String = '') { 
-			super(theme ? theme : UIManager.getInstance().theme.textAreaTheme, x, y, text);
+		public function JTextArea(x:int = 0, y:int = 0, text:String = '', font:JFont = null, filters:Array = null) { 
+			super(x, y, text, font ? font : JFont.FONT_LABEL, filters);
 			$scrollBarAutoHide = true;
 		}
 		
@@ -46,7 +44,7 @@ package org.libra.ui.flash.components {
 			$textField.selectable = $textField.mouseEnabled = true;
 			this.$textField.type = TextFieldType.INPUT;
 			$textField.background = true;
-			$textField.backgroundColor = DefaultTheme.BACKGROUND;
+			$textField.backgroundColor = Skin.BACKGROUND;
 		}
 		
 		/**
@@ -71,7 +69,7 @@ package org.libra.ui.flash.components {
 		 * @inheritDoc
 		 */
 		override public function clone():Component {
-			return new JTextArea($theme, x, y, $text);
+			return new JTextArea(x, y, $text, $font, $filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

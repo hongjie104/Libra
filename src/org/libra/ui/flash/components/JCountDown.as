@@ -3,8 +3,6 @@ package org.libra.ui.flash.components {
 	import org.libra.tick.ITimerable;
 	import org.libra.tick.MultiTimer;
 	import org.libra.ui.flash.core.Component;
-	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	
 	/**
@@ -29,8 +27,8 @@ package org.libra.ui.flash.components {
 		
 		protected var $prefixText:String;
 		
-		public function JCountDown(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, prefixText:String = '') { 
-			super(theme ? theme : UIManager.getInstance().theme.labelTheme, x, y);
+		public function JCountDown(x:int = 0, y:int = 0, prefixText:String = '') { 
+			super(x, y);
 			this.$prefixText = prefixText;
 		}
 		
@@ -64,7 +62,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		override public function clone():Component {
-			return new JCountDown($theme, x, y, $prefixText);
+			return new JCountDown(x, y, $prefixText);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

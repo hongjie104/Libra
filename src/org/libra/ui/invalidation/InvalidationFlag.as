@@ -59,7 +59,7 @@ package org.libra.ui.invalidation {
 		 */
 		public function InvalidationFlag() {
 			$invalidationList = [false, false, false, false, false];
-			$length = $invalidationList.$length;
+			$length = 5;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

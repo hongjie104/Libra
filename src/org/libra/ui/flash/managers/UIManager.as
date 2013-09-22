@@ -3,7 +3,7 @@ package org.libra.ui.flash.managers {
 	import flash.display.Stage;
 	import org.libra.ui.flash.components.JLoadingPanel;
 	import org.libra.ui.flash.interfaces.IContainer;
-	import org.libra.ui.flash.theme.DefaultTheme;
+	import org.libra.ui.flash.theme.Skin;
 	import org.libra.utils.ui.KeyPoll;
 	/**
 	 * <p>
@@ -46,9 +46,9 @@ package org.libra.ui.flash.managers {
 		//private var panelList:Vector.<IPanel>;
 		
 		/**
-		 * 默认的主题
+		 * 默认的皮肤
 		 */
-		private var $theme:DefaultTheme;
+		private var $skin:Skin;
 		
 		private var $uiContainer:IContainer;
 		
@@ -80,19 +80,19 @@ package org.libra.ui.flash.managers {
 		 * 在使用ui框架之前就必需初始化
 		 * @param	stage 传统显示列表中的stage
 		 */
-		public function init(stage:Stage, uiContainer:IContainer, theme:DefaultTheme):void {
+		public function init(stage:Stage, uiContainer:IContainer, skin:Skin):void {
 			this.$stage = stage;
 			this.$uiContainer = uiContainer;
-			this.$theme = theme;
+			this.$skin = skin;
 			$stage.addChild($uiContainer as DisplayObject);
 			LayoutManager.getInstance().resize(stage.stageWidth, stage.stageHeight);
 			$keyPoll = new KeyPoll(stage);
 			
-			this.$loadingPanel = new JLoadingPanel(uiContainer, theme.panelTheme);
+			this.$loadingPanel = new JLoadingPanel(uiContainer, $skin.panelSkin);
 		}
 		
-		public function get theme():DefaultTheme {
-			return $theme ||= new DefaultTheme();
+		public function get skin():Skin {
+			return $skin ||= new Skin();
 		}
 		
 		public function get keyPoll():KeyPoll {

@@ -7,9 +7,6 @@ package {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.net.URLRequest;
-	import flash.system.LoaderContext;
-	import flash.system.Security;
-	import org.libra.bmpEngine.multi.JMultiBitmap;
 	import org.libra.bmpEngine.multi.RenderLayer;
 	import org.libra.bmpEngine.multi.RenderMovieClip;
 	import org.libra.copGameEngine.component.JMultiBitmapDataRender;
@@ -20,7 +17,7 @@ package {
 	import org.libra.ui.flash.components.JPanel;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultTheme;
+	import org.libra.ui.flash.theme.Skin;
 	import org.libra.utils.asset.AssetsStorage;
 	import org.libra.utils.displayObject.BitmapDataUtil;
 	import org.libra.utils.MathUtil;
@@ -110,7 +107,7 @@ package {
 		private function testCopGame():void {
 			//Security.allowDomain('*');
 			const uiContainer:Container = new Container();
-			UIManager.getInstance().init(stage, uiContainer, new DefaultTheme());
+			UIManager.getInstance().init(stage, uiContainer, new Skin());
 			myContent = new MainContext(this);
 		}
 		
@@ -136,16 +133,18 @@ package {
 			</Container>
 			</View>;*/
 			var xml:XML = <JPanel x="159" y="94" width="300" height="200">
-						  <JCheckBoxGroup x="35" y="74" width="200" height="20">
-							<JCheckBox width="54" height="20" text="勾选框" textColor="16759090" textAlign="center"/>
-							<JCheckBox x="59" width="54" height="20" text="勾选框" textColor="16759090" textAlign="center"/>
-							<JCheckBox x="118" width="54" height="20" text="勾选框" textColor="16759090" textAlign="center" selected="true"/>
+						   <JCheckBoxGroup x="27" y="98" width="200" height="20" gap="60">
+							<JCheckBox width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
+							<JCheckBox x="60" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox" selected="true"/>
+							<JCheckBox x="120" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
 						  </JCheckBoxGroup>
+						  <JButton x="56" y="35" width="76" height="28" text="按钮" textColor="16759090" textAlign="center" skinStr="76&amp;28&amp;btnRed"/>
+						  <JButton x="200" y="41" width="43" height="26" text="按钮" textColor="16759090" textAlign="center" skinStr="43&amp;26&amp;btn"/>
 						</JPanel>;
 			var uiContainer:Container = new Container();
 			uiContainer.setSize(stage.stageWidth, stage.stageHeight);
-			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
-			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().theme.panelTheme);
+			UIManager.getInstance().init(this.stage, uiContainer, new Skin());
+			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().skin.panelSkin);
 			panel.createView(xml);
 			panel.show();
 			panel.x = panel.y = 50;

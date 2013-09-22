@@ -36,7 +36,7 @@ package org.libra.ui.flash.components {
 		private var $curState:int;
 		
 		public function JListItem(x:int = 0, y:int = 0) { 
-			super(null, x, y);
+			super(x, y);
 			this.mouseChildren = this.mouseEnabled = true;
 			initStatue();
 			this.setSize(100, 20);
@@ -81,7 +81,7 @@ package org.libra.ui.flash.components {
 		
 		override protected function init():void {
 			super.init();
-			$label = new JLabel(UIManager.getInstance().theme.labelTheme);
+			$label = new JLabel();
 			this.append($label);
 		}
 		

@@ -5,7 +5,6 @@ package org.libra.ui.flash.core {
 	import flash.text.TextFormat;
 	import flash.utils.getQualifiedClassName;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultTextTheme;
 	import org.libra.ui.flash.theme.Filter;
 	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.invalidation.InvalidationFlag;
@@ -34,11 +33,9 @@ package org.libra.ui.flash.core {
 		
 		protected var $htmlText:String;
 		
-		/**
-		 * 主题
-		 * @private
-		 */
-		protected var $theme:DefaultTextTheme;
+		protected var $font:JFont;
+		
+		protected var $filters:Array;
 		
 		/**
 		 * 是否使用默认的滤镜
@@ -53,11 +50,11 @@ package org.libra.ui.flash.core {
 		 * @param	y 纵坐标
 		 * @param	text 文本内容
 		 */
-		public function BaseText(theme:DefaultTextTheme = null, x:int = 0, y:int = 0, text:String = '') { 
+		public function BaseText(x:int = 0, y:int = 0, text:String = '', font:JFont = null, filters:Array = null) { 
 			super(x, y);
-			this.$theme = theme ? theme : UIManager.getInstance().theme.textFieldTheme;
+			this.$font = font;
+			this.$filters = filters;
 			this.initTextField(text);
-			this.setSize($theme.width, $theme.height);
 			$htmlText = '';
 			$defaultFilter = true;
 		}
@@ -111,6 +108,7 @@ package org.libra.ui.flash.core {
 		 * @param	font
 		 */
 		public function setFont(font:JFont):void {
+			if (!font) font = JFont.FONT_LABEL.clone();
 			const newTf:TextFormat = font.getTextFormat();
 			newTf.align = this.textAlign;
 			this.$textField.setTextFormat(newTf);
@@ -137,11 +135,6 @@ package org.libra.ui.flash.core {
 		/*-----------------------------------------------------------------------------------------
 		Getters and setter
 		-------------------------------------------------------------------------------------------*/
-		
-		public function set theme(theme:DefaultTextTheme):void {
-			$theme = theme;
-			this.invalidate(InvalidationFlag.STYLE);
-		}
 		
 		/**
 		 * 设置文本
@@ -297,7 +290,7 @@ package org.libra.ui.flash.core {
 		}
 		
 		override public function clone():Component {
-			return new BaseText($theme, x, y, $text);
+			return new BaseText(x, y, $text, $font, $filters);
 		}
 		
 		override public function toXML():XML {
@@ -336,20 +329,14 @@ package org.libra.ui.flash.core {
 			$textField = new TextField();
 			$textField.selectable = $textField.mouseWheelEnabled = $textField.mouseEnabled = $textField.doubleClickEnabled = false;
 			$textField.multiline = false;
-			setFont($theme.font);
-			$textField.filters = $theme.filter;
+			this.setFont(this.$font);
+			this.textFilter = $filters;
 			this.text = text;
 			this.addChild($textField);
 		}
 		
 		override protected function refreshText():void {
 			$textField.text = $text ? $text : $htmlText;
-		}
-		
-		override protected function refreshStyle():void {
-			this.setSize($theme.width, $theme.height);
-			setFont($theme.font);
-			$textField.filters = $theme.filter;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

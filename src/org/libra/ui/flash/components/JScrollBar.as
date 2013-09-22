@@ -171,9 +171,9 @@ package org.libra.ui.flash.components {
 			this.addChild($scrollSlider);
 			
 			//上下两个按钮
-			$upBtn = new JButton($orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollRightBtnTheme : UIManager.getInstance().theme.vScrollUpBtnTheme);
+			$upBtn = new JButton(0, 0, $orientation == Constants.HORIZONTAL ? UIManager.getInstance().skin.hScrollRightBtnSkin : UIManager.getInstance().skin.vScrollUpBtnSkin);
 			this.addChild($upBtn);
-			$downBtn = new JButton($orientation == Constants.HORIZONTAL ? UIManager.getInstance().theme.hScrollLefttBtnTheme : UIManager.getInstance().theme.vScrollDownBtnTheme);
+			$downBtn = new JButton(0, 0, $orientation == Constants.HORIZONTAL ? UIManager.getInstance().skin.hScrollLefttBtnSkin : UIManager.getInstance().skin.vScrollDownBtnSkin);
 			this.addChild($downBtn);
 		}
 		

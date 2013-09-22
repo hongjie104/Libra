@@ -7,7 +7,8 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultFrameTheme;
+	import org.libra.ui.flash.theme.BtnSkin;
+	import org.libra.ui.flash.theme.ContainerSkin;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	
@@ -25,23 +26,26 @@ package org.libra.ui.flash.components {
 	 */
 	public class JFrame extends JPanel {
 		
-		private var $bar:Sprite;
+		protected var $bar:Sprite;
 		
-		private var $closeBtn:JButton;
+		protected var $closeBtn:JButton;
 		
-		private var $barHeight:int;
+		protected var $barHeight:int;
 		
-		private var $dragBounds:Rectangle;
+		protected var $dragBounds:Rectangle;
 		
-		private var $title:JLabel;
+		protected var $title:JLabel;
 		
-		private var $closeEnabled:Boolean;
+		protected var $closeEnabled:Boolean;
 		
-		private var $dragBarEnabled:Boolean;
+		protected var $closeBtnSkin:BtnSkin;
 		
-		public function JFrame(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, barHeight:int = 25, theme:DefaultFrameTheme = null) {
- 			super(owner, w, h, resName, model, theme ? theme : UIManager.getInstance().theme.frameTheme);
+		protected var $dragBarEnabled:Boolean;
+		
+		public function JFrame(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, barHeight:int = 25, skin:ContainerSkin = null, closeBtnSkin:BtnSkin = null) {
+ 			super(owner, w, h, resName, model, skin ? skin : UIManager.getInstance().skin.frameSkin);
 			this.$barHeight = barHeight;
+			$closeBtnSkin = closeBtnSkin ? closeBtnSkin : UIManager.getInstance().skin.closeBtnSkin;
 			closeEnabled = true;
 			dragBarEnabled = true;
 		}
@@ -80,7 +84,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		override public function clone():Component {
-			return new JFrame($owner, $actualWidth, $actualHeight, $resName, $model, $barHeight, $theme as DefaultFrameTheme);
+			return new JFrame($owner, $actualWidth, $actualHeight, $resName, $model, $barHeight, $skin, $closeBtnSkin);
 		}
 		
 		override public function dispose():void {
@@ -107,13 +111,13 @@ package org.libra.ui.flash.components {
 			GraphicsUtil.drawRect($bar.graphics, 0, 0, $actualWidth, $barHeight, 0, .0);
 			this.addChild($bar);
 			
-			$closeBtn = new JButton(($theme as DefaultFrameTheme).closeBtnTheme);
+			$closeBtn = new JButton(0, 0, $closeBtnSkin);
 			$closeBtn.setLocation($actualWidth - $closeBtn.width - 6, 6);
 			if($closeEnabled)
 				this.append($closeBtn);
 			
 			//面板的标题，默认距离顶部4个像素
-			$title = new JLabel(UIManager.getInstance().theme.labelTheme, 0, 4, 'JFrame Title');
+			$title = new JLabel(0, 4, 'JFrame Title');
 			$title.setSize($actualWidth, 20);
 			$title.textAlign = 'center';
 			this.append($title);
