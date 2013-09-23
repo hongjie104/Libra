@@ -32,7 +32,7 @@ package org.libra.ui.flash.theme {
 		
 		protected var $height:int;
 		
-		public function ProgressBarSkin(barskin:String, barScale9Rect:Rectangle, barBgskin:String, barBgScale9Rect:Rectangle, barX:int = 29, barY:int = 1, barWidth:int = 142, w:int = 200, h:int = 18) { 
+		public function ProgressBarSkin(barskin:String, barScale9Rect:Rectangle, barBgskin:String, barBgScale9Rect:Rectangle, barX:int = 29, barY:int = 1, barWidth:int = 142, width:int = 200, height:int = 18) { 
 			this.$barSkin = barskin;
 			this.$barScale9Rect = barScale9Rect;
 			this.$barBgSkin = barBgskin;
@@ -40,8 +40,8 @@ package org.libra.ui.flash.theme {
 			$barX = barX;
 			$barY = barY;
 			$barWidth = barWidth;
-			$width = w;
-			$height = h;
+			$width = width;
+			$height = height;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

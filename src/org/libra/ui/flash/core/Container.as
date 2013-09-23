@@ -5,8 +5,8 @@ package org.libra.ui.flash.core {
 	import flash.events.Event;
 	import org.libra.ui.flash.interfaces.IComponent;
 	import org.libra.ui.flash.interfaces.IContainer;
-	import org.libra.ui.flash.interfaces.IDragable;
-	import org.libra.ui.flash.interfaces.IDropable;
+	import org.libra.ui.flash.interfaces.IDragabled;
+	import org.libra.ui.flash.interfaces.IDropabled;
 	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.flash.theme.ContainerSkin;
 	import org.libra.ui.flash.UIClassMap;
@@ -26,7 +26,7 @@ package org.libra.ui.flash.core {
 	 * @version 1.0
 	 * @see
 	 */
-	public class Container extends Component implements IDropable, IContainer {
+	public class Container extends Component implements IDropabled, IContainer {
 		
 		protected var $viewClassMap:Object = {};
 		
@@ -46,7 +46,7 @@ package org.libra.ui.flash.core {
 		 * 拖拽时,可放进该容器的控件集合
 		 * @private
 		 */
-		private var $dropAcceptList:Vector.<IDragable>;
+		private var $dropAcceptList:Vector.<IDragabled>;
 		
 		protected var $skin:ContainerSkin;
 		
@@ -260,8 +260,8 @@ package org.libra.ui.flash.core {
 		 * 添加可以拖拽进该容器的控件
 		 * @param	dragable 可以拖拽进该容器的控件
 		 */
-		public function addDropAccept(dragable:IDragable):void {
-			if (!$dropAcceptList) $dropAcceptList = new Vector.<IDragable>();
+		public function addDropAccept(dragable:IDragabled):void {
+			if (!$dropAcceptList) $dropAcceptList = new Vector.<IDragabled>();
 			if(this.$dropAcceptList.indexOf(dragable) == -1)
 				$dropAcceptList.push(dragable);
 		}
@@ -270,7 +270,7 @@ package org.libra.ui.flash.core {
 		 * 移除可以拖拽进该容器的控件
 		 * @param	dragEnabled 可以拖拽进该容器的控件
 		 */
-		public function removeDropAccept(dragEnabled:IDragable):void {
+		public function removeDropAccept(dragEnabled:IDragabled):void {
 			if (this.$dropAcceptList) {
 				var index:int = this.$dropAcceptList.indexOf(dragEnabled);
 				if (index != -1) this.$dropAcceptList.splice(index, 1);
@@ -282,7 +282,7 @@ package org.libra.ui.flash.core {
 		 * @param	dragEnabled 被拖拽的控件
 		 * @return 布尔值
 		 */
-		public function isDropAccept(dragEnabled:IDragable):Boolean {
+		public function isDropAccept(dragEnabled:IDragabled):Boolean {
 			return this.$dropAcceptList ? this.$dropAcceptList.indexOf(dragEnabled) != -1 : false;
 		}
 		
@@ -290,7 +290,7 @@ package org.libra.ui.flash.core {
 		 * 当拖拽成功后,调用该方法,将被拖拽的控件添加至容器中
 		 * @param	dragEnabled 被拖拽的控件
 		 */
-		public function addDragComponent(dragEnabled:IDragable):void {
+		public function addDragComponent(dragEnabled:IDragabled):void {
 			dragEnabled.removeFromParent();
 			this.append(dragEnabled as IComponent);
 		}

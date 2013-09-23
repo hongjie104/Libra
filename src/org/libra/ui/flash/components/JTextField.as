@@ -3,6 +3,7 @@ package org.libra.ui.flash.components {
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.theme.JFont;
 	import org.libra.ui.flash.theme.Skin;
+	import org.libra.utils.MathUtil;
 	
 	/**
 	 * <p>
@@ -17,6 +18,13 @@ package org.libra.ui.flash.components {
 	 * @see
 	 */
 	public class JTextField extends JLabel {
+		
+		/**
+		 * 是否可以编辑
+		 * @default true
+		 * @private
+		 */
+		protected var $editable:Boolean;
 		
 		public function JTextField(x:int = 0, y:int = 0, text:String = null, font:JFont = null, filters:Array = null) { 
 			super(x, y, text, font?font:JFont.FONT_INPUT, filters);
@@ -44,6 +52,15 @@ package org.libra.ui.flash.components {
 		Getters and setter
 		-------------------------------------------------------------------------------------------*/
 		
+		public function get editable():Boolean {
+			return this.$editable;
+		}
+		
+		public function set editable(val:Boolean):void {
+			$editable = val;
+			$textField.type = val ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
+		}
+		
 		public function set restrict(val:String):void {
 			this.$textField.restrict = val;
 		}
@@ -57,12 +74,12 @@ package org.libra.ui.flash.components {
 		}
 		
 		public function get backgroundColor():int {
-			return $textField.backgroundColor;
+			return $textField.background ? $textField.backgroundColor : -1;
 		}
 		
 		public function set backgroundColor(value:int):void {
 			$textField.background = value >= 0
-			$textField.backgroundColor = value;
+			$textField.backgroundColor = MathUtil.max(value, 0);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -74,6 +91,7 @@ package org.libra.ui.flash.components {
 			this.setFont($font);
 			this.text = text;
 			$textField.selectable = $textField.mouseEnabled = true;
+			$editable = true;
 			this.$textField.type = TextFieldType.INPUT;
 			backgroundColor = Skin.BACKGROUND;
 		}

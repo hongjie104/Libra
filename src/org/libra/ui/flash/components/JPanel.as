@@ -212,11 +212,13 @@ package org.libra.ui.flash.components {
 				xml["@var"] = this.$id;
 			}
 			for (var i:int = 0; i < $numComponent; i += 1) {
-				var tmpXML:XML = this.$componentList[i].toXML();
-				if($componentList[i].id.indexOf('component') == -1){
-					tmpXML["@var"] = $componentList[i].id;
+				if ($componentList[i].id) {
+					var tmpXML:XML = this.$componentList[i].toXML();
+					if($componentList[i].id.indexOf('component') == -1){
+						tmpXML["@var"] = $componentList[i].id;
+					}
+					xml.appendChild(tmpXML);
 				}
-				xml.appendChild(tmpXML);
 			}
 			return xml;
 		}

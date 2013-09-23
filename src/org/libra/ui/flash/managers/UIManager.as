@@ -23,9 +23,9 @@ package org.libra.ui.flash.managers {
 		 * 鼠标事件，是否截流。
 		 * 在实际开发中，截流可以提高效率，
 		 * 但是在UI编辑器中，事件流被截，控件就无法被选取了
-		 * 所以加了这个一个字段，在UI编辑器中将值设为false。
+		 * 所以加了这个一个字段，在UI编辑器中将值设为true。
 		 */
-		public static var stopPropagation:Boolean = true;
+		public static var UI_EDITOR:Boolean = false;
 		
 		/**
 		 * 单例

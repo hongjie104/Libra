@@ -227,7 +227,7 @@ package org.libra.ui.flash.components {
 			}
 			target.selected = true;
 			this.selectedItem = target;
-			if (UIManager.stopPropagation) event.stopPropagation();
+			if (!UIManager.UI_EDITOR) event.stopPropagation();
 		}
 		
 	}

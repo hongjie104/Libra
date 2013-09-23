@@ -79,7 +79,7 @@ package org.libra.ui.flash.components {
 			}
 		}
 		
-		public function setTitle(val:String):void {
+		public function set title(val:String):void {
 			this.$title.text = val;
 		}
 		
@@ -107,6 +107,12 @@ package org.libra.ui.flash.components {
 		
 		override protected function init():void {
 			super.init();
+			//面板的标题，默认距离顶部4个像素
+			$title = new JLabel(0, 4, 'JFrame Title');
+			$title.setSize($actualWidth, 20);
+			$title.textAlign = 'center';
+			this.append($title);
+			
 			$bar = new Sprite();
 			GraphicsUtil.drawRect($bar.graphics, 0, 0, $actualWidth, $barHeight, 0, .0);
 			this.addChild($bar);
@@ -115,12 +121,6 @@ package org.libra.ui.flash.components {
 			$closeBtn.setLocation($actualWidth - $closeBtn.width - 6, 6);
 			if($closeEnabled)
 				this.append($closeBtn);
-			
-			//面板的标题，默认距离顶部4个像素
-			$title = new JLabel(0, 4, 'JFrame Title');
-			$title.setSize($actualWidth, 20);
-			$title.textAlign = 'center';
-			this.append($title);
 		}
 		
 		override protected function resize():void {
@@ -176,7 +176,7 @@ package org.libra.ui.flash.components {
 		
 		private function onCloseBtnClikced(e:MouseEvent):void {
 			this.close();
-			if (UIManager.stopPropagation) e.stopPropagation();
+			if (!UIManager.UI_EDITOR) e.stopPropagation();
 		}
 	}
 

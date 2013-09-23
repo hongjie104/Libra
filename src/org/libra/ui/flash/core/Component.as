@@ -12,10 +12,11 @@ package org.libra.ui.flash.core {
 	import org.libra.displayObject.JSprite;
 	import org.libra.ui.flash.components.JToolTip;
 	import org.libra.ui.flash.interfaces.IComponent;
-	import org.libra.ui.flash.interfaces.IDragable;
+	import org.libra.ui.flash.interfaces.IDragabled;
 	import org.libra.ui.flash.interfaces.IPanel;
 	import org.libra.ui.flash.managers.DragManager;
 	import org.libra.ui.flash.managers.ToolTipManager;
+	import org.libra.ui.flash.managers.UIManager;
 	import org.libra.ui.invalidation.InvalidationFlag;
 	import org.libra.utils.displayObject.GraphicsUtil;
 	
@@ -31,7 +32,7 @@ package org.libra.ui.flash.core {
 	 * @version 1.0
 	 * @see
 	 */
-	public class Component extends JSprite implements IComponent, IDragable {
+	public class Component extends JSprite implements IComponent, IDragabled {
 		
 		/**
 		 * 宽度
@@ -73,7 +74,7 @@ package org.libra.ui.flash.core {
 		/**
 		 * @private
 		 */
-		private var $dragEnabled:Boolean;
+		private var $dragabled:Boolean;
 		
 		/**
 		 * @private
@@ -204,6 +205,9 @@ package org.libra.ui.flash.core {
 					this.borderColor = $borderColor;
 				}
 				invalidate(InvalidationFlag.SIZE);
+				if (UIManager.UI_EDITOR) {
+					GraphicsUtil.drawRect(this.graphics, 0, 0, w, h, 0xff0000, .0);
+				}
 			}
 		}
 		
@@ -291,7 +295,7 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function dispose():void {
-			dragEnabled = false;
+			dragabled = false;
 			super.dispose();
 		}
 		
@@ -299,7 +303,10 @@ package org.libra.ui.flash.core {
 		 * @inheritDoc
 		 */
 		override public function toString():String {
-			return name ||= getQualifiedClassName(this);
+			if (name.indexOf('instance') == -1) return name;
+			name = getQualifiedClassName(this);
+			return name;
+			//return name ||= getQualifiedClassName(this);
 		}
 		
 		/**
@@ -408,10 +415,10 @@ package org.libra.ui.flash.core {
 		 * 当可以被拖拽时,响应鼠标按下事件,触发拖拽事件
 		 * @param	val
 		 */
-		public function set dragEnabled(val:Boolean):void {
-			if (this.$dragEnabled != val) {
-				this.$dragEnabled = val;
-				if ($dragEnabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+		public function set dragabled(val:Boolean):void {
+			if (this.$dragabled != val) {
+				this.$dragabled = val;
+				if ($dragabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 				else this.removeEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 			}
 		}

@@ -54,7 +54,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function refreshData():void {
-			$progressBar.setProgress($progress);
+			$progressBar.progress = $progress;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

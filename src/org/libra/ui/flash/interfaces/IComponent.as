@@ -2,6 +2,7 @@ package org.libra.ui.flash.interfaces {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.events.Event;
+	
 	import org.libra.displayObject.interfaces.ISprite;
 	
 	/**
@@ -34,6 +35,8 @@ package org.libra.ui.flash.interfaces {
 		function get stage():Stage;
 		
 		function get id():String;
+		
+		function set showScaleGrid(val:Boolean):void;
 		
 	}
 	

@@ -14,9 +14,9 @@ package org.libra.ui.flash.interfaces {
 	 * @version 1.0
 	 * @see
 	 */
-	public interface IDragable {
+	public interface IDragabled {
 		
-		function set dragEnabled(val:Boolean):void;
+		function set dragabled(val:Boolean):void;
 		
 		function get dragBmd():BitmapData;
 		

@@ -6,8 +6,8 @@ package org.libra.ui.flash.managers {
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import org.libra.ui.flash.interfaces.IDragable;
-	import org.libra.ui.flash.interfaces.IDropable;
+	import org.libra.ui.flash.interfaces.IDragabled;
+	import org.libra.ui.flash.interfaces.IDropabled;
 	/**
 	 * <p>
 	 * 拖放管理类
@@ -36,9 +36,9 @@ package org.libra.ui.flash.managers {
 		/**
 		 * 被拖放的组件
 		 */
-		private static var $dragComponent:IDragable;
+		private static var $dragComponent:IDragabled;
 		
-		static private var $dropComponent:IDropable;
+		static private var $dropComponent:IDropabled;
 		
 		/**
 		 * 开始拖动组件时的坐标
@@ -53,7 +53,7 @@ package org.libra.ui.flash.managers {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public static function startDrag($dragComponent:IDragable):void {
+		public static function startDrag($dragComponent:IDragabled):void {
 			if (!$dragBitmap) {
 				$dragBitmap = new Bitmap();
 				$dragSprite = new Sprite();
@@ -86,13 +86,13 @@ package org.libra.ui.flash.managers {
 		 * @param	pos 当前鼠标坐标
 		 * @return 容器
 		 */
-		private static function getAcceptContainer(pos:Point):IDropable {
+		private static function getAcceptContainer(pos:Point):IDropabled {
 			const targets:Array = UIManager.getInstance().stage.getObjectsUnderPoint(pos);
 			var l:int = targets.length;
-			var con:IDropable;
+			var con:IDropabled;
 			while (--l > -1) {
-				if (targets[l] is IDropable) {
-					con = targets[l] as IDropable;
+				if (targets[l] is IDropabled) {
+					con = targets[l] as IDropabled;
 					//先判断一下，鼠标点是否点击到了容器上。
 					//if (con.isMouseHitMe(pos)) {
 						if (con.isDropAccept($dragComponent)) {
