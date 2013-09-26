@@ -2,6 +2,7 @@ package org.libra.tick {
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.utils.getTimer;
+	import org.libra.log4a.Logger;
 	import org.libra.utils.MathUtil;
 	
 	/**
@@ -52,13 +53,25 @@ package org.libra.tick {
 		 * 可由此实现慢速播放
 		 * @private
 		 */		
-		public var speed:Number = 1.0;
+		//public var speed:Number = 1.0;
 		
 		/**
 		 * 上次记录的时间
 		 * @private
 		 */
 		private var prevTime:int;
+		
+		/**
+		 * 当前渲染对象在队列中的索引
+		 * @private
+		 */
+		private var nowRender:int;
+		
+		/**
+		 * 需要渲染的对象总数
+		 * @private
+		 */
+		private var objNum:int;
 		
 		/**
 		 * 构造函数
@@ -80,6 +93,7 @@ package org.libra.tick {
 		public function addItem(item:ITickable):Boolean {
 			if (hasItem(item)) return false;
 			this.tickabledList[this.tickabledList.length] = item;
+			objNum += 1;
 			return true;
 		}
 		
@@ -91,6 +105,7 @@ package org.libra.tick {
 			var index:int = this.tickabledList.indexOf(item);
 			if (index != -1) {
 				this.tickabledList.splice(index, 1);
+				objNum--;
 				return true;
 			}
 			return false;
@@ -101,6 +116,7 @@ package org.libra.tick {
 		 */
 		public function clearItem():void {
 			this.tickabledList.length = 0;
+			objNum = 0;
 		}
 		
 		/**
@@ -155,18 +171,33 @@ package org.libra.tick {
 				if (prevTime == 0) interval = 0;
 				else {
 					interval = MathUtil.max(MIN_INTERVAL, MathUtil.min(nextTime - prevTime, MAX_INTERVAL));
-					//var e:TickEvent = new TickEvent(TickEvent.TICK);
-					//e.interval = interval * speed;
-					//dispatchEvent(e);
-					interval *= speed;
-					for each(var r:ITickable in tickabledList) {
-						if(r.tickabled) r.tick(interval);
+					//interval *= speed;
+					const tmp:int = getTimer();
+					/*for each(var r:ITickable in tickabledList) {
+						if (r.tickabled) r.tick(interval);
+						if (getTimer() - tmp > 10) {
+							Logger.warn('渲染超过10毫秒,跳出循环');
+							break;
+						}
+					}*/
+					while (true) {
+						if (nowRender > objNum - 1) {
+							nowRender = 0;
+							break;
+						}
+						if (tickabledList[nowRender].tickabled) {
+							tickabledList[nowRender].tick(interval);
+						}
+						nowRender += 1;
+						if (getTimer() - tmp > 10) {
+							Logger.warn('渲染超过10毫秒,跳出循环');
+							break;
+						}
 					}
 				}
 			}
 			prevTime = nextTime;
 		}
-		
 		
 		/**
 		 * 获取当前实例。

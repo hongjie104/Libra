@@ -112,6 +112,9 @@ package org.libra.ui.flash.core {
 			return new BaseButton(this.x, this.y, this.$skin, this.text, $font, $filters);
 		}
 		
+		/**
+		 * UI编辑器导出的皮肤配置进行赋值
+		 */
 		public function set skinStr(val:String):void {
 			const ary:Array = val.split('&');
 			if (ary.length == 3) {

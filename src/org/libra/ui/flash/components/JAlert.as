@@ -3,9 +3,9 @@ package org.libra.ui.flash.components {
 	import flash.events.MouseEvent;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.DefaultFrameTheme;
-	import org.libra.ui.flash.theme.DefaultPanelTheme;
-	import org.libra.ui.flash.theme.DefaultTheme;
+	import org.libra.ui.flash.theme.BtnSkin;
+	import org.libra.ui.flash.theme.ContainerSkin;
+	import org.libra.ui.flash.theme.Skin;
 	
 	/**
 	 * <p>
@@ -55,17 +55,17 @@ package org.libra.ui.flash.components {
 		
 		private var $clickedHandler:Function;
 		
-		public function JAlert(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', barHeight:int = 25, theme:DefaultFrameTheme = null) { 
-			super(owner, w, h, resName, true, barHeight, theme);
+		public function JAlert(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', barHeight:int = 25, skin:ContainerSkin = null, closeBtnSkin:BtnSkin = null) { 
+			super(owner, w, h, resName, true, barHeight, skin, closeBtnSkin);
 			
-			const uiTheme:DefaultTheme = UIManager.getInstance().theme;
-			const btnY:int = h - uiTheme.btnTheme.height - 36;
-			$okButton = new JButton(uiTheme.btnTheme, 0, btnY, OK_STR);
-			$cancelButton = new JButton(uiTheme.btnTheme, 0, btnY, CANCEL_STR);
-			$yesButton = new JButton(uiTheme.btnTheme, 0, btnY, YES_STR);
-			$noButton = new JButton(uiTheme.btnTheme, 0, btnY, NO_STR);
-			$closeButton = new JButton(uiTheme.btnTheme, 0, btnY, CLOSE_STR);
-			$msgLabel = new JLabel(uiTheme.labelTheme, 0, 60);
+			const uiSkin:Skin = UIManager.getInstance().skin;
+			const btnY:int = h - uiSkin.btnSkin.height - 36;
+			$okButton = new JButton(0, btnY, uiSkin.btnSkin, OK_STR);
+			$cancelButton = new JButton(0, btnY, uiSkin.btnSkin, CANCEL_STR);
+			$yesButton = new JButton(0, btnY, uiSkin.btnSkin, YES_STR);
+			$noButton = new JButton(0, btnY, uiSkin.btnSkin, NO_STR);
+			$closeButton = new JButton(0, btnY, uiSkin.btnSkin, CLOSE_STR);
+			$msgLabel = new JLabel(0, 60);
 			$msgLabel.width = w - 40;
 			//最大四行，每行20像素
 			$msgLabel.height = 80;
@@ -78,7 +78,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public static function show(msg:String, finishHandler:Function = null, buttons:int = OK):void { 
-			const alert:JAlert = new JAlert(UIManager.getInstance().uiContainer, 260, 200, '', 25, UIManager.getInstance().theme.frameTheme);
+			const alert:JAlert = new JAlert(UIManager.getInstance().uiContainer, 260, 200, '', 25, UIManager.getInstance().skin.frameSkin, UIManager.getInstance().skin.closeBtnSkin);
 			alert.closeEnabled = false;
 			alert.$msgLabel.text = msg;
 			alert.append(alert.$msgLabel);
@@ -110,7 +110,7 @@ package org.libra.ui.flash.components {
 			//各个按钮之间的水平间距
 			const btnGapH:int = 20;
 			const l:int = btnList.length;
-			const btnW:int = UIManager.getInstance().theme.btnTheme.width;
+			const btnW:int = UIManager.getInstance().skin.closeBtnSkin.width;
 			const startX:int = (alert.width - btnW * l - btnGapH * (l - 1)) >> 1;
 			for (var i:int = 0; i < l; i += 1)
 				btnList[i].x = startX + i * (btnW + btnGapH);

@@ -6,8 +6,10 @@ package org.libra.ui.flash.components {
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
+	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	import flash.ui.Keyboard;
+	import org.libra.log4a.Logger;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.core.Container;
 	import org.libra.ui.flash.interfaces.IContainer;
@@ -200,6 +202,19 @@ package org.libra.ui.flash.components {
 		
 		public function set activated(value:Boolean):void {
 			$activated = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function set skinStr(value:String):void {
+			const ary:Array = value.split('&');
+			if (ary.length == 5) {
+				this.skin = new ContainerSkin(ary[0], new Rectangle(Number(ary[1]), Number(ary[2]), Number(ary[3]), Number(ary[4])));
+			}else {
+				this.skin = UIManager.getInstance().skin.panelSkin;
+				Logger.error('Panel的皮肤配置格式有误:' + ary);
+			}
 		}
 		
 		override public function clone():Component {

@@ -3,6 +3,8 @@ package org.libra.ui.flash.core {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
+	import org.libra.log4a.Logger;
 	import org.libra.ui.flash.interfaces.IComponent;
 	import org.libra.ui.flash.interfaces.IContainer;
 	import org.libra.ui.flash.interfaces.IDragabled;
@@ -302,6 +304,23 @@ package org.libra.ui.flash.core {
 			return this.$numComponent;
 		}
 		
+		public function set skin(val:ContainerSkin):void {
+			initBackground();
+		}
+		
+		/**
+		 * UI编辑器导出的皮肤配置进行赋值
+		 */
+		public function set skinStr(val:String):void {
+			const ary:Array = val.split('&');
+			if (ary.length == 5) {
+				this.skin = new ContainerSkin(ary[0], new Rectangle(Number(ary[1]), Number(ary[2]), Number(ary[3]), Number(ary[4])));
+			}else {
+				this.skin = UIManager.getInstance().skin.containerSkin;
+				Logger.error('容器的皮肤配置格式有误:' + ary);
+			}
+		}
+		
 		public function createView(xml:XML):void {
 			createComps(xml);
 			this.dispatchEvent(new Event(Event.COMPLETE));
@@ -311,8 +330,10 @@ package org.libra.ui.flash.core {
 			return new Container(x, y, $skin);
 		}
 		
-		public function set skin(val:ContainerSkin):void {
-			initBackground();
+		override public function toXML():XML {
+			const xml:XML = super.toXML();
+			xml.@skinStr = this.$skin.skin + '&' + this.$skin.scale9Rect.x + '&' + this.$skin.scale9Rect.y + '&' + this.$skin.scale9Rect.width + '&' + this.$skin.scale9Rect.height;
+			return xml;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

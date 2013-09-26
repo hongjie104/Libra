@@ -1,6 +1,7 @@
 package org.libra.ui.flash.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import org.libra.log4a.Logger;
 	import org.libra.ui.flash.core.BaseButton;
 	import org.libra.ui.flash.core.Component;
 	import org.libra.ui.flash.core.state.BaseCheckBoxState;
@@ -58,6 +59,19 @@ package org.libra.ui.flash.components {
 		public function setCheckBoxGroup($group:JCheckBoxGroup):void {
 			if (this.$group && this.$group != $group) this.$group.removeCheckBox(this);
 			this.$group = $group;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function set skinStr(value:String):void {
+			const ary:Array = value.split('&');
+			if (ary.length == 3) {
+				this.skin = new BtnSkin(ary[0], ary[1], ary[2]);
+			}else {
+				this.skin = UIManager.getInstance().skin.checkBoxSkin;
+				Logger.error('checkBox的皮肤配置格式有误:' + ary);
+			}
 		}
 		
 		override public function clone():Component {

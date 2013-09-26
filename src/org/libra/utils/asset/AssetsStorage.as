@@ -107,6 +107,9 @@ package org.libra.utils.asset {
 			var asset:IAsset;
 			for (var i:int = 0; i < l; i += 1) {
 				asset = assetList[i];
+				if ($loaderMax.getLoader(asset.url)) {
+					continue;
+				}
 				var swfLoader:SWFLoader = new SWFLoader(asset.url, { autoDispose:true, onComplete:function():void { asset.doSthAfterLoad(swfLoader); }} );
 				$loaderMax.append(swfLoader);
 			}
