@@ -65,13 +65,13 @@ package org.libra.tick {
 		 * 当前渲染对象在队列中的索引
 		 * @private
 		 */
-		private var nowRender:int;
+		//private var nowRender:int;
 		
 		/**
 		 * 需要渲染的对象总数
 		 * @private
 		 */
-		private var objNum:int;
+		//private var objNum:int;
 		
 		/**
 		 * 构造函数
@@ -93,7 +93,7 @@ package org.libra.tick {
 		public function addItem(item:ITickable):Boolean {
 			if (hasItem(item)) return false;
 			this.tickabledList[this.tickabledList.length] = item;
-			objNum += 1;
+			//objNum += 1;
 			return true;
 		}
 		
@@ -105,7 +105,7 @@ package org.libra.tick {
 			var index:int = this.tickabledList.indexOf(item);
 			if (index != -1) {
 				this.tickabledList.splice(index, 1);
-				objNum--;
+				//objNum--;
 				return true;
 			}
 			return false;
@@ -116,7 +116,7 @@ package org.libra.tick {
 		 */
 		public function clearItem():void {
 			this.tickabledList.length = 0;
-			objNum = 0;
+			//objNum = 0;
 		}
 		
 		/**
@@ -172,15 +172,15 @@ package org.libra.tick {
 				else {
 					interval = MathUtil.max(MIN_INTERVAL, MathUtil.min(nextTime - prevTime, MAX_INTERVAL));
 					//interval *= speed;
-					const tmp:int = getTimer();
-					/*for each(var r:ITickable in tickabledList) {
+					//const tmp:int = getTimer();
+					for each(var r:ITickable in tickabledList) {
 						if (r.tickabled) r.tick(interval);
-						if (getTimer() - tmp > 10) {
-							Logger.warn('渲染超过10毫秒,跳出循环');
-							break;
-						}
-					}*/
-					while (true) {
+						//if (getTimer() - tmp > 10) {
+							//Logger.warn('渲染超过10毫秒,跳出循环');
+							//break;
+						//}
+					}
+					/*while (true) {
 						if (nowRender > objNum - 1) {
 							nowRender = 0;
 							break;
@@ -193,7 +193,7 @@ package org.libra.tick {
 							Logger.warn('渲染超过10毫秒,跳出循环');
 							break;
 						}
-					}
+					}*/
 				}
 			}
 			prevTime = nextTime;

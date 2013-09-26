@@ -218,7 +218,7 @@ package org.libra.bmpEngine.single {
 
 }
 
-class FrameFun {
+final class FrameFun {
 	
 	private var fun:Function;
 	private var params:Array;
