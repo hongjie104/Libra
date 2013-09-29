@@ -222,6 +222,10 @@ package org.libra.bmpEngine.single {
 			this.loops = val;
 		}
 		
+		public function randomFrame():void {
+			setCurFrame(MathUtil.random(0, numFrame - 1));
+		}
+		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
 		-------------------------------------------------------------------------------------------*/

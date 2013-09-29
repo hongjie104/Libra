@@ -221,6 +221,7 @@ package {
 			
 			for (var i:int = 0; i < 1000; i += 1 ) {
 				var bmp:JBitmap = JBitmapUtil.createFromBitmap(8, 64, source, 10, true);
+				bmp.randomFrame();
 				this.addChild(bmp);
 				bmp.x = Math.random() * stage.stageWidth;
 				bmp.y = Math.random() * stage.stageHeight;
