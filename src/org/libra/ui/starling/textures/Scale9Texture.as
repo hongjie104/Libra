@@ -48,48 +48,48 @@ package org.libra.ui.starling.textures {
 			const topHeight:Number = this.scale9Grid.y;
 			const middleHeight:Number = this.scale9Grid.height;
 			const bottomHeight:Number = textureFrame.height - this.scale9Grid.height - this.scale9Grid.y;
-
+			
 			const regionLeftWidth:Number = leftWidth + textureFrame.x;
 			const regionTopHeight:Number = topHeight + textureFrame.y;
 			const regionRightWidth:Number = rightWidth - (textureFrame.width - this.texture.width) - textureFrame.x;
 			const regionBottomHeight:Number = bottomHeight - (textureFrame.height - this.texture.height) - textureFrame.y;
-
+			
 			const hasLeftFrame:Boolean = regionLeftWidth != leftWidth;
 			const hasTopFrame:Boolean = regionTopHeight != topHeight;
 			const hasRightFrame:Boolean = regionRightWidth != rightWidth;
 			const hasBottomFrame:Boolean = regionBottomHeight != bottomHeight;
-
+			
 			const topLeftRegion:Rectangle = new Rectangle(0, 0, regionLeftWidth, regionTopHeight);
 			const topLeftFrame:Rectangle = (hasLeftFrame || hasTopFrame) ? new Rectangle(textureFrame.x, textureFrame.y, leftWidth, topHeight) : null;
 			this.topLeft = Texture.fromTexture(this.texture, topLeftRegion, topLeftFrame);
-
+			
 			const topCenterRegion:Rectangle = new Rectangle(regionLeftWidth, 0, centerWidth, regionTopHeight);
 			const topCenterFrame:Rectangle = hasTopFrame ? new Rectangle(0, textureFrame.y, centerWidth, topHeight) : null;
 			this.topCenter = Texture.fromTexture(this.texture, topCenterRegion, topCenterFrame);
-
+			
 			const topRightRegion:Rectangle = new Rectangle(regionLeftWidth + centerWidth, 0, regionRightWidth, regionTopHeight);
 			const topRightFrame:Rectangle = (hasTopFrame || hasRightFrame) ? new Rectangle(0, textureFrame.y, rightWidth, topHeight) : null;
 			this.topRight = Texture.fromTexture(this.texture, topRightRegion, topRightFrame);
-
+			
 			const middleLeftRegion:Rectangle = new Rectangle(0, regionTopHeight, regionLeftWidth, middleHeight);
 			const middleLeftFrame:Rectangle = hasLeftFrame ? new Rectangle(textureFrame.x, 0, leftWidth, middleHeight) : null;
 			this.middleLeft = Texture.fromTexture(this.texture, middleLeftRegion, middleLeftFrame);
-
+			
 			const middleCenterRegion:Rectangle = new Rectangle(regionLeftWidth, regionTopHeight, centerWidth, middleHeight);
 			this.middleCenter = Texture.fromTexture(this.texture, middleCenterRegion);
-
+			
 			const middleRightRegion:Rectangle = new Rectangle(regionLeftWidth + centerWidth, regionTopHeight, regionRightWidth, middleHeight);
 			const middleRightFrame:Rectangle = hasRightFrame ? new Rectangle(0, 0, rightWidth, middleHeight) : null;
 			this.middleRight = Texture.fromTexture(this.texture, middleRightRegion, middleRightFrame);
-
+			
 			const bottomLeftRegion:Rectangle = new Rectangle(0, regionTopHeight + middleHeight, regionLeftWidth, regionBottomHeight);
 			const bottomLeftFrame:Rectangle = (hasLeftFrame || hasBottomFrame) ? new Rectangle(textureFrame.x, 0, leftWidth, bottomHeight) : null;
 			this.bottomLeft = Texture.fromTexture(this.texture, bottomLeftRegion, bottomLeftFrame);
-
+			
 			const bottomCenterRegion:Rectangle = new Rectangle(regionLeftWidth, regionTopHeight + middleHeight, centerWidth, regionBottomHeight);
 			const bottomCenterFrame:Rectangle = hasBottomFrame ? new Rectangle(0, 0, centerWidth, bottomHeight) : null;
 			this.bottomCenter = Texture.fromTexture(this.texture, bottomCenterRegion, bottomCenterFrame);
-
+			
 			const bottomRightRegion:Rectangle = new Rectangle(regionLeftWidth + centerWidth, regionTopHeight + middleHeight, regionRightWidth, regionBottomHeight);
 			const bottomRightFrame:Rectangle = (hasBottomFrame || hasRightFrame) ? new Rectangle(0, 0, rightWidth, bottomHeight) : null;
 			this.bottomRight = Texture.fromTexture(this.texture, bottomRightRegion, bottomRightFrame);

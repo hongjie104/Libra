@@ -16,7 +16,7 @@ package org.libra.ui.starling.core {
 	 */
 	public interface IDragable {
 		
-		function setDragEnabled(val:Boolean):void;
+		function set dragEnabled(val:Boolean):void;
 		
 		/**
 		 * 被拖拽时呈现的纹理

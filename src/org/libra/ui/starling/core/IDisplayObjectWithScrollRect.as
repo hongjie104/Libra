@@ -23,12 +23,12 @@ package org.libra.ui.starling.core {
 		 * 
 		 * @see flash.display.DisplayObject#scrollRect
 		 */
-		function getScrollRect():Rectangle;
+		function get scrollRect():Rectangle;
 		
 		/**
 		 * @private
 		 */
-		function setScrollRect(value:Rectangle):void;
+		function set scrollRect(value:Rectangle):void;
 		
 	}
 	

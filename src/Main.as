@@ -1,32 +1,15 @@
 package {
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.net.URLRequest;
-	import org.libra.bmpEngine.multi.JMultiBitmap;
-	import org.libra.bmpEngine.multi.RenderLayer;
-	import org.libra.bmpEngine.multi.RenderMovieClip;
-	import org.libra.bmpEngine.single.BitmapFrame;
-	import org.libra.bmpEngine.single.JBitmap;
-	import org.libra.bmpEngine.utils.JBitmapUtil;
-	import org.libra.copGameEngine.component.JMultiBitmapDataRender;
-	import org.libra.copGameEngine.MainContext;
-	import org.libra.copGameEngine.model.element.JAnimationProp;
-	import org.libra.game.objects.Avatar;
-	import org.libra.tick.Tick;
-	import org.libra.ui.flash.components.JCheckBoxGroup;
-	import org.libra.ui.flash.components.JPanel;
-	import org.libra.ui.flash.core.Container;
-	import org.libra.ui.flash.managers.UIManager;
-	import org.libra.ui.flash.theme.Skin;
+	import org.libra.ui.starling.managers.UIManager;
 	import org.libra.utils.asset.AssetsStorage;
-	import org.libra.utils.displayObject.BitmapDataUtil;
-	import org.libra.utils.MathUtil;
 	import org.libra.utils.SystemStatus;
+	import starling.core.Starling;
+	import starling.events.Event;
 	
 	/**
 	 * ...
@@ -39,10 +22,11 @@ package {
 		[Embed(source="../asset/walk.png")]
 		private var BMP:Class;
 		
-		//private var starling:Starling;
+		private var starling:Starling;
+		
 		private var loader:Loader;
 		
-		private var myContent:MainContext;
+		//private var myContent:MainContext;
 		
 		public function Main():void {
 			if (stage) init();
@@ -74,18 +58,18 @@ package {
 			//UIManager.getInstance().init(this.stage, new DefaultTheme());
 			//testUI();
 			//testAutoCreateUI();
-			testBmpEngine();
+			//testBmpEngine();
 			//testAStar();
 			//测试绘制菱形
 			//testDiamond();
-			//testStarlingUI();
+			testStarlingUI();
 			//testMultiBitmap();
 			//testCopGame();
 			//test()
-			addChild(new SystemStatus());
+			//addChild(new SystemStatus());
 		}
 		
-		private function test():void {
+		/*private function test():void {
 			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
 			var w:int = source.width >> 3;
 			var h:int = source.height >> 3;
@@ -107,61 +91,61 @@ package {
 				//Tick.getInstance().addItem(bitmap);
 				Tick.getInstance().addItem(sprite);
 			}
-		}
+		}*/
 		
-		private function testCopGame():void {
+		/*private function testCopGame():void {
 			//Security.allowDomain('*');
 			const uiContainer:Container = new Container();
 			UIManager.getInstance().init(stage, uiContainer, new Skin());
 			myContent = new MainContext(this);
-		}
+		}*/
 		
-		private function testAutoCreateUI():void {
-			/*var xml:XML = <View>
-			  <Container x="20" y="-10">
-			    <JLabel text="yung" x="103" y="38" textColor="0xffffff" />
-			    <JLabel text="Lv.36" x="206" y="38" textColor="0xffffff" size="12"/>
-			    <JLabel text="银币" x="104" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2"/>
-			    <JLabel text="6万" x="136" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="100"/>
-			    <JLabel text="金币" x="104" y="84" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
-			    <JLabel text="10" x="136" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    <JLabel text="10" x="223" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    <JLabel text="礼券" x="191" y="83" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
-			    <JLabel text="10/80" x="124" y="108" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
-			    <JButton text="按钮" x="183" y="110"/>
-			  </Container>
-			</View>;*/
-			/*var xml:XML = <View>
-			<Container width="300" height="200">
-			  <JButton width="43" height="26" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center"/>
-			  <JLabel width="120" height="20" text="org.libra.ui.flash.components::JLabel" textColor="16777215" textAlign="left"/>
-			</Container>
-			</View>;*/
-			var xml:XML = <JPanel x="159" y="94" width="300" height="200">
-						   <JCheckBoxGroup x="27" y="98" width="200" height="20" gap="60">
-							<JCheckBox width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
-							<JCheckBox x="60" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox" selected="true"/>
-							<JCheckBox x="120" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
-						  </JCheckBoxGroup>
-						  <JButton x="56" y="35" width="76" height="28" text="按钮" textColor="16759090" textAlign="center" skinStr="76&amp;28&amp;btnRed"/>
-						  <JButton x="200" y="41" width="43" height="26" text="按钮" textColor="16759090" textAlign="center" skinStr="43&amp;26&amp;btn"/>
-						</JPanel>;
-			var uiContainer:Container = new Container();
-			uiContainer.setSize(stage.stageWidth, stage.stageHeight);
-			UIManager.getInstance().init(this.stage, uiContainer, new Skin());
-			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().skin.panelSkin);
-			panel.createView(xml);
-			panel.show();
-			panel.x = panel.y = 50;
-		}
-		
-		//private function testStarlingUI():void {
-			///*starling = new starling.core.Starling(Game, stage);
-			//starling.start();
-			//starling.showStats = true;
-			//
-			//starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage, null, new DefaultTheme()); } );*/
+		//private function testAutoCreateUI():void {
+			///*var xml:XML = <View>
+			  //<Container x="20" y="-10">
+			    //<JLabel text="yung" x="103" y="38" textColor="0xffffff" />
+			    //<JLabel text="Lv.36" x="206" y="38" textColor="0xffffff" size="12"/>
+			    //<JLabel text="银币" x="104" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2"/>
+			    //<JLabel text="6万" x="136" y="61" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="100"/>
+			    //<JLabel text="金币" x="104" y="84" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    //<JLabel text="10" x="136" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    //<JLabel text="10" x="223" y="84" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    //<JLabel text="礼券" x="191" y="83" textColor="0xffff00" stroke="0x000000,0.5,2,2"/>
+			    //<JLabel text="10/80" x="124" y="108" textColor="0xffffff" stroke="0x000000,0.5,2,2" width="50"/>
+			    //<JButton text="按钮" x="183" y="110"/>
+			  //</Container>
+			//</View>;*/
+			///*var xml:XML = <View>
+			//<Container width="300" height="200">
+			  //<JButton width="43" height="26" text="org.libra.ui.flash.components::JButton" textColor="16759090" textAlign="center"/>
+			  //<JLabel width="120" height="20" text="org.libra.ui.flash.components::JLabel" textColor="16777215" textAlign="left"/>
+			//</Container>
+			//</View>;*/
+			//var xml:XML = <JPanel x="159" y="94" width="300" height="200">
+						   //<JCheckBoxGroup x="27" y="98" width="200" height="20" gap="60">
+							//<JCheckBox width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
+							//<JCheckBox x="60" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox" selected="true"/>
+							//<JCheckBox x="120" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
+						  //</JCheckBoxGroup>
+						  //<JButton x="56" y="35" width="76" height="28" text="按钮" textColor="16759090" textAlign="center" skinStr="76&amp;28&amp;btnRed"/>
+						  //<JButton x="200" y="41" width="43" height="26" text="按钮" textColor="16759090" textAlign="center" skinStr="43&amp;26&amp;btn"/>
+						//</JPanel>;
+			//var uiContainer:Container = new Container();
+			//uiContainer.setSize(stage.stageWidth, stage.stageHeight);
+			//UIManager.getInstance().init(this.stage, uiContainer, new Skin());
+			//var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().skin.panelSkin);
+			//panel.createView(xml);
+			//panel.show();
+			//panel.x = panel.y = 50;
 		//}
+		
+		private function testStarlingUI():void {
+			starling = new starling.core.Starling(Game, stage);
+			starling.start();
+			starling.showStats = true;
+			
+			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage); } );
+		}
 		
 		//private function testDiamond():void {
 			//GraphicsUtil.drawDiamondNet(this.graphics, new Point(300), 20, 40);
@@ -173,81 +157,81 @@ package {
 			//this.addChild(map);
 		//}
 		
-		private function testMultiBitmap():void {
-			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
-			var w:int = source.width >> 3;
-			var h:int = source.height >> 3;
-			var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
-			
-			for (var i:int = 0; i < 1000; i += 1) {
-				var bitmap:JMultiBitmap = new JMultiBitmap(w, h);
-				var layer:RenderLayer = new RenderLayer(w, h);
-				var sprite:RenderMovieClip = new RenderMovieClip(bmdList);
+		//private function testMultiBitmap():void {
+			//var source:BitmapData = (new BMP() as Bitmap).bitmapData;
+			//var w:int = source.width >> 3;
+			//var h:int = source.height >> 3;
+			//var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(w, h, source)[0];
+			//
+			//for (var i:int = 0; i < 1000; i += 1) {
+				//var bitmap:JMultiBitmap = new JMultiBitmap(w, h);
+				//var layer:RenderLayer = new RenderLayer(w, h);
+				//var sprite:RenderMovieClip = new RenderMovieClip(bmdList);
 				//sprite.frameRate = 12;
-				sprite.play();
-				layer.addItem(sprite);
-				bitmap.addLayer(layer);
-				this.addChild(bitmap);
-				bitmap.x = MathUtil.random(0, stage.stageWidth);
-				bitmap.y = MathUtil.random(0, stage.stageHeight);
-				Tick.getInstance().addItem(bitmap);
-				Tick.getInstance().addItem(sprite);
-			}
-		}
+				//sprite.play();
+				//layer.addItem(sprite);
+				//bitmap.addLayer(layer);
+				//this.addChild(bitmap);
+				//bitmap.x = MathUtil.random(0, stage.stageWidth);
+				//bitmap.y = MathUtil.random(0, stage.stageHeight);
+				//Tick.getInstance().addItem(bitmap);
+				//Tick.getInstance().addItem(sprite);
+			//}
+		//}
 		
-		private function testBmpEngine():void {
-			var source:BitmapData = (new BMP() as Bitmap).bitmapData;
-			/*
-			var frameList:Vector.<BitmapFrame> = new Vector.<BitmapFrame>();
-			var rows:int = Math.ceil(64 / 8);
-			var bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width / 8, source.height / rows, source);
-			var count:int = 0;
-			for (var k:* in bmdList) {
-				var bmdList1:Vector.<BitmapData> = bmdList[k];
-				for(var j:* in bmdList1)
-				frameList[count] = new BitmapFrame(count++, bmdList1[j]);
-			}
-			for (i = 0; i < 200; i += 1 ) {
-				var avatar:Avatar = new Avatar();
-				var animatable:BitmapAnimatable = new BitmapAnimatable(avatar.getBitmap());
-				animatable.setFrameList(frameList);
-				avatar.setAnimatable(animatable);
-				this.addChild(avatar);
-				avatar.x = Math.random() * stage.stageWidth;
-				avatar.y = Math.random() * stage.stageHeight;
-			}
-			
-			return;*/
-			
-			for (var i:int = 0; i < 1000; i += 1 ) {
-				var bmp:JBitmap = JBitmapUtil.createFromBitmap(8, 64, source, 10, true);
-				bmp.randomFrame();
-				this.addChild(bmp);
-				bmp.x = Math.random() * stage.stageWidth;
-				bmp.y = Math.random() * stage.stageHeight;
-			}
-			
-			/*var source:MovieClip = new TestRole();
-			for (var i:int = 0; i < 100; i += 1 ) {
-				var bmp:JBitmap = JBitmapUtil.createFromMC(source);
-				this.addChild(bmp);
-				bmp.x = Math.random() * stage.stageWidth + 100;
-				bmp.y = Math.random() * stage.stageHeight + 100;
-			}*/
-			
-			/*var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(100, 130, source)[0];
-			var bitmap:JMultiBitmap = new JMultiBitmap(100, 130);
-			var render:RenderLayer = new RenderLayer();
-			var renderItem:RenderItem = new RenderItem(null, render);
-			bitmap.addLayer(render);
-			this.addChild(bitmap);
-			renderItem.bitmapData = bmdList[0];
-			var count:int = 0;
-			this.addEventListener(flash.events.Event.ENTER_FRAME, function(evt:flash.events.Event):void { 
-					if (count++ == 4) count = 0;
-					renderItem.bitmapData = bmdList[count];
-				} );*/
-		}
+		//private function testBmpEngine():void {
+			//var source:BitmapData = (new BMP() as Bitmap).bitmapData;
+			///*
+			//var frameList:Vector.<BitmapFrame> = new Vector.<BitmapFrame>();
+			//var rows:int = Math.ceil(64 / 8);
+			//var bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width / 8, source.height / rows, source);
+			//var count:int = 0;
+			//for (var k:* in bmdList) {
+				//var bmdList1:Vector.<BitmapData> = bmdList[k];
+				//for(var j:* in bmdList1)
+				//frameList[count] = new BitmapFrame(count++, bmdList1[j]);
+			//}
+			//for (i = 0; i < 200; i += 1 ) {
+				//var avatar:Avatar = new Avatar();
+				//var animatable:BitmapAnimatable = new BitmapAnimatable(avatar.getBitmap());
+				//animatable.setFrameList(frameList);
+				//avatar.setAnimatable(animatable);
+				//this.addChild(avatar);
+				//avatar.x = Math.random() * stage.stageWidth;
+				//avatar.y = Math.random() * stage.stageHeight;
+			//}
+			//
+			//return;*/
+			//
+			//for (var i:int = 0; i < 1000; i += 1 ) {
+				//var bmp:JBitmap = JBitmapUtil.createFromBitmap(8, 64, source, 10, true);
+				//bmp.randomFrame();
+				//this.addChild(bmp);
+				//bmp.x = Math.random() * stage.stageWidth;
+				//bmp.y = Math.random() * stage.stageHeight;
+			//}
+			//
+			///*var source:MovieClip = new TestRole();
+			//for (var i:int = 0; i < 100; i += 1 ) {
+				//var bmp:JBitmap = JBitmapUtil.createFromMC(source);
+				//this.addChild(bmp);
+				//bmp.x = Math.random() * stage.stageWidth + 100;
+				//bmp.y = Math.random() * stage.stageHeight + 100;
+			//}*/
+			//
+			///*var bmdList:Vector.<BitmapData> = BitmapDataUtil.separateBitmapData(100, 130, source)[0];
+			//var bitmap:JMultiBitmap = new JMultiBitmap(100, 130);
+			//var render:RenderLayer = new RenderLayer();
+			//var renderItem:RenderItem = new RenderItem(null, render);
+			//bitmap.addLayer(render);
+			//this.addChild(bitmap);
+			//renderItem.bitmapData = bmdList[0];
+			//var count:int = 0;
+			//this.addEventListener(flash.events.Event.ENTER_FRAME, function(evt:flash.events.Event):void { 
+					//if (count++ == 4) count = 0;
+					//renderItem.bitmapData = bmdList[count];
+				//} );*/
+		//}
 		
 		/*private function testUI():void {
 			var uiContainer:Container = new Container();

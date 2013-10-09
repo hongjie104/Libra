@@ -55,7 +55,7 @@ package org.libra.ui.starling.managers {
 				newTarget = newTarget.parent;
 				if (newTarget is IDisplayObjectWithScrollRect) { 
 					var targetWithScrollRect:IDisplayObjectWithScrollRect = newTarget as IDisplayObjectWithScrollRect;
-					var scrollRect:Rectangle = targetWithScrollRect.getScrollRect();
+					var scrollRect:Rectangle = targetWithScrollRect.scrollRect;
 					if (!scrollRect || (scrollRect.x == 0 && scrollRect.y == 0)) { 
 						continue;
 					}
@@ -77,7 +77,7 @@ package org.libra.ui.starling.managers {
 				newTarget = newTarget.parent;
 				if(newTarget is IDisplayObjectWithScrollRect) {
 					var targetWithScrollRect:IDisplayObjectWithScrollRect = IDisplayObjectWithScrollRect(newTarget);
-					var scrollRect:Rectangle = targetWithScrollRect.getScrollRect();
+					var scrollRect:Rectangle = targetWithScrollRect.scrollRect;
 					if(!scrollRect || (scrollRect.x == 0 && scrollRect.y == 0)) {
 						continue;
 					}
@@ -103,7 +103,7 @@ package org.libra.ui.starling.managers {
 				newTarget = newTarget.parent;
 				if(newTarget is IDisplayObjectWithScrollRect) {
 					var targetWithScrollRect:IDisplayObjectWithScrollRect = newTarget as IDisplayObjectWithScrollRect;
-					var scrollRect:Rectangle = targetWithScrollRect.getScrollRect();
+					var scrollRect:Rectangle = targetWithScrollRect.scrollRect;
 					if(!scrollRect || (scrollRect.x == 0 && scrollRect.y == 0))
 					{
 						continue;

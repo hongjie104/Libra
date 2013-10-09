@@ -104,7 +104,7 @@ package org.libra.ui.starling.component {
 		 */
 		override protected function init():void {
 			super.init();
-			bar = new Quad(actualWidth, barHeight, 0xff0000);
+			bar = new Quad($actualWidth, barHeight, 0xff0000);
 			bar.alpha = .0;
 			this.addChild(bar);
 			
@@ -117,7 +117,7 @@ package org.libra.ui.starling.component {
 		 * @private
 		 */
 		protected function initCloseBtn():void {
-			closeBtn = new JButton(DefaultTheme.BTN_CLOSE, 21, 19, actualWidth - 25, 4);
+			closeBtn = new JButton(DefaultTheme.BTN_CLOSE, 21, 19, $actualWidth - 25, 4);
 			if(closeEnabled)
 				this.addChild(closeBtn);
 		}

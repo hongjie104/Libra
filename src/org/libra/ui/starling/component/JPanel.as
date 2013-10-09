@@ -103,8 +103,8 @@ package org.libra.ui.starling.component {
 		 * @inheritDoc
 		 */
 		override protected function resize():void {
-			this.background.width = actualWidth;
-			this.background.height = actualHeight;
+			this.$background.width = $actualWidth;
+			this.$background.height = $actualHeight;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

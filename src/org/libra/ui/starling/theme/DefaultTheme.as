@@ -1,5 +1,6 @@
 package org.libra.ui.starling.theme {
 	import flash.geom.Rectangle;
+	import flash.utils.ByteArray;
 	import org.libra.ui.starling.textures.Scale9Texture;
 	import org.libra.utils.HashMap;
 	import starling.textures.Texture;
@@ -30,7 +31,8 @@ package org.libra.ui.starling.theme {
 		
 		public static const BTN_CHECK:ButtonTheme = new ButtonTheme('checkBtn');
 		
-		[Embed(source="../../../../../../asset/ui.png")]
+		[Embed(source = "../../../../../../asset/ui.png")]
+		//[Embed(source="../../../../../../asset/ui.atf", mimeType="application/octet-stream")]
 		private var UI:Class;
 		
 		[Embed(source = "../../../../../../asset/ui.xml", mimeType = "application/octet-stream")]
@@ -44,6 +46,7 @@ package org.libra.ui.starling.theme {
 		
 		public function DefaultTheme(singleton:Singleton) {
 			atlas = new TextureAtlas(Texture.fromBitmap(new UI()), XML(new UIXML()));
+			//atlas = new TextureAtlas(Texture.fromAtfData(ByteArray(new UI()), 1, false), XML(new UIXML()));
 			textureMap = new HashMap();
 		}
 		

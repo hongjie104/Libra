@@ -109,9 +109,9 @@ package org.libra.ui.starling.core {
 		/**
 		 * @inheritDoc
 		 */
-		override public function setEnabled(val:Boolean):void {
+		override public function set enabled(val:Boolean):void {
 			if(!val) this.touchPointID = -1;
-			super.setEnabled(val);
+			super.enabled = val;
 		}
 		
 		/**
@@ -149,7 +149,7 @@ package org.libra.ui.starling.core {
 		 */
 		override protected function resize():void {
 			super.resize();
-			this.state.setSize(actualWidth, actualHeight);
+			this.state.setSize($actualWidth, $actualHeight);
 		}
 		
 		/**
@@ -172,30 +172,30 @@ package org.libra.ui.starling.core {
 			switch(this.curState) {
 				case NORMAL:
 					state.toNormal();
-					if (textImage) {
-						textImage.x = textX;
-						textImage.y = textY;
+					if ($textImage) {
+						$textImage.x = $textX;
+						$textImage.y = $textY;
 					}
 					break;
 				case MOUSE_UP:
 					state.toMouseUp();
-					if (textImage) {
-						textImage.x = textX;
-						textImage.y = textY;
+					if ($textImage) {
+						$textImage.x = $textX;
+						$textImage.y = $textY;
 					}
 					break;
 				case MOUSE_OVER:
 					state.toMouseOver();
-					if (textImage) {
-						textImage.x = textX;
-						textImage.y = textY;
+					if ($textImage) {
+						$textImage.x = $textX;
+						$textImage.y = $textY;
 					}
 					break;
 				case MOUSE_DOWN:
 					state.toMouseDown();
-					if (textImage) {
-						textImage.x = textX + 1;
-						textImage.y = textY + 1;
+					if ($textImage) {
+						$textImage.x = $textX + 1;
+						$textImage.y = $textY + 1;
 					}
 					break;
 			}

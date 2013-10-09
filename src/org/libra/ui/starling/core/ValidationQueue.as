@@ -90,4 +90,4 @@ package org.libra.ui.starling.core {
 	}
 
 }
-class Singleton{}
+final class Singleton { }

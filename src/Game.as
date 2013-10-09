@@ -37,18 +37,18 @@ package  {
 			panel.addChild(new JLabel(60, 20, 50, 50, '我是面板'));
 			
 			var btn:JButton = new JButton(DefaultTheme.BTN, 43, 26, 50, 50, '按钮');
-			btn.setFont(JFont.FONT_BTN);
-			btn.setTextFilter(Filter.BLACK);
+			btn.font = JFont.FONT_BTN;
+			btn.textFilter = Filter.BLACK;
 			btn.setTextLocation(0, 2);
-			btn.setToolTipText('按钮');
+			btn.toolTipText = '按钮';
 			//panel.addChild(btn);
-			btn.setDragEnabled(true);
+			btn.dragEnabled = true;
 			
 			panel.addDropAccept(btn);
 			
 			var label:JLabel = new JLabel(120, 20, 50, 80, '我是可拖拽的面板');
-			label.setFont(JFont.FONT_LABEL);
-			label.setTextFilter(Filter.BLACK);
+			label.font = JFont.FONT_LABEL;
+			label.textFilter = Filter.BLACK;
 			//panel.addChild(label);
 			
 			var frame:JFrame = new JFrame(uiContainer, DefaultTheme.FRAME, 400, 300, 50, 50);
@@ -65,11 +65,11 @@ package  {
 			
 			function createRadioBtn(text:String):JCheckBox {
 				var radioBtn:JCheckBox = new JCheckBox(DefaultTheme.BTN_CHECK, 54, 20);
-				radioBtn.setText(text);
-				radioBtn.setFont(JFont.FONT_BTN);
-				radioBtn.setTextFilter(Filter.BLACK);
+				radioBtn.text = text;
+				radioBtn.font = JFont.FONT_BTN;
+				radioBtn.textFilter = Filter.BLACK;
 				radioBtn.setTextLocation(0, 2);
-				radioBtn.setToolTipText(text);
+				radioBtn.toolTipText = text;
 				return radioBtn;
 			}
 			
