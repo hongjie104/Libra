@@ -17,38 +17,38 @@ package org.libra.ui.flash.core.state.ctrl {
 	 */
 	public class BaseCheckBoxStateCtrl extends BaseButtonStateCtrl {
 		
-		protected var $normalSelectedBmd:BitmapData;
+		protected var _normalSelectedBmd:BitmapData;
 		
-		protected var $overSelectedBmd:BitmapData;
+		protected var _overSelectedBmd:BitmapData;
 		
-		protected var $downSelectedBmd:BitmapData;
+		protected var _downSelectedBmd:BitmapData;
 		
 		public function BaseCheckBoxStateCtrl(loader:Loader) {
 			super(loader);
 		}
 		
 		public function get normalSelectedBmd():BitmapData {
-			return $normalSelectedBmd;
+			return _normalSelectedBmd;
 		}
 		
 		public function get overSelectedBmd():BitmapData {
-			return $overSelectedBmd;
+			return _overSelectedBmd;
 		}
 		
 		public function get downSelectedBmd():BitmapData {
-			return $downSelectedBmd;
+			return _downSelectedBmd;
 		}
 		
 		override public function set skin(val:String):void {
-			this.$skin = val;
-			const source:BitmapData = AssetsStorage.getInstance().getBitmapData($skin, $loader, false);
+			this._skin = val;
+			const source:BitmapData = AssetsStorage.instance.getBitmapData(_skin, _loader, false);
 			const bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width >> 1, source.height / 3, source);
-			$normalBmd = bmdList[0][0];
-			$overBmd = bmdList[1][0];
-			$downBmd = bmdList[2][0];
-			$normalSelectedBmd = bmdList[0][1];
-			$overSelectedBmd = bmdList[1][1];
-			$downSelectedBmd = bmdList[2][1];
+			_normalBmd = bmdList[0][0];
+			_overBmd = bmdList[1][0];
+			_downBmd = bmdList[2][0];
+			_normalSelectedBmd = bmdList[0][1];
+			_overSelectedBmd = bmdList[1][1];
+			_downSelectedBmd = bmdList[2][1];
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -28,27 +28,27 @@ package org.libra.copGameEngine.model.element {
 		 * 昵称
 		 * @private
 		 */
-		protected var $nickName:TextField;
+		protected var _nickName:TextField;
 		
 		/**
 		 * 性别
 		 * @private
 		 */
-		protected var $gender:int;
+		protected var _gender:int;
 		
 		public function JAvatarProp(width:int, height:int, bitmapDataRender:JMultiBitmapDataRender) {
 			super(width, height, bitmapDataRender);
 			
-			$nickName = new TextField();
-			$nickName.y = -20;
-			$nickName.width = 60;
-			$nickName.textColor = 0xffffff;
-			$nickName.mouseEnabled = $nickName.mouseWheelEnabled = $nickName.tabEnabled = false;
+			_nickName = new TextField();
+			_nickName.y = -20;
+			_nickName.width = 60;
+			_nickName.textColor = 0xffffff;
+			_nickName.mouseEnabled = _nickName.mouseWheelEnabled = _nickName.tabEnabled = false;
 			var tf:TextFormat = new TextFormat();
 			tf.align = TextFormatAlign.CENTER;
-			$nickName.defaultTextFormat = tf;
-			this.$nickName.filters = NAME_FONT_FILTER;
-			this.$sprite.addChild($nickName);
+			_nickName.defaultTextFormat = tf;
+			this._nickName.filters = NAME_FONT_FILTER;
+			this._sprite.addChild(_nickName);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -56,12 +56,12 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get gender():int {
-			return $gender;
+			return _gender;
 		}
 		
 		override public function set name(value:String):void {
 			super.name = value;
-			$nickName.text = value;
+			_nickName.text = value;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

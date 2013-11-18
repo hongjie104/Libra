@@ -26,43 +26,43 @@ package org.libra.ui.flash.theme {
 		
 		public static var LIST_ROLLOVER:int = 0XDDDDDD;
 		
-		protected var $btnSkin:BtnSkin;
+		protected var _btnSkin:BtnSkin;
 		
-		protected var $closeBtnSkin:BtnSkin;
+		protected var _closeBtnSkin:BtnSkin;
 		
-		protected var $checkBoxSkin:BtnSkin;
+		protected var _checkBoxSkin:BtnSkin;
 		
-		protected var $vScrollDownBtnSkin:BtnSkin;
+		protected var _vScrollDownBtnSkin:BtnSkin;
 		
-		protected var $vScrollUpBtnSkin:BtnSkin;
+		protected var _vScrollUpBtnSkin:BtnSkin;
 		
-		protected var $hScrollRightBtnSkin:BtnSkin;
+		protected var _hScrollRightBtnSkin:BtnSkin;
 		
-		protected var $hScrollLeftBtnSkin:BtnSkin;
+		protected var _hScrollLeftBtnSkin:BtnSkin;
 		
-		protected var $containerSkin:ContainerSkin;
+		protected var _containerSkin:ContainerSkin;
 		
-		protected var $panelSkin:ContainerSkin;
+		protected var _panelSkin:ContainerSkin;
 		
-		protected var $frameSkin:ContainerSkin;
+		protected var _frameSkin:ContainerSkin;
 		
-		protected var $scrollBlockSkin:ScrollBlockSkin;
+		protected var _scrollBlockSkin:ScrollBlockSkin;
 		
-		protected var $progressBarSkin:ProgressBarSkin;
+		protected var _progressBarSkin:ProgressBarSkin;
 		
 		public function Skin() {
-			$btnSkin = new BtnSkin(43, 26, 'btn');
-			$closeBtnSkin = new BtnSkin(21, 19, 'btnClose');
-			$checkBoxSkin = new BtnSkin(54, 20, 'checkBox');
-			$vScrollDownBtnSkin = new BtnSkin(16, 16, 'vScrollDownBtn');
-			$vScrollUpBtnSkin = new BtnSkin(16, 16, 'vScrollUpBtn');
-			$hScrollRightBtnSkin = new BtnSkin(16, 16, 'hScrollRightBtn');
-			$hScrollLeftBtnSkin = new BtnSkin(16, 16, 'hScrollLeftBtn');
-			$containerSkin = new ContainerSkin(null, null);
-			$panelSkin = new ContainerSkin('PanelBg', new Rectangle(3, 3, 11, 6));
-			$frameSkin = new ContainerSkin('frameBg', new Rectangle(12, 60, 1, 1));
-			$scrollBlockSkin = new ScrollBlockSkin('vScrollThumb', 'vScrollBtnBg', new Rectangle(2, 2, 11, 1), 'hScrollThumb', 'hScrollBtnBg', new Rectangle(2, 2, 1, 11));
-			$progressBarSkin = new ProgressBarSkin('progressBar', new Rectangle(5, 0, 1, 16), 'progressBarBg', new Rectangle(34, 0, 1, 18));
+			_btnSkin = new BtnSkin(43, 26, 'btn');
+			_closeBtnSkin = new BtnSkin(21, 19, 'btnClose');
+			_checkBoxSkin = new BtnSkin(54, 20, 'checkBox');
+			_vScrollDownBtnSkin = new BtnSkin(16, 16, 'vScrollDownBtn');
+			_vScrollUpBtnSkin = new BtnSkin(16, 16, 'vScrollUpBtn');
+			_hScrollRightBtnSkin = new BtnSkin(16, 16, 'hScrollRightBtn');
+			_hScrollLeftBtnSkin = new BtnSkin(16, 16, 'hScrollLeftBtn');
+			_containerSkin = new ContainerSkin(null, null);
+			_panelSkin = new ContainerSkin('PanelBg', new Rectangle(3, 3, 11, 6));
+			_frameSkin = new ContainerSkin('frameBg', new Rectangle(12, 60, 1, 1));
+			_scrollBlockSkin = new ScrollBlockSkin('vScrollThumb', 'vScrollBtnBg', new Rectangle(2, 2, 11, 1), 'hScrollThumb', 'hScrollBtnBg', new Rectangle(2, 2, 1, 11));
+			_progressBarSkin = new ProgressBarSkin('progressBar', new Rectangle(5, 0, 1, 16), 'progressBarBg', new Rectangle(34, 0, 1, 18));
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -70,51 +70,51 @@ package org.libra.ui.flash.theme {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get btnSkin():BtnSkin {
-			return $btnSkin;
+			return _btnSkin;
 		}
 		
 		public function get checkBoxSkin():BtnSkin {
-			return $checkBoxSkin;
+			return _checkBoxSkin;
 		}
 		
 		public function get vScrollDownBtnSkin():BtnSkin {
-			return $vScrollDownBtnSkin;
+			return _vScrollDownBtnSkin;
 		}
 		
 		public function get vScrollUpBtnSkin():BtnSkin {
-			return $vScrollUpBtnSkin;
+			return _vScrollUpBtnSkin;
 		}
 		
 		public function get hScrollRightBtnSkin():BtnSkin {
-			return $hScrollRightBtnSkin;
+			return _hScrollRightBtnSkin;
 		}
 		
 		public function get hScrollLefttBtnSkin():BtnSkin {
-			return $hScrollLeftBtnSkin;
+			return _hScrollLeftBtnSkin;
 		}
 		
 		public function get containerSkin():ContainerSkin {
-			return $containerSkin;
+			return _containerSkin;
 		}
 		
 		public function get panelSkin():ContainerSkin {
-			return $panelSkin;
+			return _panelSkin;
 		}
 		
 		public function get frameSkin():ContainerSkin {
-			return $frameSkin;
+			return _frameSkin;
 		}
 		
 		public function get scrollBlockSkin():ScrollBlockSkin {
-			return $scrollBlockSkin;
+			return _scrollBlockSkin;
 		}
 		
 		public function get progressBarSkin():ProgressBarSkin {
-			return $progressBarSkin;
+			return _progressBarSkin;
 		}
 		
 		public function get closeBtnSkin():BtnSkin {
-			return $closeBtnSkin;
+			return _closeBtnSkin;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

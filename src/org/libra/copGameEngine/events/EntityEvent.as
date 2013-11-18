@@ -29,7 +29,7 @@ package org.libra.copGameEngine.events {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function clone():Event {
-			return new EntityEvent($subType, $data);
+			return new EntityEvent(_subType, _data);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -28,13 +28,13 @@ package org.libra.game.components.animatable {
 		
 		protected var funList:Vector.<FrameFun>;
 		
-		protected var $x:Number;
+		protected var _x:Number;
 		
-		protected var $y:Number;
+		protected var _y:Number;
 		
-		//private var $width:int;
+		//private var _width:int;
 		//
-		//private var $height:int;
+		//private var _height:int;
 		//
 		//protected var renderLayerList:Vector.<RenderLayer>;
 		//
@@ -44,11 +44,11 @@ package org.libra.game.components.animatable {
 			this.index = index;
 			this.bmd = bmd;
 			//if (bmd) {
-				//$width = bmd.width;
-				//$height = bmd.height;
+				//_width = bmd.width;
+				//_height = bmd.height;
 			//}
-			this.$x = x;
-			this.$y = y;
+			this._x = x;
+			this._y = y;
 			this.label = label;
 			//needRender = false;
 			
@@ -137,7 +137,7 @@ package org.libra.game.components.animatable {
 				//index = index < 0 ? this.renderLayerList.length : (index > renderLayerList.length ? renderLayerList.length : index);
 				//this.renderLayerList.splice(index, 0, l);
 				//l.setBitmapFrame(this);
-				//l.setSize($width, $height);
+				//l.setSize(_width, _height);
 				//needRender = true;
 			//}
 		//}
@@ -158,8 +158,8 @@ package org.libra.game.components.animatable {
 		
 		//public function setSize(w:int, h:int):void {
 			//if (this.bmd) bmd.dispose();
-			//$width = w;
-			//$height = h;
+			//_width = w;
+			//_height = h;
 			//bmd = new BitmapData(w, h, true, 0);
 			//for each(var l:RenderLayer in renderLayerList) {
 				//l.setSize(w, h);	
@@ -190,19 +190,19 @@ package org.libra.game.components.animatable {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get x():Number { 
-			return this.$x;
+			return this._x;
 		}
 		
 		public function set x(val:Number):void {
-			this.$x = val;
+			this._x = val;
 		}
 		
 		public function get y():Number {
-			return this.$y;
+			return this._y;
 		}
 		
 		public function set y(val:Number):void {
-			this.$y = val;
+			this._y = val;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

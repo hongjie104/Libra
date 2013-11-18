@@ -14,13 +14,13 @@ package org.libra.ui.flash.theme {
 	 */
 	public class ContainerSkin {
 		
-		protected var $skin:String;
+		protected var _skin:String;
 		
-		protected var $scale9Rect:Rectangle;
+		protected var _scale9Rect:Rectangle;
 		
 		public function ContainerSkin(skin:String, scale9Rect:Rectangle) { 
-			this.$skin = skin;
-			this.$scale9Rect = scale9Rect;
+			this._skin = skin;
+			this._scale9Rect = scale9Rect;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -28,11 +28,11 @@ package org.libra.ui.flash.theme {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get skin():String {
-			return $skin;
+			return _skin;
 		}
 		
 		public function get scale9Rect():Rectangle {
-			return $scale9Rect;
+			return _scale9Rect;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

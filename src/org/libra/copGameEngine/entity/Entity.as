@@ -16,16 +16,16 @@ package org.libra.copGameEngine.entity {
 	 */
 	public class Entity implements IEntity {
 		
-		protected var $name:String;
+		protected var _name:String;
 		
-		protected var $componentList:Vector.<IEntityComponent>;
+		protected var _componentList:Vector.<IEntityComponent>;
 		
-		protected var $eventDispatcher:EventDispatcher;
+		protected var _eventDispatcher:EventDispatcher;
 		
 		public function Entity(name:String) { 
 			super();
-			this.$name = name;
-			$componentList = new Vector.<IEntityComponent>();
+			this._name = name;
+			_componentList = new Vector.<IEntityComponent>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -48,36 +48,36 @@ package org.libra.copGameEngine.entity {
 		}
 		
 		public function getComponentByType(componentType:Class):IEntityComponent {
-			var i:int = this.$componentList.length;
+			var i:int = this._componentList.length;
 			while (--i > -1) {
-				if ($componentList[i] is componentType) return $componentList[i];
+				if (_componentList[i] is componentType) return _componentList[i];
 			}
 			return null;
 		}
 		
 		public function getComponentsByType(componentType:Class):Vector.<IEntityComponent> {
 			var result:Vector.<IEntityComponent> = new Vector.<IEntityComponent>();
-			var i:int = this.$componentList.length;
+			var i:int = this._componentList.length;
 			while (--i > -1) {
-				if ($componentList[i] is componentType) result.push($componentList[i]);
+				if (_componentList[i] is componentType) result.push(_componentList[i]);
 			}
 			return result;
 		}
 		
 		public function getComponentByName(componentName:String):IEntityComponent {
-			var i:int = this.$componentList.length;
+			var i:int = this._componentList.length;
 			while (--i > -1) {
-				if ($componentList[i].name == componentName) return $componentList[i];
+				if (_componentList[i].name == componentName) return _componentList[i];
 			}
 			return null;
 		}
 		
 		public function get name():String {
-			return $name;
+			return _name;
 		}
 		
 		public function set name(value:String):void {
-			$name = value;
+			_name = value;
 		}
 		
 		public function dispose():void {
@@ -85,21 +85,21 @@ package org.libra.copGameEngine.entity {
             dispatchEvent(new EntityEvent(EntityEvent.ENTITY_DISPOSE));
 			
             // Unregister our components.
-            for each(var component:IEntityComponent in $componentList) {
+            for each(var component:IEntityComponent in _componentList) {
                 if (component.isRegistered) component.unregister();
             }
-			$componentList.length = 0;
+			_componentList.length = 0;
 		}
 		
 		public function dispatchEvent(event:Event):Boolean {
-			if (!$eventDispatcher) $eventDispatcher = new EventDispatcher();
-			if($eventDispatcher.hasEventListener(event.type))
-				return $eventDispatcher.dispatchEvent(event);
+			if (!_eventDispatcher) _eventDispatcher = new EventDispatcher();
+			if(_eventDispatcher.hasEventListener(event.type))
+				return _eventDispatcher.dispatchEvent(event);
 			return false;
 		}
 		
 		public function get eventDispatcher():EventDispatcher {
-			return $eventDispatcher ||= new EventDispatcher();
+			return _eventDispatcher ||= new EventDispatcher();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -114,24 +114,24 @@ package org.libra.copGameEngine.entity {
 				throw new Error('添加了一个有owner的组件:' + componentName);
             }
 			
-			var i:int = this.$componentList.length;
+			var i:int = this._componentList.length;
 			while (--i > -1) {
-				if ($componentList[i].name == componentName) {
+				if (_componentList[i].name == componentName) {
 					return false;
 				}
 			}
 			
             component.owner = this;
-            $componentList.push(component);
+            _componentList.push(component);
             return true;
         }
 		
 		private function doRemoveComponent(component:IEntityComponent):Boolean {
 			if (component.owner != this) return false;
-            var i:int = this.$componentList.length;
+            var i:int = this._componentList.length;
 			while (--i > -1) {
-				if ($componentList[i].name == component.name) {
-					$componentList.splice(i, 1);
+				if (_componentList[i].name == component.name) {
+					_componentList.splice(i, 1);
 					return true;
 				}
 			}
@@ -139,9 +139,9 @@ package org.libra.copGameEngine.entity {
 		}
 		
 		private function doResetComponents():void {
-			var i:int = this.$componentList.length;
+			var i:int = this._componentList.length;
 			while (--i > -1) {
-				if ($componentList[i].isRegistered) $componentList[i].reset();
+				if (_componentList[i].isRegistered) _componentList[i].reset();
 			}
 		}
 		

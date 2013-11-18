@@ -15,7 +15,7 @@ package org.libra.tick {
 		 * 单例模式
 		 * @private
 		 */
-		private static var instance:Tick;
+		private static var _instance:Tick;
 		
 		/**
 		 * 事件的载体。可以是主类Main，也可以是一个shape。
@@ -81,7 +81,7 @@ package org.libra.tick {
 		public function Tick(shape:Shape, singleton:Singleton) { 
 			this.shape = shape;
 			tickabledList = new Vector.<ITickable>();
-			instance = this;
+			//_instance = this;
 			pause = true;
 			setPause(false);
 		}
@@ -204,8 +204,8 @@ package org.libra.tick {
 		 * @private
 		 * @return Tick
 		 */
-		public static function getInstance():Tick {
-			return instance ||= new Tick(new Shape(), new Singleton());
+		public static function get instance():Tick {
+			return _instance ||= new Tick(new Shape(), new Singleton());
 		}
 		
 	}

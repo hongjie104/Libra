@@ -25,7 +25,7 @@ package org.libra.ui.starling.core.state {
 		
 		public function BaseButtonState(theme:ButtonTheme) {
 			this.theme = theme;
-			getTexture = DefaultTheme.getInstance().getTexture;
+			getTexture = DefaultTheme.instance.getTexture;
 			image = new Image(getTexture(theme.normal));
 		}
 		

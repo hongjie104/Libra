@@ -50,27 +50,27 @@ package org.libra.ui.flash.core {
 		 * 按钮当前状态
 		 * @private
 		 */
-		protected var $curState:int;
+		protected var _curState:int;
 		
 		/**
 		 * 控制按钮皮肤
 		 * @private
 		 */
-		protected var $state:IButtonState;
+		protected var _state:IButtonState;
 		
 		/**
 		 * 按钮文本相对按钮的相对横坐标
 		 * @private
 		 */
-		protected var $textX:int;
+		protected var _textX:int;
 		
 		/**
 		 * 按钮文本相对按钮的相对纵坐标
 		 * @private
 		 */
-		protected var $textY:int;
+		protected var _textY:int;
 		
-		protected var $skin:BtnSkin;
+		protected var _skin:BtnSkin;
 		
 		/**
 		 * 构造函数
@@ -81,8 +81,8 @@ package org.libra.ui.flash.core {
 		 */
 		public function BaseButton(x:int = 0, y:int = 0, skin:BtnSkin = null, text:String = null, font:JFont = null, filters:Array = null) { 
 			super(x, y, text, font ? font : JFont.FONT_BTN, filters ? filters : Filter.BLACK);
-			$skin = skin;
-			$curState = NORMAL;
+			_skin = skin;
+			_curState = NORMAL;
 			setSize(skin.width, skin.height);
 		}
 		
@@ -104,12 +104,12 @@ package org.libra.ui.flash.core {
 		
 		override public function toXML():XML {
 			const xml:XML = super.toXML();
-			xml.@skinStr = this.$skin.width + '&' + this.$skin.height + '&' + this.$skin.skin;
+			xml.@skinStr = this._skin.width + '&' + this._skin.height + '&' + this._skin.skin;
 			return xml;
 		}
 		
 		override public function clone():Component {
-			return new BaseButton(this.x, this.y, this.$skin, this.text, $font, $filters);
+			return new BaseButton(this.x, this.y, this._skin, this.text, _font, _filters);
 		}
 		
 		/**
@@ -120,13 +120,13 @@ package org.libra.ui.flash.core {
 			if (ary.length == 3) {
 				this.skin = new BtnSkin(ary[0], ary[1], ary[2]);
 			}else {
-				this.skin = UIManager.getInstance().skin.btnSkin;
+				this.skin = UIManager.instance.skin.btnSkin;
 				Logger.error('按钮的皮肤配置格式有误:' + ary);
 			}
 		}
 		
 		public function set skin(value:BtnSkin):void {
-			$skin = value;
+			_skin = value;
 			this.invalidate(InvalidationFlag.STYLE);
 		}
 		
@@ -140,64 +140,64 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function initState():void {
-			this.$state = new BaseButtonState($loader);
-			$state.setSize($actualWidth, $actualHeight);
-			this.$state.skin = $skin.skin;
-			addChildAt(this.$state.displayObject, 0);
+			this._state = new BaseButtonState(_loader);
+			_state.setSize(_actualWidth, _actualHeight);
+			this._state.skin = _skin.skin;
+			addChildAt(this._state.displayObject, 0);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function initTextField(text:String = ''):void {
-			$textField = new TextField();
-			$textField.selectable = $textField.tabEnabled = $textField.mouseWheelEnabled = $textField.mouseEnabled = $textField.doubleClickEnabled = false;
-			$textField.multiline = false;
-			setFont($font);
-			textFilter = $filters;
+			_textField = new TextField();
+			_textField.selectable = _textField.tabEnabled = _textField.mouseWheelEnabled = _textField.mouseEnabled = _textField.doubleClickEnabled = false;
+			_textField.multiline = false;
+			setFont(_font);
+			textFilter = _filters;
 			this.textAlign = 'center';
 			this.text = text;
-			this.addChild($textField);
+			this.addChild(_textField);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function resize():void {
-			this.$state.setSize($actualWidth, $actualHeight);
+			this._state.setSize(_actualWidth, _actualHeight);
 			/*//保证按钮中的文本在垂直方向上永远居中
-			//setTextLocation($textX, ($actualHeight - $textField.textHeight) >> 1);
-			setTextLocation($textX, ($actualHeight - 16) >> 1);*/
+			//setTextLocation(_textX, (_actualHeight - _textField.textHeight) >> 1);
+			setTextLocation(_textX, (_actualHeight - 16) >> 1);*/
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function refreshState():void {
-			if (this.$curState == MOUSE_OVER) {
-				this.$state.toMouseOver();
-				this.$textField.x = $textX;
-				this.$textField.y = $textY;
-			}else if (this.$curState == MOUSE_DOWN) {
-				this.$state.toMouseDown();
-				this.$textField.x = $textX + 1;
-				this.$textField.y = $textY + 1;
+			if (this._curState == MOUSE_OVER) {
+				this._state.toMouseOver();
+				this._textField.x = _textX;
+				this._textField.y = _textY;
+			}else if (this._curState == MOUSE_DOWN) {
+				this._state.toMouseDown();
+				this._textField.x = _textX + 1;
+				this._textField.y = _textY + 1;
 			}else {
-				this.$state.toNormal();
-				this.$textField.x = $textX;
-				this.$textField.y = $textY;
+				this._state.toNormal();
+				this._textField.x = _textX;
+				this._textField.y = _textY;
 			}
 		}
 		
 		override protected function refreshText():void {
 			super.refreshText();
 			//保证按钮中的文本在垂直方向上永远居中
-			setTextLocation($textX, ($actualHeight - $textField.textHeight) >> 1);
+			setTextLocation(_textX, (_actualHeight - _textField.textHeight) >> 1);
 		}
 		
 		override protected function refreshStyle():void {
-			setSize($skin.width, $skin.height);
-			this.$state.skin = $skin.skin;
+			setSize(_skin.width, _skin.height);
+			this._state.skin = _skin.skin;
 		}
 		
 		/**
@@ -205,8 +205,8 @@ package org.libra.ui.flash.core {
 		 */
 		override public function setTextLocation(x:int, y:int):void {
 			super.setTextLocation(x, y);
-			this.$textX = x;
-			this.$textY = y;
+			this._textX = x;
+			this._textY = y;
 		}
 		
 		/**
@@ -215,8 +215,8 @@ package org.libra.ui.flash.core {
 		 * @param	state
 		 */
 		protected function set curState(state:int):void {
-			if ($curState != state) {
-				this.$curState = state;
+			if (_curState != state) {
+				this._curState = state;
 				this.invalidate(InvalidationFlag.STATE);
 			}
 		}

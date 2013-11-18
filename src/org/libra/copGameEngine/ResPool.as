@@ -21,7 +21,7 @@ package org.libra.copGameEngine {
 		/**
 		 * 本类实例
 		 */
-		private static var instance:ResPool;
+		private static var _instance:ResPool;
 		
 		private var map:Dictionary;
 		
@@ -56,8 +56,8 @@ package org.libra.copGameEngine {
 			return bmd;
 		}
 		
-		public static function getInstance():ResPool {
-			return instance ||= new ResPool(new Singleton);
+		public static function get instance():ResPool {
+			return _instance ||= new ResPool(new Singleton);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

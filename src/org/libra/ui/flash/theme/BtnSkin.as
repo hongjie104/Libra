@@ -13,16 +13,16 @@ package org.libra.ui.flash.theme {
 	 */
 	public class BtnSkin {
 		
-		protected var $skin:String;
+		protected var _skin:String;
 		
-		protected var $width:int;
+		protected var _width:int;
 		
-		protected var $height:int;
+		protected var _height:int;
 		
 		public function BtnSkin(w:int, h:int, skin:String) { 
-			$width = w;
-			$height = h;
-			$skin = skin;
+			_width = w;
+			_height = h;
+			_skin = skin;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -30,15 +30,15 @@ package org.libra.ui.flash.theme {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get skin():String {
-			return $skin;
+			return _skin;
 		}
 		
 		public function get width():int {
-			return $width;
+			return _width;
 		}
 		
 		public function get height():int {
-			return $height;
+			return _height;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

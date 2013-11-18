@@ -14,7 +14,7 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 	 */
 	public class BmdCollectionFactory {
 		
-		private static var instance:BmdCollectionFactory;
+		private static var _instance:BmdCollectionFactory;
 		
 		private var bmdList:Vector.<IAsset>;
 		
@@ -39,8 +39,8 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 			return bmd as IAsset;
 		}
 		
-		public static function getInstance():BmdCollectionFactory {
-			return instance ||= new BmdCollectionFactory(new Singleton());
+		public static function get instance():BmdCollectionFactory {
+			return _instance ||= new BmdCollectionFactory(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

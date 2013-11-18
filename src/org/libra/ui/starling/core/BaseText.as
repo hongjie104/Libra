@@ -29,33 +29,33 @@ package org.libra.ui.starling.core {
 		 * 赋值给显示对象
 		 * @private
 		 */
-		protected var $helpTextField:TextField;
+		protected var _helpTextField:TextField;
 		
 		/**
 		 * 文本内容
 		 * @private
 		 */
-		protected var $text:String;
+		protected var _text:String;
 		
 		/**
 		 * html格式的文本内容
 		 * @private
 		 */
-		protected var $htmlText:String;
+		protected var _htmlText:String;
 		
 		/**
 		 * 是否自动换行
 		 * @private
 		 * @default false
 		 */
-		protected var $wordWrap:Boolean;
+		protected var _wordWrap:Boolean;
 		
 		/**
 		 * 文本的滤镜
 		 * 用在传统的TextField中，然后重新渲染
 		 * @private
 		 */
-		protected var $textFilter:Array;
+		protected var _textFilter:Array;
 		
 		/**
 		 * 文本的水平对齐方式
@@ -63,34 +63,34 @@ package org.libra.ui.starling.core {
 		 * @private
 		 * @default left
 		 */
-		protected var $textAlign:String;
+		protected var _textAlign:String;
 		
 		/**
 		 * 文本的横坐标
 		 * 用来调整文本在组件上的位置
 		 * @private
 		 */
-		protected var $textX:int;
+		protected var _textX:int;
 		
 		/**
 		 * 文本的纵坐标
 		 * 用来调整文本在组件上的位置
 		 * @private
 		 */
-		protected var $textY:int;
+		protected var _textY:int;
 		
 		/**
 		 * 显示文本的对象
 		 * @private
 		 */
-		protected var $textImage:Image;
+		protected var _textImage:Image;
 		
 		/**
 		 * 绘制传统TextField的BitmapData
 		 * 由他可以得到staring所需的texture
 		 * @private
 		 */
-		protected var $textBmd:BitmapData;
+		protected var _textBmd:BitmapData;
 		
 		/**
 		 * 构造函数
@@ -104,8 +104,8 @@ package org.libra.ui.starling.core {
 		public function BaseText(widht:int, height:int, x:int = 0, y:int = 0, text:String = '') { 
 			super(widht, height, x, y);
 			quickHitAreaEnabled = true;
-			$textAlign = 'left';
-			$helpTextField = new TextField();
+			_textAlign = 'left';
+			_helpTextField = new TextField();
 			this.text = text;
 		}
 		
@@ -118,7 +118,7 @@ package org.libra.ui.starling.core {
 		 * @return 字符串
 		 */
 		public function get text():String {
-			return this.$text;
+			return this._text;
 		}
 		
 		/**
@@ -126,8 +126,8 @@ package org.libra.ui.starling.core {
 		 * @param	val 字符串
 		 */
 		public function set text(val:String):void {
-			if ($text != val) {
-				this.$text = val;
+			if (_text != val) {
+				this._text = val;
 				this.invalidate(InvalidationFlag.TEXT);
 			}
 		}
@@ -137,7 +137,7 @@ package org.libra.ui.starling.core {
 		 * @param	text 字符串
 		 */
 		public function appendText(text:String):void {
-			this.$text += text;
+			this._text += text;
 			this.invalidate(InvalidationFlag.TEXT);
 		}
 		
@@ -146,7 +146,7 @@ package org.libra.ui.starling.core {
 		 * @return html格式的字符串
 		 */
 		public function get htmlText():String {
-			return this.$htmlText;
+			return this._htmlText;
 		}
 		
 		/**
@@ -154,8 +154,8 @@ package org.libra.ui.starling.core {
 		 * @param	val html格式的字符串
 		 */
 		public function set htmlText(val:String):void {
-			if ($htmlText != val) {
-				this.$htmlText = val;
+			if (_htmlText != val) {
+				this._htmlText = val;
 				this.invalidate(InvalidationFlag.TEXT);	
 			}
 		}
@@ -165,7 +165,7 @@ package org.libra.ui.starling.core {
 		 * @param	text html格式的字符串
 		 */
 		public function appendHtmlText(text:String):void {
-			this.$htmlText += text;
+			this._htmlText += text;
 			this.invalidate(InvalidationFlag.TEXT);
 		}
 		
@@ -175,8 +175,8 @@ package org.libra.ui.starling.core {
 		 * @see org.libra.ui.flash.theme.JFont
 		 */
 		public function set font(font:JFont):void {
-			if ($helpTextField.defaultTextFormat != font.getTextFormat()) {
-				$helpTextField.defaultTextFormat = font.getTextFormat();
+			if (_helpTextField.defaultTextFormat != font.getTextFormat()) {
+				_helpTextField.defaultTextFormat = font.getTextFormat();
 				this.invalidate(InvalidationFlag.TEXT);
 			}
 		}
@@ -186,8 +186,8 @@ package org.libra.ui.starling.core {
 		 * @param	val 布尔值
 		 */
 		public function set wordWrap(val:Boolean):void {
-			if (this.$wordWrap != val) {
-				this.$wordWrap = val;
+			if (this._wordWrap != val) {
+				this._wordWrap = val;
 				this.invalidate(InvalidationFlag.TEXT);
 			}
 		}
@@ -197,8 +197,8 @@ package org.libra.ui.starling.core {
 		 * @param	filter
 		 */
 		public function set textFilter(filter:Array):void {
-			if (this.$textFilter != filter) {
-				this.$textFilter = filter;
+			if (this._textFilter != filter) {
+				this._textFilter = filter;
 				this.invalidate(InvalidationFlag.TEXT);
 			}
 		}
@@ -208,8 +208,8 @@ package org.libra.ui.starling.core {
 		 * @param	val
 		 */
 		public function set textAlign(val:String):void {
-			if (this.$textAlign != val) {
-				this.$textAlign = val;
+			if (this._textAlign != val) {
+				this._textAlign = val;
 				this.invalidate(InvalidationFlag.TEXT);
 			}
 		}
@@ -220,9 +220,9 @@ package org.libra.ui.starling.core {
 		 * @param	y
 		 */
 		public function setTextLocation(x:int, y:int):void {
-			if ($textX != x || $textY != y) {
-				this.$textX = x;
-				this.$textY = y;
+			if (_textX != x || _textY != y) {
+				this._textX = x;
+				this._textY = y;
 				this.invalidate(InvalidationFlag.TEXT);
 			}
 		}
@@ -232,9 +232,9 @@ package org.libra.ui.starling.core {
 		 */
 		override public function dispose():void {
 			super.dispose();
-			if ($textBmd) {
-				this.$textBmd.dispose();
-				this.$textBmd = null;
+			if (_textBmd) {
+				this._textBmd.dispose();
+				this._textBmd = null;
 			}
 		}
 		
@@ -246,11 +246,11 @@ package org.libra.ui.starling.core {
 		 * @inheritDoc
 		 */
 		override protected function resize():void {
-			if ($helpTextField.width != $actualWidth || $helpTextField.height != $actualHeight) {
-				$helpTextField.width = $actualWidth;
-				$helpTextField.height = $actualHeight;
-				if (this.$textBmd) $textBmd.dispose();
-				$textBmd = new BitmapData($actualWidth, $actualHeight, true, 0);
+			if (_helpTextField.width != _actualWidth || _helpTextField.height != _actualHeight) {
+				_helpTextField.width = _actualWidth;
+				_helpTextField.height = _actualHeight;
+				if (this._textBmd) _textBmd.dispose();
+				_textBmd = new BitmapData(_actualWidth, _actualHeight, true, 0);
 			}
 		}
 		
@@ -258,37 +258,37 @@ package org.libra.ui.starling.core {
 		 * @inheritDoc
 		 */
 		override protected function refreshText():void {
-			$helpTextField.wordWrap = this.$wordWrap;
-			$helpTextField.filters = this.$textFilter;
+			_helpTextField.wordWrap = this._wordWrap;
+			_helpTextField.filters = this._textFilter;
 			//抗锯齿
-			$helpTextField.antiAliasType = AntiAliasType.ADVANCED;
+			_helpTextField.antiAliasType = AntiAliasType.ADVANCED;
 			
-			var tf:TextFormat = $helpTextField.defaultTextFormat;
-			tf.align = this.$textAlign;
-			$helpTextField.defaultTextFormat = tf;
+			var tf:TextFormat = _helpTextField.defaultTextFormat;
+			tf.align = this._textAlign;
+			_helpTextField.defaultTextFormat = tf;
 			
-			if ($text) $helpTextField.text = this.$text;
-			else if ($htmlText) $helpTextField.htmlText = this.$htmlText;
+			if (_text) _helpTextField.text = this._text;
+			else if (_htmlText) _helpTextField.htmlText = this._htmlText;
 			else {
-				$helpTextField.text = '';
+				_helpTextField.text = '';
 			}
 			
-			this.$textBmd.fillRect($textBmd.rect, 0x00000000);
-			this.$textBmd.draw($helpTextField, new Matrix(1, 0, 0, 1, 0, (($actualHeight - $helpTextField.textHeight) >> 1) - 2));
+			this._textBmd.fillRect(_textBmd.rect, 0x00000000);
+			this._textBmd.draw(_helpTextField, new Matrix(1, 0, 0, 1, 0, ((_actualHeight - _helpTextField.textHeight) >> 1) - 2));
 			//text = htmlText = '';
-			var texture:Texture = Texture.fromBitmapData($textBmd, false, false, Starling.contentScaleFactor);
-			if (this.$textImage) {
-				$textImage.texture.dispose();
-				$textImage.texture = texture;
+			var texture:Texture = Texture.fromBitmapData(_textBmd, false, false, Starling.contentScaleFactor);
+			if (this._textImage) {
+				_textImage.texture.dispose();
+				_textImage.texture = texture;
 				//根据图像当前的纹理调整图像的尺寸，在为图片设置了另外一个不同的纹理以后，需要调用这个方法来同步图像和纹理的尺寸。
-				$textImage.readjustSize();
+				_textImage.readjustSize();
 			}else {
-				$textImage = new Image(texture);
-				$textImage.touchable = false;
-                addChild($textImage);
+				_textImage = new Image(texture);
+				_textImage.touchable = false;
+                addChild(_textImage);
 			}
-			$textImage.x = $textX;
-			$textImage.y = $textY;
+			_textImage.x = _textX;
+			_textImage.y = _textY;
 		}
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers

@@ -38,18 +38,18 @@ package org.libra.ui.flash.core {
 		 * 宽度
 		 * @private
 		 */
-		protected var $actualWidth:Number;
+		protected var _actualWidth:Number;
 		
 		/**
 		 * 高度
 		 * @private
 		 */
-		protected var $actualHeight:Number;
+		protected var _actualHeight:Number;
 		
 		/**
 		 * @private
 		 */
-		protected var $enabled:Boolean;
+		protected var _enabled:Boolean;
 		
 		/**
 		 * 是否已经绘制过了。
@@ -57,78 +57,78 @@ package org.libra.ui.flash.core {
 		 * 在每次被添加到舞台上调用。
 		 * @private
 		 */
-		protected var $inited:Boolean;
+		protected var _inited:Boolean;
 		
 		/**
 		 * 背景，永远在最底层
 		 * @private
 		 */
-		protected var $background:DisplayObject;
+		protected var _background:DisplayObject;
 		
 		/**
 		 * 遮罩
 		 * @private
 		 */
-		protected var $mask:Shape;
+		protected var _mask:Shape;
 		
 		/**
 		 * @private
 		 */
-		private var $dragabled:Boolean;
+		private var _dragabled:Boolean;
 		
 		/**
 		 * @private
 		 */
-		protected var $toolTipText:String;
+		protected var _toolTipText:String;
 		
 		/**
 		 * 渲染队列的引用
 		 * 渲染队列是单例
 		 * @private
 		 */
-		protected var $validationQueue:ValidationQueue;
+		protected var _validationQueue:ValidationQueue;
 		
 		/**
 		 * @private
 		 */
-		private var $invalidationFlag:InvalidationFlag;
+		private var _invalidationFlag:InvalidationFlag;
 		
 		/**
 		 * 加载资源库的loader
 		 * @private
 		 */
-		protected var $loader:Loader;
+		protected var _loader:Loader;
 		
 		/**
 		 * 九宫格参考，用于UI编辑器中
 		 * @private
 		 */
-		private var $scaleGrid:ScaleGrid;
+		private var _scaleGrid:ScaleGrid;
 		
-		protected var $id:String;
+		protected var _id:String;
 		
 		/**
 		 * 绘制边框的Shape
 		 * @private
 		 */
-		private var $border:Shape;
+		private var _border:Shape;
 		
 		/**
 		 * 边框的颜色
 		 * @private
 		 */
-		private var $borderColor:int;
+		private var _borderColor:int;
 		
 		public function Component(x:int = 0, y:int = 0) { 
 			super();
 			
 			//取消flash默认的焦点边框
 			this.focusRect = false;
-			this.$enabled = true;
+			this._enabled = true;
 			setLocation(x, y);
 			//<0,默认不要边框
-			$borderColor = -1;
-			$invalidationFlag = new InvalidationFlag();
+			_borderColor = -1;
+			_invalidationFlag = new InvalidationFlag();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -156,8 +156,8 @@ package org.libra.ui.flash.core {
 		 * @return 被添加的可视对象
 		 */
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject {
-			if (index == 0 && this.$background) {
-				index = child == $background ? 0 : 1;
+			if (index == 0 && this._background) {
+				index = child == _background ? 0 : 1;
 			}
 			return super.addChildAt(child, index);
 		}
@@ -195,14 +195,14 @@ package org.libra.ui.flash.core {
 		 * @see #height
 		 */
 		public function setSize(w:int, h:int):void {
-			if ($actualWidth != w || $actualHeight != h) {
-				this.$actualWidth = w;
-				this.$actualHeight = h;
-				if ($scaleGrid) {
+			if (_actualWidth != w || _actualHeight != h) {
+				this._actualWidth = w;
+				this._actualHeight = h;
+				if (_scaleGrid) {
 					dispatchEvent(new Event(Event.RESIZE));
 				}
-				if (this.$borderColor > -1) {
-					this.borderColor = $borderColor;
+				if (this._borderColor > -1) {
+					this.borderColor = _borderColor;
 				}
 				invalidate(InvalidationFlag.SIZE);
 				if (UIManager.UI_EDITOR) {
@@ -231,7 +231,7 @@ package org.libra.ui.flash.core {
 		 * @param	val
 		 */
 		public function set enabled(val:Boolean):void {
-			this.$enabled = val;
+			this._enabled = val;
 			this.tabEnabled = this.mouseChildren = this.mouseEnabled = val;
 			invalidate(InvalidationFlag.STATE);
 		}
@@ -241,7 +241,7 @@ package org.libra.ui.flash.core {
 		 * @return 布尔值
 		 */
 		public function get enabled():Boolean {
-			return this.$enabled;
+			return this._enabled;
 		}
 		
 		/**
@@ -249,12 +249,12 @@ package org.libra.ui.flash.core {
 		 * @param	text 文本内容
 		 */
 		public function set toolTipText(text:String):void {
-			this.$toolTipText = text;
-			ToolTipManager.getInstance().setToolTip(this, text ? JToolTip.getInstance() : null);
+			this._toolTipText = text;
+			ToolTipManager.instance.setToolTip(this, text ? JToolTip.instance : null);
 		}
 		
 		public function get toolTipText():String {
-			return $toolTipText;
+			return _toolTipText;
 		}
 		
 		/**
@@ -262,7 +262,7 @@ package org.libra.ui.flash.core {
 		 * @see org.libra.ui.flash.managers.ToolTipManager
 		 */
 		public function initToolTip():void {
-			JToolTip.getInstance().text = this.$toolTipText;
+			JToolTip.instance.text = this._toolTipText;
 		}
 		
 		/**
@@ -270,9 +270,9 @@ package org.libra.ui.flash.core {
 		 * @param	bg 一个可视对象
 		 */
 		public function set background(bg:DisplayObject):void {
-			if (this.$background && $background.parent == this) this.removeChild(this.$background);
-			this.$background = bg;
-			super.addChildAt($background, 0);
+			if (this._background && _background.parent == this) this.removeChild(this._background);
+			this._background = bg;
+			super.addChildAt(_background, 0);
 		}
 		
 		/**
@@ -281,12 +281,12 @@ package org.libra.ui.flash.core {
 		 */
 		public function setMask(rect:Rectangle = null):void {
 			if (rect) {
-				if (!this.$mask) this.$mask = new Shape();
-				GraphicsUtil.drawRect($mask.graphics, rect.x, rect.y, rect.width, rect.height);
-				this.addChild($mask);
-				this.mask = $mask;
+				if (!this._mask) this._mask = new Shape();
+				GraphicsUtil.drawRect(_mask.graphics, rect.x, rect.y, rect.width, rect.height);
+				this.addChild(_mask);
+				this.mask = _mask;
 			}else {
-				if ($mask.parent) $mask.parent.removeChild($mask);
+				if (_mask.parent) _mask.parent.removeChild(_mask);
 				this.mask = null;
 			}
 		}
@@ -327,10 +327,10 @@ package org.libra.ui.flash.core {
 			return new XML('<' + tmpAry[tmpAry.length - 1] + ' ' + 
 							(x ? 'x="' + x + '" ' : '') + 
 							(y ? 'y="' + y + '" ' : '') + 
-							($actualWidth ? 'width="' + $actualWidth + '" ' : '') + 
-							($actualHeight ? 'height="' + $actualHeight + '" ' : '') + 
-							($enabled ? '' : 'enabled="false" ') + 
-							($toolTipText ? 'toolTipText="' + $toolTipText + '" ' : '') + 
+							(_actualWidth ? 'width="' + _actualWidth + '" ' : '') + 
+							(_actualHeight ? 'height="' + _actualHeight + '" ' : '') + 
+							(_enabled ? '' : 'enabled="false" ') + 
+							(_toolTipText ? 'toolTipText="' + _toolTipText + '" ' : '') + 
 						   '/>');
 		}
 		
@@ -365,7 +365,7 @@ package org.libra.ui.flash.core {
 		 */
 		public function validate():void {
 			draw();
-			this.$invalidationFlag.reset();
+			this._invalidationFlag.reset();
 		}
 		
 		public function getRoot():IPanel {
@@ -384,28 +384,28 @@ package org.libra.ui.flash.core {
 		 * 获取控件的宽度
 		 */
 		override public function get width():Number {
-			return $actualWidth;
+			return _actualWidth;
 		}
 		
 		/**
 		 * 设置控件的宽度
 		 */
 		override public function set width(value:Number):void {
-			setSize(value, $actualHeight);
+			setSize(value, _actualHeight);
 		}
 		
 		/**
 		 * 获取控件的高度
 		 */
 		override public function get height():Number {
-			return $actualHeight;
+			return _actualHeight;
 		}
 		
 		/**
 		 * 设置控件的高度
 		 */
 		override public function set height(value:Number):void {
-			setSize($actualWidth, value);
+			setSize(_actualWidth, value);
 		}
 		
 		/* INTERFACE org.libra.ui.interfaces.IDragable */
@@ -416,9 +416,9 @@ package org.libra.ui.flash.core {
 		 * @param	val
 		 */
 		public function set dragabled(val:Boolean):void {
-			if (this.$dragabled != val) {
-				this.$dragabled = val;
-				if ($dragabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+			if (this._dragabled != val) {
+				this._dragabled = val;
+				if (_dragabled) this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 				else this.removeEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 			}
 		}
@@ -428,7 +428,7 @@ package org.libra.ui.flash.core {
 		 * @return
 		 */
 		public function get dragBmd():BitmapData {
-			var bmd:BitmapData = new BitmapData($actualWidth, $actualHeight, true, 0);
+			var bmd:BitmapData = new BitmapData(_actualWidth, _actualHeight, true, 0);
 			bmd.draw(this);
 			return bmd;
 		}
@@ -442,7 +442,7 @@ package org.libra.ui.flash.core {
 		
 		public function set useRootLoader(val:Boolean):void {
 			const root:IPanel = getRoot();
-			$loader = root ? root.loader : null;
+			_loader = root ? root.loader : null;
 		}
 		
 		/**
@@ -450,30 +450,30 @@ package org.libra.ui.flash.core {
 		 */
 		public function set showScaleGrid(val:Boolean):void {
 			if (val) {
-				if (!$scaleGrid) $scaleGrid = new ScaleGrid();
-				$scaleGrid.component = this;
+				if (!_scaleGrid) _scaleGrid = new ScaleGrid();
+				_scaleGrid.component = this;
 			}else {
-				$scaleGrid.component = null;
+				_scaleGrid.component = null;
 			}
 		}
 		
 		public function get id():String {
-			return $id;
+			return _id;
 		}
 		
 		public function set id(value:String):void {
-			$id = value;
+			_id = value;
 		}
 		
 		public function set borderColor(value:int):void {
-			this.$borderColor = value;
+			this._borderColor = value;
 			if (value > -1) {
-				if (!$border) $border = new Shape();
-				GraphicsUtil.lineRect($border.graphics, 0, 0, $actualWidth, $actualHeight, value);
-				if (!$border.parent) addChild($border);
+				if (!_border) _border = new Shape();
+				GraphicsUtil.lineRect(_border.graphics, 0, 0, _actualWidth, _actualHeight, value);
+				if (!_border.parent) addChild(_border);
 			}else {
-				$border.graphics.clear();
-				removeChild($border);
+				_border.graphics.clear();
+				removeChild(_border);
 			}
 		}
 		
@@ -488,10 +488,10 @@ package org.libra.ui.flash.core {
 		 * @param	flag
 		 * @see org.libra.ui.invalidation.InvalidationFlag
 		 */
-		protected function invalidate($invalidationFlag:int = -1):void {
-			this.$invalidationFlag.setInvalid($invalidationFlag);
-			if($inited)
-				$validationQueue.addControl(this, false);
+		protected function invalidate(_invalidationFlag:int = -1):void {
+			this._invalidationFlag.setInvalid(_invalidationFlag);
+			if(_inited)
+				_validationQueue.addControl(this, false);
 		}
 		
 		/**
@@ -501,10 +501,10 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function init():void {
-			$inited = true;
-			$validationQueue = ValidationQueue.getInstance();
+			_inited = true;
+			_validationQueue = ValidationQueue.instance;
 			this.invalidate();
-			$loader = null;
+			_loader = null;
 		}
 		
 		/**
@@ -514,15 +514,15 @@ package org.libra.ui.flash.core {
 		 * @private
 		 */
 		protected function draw():void {
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.SIZE))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.SIZE))
 				resize();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.TEXT))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.TEXT))
 				refreshText();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.DATA))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.DATA))
 				refreshData();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.STATE))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.STATE))
 				refreshState();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.STYLE))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.STYLE))
 				refreshStyle();
 		}
 		
@@ -568,7 +568,7 @@ package org.libra.ui.flash.core {
 		 */
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			if (!$inited) init();
+			if (!_inited) init();
 		}
 		
 		/**

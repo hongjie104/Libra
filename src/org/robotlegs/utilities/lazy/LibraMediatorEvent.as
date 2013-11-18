@@ -25,11 +25,11 @@ package org.robotlegs.utilities.lazy {
 		 */
         public static const VIEW_REMOVED:String = "viewRemoved";
 		
-		private var $view:IComponent;
+		private var _view:IComponent;
 		
 		public function LibraMediatorEvent(type:String, view:IComponent) {
 			super(type, true);
-            $view = view;
+            _view = view;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -37,11 +37,11 @@ package org.robotlegs.utilities.lazy {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get view():IComponent {
-			return $view;
+			return _view;
 		}
 		
 		override public function clone():Event {
-			return new LibraMediatorEvent(type, $view);
+			return new LibraMediatorEvent(type, _view);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

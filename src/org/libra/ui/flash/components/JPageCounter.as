@@ -20,17 +20,17 @@ package org.libra.ui.flash.components {
 	 */
 	public class JPageCounter extends Component {
 		
-		protected var $maxVal:int;
+		protected var _maxVal:int;
 		
-		protected var $minVal:int;
+		protected var _minVal:int;
 		
-		protected var $val:int;
+		protected var _val:int;
 		
-		protected var $prevBtn:JButton;
+		protected var _prevBtn:JButton;
 		
-		protected var $nextBtn:JButton;
+		protected var _nextBtn:JButton;
 		
-		protected var $counterLabel:JLabel;
+		protected var _counterLabel:JLabel;
 		
 		public function JPageCounter(maxVal:int = 100, minVal:int = 0, x:int = 0, y:int = 0) { 
 			super(x, y);
@@ -47,53 +47,53 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			
-			this.$prevBtn = new JButton(0, 0, UIManager.getInstance().skin.hScrollLefttBtnSkin);
-			this.$nextBtn = new JButton(0, 0, UIManager.getInstance().skin.hScrollRightBtnSkin);
-			this.$counterLabel = new JLabel();
-			$counterLabel.textAlign = 'center';
-			this.addChild($prevBtn);
-			this.addChild($nextBtn);
-			this.addChild($counterLabel);
+			this._prevBtn = new JButton(0, 0, UIManager.instance.skin.hScrollLefttBtnSkin);
+			this._nextBtn = new JButton(0, 0, UIManager.instance.skin.hScrollRightBtnSkin);
+			this._counterLabel = new JLabel();
+			_counterLabel.textAlign = 'center';
+			this.addChild(_prevBtn);
+			this.addChild(_nextBtn);
+			this.addChild(_counterLabel);
 		}
 		
 		public function set maxVal(val:int):void {
-			if ($maxVal != val) {
-				$maxVal = MathUtil.max(val, $minVal);
-				$val = MathUtil.min($val, $maxVal);
+			if (_maxVal != val) {
+				_maxVal = MathUtil.max(val, _minVal);
+				_val = MathUtil.min(_val, _maxVal);
 				invalidate(InvalidationFlag.DATA);
 			}
 		}
 		
 		public function get maxVal():int {
-			return $maxVal;
+			return _maxVal;
 		}
 		
 		public function set minVal(val:int):void {
-			if ($minVal != val) {
-				$minVal = MathUtil.min(val, $maxVal);
-				$val = MathUtil.max($val, $minVal);
+			if (_minVal != val) {
+				_minVal = MathUtil.min(val, _maxVal);
+				_val = MathUtil.max(_val, _minVal);
 				invalidate(InvalidationFlag.DATA);
 			}
 		}
 		
 		public function get minVal():int {
-			return $minVal;
+			return _minVal;
 		}
 		
 		public function set value(val:int):void {
-			if ($val != val) {
-				$val = MathUtil.min($val, $maxVal);
-				$val = MathUtil.max($val, $minVal);
+			if (_val != val) {
+				_val = MathUtil.min(_val, _maxVal);
+				_val = MathUtil.max(_val, _minVal);
 				invalidate(InvalidationFlag.DATA);
 			}
 		}
 		
 		public function get value():int {
-			return $val;
+			return _val;
 		}
 		
 		override public function clone():Component {
-			return new JPageCounter($maxVal, $minVal, x, y);
+			return new JPageCounter(_maxVal, _minVal, x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -104,16 +104,16 @@ package org.libra.ui.flash.components {
 		 * @inheritDoc
 		 */
 		override protected function resize():void {
-			this.$nextBtn.x = $actualWidth - $nextBtn.width;
-			this.$counterLabel.width = $actualWidth - $prevBtn.width - $nextBtn.width;
-			this.$counterLabel.x = $prevBtn.width;
+			this._nextBtn.x = _actualWidth - _nextBtn.width;
+			this._counterLabel.width = _actualWidth - _prevBtn.width - _nextBtn.width;
+			this._counterLabel.x = _prevBtn.width;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function refreshData():void {
-			this.$counterLabel.text = $val + '/' + $maxVal;
+			this._counterLabel.text = _val + '/' + _maxVal;
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
@@ -123,26 +123,26 @@ package org.libra.ui.flash.components {
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			$prevBtn.addEventListener(MouseEvent.CLICK, onPrev);
-			$nextBtn.addEventListener(MouseEvent.CLICK, onNext);
+			_prevBtn.addEventListener(MouseEvent.CLICK, onPrev);
+			_nextBtn.addEventListener(MouseEvent.CLICK, onNext);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			$prevBtn.removeEventListener(MouseEvent.CLICK, onPrev);
-			$nextBtn.removeEventListener(MouseEvent.CLICK, onNext);
+			_prevBtn.removeEventListener(MouseEvent.CLICK, onPrev);
+			_nextBtn.removeEventListener(MouseEvent.CLICK, onNext);
 		}
 		
 		private function onPrev(e:MouseEvent):void {
-			if (this.$val > $minVal) {
-				this.$val--;
+			if (this._val > _minVal) {
+				this._val--;
 				invalidate(InvalidationFlag.DATA);
 			}
 		}
 		
 		private function onNext(e:MouseEvent):void {
-			if (this.$val < $maxVal) {
-				this.$val += 1;
+			if (this._val < _maxVal) {
+				this._val += 1;
 				invalidate(InvalidationFlag.DATA);
 			}
 		}

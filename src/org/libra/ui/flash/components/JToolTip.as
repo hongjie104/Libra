@@ -20,7 +20,7 @@ package org.libra.ui.flash.components {
 	 */
 	public class JToolTip extends JLabel {
 		
-		private static var instance:JLabel;
+		private static var _instance:JLabel;
 		
 		public function JToolTip(singleton:Singleton) {
 			super();
@@ -31,13 +31,13 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function setSize(w:int, h:int):void {
-			this.$actualWidth = w;
-			this.$actualHeight = h;
+			this._actualWidth = w;
+			this._actualHeight = h;
 			invalidate(InvalidationFlag.SIZE);
 		}
 		
-		public static function getInstance():JLabel {
-			return instance ||= new JToolTip(new Singleton());
+		public static function get instance():JLabel {
+			return _instance ||= new JToolTip(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -45,10 +45,10 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function set text(value:String):void {
-			$text = value;
-			$textField.text = $text;
-			this.$textField.autoSize = TextFieldAutoSize.LEFT;
-			this.setSize($textField.textWidth + 13, 29);
+			_text = value;
+			_textField.text = _text;
+			this._textField.autoSize = TextFieldAutoSize.LEFT;
+			this.setSize(_textField.textWidth + 13, 29);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -61,15 +61,15 @@ package org.libra.ui.flash.components {
 		}
 		
 		override protected function resize():void {
-			if (this.$background) {
-				if (this.$background is Bitmap) {
-					const bitmap:Bitmap = $background as Bitmap;
+			if (this._background) {
+				if (this._background is Bitmap) {
+					const bitmap:Bitmap = _background as Bitmap;
 					if (bitmap.bitmapData) bitmap.bitmapData.dispose();
 				}
 			}
-			if($actualWidth > 0 && $actualHeight > 0)
-				this.background = new Bitmap(BitmapDataUtil.getScale9BitmapData(AssetsStorage.getInstance().getBitmapData('toolTipBg'), 
-					$actualWidth, $actualHeight, new Rectangle(5, 4, 1, 20)));
+			if(_actualWidth > 0 && _actualHeight > 0)
+				this.background = new Bitmap(BitmapDataUtil.getScale9BitmapData(AssetsStorage.instance.getBitmapData('toolTipBg'), 
+					_actualWidth, _actualHeight, new Rectangle(5, 4, 1, 20)));
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -41,56 +41,56 @@ package org.libra.ui.flash.components {
 		/**
 		 * 是否自动隐藏
 		 */
-		protected var $autoHide:Boolean;
+		protected var _autoHide:Boolean;
 		
 		/**
 		 * 向上的按钮
 		 */
-		protected var $upBtn:JButton;
+		protected var _upBtn:JButton;
 		
 		/**
 		 * 向下的按钮
 		 */
-		protected var $downBtn:JButton;
+		protected var _downBtn:JButton;
 		
 		/**
 		 * 滑动条，不包含上下两个按钮的
 		 */
-		protected var $scrollSlider:JScrollSlider;
+		protected var _scrollSlider:JScrollSlider;
 		
 		/**
 		 * 滚动条的方向，水平还是垂直
 		 */
-		protected var $orientation:int;
+		protected var _orientation:int;
 		
 		/**
 		 * 滑动条滑动了一个单位时，滚动区域中滚动多少个单位
 		 * 默认是1
 		 */
-		protected var $lineSize:int;
+		protected var _lineSize:int;
 		
-		protected var $delayTimer:Timer;
+		protected var _delayTimer:Timer;
 		
-		protected var $repeatTimer:Timer;
+		protected var _repeatTimer:Timer;
 		
 		/**
 		 * 上按钮还是下按钮
 		 */
-		protected var $direction:int;
+		protected var _direction:int;
 		
-		protected var $shouldRepeat:Boolean;
+		protected var _shouldRepeat:Boolean;
 		
 		public function JScrollBar(orientation:int = 1, x:int = 0, y:int = 0) { 
 			super(x, y);
-			this.$orientation = orientation;
-			$shouldRepeat = $autoHide = false;
-			$lineSize = 1;
-			$orientation == Constants.HORIZONTAL ? setSize(132, 16) : setSize(16, 132);
+			this._orientation = orientation;
+			_shouldRepeat = _autoHide = false;
+			_lineSize = 1;
+			_orientation == Constants.HORIZONTAL ? setSize(132, 16) : setSize(16, 132);
 			
-			$delayTimer = new Timer(DELAY_TIME, 1);
-			$delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayComplete);
-			$repeatTimer = new Timer(REPEAT_TIME);
-			$repeatTimer.addEventListener(TimerEvent.TIMER, onRepeat);
+			_delayTimer = new Timer(DELAY_TIME, 1);
+			_delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onDelayComplete);
+			_repeatTimer = new Timer(REPEAT_TIME);
+			_repeatTimer.addEventListener(TimerEvent.TIMER, onRepeat);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -98,66 +98,66 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function setSliderParams(min:Number, max:Number, value:Number):void {
-			this.$scrollSlider.setSliderParams(min, max, value);
+			this._scrollSlider.setSliderParams(min, max, value);
 		}
 		
 		public function set thumbPercent(value:Number):void {
-			this.$scrollSlider.thumbPercent = value;
-			visible = $autoHide ? $scrollSlider.thumbPercent < 1.0 : true;
+			this._scrollSlider.thumbPercent = value;
+			visible = _autoHide ? _scrollSlider.thumbPercent < 1.0 : true;
 		}
 		
 		public function set autoHide(value:Boolean):void {
-            $autoHide = value;
+            _autoHide = value;
             invalidate(InvalidationFlag.STATE);
         }
 		
 		public function set value(v:Number):void {
-			$scrollSlider.value = v;
+			_scrollSlider.value = v;
 		}
 		
 		public function get value():Number {
-			return $scrollSlider.value;
+			return _scrollSlider.value;
 		}
 		
 		public function set min(v:Number):void {
-			$scrollSlider.min = v;
+			_scrollSlider.min = v;
 		}
 		
 		public function get min():Number {
-			return $scrollSlider.min;
+			return _scrollSlider.min;
 		}
 		
 		public function set max(v:Number):void {
-			this.$scrollSlider.max = v;
+			this._scrollSlider.max = v;
 		}
 		
 		public function get max():Number {
-			return this.$scrollSlider.max
+			return this._scrollSlider.max
 		}
 		
 		/**
 		 * Sets the amount the value will change when up or down buttons are pressed.
 		 */
 		public function set lineSize(value:int):void {
-			$lineSize = value;
+			_lineSize = value;
 		}
 		
 		/**
 		 * Sets the amount the value will change when the back is clicked.
 		 */
 		public function set pageSize(value:int):void {
-			$scrollSlider.pageSize = value;
+			_scrollSlider.pageSize = value;
 		}
 		
 		public function changeValue(add:Number):void {
-			this.$scrollSlider.changeValue(add);
+			this._scrollSlider.changeValue(add);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override public function clone():Component {
-			return new JScrollBar($orientation, x, y);
+			return new JScrollBar(_orientation, x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -167,46 +167,46 @@ package org.libra.ui.flash.components {
 			super.init();
 			
 			//滑动条
-			this.$scrollSlider = new JScrollSlider(this.$orientation, 0, 16);
-			this.addChild($scrollSlider);
+			this._scrollSlider = new JScrollSlider(this._orientation, 0, 16);
+			this.addChild(_scrollSlider);
 			
 			//上下两个按钮
-			$upBtn = new JButton(0, 0, $orientation == Constants.HORIZONTAL ? UIManager.getInstance().skin.hScrollRightBtnSkin : UIManager.getInstance().skin.vScrollUpBtnSkin);
-			this.addChild($upBtn);
-			$downBtn = new JButton(0, 0, $orientation == Constants.HORIZONTAL ? UIManager.getInstance().skin.hScrollLefttBtnSkin : UIManager.getInstance().skin.vScrollDownBtnSkin);
-			this.addChild($downBtn);
+			_upBtn = new JButton(0, 0, _orientation == Constants.HORIZONTAL ? UIManager.instance.skin.hScrollRightBtnSkin : UIManager.instance.skin.vScrollUpBtnSkin);
+			this.addChild(_upBtn);
+			_downBtn = new JButton(0, 0, _orientation == Constants.HORIZONTAL ? UIManager.instance.skin.hScrollLefttBtnSkin : UIManager.instance.skin.vScrollDownBtnSkin);
+			this.addChild(_downBtn);
 		}
 		
 		override protected function resize():void {
-			if($orientation == Constants.VERTICAL) {
-				$scrollSlider.x = 0;
-				$scrollSlider.y = $upBtn.height;
-				$scrollSlider.width = $actualWidth;
-				$scrollSlider.height = $actualHeight - ($upBtn.height << 1);
-				$downBtn.x = 0;
-				$downBtn.y = $actualHeight - $downBtn.height;
+			if(_orientation == Constants.VERTICAL) {
+				_scrollSlider.x = 0;
+				_scrollSlider.y = _upBtn.height;
+				_scrollSlider.width = _actualWidth;
+				_scrollSlider.height = _actualHeight - (_upBtn.height << 1);
+				_downBtn.x = 0;
+				_downBtn.y = _actualHeight - _downBtn.height;
 			} else {
-				$scrollSlider.x = $downBtn.width;
-				$scrollSlider.y = 0;
-				$scrollSlider.width = $actualWidth - ($downBtn.width << 1);
-				$scrollSlider.height = $actualHeight;
-				$downBtn.x = $actualWidth - $downBtn.width;
-				$downBtn.y = 0;
+				_scrollSlider.x = _downBtn.width;
+				_scrollSlider.y = 0;
+				_scrollSlider.width = _actualWidth - (_downBtn.width << 1);
+				_scrollSlider.height = _actualHeight;
+				_downBtn.x = _actualWidth - _downBtn.width;
+				_downBtn.y = 0;
 			}
 			refreshState();
 		}
 		
 		override protected function refreshState():void {
-			visible = $autoHide ? $scrollSlider.thumbPercent < 1.0 : true;
+			visible = _autoHide ? _scrollSlider.thumbPercent < 1.0 : true;
 		}
 		
 		protected function goUp():void {
-			$scrollSlider.changeValue(0 - $lineSize);
+			_scrollSlider.changeValue(0 - _lineSize);
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		protected function goDown():void {
-			this.$scrollSlider.changeValue($lineSize);
+			this._scrollSlider.changeValue(_lineSize);
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
@@ -216,38 +216,38 @@ package org.libra.ui.flash.components {
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			this.$scrollSlider.addEventListener(Event.CHANGE, onChange);
-			this.$upBtn.addEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
-			this.$downBtn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
+			this._scrollSlider.addEventListener(Event.CHANGE, onChange);
+			this._upBtn.addEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
+			this._downBtn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			this.$scrollSlider.removeEventListener(Event.CHANGE, onChange);
-			this.$upBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
-			this.$downBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
+			this._scrollSlider.removeEventListener(Event.CHANGE, onChange);
+			this._upBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onUpBtnDown);
+			this._downBtn.removeEventListener(MouseEvent.MOUSE_DOWN, onDownBtnDown);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		protected function onUpBtnDown(event:MouseEvent):void {
 			goUp();
-			$shouldRepeat = true;
-			$direction = Constants.UP;
-			$delayTimer.start();
+			_shouldRepeat = true;
+			_direction = Constants.UP;
+			_delayTimer.start();
 		}
 		
 		protected function onDownBtnDown(event:MouseEvent):void {
 			goDown();
-			$shouldRepeat = true;
-			$direction = Constants.DOWN;
-			$delayTimer.start();
+			_shouldRepeat = true;
+			_direction = Constants.DOWN;
+			_delayTimer.start();
 		}
 		
 		protected function onMouseUp(event:MouseEvent):void{
-			$delayTimer.stop();
-			$repeatTimer.stop();
-			$shouldRepeat = false;
+			_delayTimer.stop();
+			_repeatTimer.stop();
+			_shouldRepeat = false;
 		}
 		
 		protected function onChange(event:Event):void {
@@ -255,13 +255,13 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function onDelayComplete(event:TimerEvent):void {
-			if($shouldRepeat) {
-				$repeatTimer.start();
+			if(_shouldRepeat) {
+				_repeatTimer.start();
 			}
 		}
 		
 		protected function onRepeat(event:TimerEvent):void {
-			$direction == Constants.UP ? goUp() : goDown();
+			_direction == Constants.UP ? goUp() : goDown();
 		}
 		
 	}

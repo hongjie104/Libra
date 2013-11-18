@@ -21,19 +21,19 @@ package org.libra.ui.starling.managers {
 		 * 单例
 		 * @private
 		 */
-		private static var instance:UIManager;
+		private static var _instance:UIManager;
 		
 		/**
 		 * 传统显示列表的舞台
 		 * @private
 		 */
-		private var $stage:Stage;
+		private var _stage:Stage;
 		
 		/**
 		 * starling的根容器
 		 * @private
 		 */
-		private var $starlingRoot:Sprite;
+		private var _starlingRoot:Sprite;
 		
 		/**
 		 * 在舞台上的所有面板
@@ -60,14 +60,14 @@ package org.libra.ui.starling.managers {
 		 * @param	stage 传统显示列表中的stage
 		 */
 		public function init(stage:Stage):void {
-			this.$stage = stage;
-			//this.$uiContainer = uiContainer;
-			//this.$theme = theme;
-			$starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
+			this._stage = stage;
+			//this._uiContainer = uiContainer;
+			//this._theme = theme;
+			_starlingRoot = Starling.current ? Starling.current.root as Sprite : null;
 		}
 		
 		//public function get theme():DefaultTheme {
-			//return $theme;
+			//return _theme;
 		//}
 		
 		/**
@@ -75,11 +75,11 @@ package org.libra.ui.starling.managers {
 		 * @return Stage
 		 */
 		public function get stage():Stage {
-			return this.$stage;
+			return this._stage;
 		}
 		
 		//public function get uiContainer():Container {
-			//return $uiContainer;
+			//return _uiContainer;
 		//}
 		
 		/**
@@ -87,15 +87,15 @@ package org.libra.ui.starling.managers {
 		 * @return
 		 */
 		public function get starlingRoot():Sprite {
-			return $starlingRoot;
+			return _starlingRoot;
 		}
 		
 		/**
 		 * 获取单例
 		 * @return UIManager
 		 */
-		public static function getInstance():UIManager {
-			return instance ||= new UIManager(new Singleton());
+		public static function get instance():UIManager {
+			return _instance ||= new UIManager(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

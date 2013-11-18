@@ -15,7 +15,7 @@ package org.libra.aStar {
 		 */
 		public static const FOUR:int = 4;
 		
-		private static var instance:AStar;
+		private static var _instance:AStar;
 		
 		private var _open:Binary;
 		private var _closed:Vector.<Node>;
@@ -98,7 +98,8 @@ package org.libra.aStar {
 						var h:Number = _heuristic(test);
 						var f:Number = g + h;
 						var isInOpen:Boolean = _open.indexOf(test) != -1;
-						if (isInOpen || _closed.indexOf(test) != -1) {
+						//if (isInOpen || _closed.indexOf(test) != -1) {
+						if (isInOpen || getCloseNodeIndex(test) != -1) {
 							if (test.f > f) {
 								test.f = f;
 								test.g = g;
@@ -125,6 +126,15 @@ package org.libra.aStar {
 			}
 			buildPath();
 			return true;
+			
+			function getCloseNodeIndex(n:Node):int {
+				var i:int = _closed.length;
+				trace(i);
+				while (--i > -1) {
+					if (_closed[i] == n) return i;
+				}
+				return -1;
+			}
 		}
 		
 		public function setSize(cols:int, rows:int):void { 
@@ -175,7 +185,7 @@ package org.libra.aStar {
 		}
 		
 		private function buildPath():void {
-			_path = [];
+			_path = new Vector.<Node>();
 			var node:Node = _endNode;
 			_path.push(node);
 			while (node != _startNode) {
@@ -212,8 +222,8 @@ package org.libra.aStar {
 			return _diagCost * diag + _straightCost * (straight - 2 * diag);
 		}
 		
-		public static function getInstance():AStar {
-			return instance ||= new AStar(new Singleton());
+		public static function get instance():AStar {
+			return _instance ||= new AStar(new Singleton());
 		}
 		
 		public function getGrid():Grid {

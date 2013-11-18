@@ -18,7 +18,7 @@ package org.libra.ui.starling.core {
 	 */
 	public final class ValidationQueue implements IAnimatable {
 		
-		private static var instance:ValidationQueue;
+		private static var _instance:ValidationQueue;
 		
 		private var validating:Boolean;
 		
@@ -75,8 +75,8 @@ package org.libra.ui.starling.core {
 			this.validating = false;
 		}
 		
-		public static function getInstance():ValidationQueue {
-			return instance ||= new ValidationQueue(new Singleton());
+		public static function get instance():ValidationQueue {
+			return _instance ||= new ValidationQueue(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

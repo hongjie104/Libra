@@ -16,39 +16,39 @@ package org.libra.bmpEngine.multi {
 	 */
 	public class RenderMovieClip extends RenderSprite implements ITickable {
 		
-		protected var $tickabled:Boolean;
+		protected var _tickabled:Boolean;
 		
-		protected var $bmdList:Vector.<BitmapData>;
+		protected var _bmdList:Vector.<BitmapData>;
 		
-		protected var $totalFrames:int;
+		protected var _totalFrames:int;
 		
-		protected var $currentFrame:int;
+		protected var _currentFrame:int;
 		
-		protected var $playing:Boolean;
+		protected var _playing:Boolean;
 		
-		protected var $loop:int;
+		protected var _loop:int;
 		
 		/**
 		 * 帧率
 		 */
-		protected var $frameRate:int;
+		protected var _frameRate:int;
 		
 		/**
 		 * 每帧需要的毫秒数
 		 */
-		protected var $rateTimer:int;
+		protected var _rateTimer:int;
 		
-		protected var $frameTimer:int;
+		protected var _frameTimer:int;
 		
-		//protected var $changedSignal:Signal;
+		//protected var _changedSignal:Signal;
 		
 		public function RenderMovieClip(bmdList:Vector.<BitmapData>) {
 			super(bmdList && bmdList.length ? bmdList[0] : null);
 			this.bmdList = bmdList;
-			$loop = -1;
+			_loop = -1;
 			frameRate = 10;
-			//$changedSignal = new Signal(int);
-			$tickabled = true;
+			//_changedSignal = new Signal(int);
+			_tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -56,45 +56,45 @@ package org.libra.bmpEngine.multi {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function set bmdList(bmdList:Vector.<BitmapData>):void {
-			this.$bmdList = bmdList;
-			$totalFrames = $bmdList && $bmdList.length ? $bmdList.length - 1 : 0;
-			$currentFrame = 0;
-			this.$updated = true;
+			this._bmdList = bmdList;
+			_totalFrames = _bmdList && _bmdList.length ? _bmdList.length - 1 : 0;
+			_currentFrame = 0;
+			this._updated = true;
 		}
 		
 		/**
 		 * 指定播放头所处的帧的编号
 		 */
 		public function get currentFrame():int {
-			return $currentFrame;
+			return _currentFrame;
 		}
 		
 		/**
 		 * 实例中帧的总数
 		 */
 		public function get totalFrames():int {
-			return $totalFrames;
+			return _totalFrames;
 		}
 		
 		public function get playing():Boolean {
-			return $playing;
+			return _playing;
 		}
 		
 		public function get loop():int {
-			return $loop;
+			return _loop;
 		}
 		
 		public function set loop(val:int):void {
-			this.$loop = val;
+			this._loop = val;
 		}
 		
 		public function get frameRate():int {
-			return $frameRate;
+			return _frameRate;
 		}
 		
 		public function set frameRate(frameRate:int):void {
-			this.$frameRate = frameRate;
-			this.$rateTimer = 1000 / $frameRate;
+			this._frameRate = frameRate;
+			this._rateTimer = 1000 / _frameRate;
 		}
 		
 		/**
@@ -119,7 +119,7 @@ package org.libra.bmpEngine.multi {
 		 * 将播放头转到下一帧并停止
 		 */
 		public function nextFrame():void {
-			setCurrentFrame($currentFrame + 1);
+			setCurrentFrame(_currentFrame + 1);
 			stop();
 		}
 		
@@ -127,7 +127,7 @@ package org.libra.bmpEngine.multi {
 		 * 将播放头转到前一帧并停止
 		 */
 		public function prevFrame():void {
-			setCurrentFrame($currentFrame - 1);
+			setCurrentFrame(_currentFrame - 1);
 			stop();
 		}
 		
@@ -135,39 +135,39 @@ package org.libra.bmpEngine.multi {
 		 * 移动播放头
 		 */
 		public function play():void {
-			$playing = true;
+			_playing = true;
 		}
 		
 		/**
 		 * 停止影片剪辑中的播放头
 		 */
 		public function stop():void {
-			$playing = false;
+			_playing = false;
 		}
 		
 		/* INTERFACE org.libra.tick.ITickable */
 		
 		public function tick(interval:int):void {
-			if ($playing) {
-				if ($loop == 0) {
+			if (_playing) {
+				if (_loop == 0) {
 					stop();
 					return;
 				}
-				$frameTimer -= interval;
-				while ($frameTimer < 0) {
-					if (this.$currentFrame == $totalFrames) {
-						if ($loop > 0) $loop--;
-						if ($loop == 0) {
-							this.$frameTimer = 0;
+				_frameTimer -= interval;
+				while (_frameTimer < 0) {
+					if (this._currentFrame == _totalFrames) {
+						if (_loop > 0) _loop--;
+						if (_loop == 0) {
+							this._frameTimer = 0;
 							stop();
 							return;
 						}else {
 							this.setCurrentFrame(0);
 						}
 					}else {
-						this.setCurrentFrame($currentFrame + 1);
+						this.setCurrentFrame(_currentFrame + 1);
 					}
-					$frameTimer += $rateTimer;
+					_frameTimer += _rateTimer;
 				}
 			}
 		}
@@ -175,15 +175,15 @@ package org.libra.bmpEngine.multi {
 		/* INTERFACE org.libra.tick.ITickable */
 		
 		public function get tickabled():Boolean {
-			return $tickabled;
+			return _tickabled;
 		}
 		
 		public function set tickabled(value:Boolean):void {
-			$tickabled = value;
+			_tickabled = value;
 		}
 		
 		//public function get changedSignal():Signal {
-			//return $changedSignal;
+			//return _changedSignal;
 		//}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -191,17 +191,17 @@ package org.libra.bmpEngine.multi {
 		-------------------------------------------------------------------------------------------*/
 		
 		private function setCurrentFrame(frame:int):void {
-			if ($currentFrame != frame) {
-				if(frame > this.$totalFrames){
+			if (_currentFrame != frame) {
+				if(frame > this._totalFrames){
 					frame = 0;
 				}else if(frame < 0){
-					frame = this.$totalFrames;
+					frame = this._totalFrames;
 				}
-				$bitmapData = $bmdList[frame];
-				$rect = $bitmapData.rect;
-				$currentFrame = frame;
-				$updated = true;
-				//$changedSignal.dispatch($currentFrame);
+				_bitmapData = _bmdList[frame];
+				_rect = _bitmapData.rect;
+				_currentFrame = frame;
+				_updated = true;
+				//_changedSignal.dispatch(_currentFrame);
 			}
 		}
 		

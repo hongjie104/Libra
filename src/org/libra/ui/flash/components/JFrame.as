@@ -26,26 +26,26 @@ package org.libra.ui.flash.components {
 	 */
 	public class JFrame extends JPanel {
 		
-		protected var $bar:Sprite;
+		protected var _bar:Sprite;
 		
-		protected var $closeBtn:JButton;
+		protected var _closeBtn:JButton;
 		
-		protected var $barHeight:int;
+		protected var _barHeight:int;
 		
-		protected var $dragBounds:Rectangle;
+		protected var _dragBounds:Rectangle;
 		
-		protected var $title:JLabel;
+		protected var _title:JLabel;
 		
-		protected var $closeEnabled:Boolean;
+		protected var _closeEnabled:Boolean;
 		
-		protected var $closeBtnSkin:BtnSkin;
+		protected var _closeBtnSkin:BtnSkin;
 		
-		protected var $dragBarEnabled:Boolean;
+		protected var _dragBarEnabled:Boolean;
 		
 		public function JFrame(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, barHeight:int = 25, skin:ContainerSkin = null, closeBtnSkin:BtnSkin = null) {
- 			super(owner, w, h, resName, model, skin ? skin : UIManager.getInstance().skin.frameSkin);
-			this.$barHeight = barHeight;
-			$closeBtnSkin = closeBtnSkin ? closeBtnSkin : UIManager.getInstance().skin.closeBtnSkin;
+ 			super(owner, w, h, resName, model, skin ? skin : UIManager.instance.skin.frameSkin);
+			this._barHeight = barHeight;
+			_closeBtnSkin = closeBtnSkin ? closeBtnSkin : UIManager.instance.skin.closeBtnSkin;
 			closeEnabled = true;
 			dragBarEnabled = true;
 		}
@@ -55,36 +55,36 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		override public function setSize(w:int, h:int):void {
 			super.setSize(w, h);
-			if (!this.$dragBounds) this.$dragBounds = new Rectangle();
-			$dragBounds.x = 40 - w;
-			$dragBounds.y = 0;
-			const stage:Stage = UIManager.getInstance().stage;
-			$dragBounds.width = stage.stageWidth + w - 80;
-			$dragBounds.height = stage.stageHeight - $barHeight;
+			if (!this._dragBounds) this._dragBounds = new Rectangle();
+			_dragBounds.x = 40 - w;
+			_dragBounds.y = 0;
+			const stage:Stage = UIManager.instance.stage;
+			_dragBounds.width = stage.stageWidth + w - 80;
+			_dragBounds.height = stage.stageHeight - _barHeight;
 			
 			renderTitle();
 		}
 		
 		public function set closeEnabled(bool:Boolean):void {
-			if (this.$closeEnabled != bool) {
-				this.$closeEnabled = bool;
+			if (this._closeEnabled != bool) {
+				this._closeEnabled = bool;
 				invalidate(InvalidationFlag.STATE);
 			}
 		}
 		
 		public function set dragBarEnabled(bool:Boolean):void {
-			if (this.$dragBarEnabled != bool) {
-				this.$dragBarEnabled = bool;
+			if (this._dragBarEnabled != bool) {
+				this._dragBarEnabled = bool;
 				invalidate(InvalidationFlag.STATE);
 			}
 		}
 		
 		public function set title(val:String):void {
-			this.$title.text = val;
+			this._title.text = val;
 		}
 		
 		override public function clone():Component {
-			return new JFrame($owner, $actualWidth, $actualHeight, $resName, $model, $barHeight, $skin, $closeBtnSkin);
+			return new JFrame(_owner, _actualWidth, _actualHeight, _resName, _model, _barHeight, _skin, _closeBtnSkin);
 		}
 		
 		override public function dispose():void {
@@ -108,45 +108,45 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			//面板的标题，默认距离顶部4个像素
-			$title = new JLabel(0, 4, 'JFrame Title');
-			$title.setSize($actualWidth, 20);
-			$title.textAlign = 'center';
-			this.append($title);
+			_title = new JLabel(0, 4, 'JFrame Title');
+			_title.setSize(_actualWidth, 20);
+			_title.textAlign = 'center';
+			this.append(_title);
 			
-			$bar = new Sprite();
-			GraphicsUtil.drawRect($bar.graphics, 0, 0, $actualWidth, $barHeight, 0, .0);
-			this.addChild($bar);
+			_bar = new Sprite();
+			GraphicsUtil.drawRect(_bar.graphics, 0, 0, _actualWidth, _barHeight, 0, .0);
+			this.addChild(_bar);
 			
-			$closeBtn = new JButton(0, 0, $closeBtnSkin);
-			$closeBtn.setLocation($actualWidth - $closeBtn.width - 6, 6);
-			if($closeEnabled)
-				this.append($closeBtn);
+			_closeBtn = new JButton(0, 0, _closeBtnSkin);
+			_closeBtn.setLocation(_actualWidth - _closeBtn.width - 6, 6);
+			if(_closeEnabled)
+				this.append(_closeBtn);
 		}
 		
 		override protected function resize():void {
 			super.resize();
-			$closeBtn.setLocation($actualWidth - $closeBtn.width - 6, 6);
+			_closeBtn.setLocation(_actualWidth - _closeBtn.width - 6, 6);
 		}
 		
 		override protected function refreshState():void {
-			$closeEnabled ? append($closeBtn) : remove($closeBtn);
-			$dragBarEnabled ? addBarDragListeners() : removeBarDragListeners();
+			_closeEnabled ? append(_closeBtn) : remove(_closeBtn);
+			_dragBarEnabled ? addBarDragListeners() : removeBarDragListeners();
 		}
 		
 		private function addBarDragListeners():void {
-			this.$bar.addEventListener(MouseEvent.MOUSE_DOWN, onBarMouseDown);
-			this.$bar.addEventListener(MouseEvent.MOUSE_UP, onBarMouseUp);
+			this._bar.addEventListener(MouseEvent.MOUSE_DOWN, onBarMouseDown);
+			this._bar.addEventListener(MouseEvent.MOUSE_UP, onBarMouseUp);
 		}
 		
 		private function removeBarDragListeners():void {
-			this.$bar.removeEventListener(MouseEvent.MOUSE_DOWN, onBarMouseDown);
-			this.$bar.removeEventListener(MouseEvent.MOUSE_UP, onBarMouseUp);
+			this._bar.removeEventListener(MouseEvent.MOUSE_DOWN, onBarMouseDown);
+			this._bar.removeEventListener(MouseEvent.MOUSE_UP, onBarMouseUp);
 		}
 		
 		private function renderTitle():void {
-			if ($inited) {
-				$title.width = $actualWidth;
-				$title.textAlign = 'center';
+			if (_inited) {
+				_title.width = _actualWidth;
+				_title.textAlign = 'center';
 			}
 		}
 		
@@ -156,14 +156,14 @@ package org.libra.ui.flash.components {
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			if ($dragBarEnabled) addBarDragListeners();
-			this.$closeBtn.addEventListener(MouseEvent.CLICK, onCloseBtnClikced);
+			if (_dragBarEnabled) addBarDragListeners();
+			this._closeBtn.addEventListener(MouseEvent.CLICK, onCloseBtnClikced);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			if ($dragBarEnabled) removeBarDragListeners();
-			this.$closeBtn.removeEventListener(MouseEvent.CLICK, onCloseBtnClikced);
+			if (_dragBarEnabled) removeBarDragListeners();
+			this._closeBtn.removeEventListener(MouseEvent.CLICK, onCloseBtnClikced);
 		}
 		
 		private function onBarMouseUp(e:MouseEvent):void {
@@ -171,7 +171,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		private function onBarMouseDown(e:MouseEvent):void {
-			this.startDrag(false, $dragBounds);
+			this.startDrag(false, _dragBounds);
 		}
 		
 		private function onCloseBtnClikced(e:MouseEvent):void {

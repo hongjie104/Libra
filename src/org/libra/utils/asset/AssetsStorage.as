@@ -24,26 +24,26 @@ package org.libra.utils.asset {
 	 */
 	public final class AssetsStorage extends EventDispatcher {
 		
-		private static var $instance:AssetsStorage;
+		private static var _instance:AssetsStorage;
 		
-		private var $resMap:HashMap;
+		private var _resMap:HashMap;
 		
-		private var $objMap:HashMap;
+		private var _objMap:HashMap;
 		
-		private var $uiLoader:Loader;
+		private var _uiLoader:Loader;
 		
-		private var $loaderMax:LoaderMax;
+		private var _loaderMax:LoaderMax;
 		
-		private var $configLoaderMax:LoaderMax;
+		private var _configLoaderMax:LoaderMax;
 		
-		private var $loadQueue:Vector.<IAsset>;
+		private var _loadQueue:Vector.<IAsset>;
 		
 		public function AssetsStorage(singleton:Singleton) {
-			$resMap = new HashMap();
-			$objMap = new HashMap();
+			_resMap = new HashMap();
+			_objMap = new HashMap();
 			
-			$loaderMax = new LoaderMax( { onComplete:onLoadComplete } );
-			$loadQueue = new Vector.<IAsset>();
+			_loaderMax = new LoaderMax( { onComplete:onLoadComplete } );
+			_loadQueue = new Vector.<IAsset>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -51,39 +51,39 @@ package org.libra.utils.asset {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function init(uiLoader:Loader):void {
-			this.$uiLoader = uiLoader;
+			this._uiLoader = uiLoader;
 		}
 		
 		public function getBitmapData(bmdName:String, loader:Loader = null, add:Boolean = true):BitmapData { 
-			var bmd:BitmapData = $resMap.get(bmdName);
+			var bmd:BitmapData = _resMap.get(bmdName);
 			if (bmd) return bmd;
-			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, loader ? loader : $uiLoader) as Class;
+			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, loader ? loader : _uiLoader) as Class;
 			bmd = c ? new c() : null;
 			if (add) {
-				$resMap.put(bmdName, bmd);
+				_resMap.put(bmdName, bmd);
 			}
 			return bmd;
 		}
 		
 		public function getObj(key:*):*{
-			return this.$objMap.get(key);
+			return this._objMap.get(key);
 		}
 		
 		public function putObj(key:*, obj:*):void {
-			this.$objMap.put(key, obj);
+			this._objMap.put(key, obj);
 		}
 		
 		/**
 		 * 开始加载游戏所需配置文件
 		 */
 		public function loadConfig(xmlList:XMLList):void {
-			UIManager.getInstance().showLoading();
+			UIManager.instance.showLoading();
 			const l:int = xmlList.length();
-			this.$configLoaderMax = new LoaderMax( { onComplete:onLoadConfig, onProgress:onConfigProgress } );
+			this._configLoaderMax = new LoaderMax( { onComplete:onLoadConfig, onProgress:onConfigProgress } );
 			for (var i:int = 0; i < l; i += 1) {
-				$configLoaderMax.append(new BinaryDataLoader(URI.CONFIG_URL + xmlList[i].@name, { name:xmlList[i].@id } ));
+				_configLoaderMax.append(new BinaryDataLoader(URI.CONFIG_URL + xmlList[i].@name, { name:xmlList[i].@id } ));
 			}
-			$configLoaderMax.load();
+			_configLoaderMax.load();
 		}
 		
 		/**
@@ -91,7 +91,7 @@ package org.libra.utils.asset {
 		 */
 		public function loadRes(xmlList:XMLList):void {
 			//先将加载配置文件的loader清除
-			$configLoaderMax.dispose(true);
+			_configLoaderMax.dispose(true);
 			if (xmlList) {
 				const l:int = xmlList.length();
 				const loaderMax:LoaderMax = new LoaderMax( { autoDispose:true, onComplete:onLoadBaseRes, onProgress:onBaseResProgress } );
@@ -107,17 +107,17 @@ package org.libra.utils.asset {
 			var asset:IAsset;
 			for (var i:int = 0; i < l; i += 1) {
 				asset = assetList[i];
-				if ($loaderMax.getLoader(asset.url)) {
+				if (_loaderMax.getLoader(asset.url)) {
 					continue;
 				}
 				var swfLoader:SWFLoader = new SWFLoader(asset.url, { autoDispose:true, onComplete:function():void { asset.doSthAfterLoad(swfLoader); }} );
-				$loaderMax.append(swfLoader);
+				_loaderMax.append(swfLoader);
 			}
-			$loaderMax.load();
+			_loaderMax.load();
 		}
 		
-		public static function getInstance():AssetsStorage {
-			return $instance ||= new AssetsStorage(new Singleton());
+		public static function get instance():AssetsStorage {
+			return _instance ||= new AssetsStorage(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ package org.libra.utils.asset {
 		-------------------------------------------------------------------------------------------*/
 		
 		private function onLoadComplete(evt:LoaderEvent):void {
-			$loaderMax.empty(true, true);
+			_loaderMax.empty(true, true);
 		}
 		
 		private function onLoadConfig(evt:LoaderEvent):void {
@@ -138,17 +138,17 @@ package org.libra.utils.asset {
 		}
 		
 		private function onConfigProgress(evt:LoaderEvent):void {
-			UIManager.getInstance().setLoadingProgress(evt.target.progress);
+			UIManager.instance.setLoadingProgress(evt.target.progress);
 		}
 		
 		private function onLoadBaseRes(evt:LoaderEvent):void {
 			//加载进入游戏所需资源完成后，可以进入游戏了
-			UIManager.getInstance().closeLoading();
+			UIManager.instance.closeLoading();
 			dispatchEvent(new LoaderEvent('loadBaseRes', null));
 		}
 		
 		private function onBaseResProgress(evt:LoaderEvent):void {
-			UIManager.getInstance().setLoadingProgress(evt.target.progress);
+			UIManager.instance.setLoadingProgress(evt.target.progress);
 		}
 		
 	}

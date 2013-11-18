@@ -17,17 +17,17 @@ package org.libra.copGameEngine.view.scene {
 	 */
 	public class BaseScene extends JSprite implements IScene {
 		
-		protected var $showing:Boolean;
+		protected var _showing:Boolean;
 		
-		protected var $tickabled:Boolean;
+		protected var _tickabled:Boolean;
 		
-		protected var $layerList:Vector.<ILayer>;
+		protected var _layerList:Vector.<ILayer>;
 		
 		public function BaseScene() {
 			super();
 			new LazyMediatorActivator(this);
-			$tickabled = true;
-			$layerList = new Vector.<ILayer>();
+			_tickabled = true;
+			_layerList = new Vector.<ILayer>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -37,45 +37,45 @@ package org.libra.copGameEngine.view.scene {
 		/* INTERFACE org.libra.copEngine.scene.IScene */
 		
 		public function show():void {
-			if ($showing) return;
-			$showing = true;
-			$tickabled = true;
+			if (_showing) return;
+			_showing = true;
+			_tickabled = true;
 		}
 		
 		public function close():void {
-			if ($showing) {
-				$showing = false;
-				$tickabled = false;
+			if (_showing) {
+				_showing = false;
+				_tickabled = false;
 			}
 		}
 		
 		public function get showing():Boolean {
-			return $showing;
+			return _showing;
 		}
 		
 		public function tick(interval:int):void {
-			for each(var layer:ILayer in this.$layerList) {
+			for each(var layer:ILayer in this._layerList) {
 				layer.tick(interval);
 			}
 		}
 		
 		public function get tickabled():Boolean {
-			return $tickabled;
+			return _tickabled;
 		}
 		
 		public function set tickabled(value:Boolean):void {
-			$tickabled = value;
+			_tickabled = value;
 		}
 		
 		public function addLayer(layer:ILayer):void {
-			$layerList[$layerList.length] = layer;
+			_layerList[_layerList.length] = layer;
 			this.addChild(layer as DisplayObject);
 		}
 		
 		public function removeLayer(layer:ILayer):void {
-			var index:int = $layerList.indexOf(layer);
+			var index:int = _layerList.indexOf(layer);
 			if (index != -1)
-				$layerList.splice(index, 1);
+				_layerList.splice(index, 1);
 			this.removeChild(layer as DisplayObject);
 		}
 		

@@ -18,11 +18,11 @@ package org.libra.ui.flash.core.state {
 	 */
 	public class BaseListItemState extends Shape implements ISelectState {
 		
-		private var $selected:Boolean;
+		private var _selected:Boolean;
 		
-		private var $width:int;
+		private var _width:int;
 		
-		private var $height:int;
+		private var _height:int;
 		
 		public function BaseListItemState() {
 			super();
@@ -35,17 +35,17 @@ package org.libra.ui.flash.core.state {
 		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
 		
 		public function set selected(val:Boolean):void {
-			this.$selected = val;
+			this._selected = val;
 			val ? toSelected() : toNormal();
 		}
 		
 		public function toSelected():void {
-			GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Skin.LIST_SELECTED);
+			GraphicsUtil.drawRect(this.graphics, 0, 0, _width, _height, Skin.LIST_SELECTED);
 		}
 		
 		public function setSize(w:int, h:int):void {
-			this.$width = w;
-			this.$height = h;
+			this._width = w;
+			this._height = h;
 		}
 		
 		public function set skin(val:String):void {
@@ -57,11 +57,11 @@ package org.libra.ui.flash.core.state {
 		}
 		
 		public function toNormal():void {
-			$selected ? toSelected() : GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Skin.LIST_DEFAULT);
+			_selected ? toSelected() : GraphicsUtil.drawRect(this.graphics, 0, 0, _width, _height, Skin.LIST_DEFAULT);
 		}
 		
 		public function toMouseOver():void {
-			GraphicsUtil.drawRect(this.graphics, 0, 0, $width, $height, Skin.LIST_ROLLOVER);
+			GraphicsUtil.drawRect(this.graphics, 0, 0, _width, _height, Skin.LIST_ROLLOVER);
 		}
 		
 		public function toMouseDown():void {

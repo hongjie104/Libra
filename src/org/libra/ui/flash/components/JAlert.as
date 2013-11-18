@@ -41,36 +41,36 @@ package org.libra.ui.flash.components {
 		
 		public static const CLOSE:int = 16; //10000
 		
-		private var $msgLabel:JLabel;
+		private var _msgLabel:JLabel;
 		
-		private var $okButton:JButton;
+		private var _okButton:JButton;
 		
-		private var $cancelButton:JButton;
+		private var _cancelButton:JButton;
 		
-		private var $yesButton:JButton;
+		private var _yesButton:JButton;
 		
-		private var $noButton:JButton;
+		private var _noButton:JButton;
 		
-		private var $closeButton:JButton;
+		private var _closeButton:JButton;
 		
-		private var $clickedHandler:Function;
+		private var _clickedHandler:Function;
 		
 		public function JAlert(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', barHeight:int = 25, skin:ContainerSkin = null, closeBtnSkin:BtnSkin = null) { 
 			super(owner, w, h, resName, true, barHeight, skin, closeBtnSkin);
 			
-			const uiSkin:Skin = UIManager.getInstance().skin;
+			const uiSkin:Skin = UIManager.instance.skin;
 			const btnY:int = h - uiSkin.btnSkin.height - 36;
-			$okButton = new JButton(0, btnY, uiSkin.btnSkin, OK_STR);
-			$cancelButton = new JButton(0, btnY, uiSkin.btnSkin, CANCEL_STR);
-			$yesButton = new JButton(0, btnY, uiSkin.btnSkin, YES_STR);
-			$noButton = new JButton(0, btnY, uiSkin.btnSkin, NO_STR);
-			$closeButton = new JButton(0, btnY, uiSkin.btnSkin, CLOSE_STR);
-			$msgLabel = new JLabel(0, 60);
-			$msgLabel.width = w - 40;
+			_okButton = new JButton(0, btnY, uiSkin.btnSkin, OK_STR);
+			_cancelButton = new JButton(0, btnY, uiSkin.btnSkin, CANCEL_STR);
+			_yesButton = new JButton(0, btnY, uiSkin.btnSkin, YES_STR);
+			_noButton = new JButton(0, btnY, uiSkin.btnSkin, NO_STR);
+			_closeButton = new JButton(0, btnY, uiSkin.btnSkin, CLOSE_STR);
+			_msgLabel = new JLabel(0, 60);
+			_msgLabel.width = w - 40;
 			//最大四行，每行20像素
-			$msgLabel.height = 80;
-			$msgLabel.x = (w - $msgLabel.width) >> 1;
-			$msgLabel.wordWrap = true;
+			_msgLabel.height = 80;
+			_msgLabel.x = (w - _msgLabel.width) >> 1;
+			_msgLabel.wordWrap = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -78,39 +78,39 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public static function show(msg:String, finishHandler:Function = null, buttons:int = OK):void { 
-			const alert:JAlert = new JAlert(UIManager.getInstance().uiContainer, 260, 200, '', 25, UIManager.getInstance().skin.frameSkin, UIManager.getInstance().skin.closeBtnSkin);
+			const alert:JAlert = new JAlert(UIManager.instance.uiContainer, 260, 200, '', 25, UIManager.instance.skin.frameSkin, UIManager.instance.skin.closeBtnSkin);
 			alert.closeEnabled = false;
-			alert.$msgLabel.text = msg;
-			alert.append(alert.$msgLabel);
-			alert.$clickedHandler = finishHandler;
+			alert._msgLabel.text = msg;
+			alert.append(alert._msgLabel);
+			alert._clickedHandler = finishHandler;
 			
 			const btnList:Vector.<JButton> = new Vector.<JButton>();
 			if ((buttons & OK) == OK) {
-				alert.append(alert.$okButton);
-				btnList.push(alert.$okButton);
+				alert.append(alert._okButton);
+				btnList.push(alert._okButton);
 			}
 			if ((buttons & CANCEL) == CANCEL) {
-				alert.append(alert.$cancelButton);
-				btnList.push(alert.$cancelButton);
+				alert.append(alert._cancelButton);
+				btnList.push(alert._cancelButton);
 			}
 			if ((buttons & YES) == YES) {
-				alert.append(alert.$yesButton);
-				btnList.push(alert.$yesButton);
+				alert.append(alert._yesButton);
+				btnList.push(alert._yesButton);
 			}
 			if ((buttons & NO) == NO) {
-				alert.append(alert.$noButton);
-				btnList.push(alert.$noButton);
+				alert.append(alert._noButton);
+				btnList.push(alert._noButton);
 			}
 			if ((buttons & CLOSE) == CLOSE) {
-				alert.append(alert.$closeButton);
-				btnList.push(alert.$closeButton);
+				alert.append(alert._closeButton);
+				btnList.push(alert._closeButton);
 			}
 			alert.defaultBtn = btnList.length ? btnList[0] : null;
 			//所有按钮自动居中显示
 			//各个按钮之间的水平间距
 			const btnGapH:int = 20;
 			const l:int = btnList.length;
-			const btnW:int = UIManager.getInstance().skin.closeBtnSkin.width;
+			const btnW:int = UIManager.instance.skin.closeBtnSkin.width;
 			const startX:int = (alert.width - btnW * l - btnGapH * (l - 1)) >> 1;
 			for (var i:int = 0; i < l; i += 1)
 				btnList[i].x = startX + i * (btnW + btnGapH);
@@ -120,7 +120,7 @@ package org.libra.ui.flash.components {
 		
 		override public function close(tween:Boolean = true, destroy:Boolean = false):void {
 			super.close(tween, destroy);
-			$clickedHandler = null;
+			_clickedHandler = null;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -133,49 +133,49 @@ package org.libra.ui.flash.components {
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			$okButton.addEventListener(MouseEvent.CLICK, onOk);
-			$cancelButton.addEventListener(MouseEvent.CLICK, onCancel);
-			$yesButton.addEventListener(MouseEvent.CLICK, onYes);
-			$noButton.addEventListener(MouseEvent.CLICK, onNo);
-			$closeButton.addEventListener(MouseEvent.CLICK, onClose);
+			_okButton.addEventListener(MouseEvent.CLICK, onOk);
+			_cancelButton.addEventListener(MouseEvent.CLICK, onCancel);
+			_yesButton.addEventListener(MouseEvent.CLICK, onYes);
+			_noButton.addEventListener(MouseEvent.CLICK, onNo);
+			_closeButton.addEventListener(MouseEvent.CLICK, onClose);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			$okButton.removeEventListener(MouseEvent.CLICK, onOk);
-			$cancelButton.removeEventListener(MouseEvent.CLICK, onCancel);
-			$yesButton.removeEventListener(MouseEvent.CLICK, onYes);
-			$noButton.removeEventListener(MouseEvent.CLICK, onNo);
-			$closeButton.removeEventListener(MouseEvent.CLICK, onClose);
+			_okButton.removeEventListener(MouseEvent.CLICK, onOk);
+			_cancelButton.removeEventListener(MouseEvent.CLICK, onCancel);
+			_yesButton.removeEventListener(MouseEvent.CLICK, onYes);
+			_noButton.removeEventListener(MouseEvent.CLICK, onNo);
+			_closeButton.removeEventListener(MouseEvent.CLICK, onClose);
 		}
 		
 		private function onClose(e:MouseEvent):void {
-			if ($clickedHandler != null)
-				$clickedHandler(JAlert.CLOSE);
+			if (_clickedHandler != null)
+				_clickedHandler(JAlert.CLOSE);
 			this.close(true, true);
 		}
 		
 		private function onNo(e:MouseEvent):void {
-			if ($clickedHandler != null)
-				$clickedHandler(JAlert.NO);
+			if (_clickedHandler != null)
+				_clickedHandler(JAlert.NO);
 			close(true, true);
 		}
 		
 		private function onYes(e:MouseEvent):void {
-			if ($clickedHandler != null)
-				$clickedHandler(JAlert.YES);
+			if (_clickedHandler != null)
+				_clickedHandler(JAlert.YES);
 			close(true, true);
 		}
 		
 		private function onCancel(e:MouseEvent):void {
-			if ($clickedHandler != null)
-				$clickedHandler(JAlert.CANCEL);
+			if (_clickedHandler != null)
+				_clickedHandler(JAlert.CANCEL);
 			close(true, true);
 		}
 		
 		private function onOk(e:MouseEvent):void {
-			if ($clickedHandler != null)
-				$clickedHandler(JAlert.OK);
+			if (_clickedHandler != null)
+				_clickedHandler(JAlert.OK);
 			close(true, true);
 		}
 	}

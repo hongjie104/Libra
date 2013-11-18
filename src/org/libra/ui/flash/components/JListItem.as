@@ -25,23 +25,23 @@ package org.libra.ui.flash.components {
 		
 		private static const MOUSE_OVER:int = 1;
 		
-		private var $data:*;
+		private var _data:*;
 		
-		private var $selected:Boolean;
+		private var _selected:Boolean;
 		
-		private var $state:ISelectState;
+		private var _state:ISelectState;
 		
-		private var $label:JLabel;
+		private var _label:JLabel;
 		
-		private var $curState:int;
+		private var _curState:int;
 		
 		public function JListItem(x:int = 0, y:int = 0) { 
 			super(x, y);
 			this.mouseChildren = this.mouseEnabled = true;
 			initStatue();
 			this.setSize(100, 20);
-			$selected = false;
-			$curState = NORMAL;
+			_selected = false;
+			_curState = NORMAL;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -49,21 +49,21 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function set selected(val:Boolean):void {
-			this.$selected = val;
+			this._selected = val;
 			this.invalidate(InvalidationFlag.STATE);
 		}
 		
 		public function get selected():Boolean {
-			return this.$selected;
+			return this._selected;
 		}
 		
 		public function set data(data:*):void {
-			this.$data = data;
+			this._data = data;
 			invalidate(InvalidationFlag.DATA);
 		}
 		
 		public function get data():*{
-			return this.$data;
+			return this._data;
 		}
 		
 		override public function clone():Component {
@@ -75,33 +75,33 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		protected function initStatue():void {
-			$state = new BaseListItemState();
-			this.addChild($state.displayObject);
+			_state = new BaseListItemState();
+			this.addChild(_state.displayObject);
 		}
 		
 		override protected function init():void {
 			super.init();
-			$label = new JLabel();
-			this.append($label);
+			_label = new JLabel();
+			this.append(_label);
 		}
 		
 		override protected function refreshData():void {
-			$label.text = $data;
+			_label.text = _data;
 		}
 		
 		override protected function resize():void {
-			this.$state.setSize($actualWidth, $actualHeight);
-			$label.setSize($actualWidth, $actualHeight);
+			this._state.setSize(_actualWidth, _actualHeight);
+			_label.setSize(_actualWidth, _actualHeight);
 		}
 		
 		override protected function refreshState():void {
-			this.$state.selected = this.$selected;
-			$curState == NORMAL ? $state.toNormal() : $state.toMouseOver();
+			this._state.selected = this._selected;
+			_curState == NORMAL ? _state.toNormal() : _state.toMouseOver();
 		}
 		
 		private function set curState(state:int):void {
-			if ($curState != state) {
-				$curState = state;
+			if (_curState != state) {
+				_curState = state;
 				invalidate(InvalidationFlag.STATE);
 			}
 		}

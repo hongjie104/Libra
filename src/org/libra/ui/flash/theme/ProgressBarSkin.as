@@ -14,34 +14,34 @@ package org.libra.ui.flash.theme {
 	 */
 	public class ProgressBarSkin {
 		
-		protected var $barSkin:String;
+		protected var _barSkin:String;
 		
-		protected var $barBgSkin:String;
+		protected var _barBgSkin:String;
 		
-		protected var $barScale9Rect:Rectangle;
+		protected var _barScale9Rect:Rectangle;
 		
-		protected var $barBgScale9Rect:Rectangle;
+		protected var _barBgScale9Rect:Rectangle;
 		
-		protected var $barX:int;
+		protected var _barX:int;
 		
-		protected var $barY:int;
+		protected var _barY:int;
 		
-		protected var $barWidth:int;
+		protected var _barWidth:int;
 		
-		protected var $width:int;
+		protected var _width:int;
 		
-		protected var $height:int;
+		protected var _height:int;
 		
 		public function ProgressBarSkin(barskin:String, barScale9Rect:Rectangle, barBgskin:String, barBgScale9Rect:Rectangle, barX:int = 29, barY:int = 1, barWidth:int = 142, width:int = 200, height:int = 18) { 
-			this.$barSkin = barskin;
-			this.$barScale9Rect = barScale9Rect;
-			this.$barBgSkin = barBgskin;
-			this.$barBgScale9Rect = barBgScale9Rect;
-			$barX = barX;
-			$barY = barY;
-			$barWidth = barWidth;
-			$width = width;
-			$height = height;
+			this._barSkin = barskin;
+			this._barScale9Rect = barScale9Rect;
+			this._barBgSkin = barBgskin;
+			this._barBgScale9Rect = barBgScale9Rect;
+			_barX = barX;
+			_barY = barY;
+			_barWidth = barWidth;
+			_width = width;
+			_height = height;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -49,39 +49,39 @@ package org.libra.ui.flash.theme {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get barSkin():String {
-			return $barSkin;
+			return _barSkin;
 		}
 		
 		public function get barScale9Rect():Rectangle {
-			return $barScale9Rect;
+			return _barScale9Rect;
 		}
 		
 		public function get barBgSkin():String {
-			return $barBgSkin;
+			return _barBgSkin;
 		}
 		
 		public function get barBgScale9Rect():Rectangle {
-			return $barBgScale9Rect;
+			return _barBgScale9Rect;
 		}
 		
 		public function get width():int {
-			return $width;
+			return _width;
 		}
 		
 		public function get height():int {
-			return $height;
+			return _height;
 		}
 		
 		public function get barX():int {
-			return $barX;
+			return _barX;
 		}
 		
 		public function get barY():int {
-			return $barY;
+			return _barY;
 		}
 		
 		public function get barWidth():int {
-			return $barWidth;
+			return _barWidth;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

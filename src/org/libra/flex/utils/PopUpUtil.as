@@ -16,7 +16,7 @@ package org.libra.flex.utils {
 	public class PopUpUtil {
 		private var effector:Object;
 		
-		private static var instance:PopUpUtil;
+		private static var _instance:PopUpUtil;
 
 		public function PopUpUtil() {
 		}
@@ -65,8 +65,8 @@ package org.libra.flex.utils {
 			this.effector.play();
 		}
 		
-		public static function getInstance():PopUpUtil{
-			return instance ||= new PopUpUtil();
+		public static function get instance():PopUpUtil{
+			return _instance ||= new PopUpUtil();
 		}
 
 	}

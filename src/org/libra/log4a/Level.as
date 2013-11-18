@@ -44,9 +44,9 @@ package org.libra.log4a {
 		 */
 		public static var OFF:Level = new Level(6, "OFF");
 		
-		private var $value:int;
+		private var _value:int;
 		
-		private var $name:String;
+		private var _name:String;
 		
 		/**
 		 * 构造函数
@@ -55,8 +55,8 @@ package org.libra.log4a {
 		 * @param name 层级名称 @default "DEBUG"
 		 */
 		public function Level(value:int = 1, name:String = "DEBUG") {
-			$value = value;
-			$name = name;
+			_value = value;
+			_name = name;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ package org.libra.log4a {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function compareTo(level:Level):Boolean {
-			return $value > level.value;
+			return _value > level.value;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ package org.libra.log4a {
 		 * @return 
 		 */
 		public function get value():int {
-			return $value;
+			return _value;
 		}
 
 		/**
@@ -86,7 +86,7 @@ package org.libra.log4a {
 		 * @return 层级
 		 */
 		public function get name():String {
-			return $name;
+			return _name;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

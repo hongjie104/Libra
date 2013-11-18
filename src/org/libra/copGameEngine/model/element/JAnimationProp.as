@@ -22,58 +22,58 @@ package org.libra.copGameEngine.model.element {
 	 */
 	public class JAnimationProp extends JBitmapObject implements ITickable {
 		
-		protected var $tickabled:Boolean;
+		protected var _tickabled:Boolean;
 		
-		protected var $renderLayer:RenderLayer;
+		protected var _renderLayer:RenderLayer;
 		
-		protected var $baseMovieClip:RenderMovieClip;
+		protected var _baseMovieClip:RenderMovieClip;
 		
-		protected var $multiBitmapDataRender:JMultiBitmapDataRender;
+		protected var _multiBitmapDataRender:JMultiBitmapDataRender;
 		
 		/**
 		 * 当前动作的帧索引
 		 * @private
 		 */
-		protected var $curAnimationStep:int;
+		protected var _curAnimationStep:int;
 		
 		/**
 		 * 当前动作的总帧数
 		 * @private
 		 */
-		protected var $totalAnimationStep:int;
+		protected var _totalAnimationStep:int;
 		
 		/**
 		 * 当前动作停留的时间,单位毫秒
 		 * @private
 		 */
-		protected var $animationTimer:int;
+		protected var _animationTimer:int;
 		
 		public function JAnimationProp(width:int, height:int, bitmapDataRender:JMultiBitmapDataRender) {
 			super(width, height, bitmapDataRender);
 			
-			$multiBitmapDataRender = bitmapDataRender;
-			$renderLayer = new RenderLayer(width, height);
-			$baseMovieClip = new RenderMovieClip(null);
-			$renderLayer.addItem($baseMovieClip);
-			$multiBitmapDataRender.addLayer($renderLayer);
+			_multiBitmapDataRender = bitmapDataRender;
+			_renderLayer = new RenderLayer(width, height);
+			_baseMovieClip = new RenderMovieClip(null);
+			_renderLayer.addItem(_baseMovieClip);
+			_multiBitmapDataRender.addLayer(_renderLayer);
 			
-			$tickabled = true;
-			$sprite.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			_tickabled = true;
+			_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
 		/* INTERFACE org.libra.tick.ITickable */
 		
 		public function get tickabled():Boolean {
-			return $tickabled;
+			return _tickabled;
 		}
 		
 		public function set tickabled(value:Boolean):void {
-			$tickabled = value;
+			_tickabled = value;
 		}
 		
 		public function tick(interval:int):void {
-			$baseMovieClip.tick(interval);
-			$multiBitmapDataRender.tick(interval);
+			_baseMovieClip.tick(interval);
+			_multiBitmapDataRender.tick(interval);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function set bmdList(val:Vector.<BitmapData>):void {
-			this.$baseMovieClip.bmdList = val;
+			this._baseMovieClip.bmdList = val;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -93,15 +93,15 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		private function onAddToStage(e:Event):void {
-			$sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			$sprite.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
-			Tick.getInstance().addItem(this);
+			_sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			_sprite.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
+			Tick.instance.addItem(this);
 		}
 		
 		private function onRemoveFromStage(e:Event):void {
-			$sprite.removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
-			$sprite.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			Tick.getInstance().removeItem(this);
+			_sprite.removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
+			_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			Tick.instance.removeItem(this);
 		}
 		
 	}

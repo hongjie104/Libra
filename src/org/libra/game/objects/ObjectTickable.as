@@ -19,7 +19,7 @@ package org.libra.game.objects {
 	 */
 	public class ObjectTickable extends JSprite implements ITickable {
 		
-		protected var $tickabled:Boolean;
+		protected var _tickabled:Boolean;
 		
 		protected var baseBitmap:Bitmap;
 		
@@ -27,7 +27,7 @@ package org.libra.game.objects {
 			super();
 			baseBitmap = new Bitmap();
 			this.addChild(baseBitmap);
-			$tickabled = true;
+			_tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -45,11 +45,11 @@ package org.libra.game.objects {
 		}
 		
 		public function get tickabled():Boolean {
-			return $tickabled;
+			return _tickabled;
 		}
 		
 		public function set tickabled(value:Boolean):void {
-			$tickabled = value;
+			_tickabled = value;
 		}
 		
 		override public function dispose():void {
@@ -66,12 +66,12 @@ package org.libra.game.objects {
 		-------------------------------------------------------------------------------------------*/
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			Tick.getInstance().addItem(this);
+			Tick.instance.addItem(this);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			Tick.getInstance().removeItem(this);
+			Tick.instance.removeItem(this);
 		}
 	}
 

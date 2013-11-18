@@ -49,85 +49,85 @@ package org.libra.copGameEngine.model.element {
 		 * 接受任务时的npc说话内容
 		 * @private
 		 */ 
-		protected var $acceptInfo:String;
+		protected var _acceptInfo:String;
 		
 		/**
 		 * 提交任务时的npc说话内容
 		 * @private
 		 */
-		protected var $submitInfo:String;
+		protected var _submitInfo:String;
 		
 		/**
 		 * 前置任务的id
 		 * @private
 		 */
-		protected var $prepMission:int;
+		protected var _prepMission:int;
 		
 		/**
 		 * 接受任务的最小等级
 		 * @private
 		 */
-		protected var $minLv:int;
+		protected var _minLv:int;
 		
 		/**
 		 * 接受任务的npc
 		 * @private
 		 */
-		protected var $acceptNPC:int;
+		protected var _acceptNPC:int;
 		
 		/**
 		 * 提交任务的npc
 		 * @private
 		 */
-		protected var $submitNPC:int;
+		protected var _submitNPC:int;
 		
 		/**
 		 * 完成条件的类型。
 		 * @private
 		 */
-		protected var $completeType:String;
+		protected var _completeType:String;
 		
 		/**
 		 * 完成条件的参数
 		 * @private
 		 */
-		protected var $completeParam:String;
+		protected var _completeParam:String;
 		
 		/**
 		 * 完成条件的值
 		 * @private
 		 */
-		protected var $completeValue:int;
+		protected var _completeValue:int;
 		
 		
 		/**
 		 * 当前的值,比如当前杀了多少怪
 		 * @private
 		 */
-		protected var $curCompleteValue:int;
+		protected var _curCompleteValue:int;
 		
 		/**
 		 * 任务的进度。
 		 * @private
 		 */
-		protected var $status:int;
+		protected var _status:int;
 		
 		/**
 		 * 是否是主线任务
 		 * @private
 		 */
-		protected var $main:Boolean;
+		protected var _main:Boolean;
 		
 		/**
 		 * 主线任务的一个排序索引
 		 * 如果不是主线任务，该值为0
 		 * @private
 		 */
-		protected var $mainIndex:int;
+		protected var _mainIndex:int;
 		
 		public function JMission() {
 			super();
-			$status = -1;
+			_status = -1;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -135,63 +135,63 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get acceptInfo():String {
-			return $acceptInfo;
+			return _acceptInfo;
 		}
 		
 		public function get submitInfo():String {
-			return $submitInfo;
+			return _submitInfo;
 		}
 		
 		public function get prepMission():int {
-			return $prepMission;
+			return _prepMission;
 		}
 		
 		public function get minLv():int {
-			return $minLv;
+			return _minLv;
 		}
 		
 		public function get acceptNPC():int {
-			return $acceptNPC;
+			return _acceptNPC;
 		}
 		
 		public function get submitNPC():int {
-			return $submitNPC;
+			return _submitNPC;
 		}
 		
 		public function get completeType():String {
-			return $completeType;
+			return _completeType;
 		}
 		
 		public function get completeParam():String {
-			return $completeParam;
+			return _completeParam;
 		}
 		
 		public function get completeValue():int {
-			return $completeValue;
+			return _completeValue;
 		}
 		
 		public function get curCompleteValue():int {
-			return $curCompleteValue;
+			return _curCompleteValue;
 		}
 		
 		public function set curCompleteValue(value:int):void {
-			$curCompleteValue = value;
+			_curCompleteValue = value;
 		}
 		
 		public function get status():int {
-			return $status;
+			return _status;
 		}
 		
 		public function set status(value:int):void {
-			$status = value;
+			_status = value;
 		}
 		
 		public function get main():Boolean {
-			return $main;
+			return _main;
 		}
 		
 		public function get mainIndex():int {
-			return $mainIndex;
+			return _mainIndex;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

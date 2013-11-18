@@ -38,7 +38,7 @@ package org.libra.ui.starling.theme {
 		[Embed(source = "../../../../../../asset/ui.xml", mimeType = "application/octet-stream")]
 		private var UIXML:Class;
 		
-		private static var instance:DefaultTheme;
+		private static var _instance:DefaultTheme;
 		
 		private var atlas:TextureAtlas;
 		
@@ -70,8 +70,8 @@ package org.libra.ui.starling.theme {
 			return texture;
 		}
 		
-		public static function getInstance():DefaultTheme {
-			return instance ||= new DefaultTheme(new Singleton());
+		public static function get instance():DefaultTheme {
+			return _instance ||= new DefaultTheme(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

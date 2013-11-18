@@ -29,16 +29,16 @@ package org.libra.ui.flash.components {
 		 * 是否勾选上
 		 * @private
 		 */
-		private var $selected:Boolean;
+		private var _selected:Boolean;
 		
 		/**
 		 * 所在的组，加入组之后，就是单选框了
 		 * @private
 		 */
-		private var $group:JCheckBoxGroup;
+		private var _group:JCheckBoxGroup;
 		
 		public function JCheckBox(x:int = 0, y:int = 0, skin:BtnSkin = null, text:String = null, font:JFont = null, filters:Array = null) { 
-			super(x, y, skin ? skin : UIManager.getInstance().skin.checkBoxSkin, text, font ? font : JFont.FONT_LABEL, filters);
+			super(x, y, skin ? skin : UIManager.instance.skin.checkBoxSkin, text, font ? font : JFont.FONT_LABEL, filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -46,19 +46,19 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get selected():Boolean {
-			return this.$selected;
+			return this._selected;
 		}
 		
 		public function set selected(val:Boolean):void {
-			if (this.$selected != val) {
-				this.$selected = val;
+			if (this._selected != val) {
+				this._selected = val;
 				this.invalidate(InvalidationFlag.STATE);
 			}
 		}
 		
-		public function setCheckBoxGroup($group:JCheckBoxGroup):void {
-			if (this.$group && this.$group != $group) this.$group.removeCheckBox(this);
-			this.$group = $group;
+		public function setCheckBoxGroup(_group:JCheckBoxGroup):void {
+			if (this._group && this._group != _group) this._group.removeCheckBox(this);
+			this._group = _group;
 		}
 		
 		/**
@@ -69,18 +69,18 @@ package org.libra.ui.flash.components {
 			if (ary.length == 3) {
 				this.skin = new BtnSkin(ary[0], ary[1], ary[2]);
 			}else {
-				this.skin = UIManager.getInstance().skin.checkBoxSkin;
+				this.skin = UIManager.instance.skin.checkBoxSkin;
 				Logger.error('checkBox的皮肤配置格式有误:' + ary);
 			}
 		}
 		
 		override public function clone():Component {
-			return new JCheckBox(x, y, $skin, $text, $font, $filters);
+			return new JCheckBox(x, y, _skin, _text, _font, _filters);
 		}
 		
 		override public function toXML():XML {
 			const xml:XML = super.toXML();
-			if (this.$selected) xml.@selected = true;
+			if (this._selected) xml.@selected = true;
 			return xml;
 		}
 		
@@ -89,34 +89,34 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function initState():void {
-			this.$state = new BaseCheckBoxState($loader);
-			this.$state.skin = $skin.skin;
-			this.addChildAt(this.$state.displayObject, 0);
+			this._state = new BaseCheckBoxState(_loader);
+			this._state.skin = _skin.skin;
+			this.addChildAt(this._state.displayObject, 0);
 			
 			setTextLocation(18, 0);
 		}
 		
 		override protected function refreshState():void {
-			(this.$state as ISelectState).selected = $selected;
+			(this._state as ISelectState).selected = _selected;
 			super.refreshState();
-			if ($selected) {
-				if (this.$group) this.$group.setCheckBoxUnselected(this);
+			if (_selected) {
+				if (this._group) this._group.setCheckBoxUnselected(this);
 				dispatchEvent(new Event(Event.SELECT));
 			}
 		}
 		
 		override protected function refreshStyle():void {
-			this.$state.skin = $skin.skin;
+			this._state.skin = _skin.skin;
 		}
 		
 		protected function toSelected():void {
-			this.$selected = true;
+			this._selected = true;
 			this.invalidate(InvalidationFlag.STATE);
 		}
 		
 		protected function toUnSelected():void {
-			if (this.$group) return;
-			this.$selected = false;
+			if (this._group) return;
+			this._selected = false;
 			this.invalidate(InvalidationFlag.STATE);
 		}
 		
@@ -124,7 +124,7 @@ package org.libra.ui.flash.components {
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
 		private function onClicked(e:MouseEvent):void {
-			$selected ? toUnSelected() : toSelected();
+			_selected ? toUnSelected() : toSelected();
 			if(!UIManager.UI_EDITOR)
 				e.stopPropagation();
 		}

@@ -14,27 +14,27 @@ package org.libra.copGameEngine.model.element {
 	 */
 	public class JUserInfo {
 		
-		protected var $account:String;
+		protected var _account:String;
 		
-		protected var $password:String;
+		protected var _password:String;
 		
-		//protected var $id:String;
+		//protected var _id:String;
 		//
-		//protected var $type:int;
+		//protected var _type:int;
 		//
-		//protected var $name:String;
+		//protected var _name:String;
 		//
-		//protected var $gender:int;
+		//protected var _gender:int;
 		
-		private static var instance:JUserInfo;
+		private static var _instance:JUserInfo;
 		
 		/**
 		 * 背包里的数据
 		 */
-		protected var $itemList:Vector.<JItem>;
+		protected var _itemList:Vector.<JItem>;
 		
 		public function JUserInfo(singleton:Singleton) {
-			$itemList = new Vector.<JItem>();
+			_itemList = new Vector.<JItem>();
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -42,70 +42,70 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		//public function get id():String {
-			//return $id;
+			//return _id;
 		//}
 		//
 		//public function set id(value:String):void {
-			//$id = value;
+			//_id = value;
 		//}
 		//
 		//public function get type():int {
-			//return $type;
+			//return _type;
 		//}
 		//
 		//public function set type(value:int):void {
-			//$type = value;
+			//_type = value;
 		//}
 		
 		public function get itemList():Vector.<JItem> {
-			return $itemList;
+			return _itemList;
 		}
 		
 		//public function get name():String {
-			//return $name;
+			//return _name;
 		//}
 		//
 		//public function set name(value:String):void {
-			//$name = value;
+			//_name = value;
 		//}
 		//
 		//public function get gender():int {
-			//return $gender;
+			//return _gender;
 		//}
 		//
 		//public function set gender(value:int):void {
-			//$gender = value;
+			//_gender = value;
 		//}
 		
 		public function get account():String {
-			return $account;
+			return _account;
 		}
 		
 		public function set account(value:String):void {
-			$account = value;
+			_account = value;
 		}
 		
 		public function get password():String {
-			return $password;
+			return _password;
 		}
 		
 		public function set password(value:String):void {
-			$password = value;
+			_password = value;
 		}
 		
 		public function getItemCount(type:int):int {
 			var count:int = 0;
-			var i:int = this.$itemList.length;
+			var i:int = this._itemList.length;
 			while (--i > -1) {
-				if ($itemList[i].type == type) {
-					count += $itemList[i].count;
+				if (_itemList[i].type == type) {
+					count += _itemList[i].count;
 				}
 			}
 			return count;
 		}
 		
-		public static function getInstance():JUserInfo {
-			return instance ||= new JUserInfo(new Singleton());
+		public static function get instance():JUserInfo {
+			return _instance ||= new JUserInfo(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

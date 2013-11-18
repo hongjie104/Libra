@@ -17,18 +17,18 @@ package org.libra.ui.flash.core.state.ctrl {
 	 */
 	public class BaseButtonStateCtrl {
 		
-		protected var $skin:String;
+		protected var _skin:String;
 		
-		protected var $normalBmd:BitmapData;
+		protected var _normalBmd:BitmapData;
 		
-		protected var $overBmd:BitmapData;
+		protected var _overBmd:BitmapData;
 		
-		protected var $downBmd:BitmapData;
+		protected var _downBmd:BitmapData;
 		
-		protected var $loader:Loader;
+		protected var _loader:Loader;
 		
 		public function BaseButtonStateCtrl(loader:Loader) {
-			$loader = loader;
+			_loader = loader;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -36,24 +36,24 @@ package org.libra.ui.flash.core.state.ctrl {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get normalBmd():BitmapData {
-			return $normalBmd;
+			return _normalBmd;
 		}
 		
 		public function get overBmd():BitmapData {
-			return $overBmd;
+			return _overBmd;
 		}
 		
 		public function get downBmd():BitmapData {
-			return $downBmd;
+			return _downBmd;
 		}
 		
 		public function set skin(val:String):void {
-			this.$skin = val;
-			const source:BitmapData = AssetsStorage.getInstance().getBitmapData($skin, $loader, false);
+			this._skin = val;
+			const source:BitmapData = AssetsStorage.instance.getBitmapData(_skin, _loader, false);
 			const bmdList:Vector.<Vector.<BitmapData>> = BitmapDataUtil.separateBitmapData(source.width, source.height / 3, source);
-			$normalBmd = bmdList[0][0];
-			$overBmd = bmdList[1][0];
-			$downBmd = bmdList[2][0];
+			_normalBmd = bmdList[0][0];
+			_overBmd = bmdList[1][0];
+			_downBmd = bmdList[2][0];
 		}
 		
 		/*-----------------------------------------------------------------------------------------

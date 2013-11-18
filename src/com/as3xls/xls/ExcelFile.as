@@ -314,9 +314,7 @@ package com.as3xls.xls {
 				} else {
 					unknown.push(r.type);
 				}
-				
 			}
-			
 			if(unknown.length > 0) {
 				//throw new Error("Unsupported BIFF records: " + unknown.join(", "));
 			}

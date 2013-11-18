@@ -24,18 +24,18 @@ package org.libra.ui.flash.components {
 		 * 可见范围高度(宽度)除以要滚动的对象高度(宽度)
 		 * 该值势必是不大于1的，如果等于1，说明不用滚动。
 		 */
-		protected var $thumbPercent:Number;
+		protected var _thumbPercent:Number;
 		
 		/**
 		 * 可见范围内的行数(列数)
 		 * 一般通过可见范围高度除以滚动对象中每一行的高度得到该值
 		 */
-		protected var $pageSize:int;
+		protected var _pageSize:int;
 		
 		public function JScrollSlider(orientation:int = 1, x:int = 0, y:int = 0) { 
 			super(orientation, x, y);
-			$thumbPercent = 1.0;
-			$pageSize = 1;
+			_thumbPercent = 1.0;
+			_pageSize = 1;
 			orientation == Constants.HORIZONTAL ? setSize(100, 16) : setSize(16, 100);
 			//this.setSliderParams(1, 1, 0);
 		}
@@ -45,22 +45,22 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function set thumbPercent(value:Number):void {
-			//if (this.$thumbPercent != value) {
-			$thumbPercent = MathUtil.min(value, 1.0);
+			//if (this._thumbPercent != value) {
+			_thumbPercent = MathUtil.min(value, 1.0);
 			invalidate(InvalidationFlag.SIZE);
 			//}
 		}
 		
 		public function get thumbPercent():Number {
-			return this.$thumbPercent;
+			return this._thumbPercent;
 		}
 		
 		public function set pageSize(value:int):void {
-			$pageSize = value;
+			_pageSize = value;
 		}
 		
 		public function changeValue(add:Number):void {
-			this.value = this.$value + add;
+			this.value = this._value + add;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -68,26 +68,26 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function drawBlock():void {
-			if ($block) {
-				this.removeChild($block);
+			if (_block) {
+				this.removeChild(_block);
 			}
-			this.$block = new JScrollBlock(this.$orientation);
-			this.$block.buttonMode = true;
-			this.addChild($block);
+			this._block = new JScrollBlock(this._orientation);
+			this._block.buttonMode = true;
+			this.addChild(_block);
 		}
 		
 		override protected function renderBlock():void {
 			var size:Number;
-			if($orientation == Constants.HORIZONTAL) {
-				size = MathUtil.max($actualHeight, Math.round($actualWidth * $thumbPercent));
-				GraphicsUtil.drawRect($block.graphics, 0, 0, size, $actualHeight, 0, 0);
-				//GraphicsUtil.drawRect($block.graphics, 1, 1, size - 2, $actualHeight - 2, Style.BUTTON_FACE, 1.0, false);
-				($block as JScrollBlock).setBounds(1, 1, size - 2, $actualHeight - 2);
+			if(_orientation == Constants.HORIZONTAL) {
+				size = MathUtil.max(_actualHeight, Math.round(_actualWidth * _thumbPercent));
+				GraphicsUtil.drawRect(_block.graphics, 0, 0, size, _actualHeight, 0, 0);
+				//GraphicsUtil.drawRect(_block.graphics, 1, 1, size - 2, _actualHeight - 2, Style.BUTTON_FACE, 1.0, false);
+				(_block as JScrollBlock).setBounds(1, 1, size - 2, _actualHeight - 2);
 			} else {
-				size = MathUtil.max($actualWidth, Math.round($actualHeight * $thumbPercent));
-				GraphicsUtil.drawRect($block.graphics, 0, 0, $actualWidth  - 2, size, 0, 0);
-				//GraphicsUtil.drawRect($block.graphics, 1, 1, $actualWidth - 2, size - 2, Style.BUTTON_FACE, 1.0, false);
-				($block as JScrollBlock).setBounds(1, 1, $actualWidth - 2, size - 2);
+				size = MathUtil.max(_actualWidth, Math.round(_actualHeight * _thumbPercent));
+				GraphicsUtil.drawRect(_block.graphics, 0, 0, _actualWidth  - 2, size, 0, 0);
+				//GraphicsUtil.drawRect(_block.graphics, 1, 1, _actualWidth - 2, size - 2, Style.BUTTON_FACE, 1.0, false);
+				(_block as JScrollBlock).setBounds(1, 1, _actualWidth - 2, size - 2);
 			}
 			
 			positionBlock();
@@ -95,12 +95,12 @@ package org.libra.ui.flash.components {
 		
 		protected override function positionBlock():void {
 			var range:Number;
-			if($orientation == Constants.HORIZONTAL) {
-				range = $actualWidth - $block.width;
-				$block.x = (value - min) / (max - min) * range;
+			if(_orientation == Constants.HORIZONTAL) {
+				range = _actualWidth - _block.width;
+				_block.x = (value - min) / (max - min) * range;
 			} else {
-				range = $actualHeight - $block.height;
-				$block.y = (value - min) / (max - min) * range;
+				range = _actualHeight - _block.height;
+				_block.y = (value - min) / (max - min) * range;
 			}
 		}
 		
@@ -110,15 +110,15 @@ package org.libra.ui.flash.components {
 		protected override function onDragBlock(event:MouseEvent):void {
 			stage.addEventListener(MouseEvent.MOUSE_UP, onDrop);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
-			$block.startDrag(false, $orientation == Constants.HORIZONTAL ? new Rectangle(0, 1, $actualWidth - $block.width, 0) : new Rectangle(1, 0, 0, $actualHeight - $block.height));
+			_block.startDrag(false, _orientation == Constants.HORIZONTAL ? new Rectangle(0, 1, _actualWidth - _block.width, 0) : new Rectangle(1, 0, 0, _actualHeight - _block.height));
 		}
 		
 		protected override function onSlide(event:MouseEvent):void {
 			var oldValue:Number = value;
-			if($orientation == Constants.HORIZONTAL) {
-				value = $actualWidth == $block.width ? min : $block.x / ($actualWidth - $block.width) * (max - min) + min;
+			if(_orientation == Constants.HORIZONTAL) {
+				value = _actualWidth == _block.width ? min : _block.x / (_actualWidth - _block.width) * (max - min) + min;
 			} else {
-				value = $actualHeight == $block.height ? min : $block.y / ($actualHeight - $block.height) * (max - min) + min;
+				value = _actualHeight == _block.height ? min : _block.y / (_actualHeight - _block.height) * (max - min) + min;
 			}
 			if(value != oldValue) {
 				dispatchEvent(new Event(Event.CHANGE));
@@ -126,12 +126,12 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected override function onBackClicked(event:MouseEvent):void{
-			if($orientation == Constants.HORIZONTAL) {
-				if(mouseX < $block.x) value = max > min ? value - $pageSize : value + $pageSize;
-				else value = max > min ? value + $pageSize : value - $pageSize;
+			if(_orientation == Constants.HORIZONTAL) {
+				if(mouseX < _block.x) value = max > min ? value - _pageSize : value + _pageSize;
+				else value = max > min ? value + _pageSize : value - _pageSize;
 			} else {
-				if(mouseY < $block.y) value = max > min ? value - $pageSize : value + $pageSize;
-				else value = max > min ? value + $pageSize : value - $pageSize;
+				if(mouseY < _block.y) value = max > min ? value - _pageSize : value + _pageSize;
+				else value = max > min ? value + _pageSize : value - _pageSize;
 			}
 			correctValue();
 			positionBlock();

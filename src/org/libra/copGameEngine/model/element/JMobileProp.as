@@ -21,26 +21,26 @@ package org.libra.copGameEngine.model.element {
 	 */
 	public class JMobileProp extends JAnimationProp {
 		
-		protected var $movePath:Vector.<Node>;
+		protected var _movePath:Vector.<Node>;
 		
-		protected var $moveSpeed:int = 5;
+		protected var _moveSpeed:int = 5;
 		
 		/**
 		 * 速度的平方。
 		 */
-		protected var $moveSpeed2:int = 25;
+		protected var _moveSpeed2:int = 25;
 		
-		protected var $totalMoveStep:int;
+		protected var _totalMoveStep:int;
 		
-		protected var $curMoveStep:int;
+		protected var _curMoveStep:int;
 		
-		protected var $moveing:Boolean;
+		protected var _moveing:Boolean;
 		
-		protected var $dir:int;
+		protected var _dir:int;
 		
 		public function JMobileProp(width:int, height:int, bitmapDataRender:JMultiBitmapDataRender) {
 			super(width, height, bitmapDataRender);
-			$dir = Direction.RIGHT_DOWN;
+			_dir = Direction.RIGHT_DOWN;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -48,19 +48,19 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function startMove(path:Vector.<Node>):void {
-			$movePath = path;
-			$totalMoveStep = path.length;
-			$curMoveStep = 0;
-			$moveing = true;
+			_movePath = path;
+			_totalMoveStep = path.length;
+			_curMoveStep = 0;
+			_moveing = true;
 		}
 		
 		public function stopMove():void { 
-			$moveing = false;
+			_moveing = false;
 		}
 		
 		override public function tick(interval:int):void {
 			super.tick(interval);
-			if ($moveing) {
+			if (_moveing) {
 				move();
 			}
 		}
@@ -70,23 +70,23 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		private function move():void { 
-			if ($movePath.length) {
-				//const targetX:Number = $movePath[step].x * cellSize + (cellSize >> 1);//根据节点列号求得屏幕坐标
-				//const targetY:Number = $movePath[step].y * cellSize + (cellSize >> 1);//根据节点行号求得屏幕坐标
-				const p:Point = Display45Util.getItemPos($movePath[$curMoveStep].y, $movePath[$curMoveStep].x);
+			if (_movePath.length) {
+				//const targetX:Number = _movePath[step].x * cellSize + (cellSize >> 1);//根据节点列号求得屏幕坐标
+				//const targetY:Number = _movePath[step].y * cellSize + (cellSize >> 1);//根据节点行号求得屏幕坐标
+				const p:Point = Display45Util.getItemPos(_movePath[_curMoveStep].y, _movePath[_curMoveStep].x);
 				const targetX:Number = p.x;
 				const targetY:Number = p.y;
-				const dx:Number = targetX - this.$bitmap.x;
-				const dy:Number = targetY - this.$bitmap.y;
+				const dx:Number = targetX - this._bitmap.x;
+				const dy:Number = targetY - this._bitmap.y;
 				const dist:Number = dx * dx + dy * dy;
 				
 				//到达当前目的地
-				if (dist < $moveSpeed2) { 
-					$curMoveStep += 1;
+				if (dist < _moveSpeed2) { 
+					_curMoveStep += 1;
 					//已到最后一个目的地，则停下
-					if($curMoveStep >= $totalMoveStep) {
-						$bitmap.x = targetX;
-						$bitmap.y = targetY;
+					if(_curMoveStep >= _totalMoveStep) {
+						_bitmap.x = targetX;
+						_bitmap.y = targetY;
 						stopMove();
 						return;
 					}
@@ -98,10 +98,10 @@ package org.libra.copGameEngine.model.element {
 				//行走
 				else {
 					var angle:Number = Math.atan2(dy, dx);
-					var speedX:int = $moveSpeed * Math.cos(angle);
-					var speedY:int = $moveSpeed * Math.sin(angle);
-					$bitmap.x += speedX;
-					$bitmap.y += speedY;
+					var speedX:int = _moveSpeed * Math.cos(angle);
+					var speedY:int = _moveSpeed * Math.sin(angle);
+					_bitmap.x += speedX;
+					_bitmap.y += speedY;
 				}
 			}else {
 				stopMove();
@@ -109,11 +109,11 @@ package org.libra.copGameEngine.model.element {
 		}
 		
 		public function get dir():int {
-			return $dir;
+			return _dir;
 		}
 		
 		public function set dir(value:int):void {
-			$dir = value;
+			_dir = value;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

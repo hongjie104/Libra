@@ -15,14 +15,14 @@ package org.libra.events {
 	 */
 	public class BaseEvent extends Event {
 		
-		protected var $subType:String;
+		protected var _subType:String;
 		
-		protected var $data:Object;
+		protected var _data:Object;
 		
 		public function BaseEvent(type:String, subType:String, data:Object = null, bubbles:Boolean = false, cancelable:Boolean = false) { 
 			super(type, bubbles, cancelable);
-			this.$subType = subType;
-			this.$data = data;
+			this._subType = subType;
+			this._data = data;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -30,19 +30,19 @@ package org.libra.events {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get subType():String {
-			return $subType;
+			return _subType;
 		}
 		
 		public function get data():Object {
-			return $data;
+			return _data;
 		}
 		
 		override public function clone():Event {
-			return new BaseEvent(type, $subType, $data, bubbles, cancelable);
+			return new BaseEvent(type, _subType, _data, bubbles, cancelable);
 		}
 		
 		override public function toString():String {
-			return 'type = ' + type + ',subType = ' + $subType + ',data = ' + $data;
+			return 'type = ' + type + ',subType = ' + _subType + ',data = ' + _data;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

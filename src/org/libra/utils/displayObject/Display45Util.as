@@ -65,8 +65,10 @@ package org.libra.utils.displayObject {
 		public static function getItemIndex(mouseP:Point):Point {
 			var row:Number = mouseP.y / height - mouseP.x / width;
 			var col:Number = mouseP.x / width + mouseP.y / height;
-			row = row < 0 ? -1 : row;
-			col = col < 0 ? -1 : col;
+			//row = row < 0 ? -1 : row;
+			//col = col < 0 ? -1 : col;
+			row = row < 0 ? 0 : row;
+			col = col < 0 ? 0 : col;
 			return new Point(int(col), int(row));
 		}
 		
@@ -76,14 +78,13 @@ package org.libra.utils.displayObject {
 		 * @return
 		 */
 		public static function getItemPos(row:int, col:int):Point { 
-			return new Point((col - row) * (width * .5),(col + row) * (height * .5));
+			return new Point((col - row) * (width * .5), (col + row) * (height * .5));
 		}
 		
 		/**
 		 * 从45度显示坐标换算为90度数据坐标
 		 * @param p
 		 * @return 
-		 * 
 		 */
 		public static function trans45To90(p:Point):Point {
 			return new Point(p.x + p.y * wh, p.y - p.x / wh);

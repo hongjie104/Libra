@@ -20,23 +20,23 @@ package org.libra.bmpEngine.multi {
 		
 		private static const HELP_POINT:Point = new Point();
 		
-		protected var $rect:Rectangle;
+		protected var _rect:Rectangle;
 		
-		protected var $itemList:Vector.<RenderSprite>;
+		protected var _itemList:Vector.<RenderSprite>;
 		
-		protected var $bitmapData:BitmapData;
+		protected var _bitmapData:BitmapData;
 		
-		protected var $updated:Boolean;
+		protected var _updated:Boolean;
 		
-		protected var $numChildren:int;
+		protected var _numChildren:int;
 		
-		protected var $visible:Boolean;
+		protected var _visible:Boolean;
 		
 		public function RenderLayer(width:int, height:int) { 
-			$itemList = new Vector.<RenderSprite>();
-			$bitmapData = new BitmapData(width, height, true, 0x0);
-			$rect = $bitmapData.rect;
-			$visible = true;
+			_itemList = new Vector.<RenderSprite>();
+			_bitmapData = new BitmapData(width, height, true, 0x0);
+			_rect = _bitmapData.rect;
+			_visible = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -44,93 +44,93 @@ package org.libra.bmpEngine.multi {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function setSize(width:int, height:int):void {
-			if($bitmapData) $bitmapData.dispose();
-			$bitmapData = new BitmapData(width, height,true,0x0);
-			$rect = $bitmapData.rect;
-			$updated = true;
+			if(_bitmapData) _bitmapData.dispose();
+			_bitmapData = new BitmapData(width, height,true,0x0);
+			_rect = _bitmapData.rect;
+			_updated = true;
 		}
 		
 		public function get visible():Boolean {
-			return $visible;
+			return _visible;
 		}
 		
 		public function setvisible(val:Boolean):void {
-			if ($visible != val) {
-				$visible = val;
-				$updated = true;
+			if (_visible != val) {
+				_visible = val;
+				_updated = true;
 			}
 		}
 		
 		public function get bitmapData():BitmapData {
-			return $bitmapData;
+			return _bitmapData;
 		}
 		
 		public function get rect():Rectangle {
-			return $rect;
+			return _rect;
 		}
 		
 		public function get updated():Boolean {
-			return $updated;
+			return _updated;
 		}
 		
 		public function set updated(value:Boolean):void {
-			$updated = value;
+			_updated = value;
 		}
 		
 		public function addItem(item:RenderSprite):void {
-			if ($itemList.indexOf(item) == -1) {
-				$itemList.push(item);
-				$numChildren += 1;
-				$updated = true;
+			if (_itemList.indexOf(item) == -1) {
+				_itemList.push(item);
+				_numChildren += 1;
+				_updated = true;
 			}
 		}
 		
 		public function addItemAt(item:RenderSprite, index:int = -1):void {
-			if (index < 1) $itemList.unshift(item);
-			else if (index > $numChildren) $itemList.push(item);
-			else $itemList.splice(index, 0, item);
-			$numChildren += 1;
-			$updated = true;
+			if (index < 1) _itemList.unshift(item);
+			else if (index > _numChildren) _itemList.push(item);
+			else _itemList.splice(index, 0, item);
+			_numChildren += 1;
+			_updated = true;
 		}
 		
 		public function removeItem(item:RenderSprite, dispose:Boolean = false):void { 
-			const index:int = $itemList.indexOf(item);
+			const index:int = _itemList.indexOf(item);
 			if (index != -1) {
-				$itemList.splice(index, 1);
-				$numChildren--;
+				_itemList.splice(index, 1);
+				_numChildren--;
 				if (dispose) item.dispose();
-				$updated = true;
+				_updated = true;
 			}
 		}
 		
 		public function removeItemAt(index:int = 0, dispose:Boolean = false):void {
 			var item:RenderSprite;
-			if (index > $numChildren) item = $itemList.pop();
-			else if (index < 0) item = $itemList.shift();
-			else item = $itemList.splice(index, 1)[0];
-			$numChildren--;
+			if (index > _numChildren) item = _itemList.pop();
+			else if (index < 0) item = _itemList.shift();
+			else item = _itemList.splice(index, 1)[0];
+			_numChildren--;
 			if (dispose) item.dispose();
-			$updated = true;
+			_updated = true;
 		}
 		
 		public function clearItem(dispose:Boolean = false):void {
 			if (dispose) {
-				const l:int = $numChildren;
+				const l:int = _numChildren;
 				while (--l > -1)
-					$itemList[l].dispose();
+					_itemList[l].dispose();
 			}
-			this.$itemList.length = 0;
-			$numChildren = 0;
-			$updated = true;
+			this._itemList.length = 0;
+			_numChildren = 0;
+			_updated = true;
 		}
 		
 		public function getRenderSpriteUnderPoint(point:Point):Vector.<RenderSprite>{
 			var list:Vector.<RenderSprite> = new Vector.<RenderSprite>();
-			var i:int = this.$numChildren;
+			var i:int = this._numChildren;
 			var sprite:RenderSprite;
 			var index:int = 0;
 			while(--i > -1){
-				sprite = this.$itemList[i];
+				sprite = this._itemList[i];
 				if(sprite.x <= point.x){
 					if(sprite.y <= point.y){
 						if(sprite.width + sprite.x >= point.x){
@@ -145,61 +145,61 @@ package org.libra.bmpEngine.multi {
 		}
 		
 		public function indexOf(val:RenderSprite, fromIndex:int = 0):int {
-			return this.$itemList.indexOf(val, fromIndex);
+			return this._itemList.indexOf(val, fromIndex);
 		}
 		
 		public function swapDepths(item1:RenderSprite, item2:RenderSprite):void { 
-			const index1:int = $itemList.indexOf(item1);
+			const index1:int = _itemList.indexOf(item1);
 			if (index1 > -1) {
-				const index2:int = $itemList.indexOf(item2);
+				const index2:int = _itemList.indexOf(item2);
 				if (index2 > -1) {
 					// swap their data
-					$itemList[index1] = item2;
-					$itemList[index2] = item1;
-					$updated = true;
+					_itemList[index1] = item2;
+					_itemList[index2] = item1;
+					_updated = true;
 				}
 			}
 		}
 		
 		public function setChildIndex(child:RenderSprite,newIndex:int):void{
-			const index:int = this.$itemList.indexOf(child);
+			const index:int = this._itemList.indexOf(child);
 			if(index != -1){
-				newIndex = MathUtil.min(MathUtil.max(0,newIndex),this.$numChildren);
-				$itemList.splice(index,1);
-				$itemList.splice(newIndex,0,child);
-				$updated = true;
+				newIndex = MathUtil.min(MathUtil.max(0,newIndex),this._numChildren);
+				_itemList.splice(index,1);
+				_itemList.splice(newIndex,0,child);
+				_updated = true;
 			}
 		}
 		
 		public function sort(compareFunction:Function):void{
-			this.$itemList.sort(compareFunction);
-			$updated = true;
+			this._itemList.sort(compareFunction);
+			_updated = true;
 		}
 		
 		public function render():void {
-			var l:int = $numChildren;
+			var l:int = _numChildren;
 			var needRender:Boolean = false;
 			while (--l > -1) {
-				if ($itemList[l].updated) {
+				if (_itemList[l].updated) {
 					needRender = true;
 					break;
 				}
 			}
-			if (needRender || $updated) {
+			if (needRender || _updated) {
 				var item:RenderSprite;
-				$bitmapData.lock();
-				$bitmapData.fillRect($bitmapData.rect, 0x00000000);
-				for (var i:int = 0; i < $numChildren; i += 1) {
-					item = $itemList[i];
+				_bitmapData.lock();
+				_bitmapData.fillRect(_bitmapData.rect, 0x00000000);
+				for (var i:int = 0; i < _numChildren; i += 1) {
+					item = _itemList[i];
 					if (item.visible && item.bitmapData) {
 						HELP_POINT.x = item.x;
 						HELP_POINT.y = item.y;
-						$bitmapData.copyPixels(item.bitmapData, item.rect, HELP_POINT, null, null, true);
+						_bitmapData.copyPixels(item.bitmapData, item.rect, HELP_POINT, null, null, true);
 					}
 					item.updated = false;
 				}
-				$bitmapData.unlock();
-				$updated = true;
+				_bitmapData.unlock();
+				_updated = true;
 			}
 		}
 		

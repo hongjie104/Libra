@@ -23,23 +23,23 @@ package org.libra.ui.flash.components {
 	 */
 	public class JSlider extends Component {
 		
-		protected var $block:Sprite;
+		protected var _block:Sprite;
 		
-		protected var $backClick:Boolean;
+		protected var _backClick:Boolean;
 		
-		protected var $value:Number = 0;
+		protected var _value:Number = 0;
 		
-		protected var $max:Number = 100;
+		protected var _max:Number = 100;
 		
-		protected var $min:Number = 0;
+		protected var _min:Number = 0;
 		
-		protected var $orientation:int;
+		protected var _orientation:int;
 		
 		public function JSlider(orientation:int = 1, x:int = 0, y:int = 0) { 
 			super(x, y);
-			this.$orientation = orientation;
-			$backClick = true;
-			$orientation == Constants.HORIZONTAL ? setSize(100, 18) : setSize(18, 100);
+			this._orientation = orientation;
+			_backClick = true;
+			_orientation == Constants.HORIZONTAL ? setSize(100, 18) : setSize(18, 100);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -47,47 +47,47 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function setSliderParams(min:Number, max:Number, value:Number):void { 
-			this.$min = min;
-			this.$max = max;
-			this.$value = value;
+			this._min = min;
+			this._max = max;
+			this._value = value;
 			this.correctValue();
 			positionBlock();
 		}
 		
 		public function set backClick(b:Boolean):void {
-			$backClick = b;
+			_backClick = b;
 		}
 		
 		public function set value(v:Number):void {
-			if (this.$value != v) {
-				$value = v;
+			if (this._value != v) {
+				_value = v;
 				correctValue();
 				positionBlock();
 			}
 		}
 		
 		public function get value():Number {
-			return $value;
+			return _value;
 		}
 		
 		public function set max(m:Number):void {
-			$max = m;
+			_max = m;
 			correctValue();
 			positionBlock();
 		}
 		
 		public function get max():Number{
-			return $max;
+			return _max;
 		}
 		
 		public function set min(m:Number):void {
-			$min = m;
+			_min = m;
 			correctValue();
 			positionBlock();
 		}
 		
 		public function get min():Number {
-			return $min;
+			return _min;
 		}
 		
 		/**
@@ -95,8 +95,8 @@ package org.libra.ui.flash.components {
 		 */
 		override public function dispose():void {
 			super.dispose();
-			if (this.$background.hasEventListener(MouseEvent.MOUSE_DOWN))
-				this.$background.removeEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
+			if (this._background.hasEventListener(MouseEvent.MOUSE_DOWN))
+				this._background.removeEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -114,9 +114,9 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function drawBlock():void {
-			this.$block = new Sprite();
-			this.$block.buttonMode = true;
-			this.addChild($block);
+			this._block = new Sprite();
+			this._block.buttonMode = true;
+			this.addChild(_block);
 		}
 		
 		override protected function resize():void {
@@ -125,27 +125,27 @@ package org.libra.ui.flash.components {
 		}
 		
 		protected function renderBack():void {
-			GraphicsUtil.drawRect(($background as Sprite).graphics, 0, 0, $actualWidth, $actualHeight, Skin.BACKGROUND);
+			GraphicsUtil.drawRect((_background as Sprite).graphics, 0, 0, _actualWidth, _actualHeight, Skin.BACKGROUND);
 		}
 		
 		protected function renderBlock():void {
-			if (this.$orientation == Constants.HORIZONTAL)
-				GraphicsUtil.drawRect($block.graphics, 1, 1, $actualHeight - 2, $actualHeight - 2, Skin.BUTTON_FACE);
+			if (this._orientation == Constants.HORIZONTAL)
+				GraphicsUtil.drawRect(_block.graphics, 1, 1, _actualHeight - 2, _actualHeight - 2, Skin.BUTTON_FACE);
 			else 
-				GraphicsUtil.drawRect($block.graphics, 1, 1, $actualWidth - 2, $actualWidth - 2, Skin.BUTTON_FACE);
+				GraphicsUtil.drawRect(_block.graphics, 1, 1, _actualWidth - 2, _actualWidth - 2, Skin.BUTTON_FACE);
 			positionBlock();
 		}
 		
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			this.$block.addEventListener(MouseEvent.MOUSE_DOWN, onDragBlock);
-			if ($backClick) this.$background.addEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
+			this._block.addEventListener(MouseEvent.MOUSE_DOWN, onDragBlock);
+			if (_backClick) this._background.addEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			this.$block.removeEventListener(MouseEvent.MOUSE_DOWN, onDragBlock);
-			if ($backClick) this.$background.removeEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
+			this._block.removeEventListener(MouseEvent.MOUSE_DOWN, onDragBlock);
+			if (_backClick) this._background.removeEventListener(MouseEvent.MOUSE_DOWN, onBackClicked);
 		}
 		
 		/**
@@ -154,12 +154,12 @@ package org.libra.ui.flash.components {
 		 */
 		protected function positionBlock():void {
 			var range:Number;
-			if($orientation == Constants.HORIZONTAL) {
-				range = $actualWidth - $actualHeight;
-				$block.x = ($value - $min) / ($max - $min) * range;
+			if(_orientation == Constants.HORIZONTAL) {
+				range = _actualWidth - _actualHeight;
+				_block.x = (_value - _min) / (_max - _min) * range;
 			} else {
-				range = $actualHeight - $actualWidth;
-				$block.y = $actualHeight - $actualWidth - ($value - $min) / ($max - $min) * range;
+				range = _actualHeight - _actualWidth;
+				_block.y = _actualHeight - _actualWidth - (_value - _min) / (_max - _min) * range;
 			}
 		}
 		
@@ -167,12 +167,12 @@ package org.libra.ui.flash.components {
 		 * 修正值
 		 */
 		protected function correctValue():void {
-			if($max > $min) {
-				$value = MathUtil.min($value, $max);
-				$value = MathUtil.max($value, $min);
+			if(_max > _min) {
+				_value = MathUtil.min(_value, _max);
+				_value = MathUtil.max(_value, _min);
 			} else {
-				$value = MathUtil.max($value, $max);
-				$value = MathUtil.min($value, $min);
+				_value = MathUtil.max(_value, _max);
+				_value = MathUtil.min(_value, _min);
 			}
 		}
 		
@@ -182,12 +182,12 @@ package org.libra.ui.flash.components {
 		protected function onDragBlock(e:MouseEvent):void {
 			stage.addEventListener(MouseEvent.MOUSE_UP, onDrop);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, onSlide);
-			if($orientation == Constants.HORIZONTAL) {
-				$block.startDrag(false, new Rectangle(0, 0, $actualWidth - $actualHeight, 0));
-				//$block.startDrag(false, new Rectangle(0, 0, $actualWidth - $block.width, 0));
+			if(_orientation == Constants.HORIZONTAL) {
+				_block.startDrag(false, new Rectangle(0, 0, _actualWidth - _actualHeight, 0));
+				//_block.startDrag(false, new Rectangle(0, 0, _actualWidth - _block.width, 0));
 			} else {
-				$block.startDrag(false, new Rectangle(0, 0, 0, $actualHeight - $actualWidth));
-				//$block.startDrag(false, new Rectangle(0, 0, 0, $actualHeight - $block.height));
+				_block.startDrag(false, new Rectangle(0, 0, 0, _actualHeight - _actualWidth));
+				//_block.startDrag(false, new Rectangle(0, 0, 0, _actualHeight - _block.height));
 			}
 		}
 		
@@ -198,32 +198,32 @@ package org.libra.ui.flash.components {
 		protected function onDrop(event:MouseEvent):void {
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onDrop);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onSlide);
-			$block.stopDrag();
+			_block.stopDrag();
 		}
 		
 		protected function onSlide(event:MouseEvent):void {
-			var oldValue:Number = $value;
-			if($orientation == Constants.HORIZONTAL) {
-				$value = $block.x / ($actualWidth - $actualHeight) * ($max - $min) + $min;
+			var oldValue:Number = _value;
+			if(_orientation == Constants.HORIZONTAL) {
+				_value = _block.x / (_actualWidth - _actualHeight) * (_max - _min) + _min;
 			} else {
-				$value = ($actualHeight - $actualWidth - $block.y) / (height - $actualWidth) * ($max - $min) + $min;
+				_value = (_actualHeight - _actualWidth - _block.y) / (height - _actualWidth) * (_max - _min) + _min;
 			}
-			if($value != oldValue) {
+			if(_value != oldValue) {
 				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
 		protected function onBackClicked(e:MouseEvent):void {
-			if($orientation == Constants.HORIZONTAL) {
-				$block.x = mouseX - $actualHeight / 2;
-				$block.x = MathUtil.max($block.x, 0);
-				$block.x = MathUtil.min($block.x, $actualWidth - $actualHeight);
-				$value = $block.x / (width - $actualHeight) * ($max - $min) + $min;
+			if(_orientation == Constants.HORIZONTAL) {
+				_block.x = mouseX - _actualHeight / 2;
+				_block.x = MathUtil.max(_block.x, 0);
+				_block.x = MathUtil.min(_block.x, _actualWidth - _actualHeight);
+				_value = _block.x / (width - _actualHeight) * (_max - _min) + _min;
 			} else {
-				$block.y = mouseY - $actualWidth / 2;
-				$block.y = MathUtil.max($block.y, 0);
-				$block.y = MathUtil.min($block.y, $actualHeight - $actualWidth);
-				$value = ($actualHeight - $actualWidth - $block.y) / (height - $actualWidth) * ($min - $min) + $min;
+				_block.y = mouseY - _actualWidth / 2;
+				_block.y = MathUtil.max(_block.y, 0);
+				_block.y = MathUtil.min(_block.y, _actualHeight - _actualWidth);
+				_value = (_actualHeight - _actualWidth - _block.y) / (height - _actualWidth) * (_min - _min) + _min;
 			}
 			dispatchEvent(new Event(Event.CHANGE));
 		}

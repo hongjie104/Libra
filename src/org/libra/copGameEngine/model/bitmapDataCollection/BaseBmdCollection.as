@@ -16,16 +16,16 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 	 */
 	public class BaseBmdCollection implements IAsset {
 		
-		protected var $url:String;
+		protected var _url:String;
 		
-		protected var $bitmapData:BitmapData;
+		protected var _bitmapData:BitmapData;
 		
-		protected var $loaded:Boolean;
+		protected var _loaded:Boolean;
 		
-		protected var $id:String;
+		protected var _id:String;
 		
 		public function BaseBmdCollection(id:String) {
-			$id = id;
+			_id = id;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -35,27 +35,27 @@ package org.libra.copGameEngine.model.bitmapDataCollection {
 		/* INTERFACE org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection */
 		
 		public function get url():String {
-			return $url;
+			return _url;
 		}
 		
 		public function get bitmapData():BitmapData {
-			return $bitmapData;
+			return _bitmapData;
 		}
 		
 		public function get loaded():Boolean {
-			return $loaded;
+			return _loaded;
 		}
 		
 		public function doSthAfterLoad(swfLoader:SWFLoader):void {
-			const c:Class = swfLoader.getClass($id);
-			$bitmapData = c ? new c() : null;
-			$loaded = true;
+			const c:Class = swfLoader.getClass(_id);
+			_bitmapData = c ? new c() : null;
+			_loaded = true;
 		}
 		
 		/* INTERFACE org.libra.copGameEngine.model.bitmapDataCollection.IBmdCollection */
 		
 		public function get id():String {
-			return $id;
+			return _id;
 		}
 		
 		public function dispose():void {

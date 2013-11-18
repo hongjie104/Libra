@@ -149,7 +149,7 @@ package org.libra.ui.starling.core {
 		 */
 		override protected function resize():void {
 			super.resize();
-			this.state.setSize($actualWidth, $actualHeight);
+			this.state.setSize(_actualWidth, _actualHeight);
 		}
 		
 		/**
@@ -172,30 +172,30 @@ package org.libra.ui.starling.core {
 			switch(this.curState) {
 				case NORMAL:
 					state.toNormal();
-					if ($textImage) {
-						$textImage.x = $textX;
-						$textImage.y = $textY;
+					if (_textImage) {
+						_textImage.x = _textX;
+						_textImage.y = _textY;
 					}
 					break;
 				case MOUSE_UP:
 					state.toMouseUp();
-					if ($textImage) {
-						$textImage.x = $textX;
-						$textImage.y = $textY;
+					if (_textImage) {
+						_textImage.x = _textX;
+						_textImage.y = _textY;
 					}
 					break;
 				case MOUSE_OVER:
 					state.toMouseOver();
-					if ($textImage) {
-						$textImage.x = $textX;
-						$textImage.y = $textY;
+					if (_textImage) {
+						_textImage.x = _textX;
+						_textImage.y = _textY;
 					}
 					break;
 				case MOUSE_DOWN:
 					state.toMouseDown();
-					if ($textImage) {
-						$textImage.x = $textX + 1;
-						$textImage.y = $textY + 1;
+					if (_textImage) {
+						_textImage.x = _textX + 1;
+						_textImage.y = _textY + 1;
 					}
 					break;
 			}

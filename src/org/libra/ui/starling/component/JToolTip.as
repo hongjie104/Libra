@@ -23,7 +23,7 @@ package org.libra.ui.starling.component {
 	 */
 	public class JToolTip extends JLabel {
 		
-		private static var instance:JToolTip;
+		private static var _instance:JToolTip;
 		
 		public function JToolTip(singleton:Singleton) {
 			super(1, 20);
@@ -36,8 +36,8 @@ package org.libra.ui.starling.component {
 		Public methods
 		-------------------------------------------------------------------------------------------*/
 		
-		public static function getInstance():JToolTip {
-			return instance ||= new JToolTip(new Singleton());
+		public static function get instance():JToolTip {
+			return _instance ||= new JToolTip(new Singleton());
 		}
 		
 		override public function invalidate(flag:int = -1):void {
@@ -50,57 +50,57 @@ package org.libra.ui.starling.component {
 		
 		override protected function init():void {
 			super.init();
-			this.setBackground(new JScale9Sprite(DefaultTheme.getInstance().getScale9Texture(DefaultTheme.TOOL_TIP)));
+			this.setBackground(new JScale9Sprite(DefaultTheme.instance.getScale9Texture(DefaultTheme.TOOL_TIP)));
 		}
 		
 		override protected function refreshText():void {
 			//当文本更新后，取得文本最小宽度，先改变控件宽度，然后再绘制文本
-			if (text) $helpTextField.text = text;
-			else if (htmlText) $helpTextField.htmlText = htmlText;
+			if (text) _helpTextField.text = text;
+			else if (htmlText) _helpTextField.htmlText = htmlText;
 			else return;
-			$helpTextField.autoSize = TextFieldAutoSize.LEFT;
+			_helpTextField.autoSize = TextFieldAutoSize.LEFT;
 			
 			//textWidth得到的宽度，是文本的宽，
 			//背景的话，还得再加上一些值，使得左右两边能够空出一些，这样更美观一些
 			//12这个值，目测刚刚好。
-			this.$actualWidth = $helpTextField.textWidth + 12;
-			this.$actualHeight = $helpTextField.height;
-			$hitArea.width = width;
-			$hitArea.height = height;
+			this._actualWidth = _helpTextField.textWidth + 12;
+			this._actualHeight = _helpTextField.height;
+			_hitArea.width = width;
+			_hitArea.height = height;
 			resize();
 		}
 		
 		override protected function resize():void {
-			if ($helpTextField.width != $actualWidth || $helpTextField.height != $actualHeight) {
+			if (_helpTextField.width != _actualWidth || _helpTextField.height != _actualHeight) {
 				super.resize();	
-				$background.width = $actualWidth;
-				$background.height = $actualHeight;
+				_background.width = _actualWidth;
+				_background.height = _actualHeight;
 			}
 			
 			//宽高改变后，需要重新绘制文本内容
-			$helpTextField.wordWrap = this.$wordWrap;
-			$helpTextField.filters = this.$textFilter;
+			_helpTextField.wordWrap = this._wordWrap;
+			_helpTextField.filters = this._textFilter;
 			//抗锯齿
-			$helpTextField.antiAliasType = AntiAliasType.ADVANCED;
+			_helpTextField.antiAliasType = AntiAliasType.ADVANCED;
 			
-			var tf:TextFormat = $helpTextField.defaultTextFormat;
-			tf.align = this.$textAlign;
-			$helpTextField.defaultTextFormat = tf;
+			var tf:TextFormat = _helpTextField.defaultTextFormat;
+			tf.align = this._textAlign;
+			_helpTextField.defaultTextFormat = tf;
 			
-			this.$textBmd.fillRect($textBmd.rect, 0x00000000);
-			this.$textBmd.draw($helpTextField, new Matrix(1, 0, 0, 1, 2, (($actualHeight - $helpTextField.textHeight) >> 1) - 2));
-			var texture:Texture = Texture.fromBitmapData($textBmd, false, false, Starling.contentScaleFactor);
-			if (this.$textImage) {
-				$textImage.texture.dispose();
-				$textImage.texture = texture;
-				$textImage.readjustSize();
+			this._textBmd.fillRect(_textBmd.rect, 0x00000000);
+			this._textBmd.draw(_helpTextField, new Matrix(1, 0, 0, 1, 2, ((_actualHeight - _helpTextField.textHeight) >> 1) - 2));
+			var texture:Texture = Texture.fromBitmapData(_textBmd, false, false, Starling.contentScaleFactor);
+			if (this._textImage) {
+				_textImage.texture.dispose();
+				_textImage.texture = texture;
+				_textImage.readjustSize();
 			}else {
-				$textImage = new Image(texture);
-                $textImage.touchable = false;
-                addChild($textImage);
+				_textImage = new Image(texture);
+                _textImage.touchable = false;
+                addChild(_textImage);
 			}
-			$textImage.x = $textX;
-			$textImage.y = $textY;
+			_textImage.x = _textX;
+			_textImage.y = _textY;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

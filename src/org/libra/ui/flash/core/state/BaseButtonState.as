@@ -19,21 +19,21 @@ package org.libra.ui.flash.core.state {
 	 */
 	public class BaseButtonState extends Bitmap implements IButtonState {
 		
-		protected var $getBmd:Function;
+		protected var _getBmd:Function;
 		
-		protected var $skin:String;
+		protected var _skin:String;
 		
-		protected var $actualWidth:int;
+		protected var _actualWidth:int;
 		
-		protected var $actualHeight:int;
+		protected var _actualHeight:int;
 		
-		protected var $btnStatsCtrl:BaseButtonStateCtrl;
+		protected var _btnStatsCtrl:BaseButtonStateCtrl;
 		
-		protected var $loader:Loader;
+		protected var _loader:Loader;
 		
 		public function BaseButtonState(loader:Loader) {
 			super();
-			$loader = loader;
+			_loader = loader;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -43,19 +43,19 @@ package org.libra.ui.flash.core.state {
 		/* INTERFACE org.libra.ui.base.states.IStatus */
 		
 		public function set skin(val:String):void {
-			this.$skin = val;
-			$btnStatsCtrl = AssetsStorage.getInstance().getObj(val) as BaseButtonStateCtrl;
-			if (!$btnStatsCtrl) {
-				$btnStatsCtrl = new BaseButtonStateCtrl($loader);
-				$btnStatsCtrl.skin = val;
-				AssetsStorage.getInstance().putObj(val, $btnStatsCtrl);
+			this._skin = val;
+			_btnStatsCtrl = AssetsStorage.instance.getObj(val) as BaseButtonStateCtrl;
+			if (!_btnStatsCtrl) {
+				_btnStatsCtrl = new BaseButtonStateCtrl(_loader);
+				_btnStatsCtrl.skin = val;
+				AssetsStorage.instance.putObj(val, _btnStatsCtrl);
 			}
 			toNormal();
 		}
 		
 		public function setSize(w:int, h:int):void {
-			$actualWidth = w;
-			$actualHeight = h;
+			_actualWidth = w;
+			_actualHeight = h;
 		}
 		
 		public function get displayObject():DisplayObject {
@@ -63,15 +63,15 @@ package org.libra.ui.flash.core.state {
 		}
 		
 		public function toNormal():void {
-			this.bitmapData = $btnStatsCtrl.normalBmd;
+			this.bitmapData = _btnStatsCtrl.normalBmd;
 		}
 		
 		public function toMouseOver():void {
-			this.bitmapData = $btnStatsCtrl.overBmd;
+			this.bitmapData = _btnStatsCtrl.overBmd;
 		}
 		
 		public function toMouseDown():void {
-			this.bitmapData = $btnStatsCtrl.downBmd;
+			this.bitmapData = _btnStatsCtrl.downBmd;
 		}
 		
 		public function dispose():void {

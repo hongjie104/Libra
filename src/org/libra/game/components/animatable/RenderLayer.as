@@ -31,14 +31,14 @@ package org.libra.game.components.animatable {
 		
 		private var renderOffset:Point;
 		
-		private var $visible:Boolean;
+		private var _visible:Boolean;
 		
 		private var bitmapFrame:BitmapFrame;
 		
 		public function RenderLayer() {
 			renderItemList = new Vector.<RenderItem>();
 			renderOffset = new Point();
-			$visible = true;
+			_visible = true;
 			needRender = true;
 		}
 		
@@ -150,12 +150,12 @@ package org.libra.game.components.animatable {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get visible():Boolean {
-			return this.$visible;
+			return this._visible;
 		}
 		
 		public function set visible(value:Boolean):void {
-			if (this.$visible != value) {
-				this.$visible = value;
+			if (this._visible != value) {
+				this._visible = value;
 				this.setNeedRender(true);
 			}
 		}

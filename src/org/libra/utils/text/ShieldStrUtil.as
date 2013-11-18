@@ -23,7 +23,7 @@ package org.libra.utils.text {
 		//替换源目标
 		private var source:String = "*********************************";
 		
-		private static var instance:ShieldStrUtil;
+		private static var _instance:ShieldStrUtil;
 		
 		public function ShieldStrUtil(singleton:Singleton) { 
 			indexDic = new Dictionary();
@@ -123,8 +123,8 @@ package org.libra.utils.text {
 			return string;
 		}
 		
-		public static function getInstance():ShieldStrUtil {
-			return instance ||= new ShieldStrUtil(new Singleton());
+		public static function get instance():ShieldStrUtil {
+			return _instance ||= new ShieldStrUtil(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

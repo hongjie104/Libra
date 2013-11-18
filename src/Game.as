@@ -73,7 +73,7 @@ package  {
 				return radioBtn;
 			}
 			
-			/*var tooltip:JToolTip = JToolTip.getInstance();
+			/*var tooltip:JToolTip = JToolTip.instance;
 			tooltip.setText('fdjifhewfewofghewriogdnhsfoiewfe');
 			tooltip.x = 50; tooltip.y = 150;
 			frame.addChild(tooltip);

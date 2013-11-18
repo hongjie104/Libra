@@ -22,7 +22,7 @@ package org.libra.bmpEngine.single {
 	 */
 	public class JBitmap extends JSprite implements ITickable {
 		
-		protected var $tickabled:Boolean;
+		protected var _tickabled:Boolean;
 		
 		protected var frameList:Vector.<BitmapFrame>;
 		
@@ -77,7 +77,7 @@ package org.libra.bmpEngine.single {
 			baseBitmap = new Bitmap();
 			this.addChild(baseBitmap);
 			playing = false;
-			$tickabled = true;
+			_tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -176,11 +176,11 @@ package org.libra.bmpEngine.single {
 		}
 		
 		public function get tickabled():Boolean {
-			return $tickabled;
+			return _tickabled;
 		}
 		
 		public function set tickabled(value:Boolean):void {
-			$tickabled = value;
+			_tickabled = value;
 		}
 		
 		override public function dispatchEvent(event:Event):Boolean {
@@ -230,7 +230,7 @@ package org.libra.bmpEngine.single {
 		Private methods
 		-------------------------------------------------------------------------------------------*/
 		
-		private function setCurFrame(curFrame:int):void {
+		protected function setCurFrame(curFrame:int):void {
 			this.curFrame = MathUtil.max(0, MathUtil.min(curFrame, numFrame - 1));
 			var frame:BitmapFrame = this.frameList[curFrame];
 			frame.doFun();
@@ -273,12 +273,12 @@ package org.libra.bmpEngine.single {
 		-------------------------------------------------------------------------------------------*/
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			Tick.getInstance().addItem(this);
+			Tick.instance.addItem(this);
 		}
 		
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			Tick.getInstance().removeItem(this);
+			Tick.instance.removeItem(this);
 		}
 		
 	}

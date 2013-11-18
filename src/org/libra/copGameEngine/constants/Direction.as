@@ -29,6 +29,16 @@ package org.libra.copGameEngine.constants {
 		
 		public static const RIGHT_UP:int = 7;
 		
+		/**
+		 * 方向
+		 * 1       0       7
+		 *         ↑
+		 *       ↖ ↗
+		 * 2    ←     →    6
+		 *       ↙ ↘
+		 * 		   ↓
+		 * 3       4       5
+		 */
 		public function Direction() {
 			throw new Error('Direction无法实例化')
 		}

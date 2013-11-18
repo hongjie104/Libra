@@ -15,17 +15,17 @@ package org.libra.copGameEngine.view.scene {
 	 */
 	public class Director implements ITickable {
 		
-		private static var instance:Director;
+		private static var _instance:Director;
 		
-		protected var $currentScene:IScene;
+		protected var _currentScene:IScene;
 		
-		protected var $sceneList:Vector.<IScene>;
+		protected var _sceneList:Vector.<IScene>;
 		
-		protected var $tickabled:Boolean;
+		protected var _tickabled:Boolean;
 		
 		public function Director(singleton:Singleton) {
-			$sceneList = new Vector.<IScene>();
-			$tickabled = true;
+			_sceneList = new Vector.<IScene>();
+			_tickabled = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -33,19 +33,19 @@ package org.libra.copGameEngine.view.scene {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function addScene(val:IScene):Boolean {
-			var i:int = this.$sceneList.length;
+			var i:int = this._sceneList.length;
 			while (--i > -1) {
-				if ($sceneList[i].name == val.name) return false;
+				if (_sceneList[i].name == val.name) return false;
 			}
-			$sceneList.push(val);
+			_sceneList.push(val);
 			return true;
 		}
 		
 		public function removeScene(val:IScene):Boolean {
-			var i:int = this.$sceneList.length;
+			var i:int = this._sceneList.length;
 			while (--i > -1) {
-				if ($sceneList[i].name == val.name) {
-					$sceneList.splice(i, 1);
+				if (_sceneList[i].name == val.name) {
+					_sceneList.splice(i, 1);
 					return true;
 				}
 			}
@@ -53,50 +53,50 @@ package org.libra.copGameEngine.view.scene {
 		}
 		
 		public function clearScene():void {
-			this.$sceneList.length = 0;
+			this._sceneList.length = 0;
 		}
 		
 		public function getScene(name:String):IScene {
-			var i:int = this.$sceneList.length;
+			var i:int = this._sceneList.length;
 			while (--i > -1) {
-				if ($sceneList[i].name == name) return $sceneList[i];
+				if (_sceneList[i].name == name) return _sceneList[i];
 			}
 			return null;
 		}
 		
 		public function set currentScene(name:String):void {
-			if ($currentScene) {
-				$currentScene.close();
+			if (_currentScene) {
+				_currentScene.close();
 			}
-			$currentScene = getScene(name);
-			if ($currentScene) $currentScene.show();
+			_currentScene = getScene(name);
+			if (_currentScene) _currentScene.show();
 		}
 		
 		public function get currentScene():String {
-			return $currentScene.name;
+			return _currentScene.name;
 		}
 		
 		/* INTERFACE org.libra.tick.ITickable */
 		
 		public function tick(interval:int):void {
-			if($currentScene && $currentScene.tickabled)
-				$currentScene.tick(interval);
+			if(_currentScene && _currentScene.tickabled)
+				_currentScene.tick(interval);
 		}
 		
 		public function get tickabled():Boolean {
-			return $tickabled;
+			return _tickabled;
 		}
 		
 		public function set tickabled(value:Boolean):void {
-			$tickabled = value;
+			_tickabled = value;
 		}
 		
-		public static function getInstance():Director {
+		public static function get instance():Director {
 			if (instance) {
 				return instance;
 			}
 			instance = new Director(new Singleton());
-			Tick.getInstance().addItem(instance);
+			Tick.instance.addItem(instance);
 			return instance;
 		}
 		

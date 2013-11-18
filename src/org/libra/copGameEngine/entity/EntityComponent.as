@@ -13,11 +13,11 @@ package org.libra.copGameEngine.entity {
 	 */
 	public class EntityComponent implements IEntityComponent {
 		
-		protected var $isRegistered:Boolean;
+		protected var _isRegistered:Boolean;
 		
-		protected var $name:String;
+		protected var _name:String;
 		
-		protected var $owner:IEntity;
+		protected var _owner:IEntity;
 		
 		public function EntityComponent() {
 			
@@ -30,36 +30,36 @@ package org.libra.copGameEngine.entity {
 		/* INTERFACE org.libra.copEngine.entity.IEntityComponent */
 		
 		public function get owner():IEntity {
-			return $owner;
+			return _owner;
 		}
 		
 		public function set owner(value:IEntity):void {
-			$owner = value;
+			_owner = value;
 		}
 		
 		public function get name():String {
-			return $name;
+			return _name;
 		}
 		
 		public function get isRegistered():Boolean {
-			return $isRegistered;
+			return _isRegistered;
 		}
 		
 		public function register(owner:IEntity, name:String):void {
-			if($isRegistered)
+			if(_isRegistered)
 				throw new Error("试图注册已经被注册过的组件:" + name);
-			$name = name;
-			$owner = owner;
+			_name = name;
+			_owner = owner;
 			onAdd();
-			$isRegistered = true;
+			_isRegistered = true;
 		}
 		
 		public function unregister():void {
-			if(!$isRegistered)
+			if(!_isRegistered)
 				throw new Error("试图注销没有被注册过的组件:" + name);
-			$name = null;
-			$owner = null;
-			$isRegistered = false;
+			_name = null;
+			_owner = null;
+			_isRegistered = false;
 			onRemove();
 		}
 		

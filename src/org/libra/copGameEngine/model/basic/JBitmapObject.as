@@ -21,27 +21,27 @@ package org.libra.copGameEngine.model.basic {
 	 */
 	public class JBitmapObject extends GameObject {
 		
-		protected var $sprite:Sprite;
+		protected var _sprite:Sprite;
 		
-		protected var $bitmap:Bitmap;
+		protected var _bitmap:Bitmap;
 		
-		protected var $bmdClass:String;
+		protected var _bmdClass:String;
 		
-		protected var $bitmapDataRender:IBitmapDataRender;
+		protected var _bitmapDataRender:IBitmapDataRender;
 		
-		protected var $bmdCollection:IAsset;
+		protected var _bmdCollection:IAsset;
 		
 		public function JBitmapObject(width:int, height:int, bitmapDataRender:IBitmapDataRender = null) {
 			super();
-			$bitmap = new Bitmap(new BitmapData(width, height, true, 0x0));
-			$sprite = new Sprite();
-			$sprite.mouseChildren = $sprite.mouseEnabled = false;
-			$sprite.addChild($bitmap);
+			_bitmap = new Bitmap(new BitmapData(width, height, true, 0x0));
+			_sprite = new Sprite();
+			_sprite.mouseChildren = _sprite.mouseEnabled = false;
+			_sprite.addChild(_bitmap);
 			
-			$bitmapDataRender = bitmapDataRender;
-			if ($bitmapDataRender) {
-				$bitmapDataRender.bitmapData = $bitmap.bitmapData;
-				addComponent($bitmapDataRender, $bitmapDataRender.name);
+			_bitmapDataRender = bitmapDataRender;
+			if (_bitmapDataRender) {
+				_bitmapDataRender.bitmapData = _bitmap.bitmapData;
+				addComponent(_bitmapDataRender, _bitmapDataRender.name);
 			}
 		}
 		
@@ -50,21 +50,21 @@ package org.libra.copGameEngine.model.basic {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function setSize(width:int, height:int):void {
-			if ($bitmap.bitmapData) $bitmap.bitmapData.dispose();
-			$bitmap.bitmapData = new BitmapData(width, height, true, 0x0);
-			if ($bitmapDataRender) this.$bitmapDataRender.bitmapData = $bitmap.bitmapData;
+			if (_bitmap.bitmapData) _bitmap.bitmapData.dispose();
+			_bitmap.bitmapData = new BitmapData(width, height, true, 0x0);
+			if (_bitmapDataRender) this._bitmapDataRender.bitmapData = _bitmap.bitmapData;
 		}
 		
 		public function get displayObject():DisplayObject {
-			return $sprite;
+			return _sprite;
 		}
 		
 		public function get bmdCollection():IAsset {
-			return this.$bmdCollection;
+			return this._bmdCollection;
 		}
 		
 		public function set bmdCollection(val:IAsset):void {
-			$bmdCollection = val;
+			_bmdCollection = val;
 		}
 		
 		override public function set type(value:int):void {
@@ -74,19 +74,19 @@ package org.libra.copGameEngine.model.basic {
 		}
 		
 		public function get x():Number {
-			return $sprite.x;
+			return _sprite.x;
 		}
 		
 		public function set x(val:Number):void {
-			$sprite.x = val;
+			_sprite.x = val;
 		}
 		
 		public function get y():Number {
-			return $sprite.y;
+			return _sprite.y;
 		}
 		
 		public function set y(val:Number):void {
-			$sprite.y = val;
+			_sprite.y = val;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ package org.libra.copGameEngine.model.basic {
 		-------------------------------------------------------------------------------------------*/
 		
 		protected function resetBmdCollection():void {
-			$bmdCollection = BmdCollectionFactory.getInstance().getBmdCollection($bmdClass, BaseBmdCollection);
+			_bmdCollection = BmdCollectionFactory.instance.getBmdCollection(_bmdClass, BaseBmdCollection);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -22,14 +22,14 @@ package org.libra.copGameEngine.events {
 		
 		static public const SHOW:String = "show";
 		
-		private var $account:String;
+		private var _account:String;
 		
-		private var $password:String;
+		private var _password:String;
 		
 		public function LoginEvent(subType:String, account:String = null, password:String = null) {
 			super(LOGIN_EVENT, subType);
-			$account = account;
-			$password = password;
+			_account = account;
+			_password = password;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -37,15 +37,15 @@ package org.libra.copGameEngine.events {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get account():String {
-			return $account;
+			return _account;
 		}
 		
 		public function get password():String {
-			return $password;
+			return _password;
 		}
 		
 		override public function clone():Event {
-			return new LoginEvent(subType, $account, $password);
+			return new LoginEvent(subType, _account, _password);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

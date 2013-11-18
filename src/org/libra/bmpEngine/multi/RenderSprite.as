@@ -18,27 +18,27 @@ package org.libra.bmpEngine.multi {
 	 */
 	public class RenderSprite {
 		
-		protected var $rect:Rectangle;
+		protected var _rect:Rectangle;
 		
-		protected var $x:int;
+		protected var _x:int;
 		
-		protected var $y:int;
+		protected var _y:int;
 		
-		protected var $scaleX:Number;
+		protected var _scaleX:Number;
 		
-		protected var $scaleY:Number;
+		protected var _scaleY:Number;
 		
-		protected var $visible:Boolean;
+		protected var _visible:Boolean;
 		
-		protected var $bitmapData:BitmapData;
+		protected var _bitmapData:BitmapData;
 		
-		protected var $updated:Boolean;
+		protected var _updated:Boolean;
 		
 		public function RenderSprite(bitmapData:BitmapData = null) {
-			$bitmapData = bitmapData;
-			$rect = $bitmapData ? $bitmapData.rect : null;
-			$visible = true;
-			$scaleX = $scaleY = 1;
+			_bitmapData = bitmapData;
+			_rect = _bitmapData ? _bitmapData.rect : null;
+			_visible = true;
+			_scaleX = _scaleY = 1;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -46,93 +46,93 @@ package org.libra.bmpEngine.multi {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get x():int {
-			return $x;
+			return _x;
 		}
 		
 		public function set x(val:int):void {
-			if ($x != val) {
-				$x = val;
-				$updated = true;
+			if (_x != val) {
+				_x = val;
+				_updated = true;
 			}
 		}
 		
 		public function get y():int {
-			return $y;
+			return _y;
 		}
 		
 		public function set y(val:int):void {
-			if ($y != val) {
-				$y = val;
-				$updated = true;
+			if (_y != val) {
+				_y = val;
+				_updated = true;
 			}
 		}
 		
 		public function get scaleX():Number {
-			return $scaleX;
+			return _scaleX;
 		}
 		
 		public function set scaleX(value:Number):void {
-			if ($scaleX != value) {
-				$scaleX = value;
+			if (_scaleX != value) {
+				_scaleX = value;
 				scale();
 			}
 		}
 		
 		public function get scaleY():Number {
-			return $scaleY;
+			return _scaleY;
 		}
 		
 		public function set scaleY(value:Number):void {
-			if ($scaleY != value) {
-				$scaleY = value;
+			if (_scaleY != value) {
+				_scaleY = value;
 				scale();
 			}
 		}
 		
 		public function get bitmapData():BitmapData {
-			return $bitmapData;
+			return _bitmapData;
 		}
 		
 		public function set bitmapData(value:BitmapData):void {
-			$bitmapData = value;
-			$rect = $bitmapData ? $bitmapData.rect : null;
-			$updated = true;
+			_bitmapData = value;
+			_rect = _bitmapData ? _bitmapData.rect : null;
+			_updated = true;
 		}
 		
 		public function get updated():Boolean {
-			return $updated;
+			return _updated;
 		}
 		
 		public function set updated(value:Boolean):void {
-			$updated = value;
+			_updated = value;
 		}
 		
 		public function get width():int {
-			return $rect ? $rect.width : 0;
+			return _rect ? _rect.width : 0;
 		}
 		
 		public function get height():int {
-			return $rect ? $rect.height : 0;
+			return _rect ? _rect.height : 0;
 		}
 		
 		public function get visible():Boolean {
-			return $visible;
+			return _visible;
 		}
 		
 		public function set visible(value:Boolean):void {
-			if ($visible != value) {
-				$visible = value;
-				$updated = true;
+			if (_visible != value) {
+				_visible = value;
+				_updated = true;
 			}
 		}
 		
 		public function get rect():Rectangle {
-			return $rect;
+			return _rect;
 		}
 		
 		public function dispose():void {
-			if ($bitmapData) $bitmapData.dispose();
-			$bitmapData = null;
+			if (_bitmapData) _bitmapData.dispose();
+			_bitmapData = null;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -141,13 +141,13 @@ package org.libra.bmpEngine.multi {
 		
 		protected function scale():void {
 			const matrix:Matrix = new Matrix();
-			matrix.scale(this.$scaleX, this.$scaleY);
+			matrix.scale(this._scaleX, this._scaleY);
 			
-			const scaledBitmapData:BitmapData = new BitmapData(width * MathUtil.abs($scaleX), height * MathUtil.abs($scaleY), true, 0x0);
-			scaledBitmapData.draw($bitmapData, matrix);
+			const scaledBitmapData:BitmapData = new BitmapData(width * MathUtil.abs(_scaleX), height * MathUtil.abs(_scaleY), true, 0x0);
+			scaledBitmapData.draw(_bitmapData, matrix);
 			bitmapData = scaledBitmapData.clone();
 			scaledBitmapData.dispose();
-			$updated = true;
+			_updated = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

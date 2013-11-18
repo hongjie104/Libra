@@ -24,25 +24,25 @@ package org.libra.ui.flash.components {
 		 * CheckBox的数组
 		 * @private
 		 */
-		private var $checkBoxList:Vector.<JCheckBox>;
+		private var _checkBoxList:Vector.<JCheckBox>;
 		
 		/**
 		 * 排列方向 0：水平 1：垂直
 		 * @private
 		 */
-		private var $orientation:int;
+		private var _orientation:int;
 		
 		/**
 		 * 间距
 		 * @private
 		 */
-		private var $gap:int;
+		private var _gap:int;
 		
 		/**
 		 * 当前被勾选的勾选框
 		 * @private
 		 */
-		private var $selectedBox:JCheckBox;
+		private var _selectedBox:JCheckBox;
 		
 		/**
 		 * N个CheckBox的集合
@@ -57,9 +57,9 @@ package org.libra.ui.flash.components {
 			super();
 			//自己是不需要响应鼠标事件的
 			mouseEnabled = false;
-			this.$orientation = orientation;
-			this.$gap = gap;
-			$checkBoxList = new Vector.<JCheckBox>();
+			this._orientation = orientation;
+			this._gap = gap;
+			_checkBoxList = new Vector.<JCheckBox>();
 			setSize(width, height);
 		}
 		
@@ -90,12 +90,12 @@ package org.libra.ui.flash.components {
 		 * @param	checkBox
 		 */
 		public function appendCheckBox(checkBox:JCheckBox):IComponent {
-			if (this.$checkBoxList.indexOf(checkBox) == -1) {
-				var l:int = $checkBoxList.length;
-				$checkBoxList[l] = checkBox;
+			if (this._checkBoxList.indexOf(checkBox) == -1) {
+				var l:int = _checkBoxList.length;
+				_checkBoxList[l] = checkBox;
 				checkBox.setCheckBoxGroup(this);
 				if (checkBox.selected) this.selectedCheckBox = checkBox;
-				if (!$selectedBox) this.selectedCheckBox = checkBox;
+				if (!_selectedBox) this.selectedCheckBox = checkBox;
 				this.invalidate(InvalidationFlag.SIZE);
 				return super.append(checkBox);
 			}
@@ -120,11 +120,11 @@ package org.libra.ui.flash.components {
 		 * @param	checkBox
 		 */
 		public function removeCheckBox(checkBox:JCheckBox):IComponent {
-			var index:int = this.$checkBoxList.indexOf(checkBox);
+			var index:int = this._checkBoxList.indexOf(checkBox);
 			if (index != -1) {
-				this.$checkBoxList.splice(index, 1);
+				this._checkBoxList.splice(index, 1);
 				super.remove(checkBox);
-				if ($selectedBox == checkBox) this.selectedCheckBox = $checkBoxList.length ? $checkBoxList[0] : null;
+				if (_selectedBox == checkBox) this.selectedCheckBox = _checkBoxList.length ? _checkBoxList[0] : null;
 				this.invalidate(InvalidationFlag.SIZE);
 			}
 			return checkBox
@@ -134,12 +134,12 @@ package org.libra.ui.flash.components {
 		 * 移除所有的JCheckBox
 		 */
 		public function clearCheckBox():void {
-			var i:int = $checkBoxList.length;
+			var i:int = _checkBoxList.length;
 			while (--i > -1)
-				this.remove($checkBoxList[i]);
+				this.remove(_checkBoxList[i]);
 				
-			this.$checkBoxList.length = 0;
-			this.$selectedBox = null;
+			this._checkBoxList.length = 0;
+			this._selectedBox = null;
 		}
 		
 		/**
@@ -147,14 +147,14 @@ package org.libra.ui.flash.components {
 		 */
 		public function set selectedCheckBox(checkBox:JCheckBox):void {
 			if (checkBox) {
-				if ($checkBoxList.indexOf(checkBox) == -1) {
+				if (_checkBoxList.indexOf(checkBox) == -1) {
 					Logger.error(checkBox + '不在组内,不能指定为选择的勾选框');
 				}else {
-					this.$selectedBox = checkBox;
+					this._selectedBox = checkBox;
 					invalidate(InvalidationFlag.STATE);
 				}
 			}else {
-				$selectedBox = null;
+				_selectedBox = null;
 			}
 		}
 		
@@ -164,10 +164,10 @@ package org.libra.ui.flash.components {
 		 */
 		public function setCheckBoxUnselected(except:JCheckBox):void {
 			this.selectedCheckBox = except;
-			var i:int = $checkBoxList.length;
+			var i:int = _checkBoxList.length;
 			while (--i > -1) {
-				if (this.$checkBoxList[i] == except) continue;
-				this.$checkBoxList[i].selected = false;
+				if (this._checkBoxList[i] == except) continue;
+				this._checkBoxList[i].selected = false;
 			}
 		}
 		
@@ -175,19 +175,19 @@ package org.libra.ui.flash.components {
 		 * 获取间距
 		 */
 		public function get gap():int {
-			return $gap;
+			return _gap;
 		}
 		
 		/**
 		 * 设置间距
 		 */
 		public function set gap(val:int):void {
-			this.$gap = val;
+			this._gap = val;
 			this.invalidate(InvalidationFlag.SIZE);
 		}
 		
 		override public function clone():Component {
-			return new JCheckBoxGroup($actualWidth, $actualHeight, $orientation, $gap);
+			return new JCheckBoxGroup(_actualWidth, _actualHeight, _orientation, _gap);
 		}
 		
 		/**
@@ -196,15 +196,15 @@ package org.libra.ui.flash.components {
 		 */
 		override public function toXML():XML {
 			const xml:XML = super.toXML();
-			xml.@gap = $gap;
-			if (this.$id.indexOf('component') == -1) {
-				xml["@var"] = this.$id;
+			xml.@gap = _gap;
+			if (this._id.indexOf('component') == -1) {
+				xml["@var"] = this._id;
 			}
-			const l:int = $checkBoxList.length;
+			const l:int = _checkBoxList.length;
 			for (var i:int = 0; i < l; i += 1) {
-				var tmpXML:XML = this.$checkBoxList[i].toXML();
-				if($checkBoxList[i].id.indexOf('component') == -1){
-					tmpXML["@var"] = $checkBoxList[i].id;
+				var tmpXML:XML = this._checkBoxList[i].toXML();
+				if(_checkBoxList[i].id.indexOf('component') == -1){
+					tmpXML["@var"] = _checkBoxList[i].id;
 				}
 				xml.appendChild(tmpXML);
 			}
@@ -216,9 +216,9 @@ package org.libra.ui.flash.components {
 		 */
 		override public function dispose():void {
 			super.dispose();
-			var i:int = $checkBoxList.length;
+			var i:int = _checkBoxList.length;
 			while (--i > -1) {
-				$checkBoxList[i].dispose();
+				_checkBoxList[i].dispose();
 			}
 		}
 		
@@ -230,11 +230,11 @@ package org.libra.ui.flash.components {
 		 * @inheritDoc
 		 */
 		override protected function resize():void {
-			if ($inited) {
+			if (_inited) {
 				var preCheckBox:JCheckBox;
-				for each(var box:JCheckBox in this.$checkBoxList) {
-					box.setLocation($orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.x + $gap : 0) : 0, 
-						$orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.y + $gap : 0));
+				for each(var box:JCheckBox in this._checkBoxList) {
+					box.setLocation(_orientation == Constants.HORIZONTAL ? (preCheckBox ? preCheckBox.x + _gap : 0) : 0, 
+						_orientation == Constants.HORIZONTAL ? 0 : (preCheckBox ? preCheckBox.y + _gap : 0));
 					preCheckBox = box;
 				}
 			}
@@ -244,7 +244,7 @@ package org.libra.ui.flash.components {
 		 * @inheritDoc
 		 */
 		override protected function refreshState():void {
-			if(this.$selectedBox) this.$selectedBox.selected = true;
+			if(this._selectedBox) this._selectedBox.selected = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

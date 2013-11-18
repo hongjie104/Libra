@@ -37,68 +37,68 @@ package org.libra.ui.flash.components {
 	 */
 	public class JPanel extends Container implements IPanel {
 		
-		protected var $owner:IContainer;
+		protected var _owner:IContainer;
 		
 		/**
 		 * 当该面试显示时，其他面板是否需要是不能响应鼠标事件
 		 * @private
 		 * @default false
 		 */
-		protected var $model:Boolean;
+		protected var _model:Boolean;
 		
-		protected var $showing:Boolean;
+		protected var _showing:Boolean;
 		
-		protected var $defaultBtn:JButton;
+		protected var _defaultBtn:JButton;
 		
-		protected var $closeTween:TweenLite;
+		protected var _closeTween:TweenLite;
 		
-		protected var $closeTweening:Boolean;
+		protected var _closeTweening:Boolean;
 		
 		/**
 		 * 面板独有的资源库名，如果面板没有独有的资源库，那么resName就为空字符串
 		 * @private
 		 * @default ''
 		 */
-		protected var $resName:String;
+		protected var _resName:String;
 		
 		/**
 		 * 是否加载了资源库
 		 * @private
 		 * @default false
 		 */
-		protected var $loaded:Boolean;
+		protected var _loaded:Boolean;
 		
 		/**
 		 * 鼠标按下时，是否自动放到显示层的最上层
 		 * @private
 		 * @default true
 		 */
-		protected var $autoUp:Boolean;
+		protected var _autoUp:Boolean;
 		
 		/**
 		 * 是不是全屏的面板,默认值是false
 		 * @private
 		 * @default false
 		 */
-		protected var $fullScreen:Boolean;
+		protected var _fullScreen:Boolean;
 		
 		/**
 		 * 打开面板时是否要自动居中显示，默认值true
 		 * @private
 		 * @default true
 		 */
-		protected var $autoCenter:Boolean;
+		protected var _autoCenter:Boolean;
 		
-		protected var $activated:Boolean;
+		protected var _activated:Boolean;
 		
 		public function JPanel(owner:IContainer, w:int = 300, h:int = 200, resName:String = '', model:Boolean = false, skin:ContainerSkin = null) { 
-			super(0, 0, skin ? skin : UIManager.getInstance().skin.panelSkin);
+			super(0, 0, skin ? skin : UIManager.instance.skin.panelSkin);
 			this.setSize(w, h);
-			this.$owner = owner;
-			this.$model = model;
-			this.$resName = resName;
-			$closeTweening = $showing = false;
-			$autoCenter = $autoUp = true;
+			this._owner = owner;
+			this._model = model;
+			this._resName = resName;
+			_closeTweening = _showing = false;
+			_autoCenter = _autoUp = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -106,102 +106,102 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get model():Boolean {
-			return $model;
+			return _model;
 		}
 		
 		public function show():void {
-			if (this.$resName && !$loaded) {
+			if (this._resName && !_loaded) {
 				//加载独有的资源库去
-				UIManager.getInstance().showLoading();
-				$loader = new Loader();
-				$loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onResLoaded);
-				$loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
-				$loader.load(new URLRequest(URI.UI_URL + this.$resName + '.swf'));
+				UIManager.instance.showLoading();
+				_loader = new Loader();
+				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onResLoaded);
+				_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
+				_loader.load(new URLRequest(URI.UI_URL + this._resName + '.swf'));
 			}else {
-				if ($showing) return;
-				this.$owner.append(this);
-				$showing = true;
-				LayoutManager.getInstance().addPanel(this);
-				UIManager.getInstance().keyPoll.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+				if (_showing) return;
+				this._owner.append(this);
+				_showing = true;
+				LayoutManager.instance.addPanel(this);
+				UIManager.instance.keyPoll.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			}
 		}
 		
 		public function close(tween:Boolean = true, destroy:Boolean = false):void {
-			if ($showing) {
+			if (_showing) {
 				if (tween) {
-					if (!$closeTweening) {
-						if ($closeTween) $closeTween.restart();
-						else $closeTween = TweenLite.to(this, .5, { alpha:.0, onStart:function():void { $closeTweening = true; }, 
-							onComplete:function():void { $closeTweening = false; close(false, destroy); } } );
+					if (!_closeTweening) {
+						if (_closeTween) _closeTween.restart();
+						else _closeTween = TweenLite.to(this, .5, { alpha:.0, onStart:function():void { _closeTweening = true; }, 
+							onComplete:function():void { _closeTweening = false; close(false, destroy); } } );
 					}
 				}else {
-					LayoutManager.getInstance().removePanel(this);
+					LayoutManager.instance.removePanel(this);
 					removeFromParent(destroy);
-					UIManager.getInstance().keyPoll.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+					UIManager.instance.keyPoll.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 				}
 			}
 		}
 		
 		override public function removeFromParent(destroy:Boolean = false):void {
 			alpha = 1.0;
-			$showing = false;
+			_showing = false;
 			super.removeFromParent(destroy);
 		}
 		
 		public function showSwitch():void {
-			$showing ? close() : show();
+			_showing ? close() : show();
 		}
 		
 		/* INTERFACE org.libra.ui.flash.interfaces.IPanel */
 		
 		public function get loader():Loader {
-			return $loader;
+			return _loader;
 		}
 		
 		public function get showing():Boolean {
-			return this.$showing;
+			return this._showing;
 		}
 		
 		public function set defaultBtn(btn:JButton):void {
 			if (btn) {
 				if (this.hasComponent(btn)) {
-					this.$defaultBtn = btn;
+					this._defaultBtn = btn;
 				}
 			}else {
-				this.$defaultBtn = null;
+				this._defaultBtn = null;
 			}
 		}
 		
 		public function get defaultBtn():JButton {
-			return this.$defaultBtn;
+			return this._defaultBtn;
 		}
 		
 		public function get autoUp():Boolean {
-			return $autoUp;
+			return _autoUp;
 		}
 		
 		public function set autoUp(value:Boolean):void {
-			$autoUp = value;
+			_autoUp = value;
 		}
 		
 		public function get fullScreen():Boolean {
-			return $fullScreen;
+			return _fullScreen;
 		}
 		
 		public function get autoCenter():Boolean {
-			return $autoCenter;
+			return _autoCenter;
 		}
 		
 		public function set autoCenter(val:Boolean):void{
-			$autoCenter = val;
+			_autoCenter = val;
 		}
 		
 		public function get activated():Boolean {
-			return $activated;
+			return _activated;
 		}
 		
 		public function set activated(value:Boolean):void {
-			$activated = value;
+			_activated = value;
 		}
 		
 		/**
@@ -212,25 +212,25 @@ package org.libra.ui.flash.components {
 			if (ary.length == 5) {
 				this.skin = new ContainerSkin(ary[0], new Rectangle(Number(ary[1]), Number(ary[2]), Number(ary[3]), Number(ary[4])));
 			}else {
-				this.skin = UIManager.getInstance().skin.panelSkin;
+				this.skin = UIManager.instance.skin.panelSkin;
 				Logger.error('Panel的皮肤配置格式有误:' + ary);
 			}
 		}
 		
 		override public function clone():Component {
-			return new JPanel(this.$owner, $actualWidth, $actualHeight, $resName, $model, $skin);
+			return new JPanel(this._owner, _actualWidth, _actualHeight, _resName, _model, _skin);
 		}
 		
 		override public function toXML():XML {
 			const xml:XML = super.toXML();
-			if (this.$id.indexOf('component') == -1) {
-				xml["@var"] = this.$id;
+			if (this._id.indexOf('component') == -1) {
+				xml["@var"] = this._id;
 			}
-			for (var i:int = 0; i < $numComponent; i += 1) {
-				if ($componentList[i].id) {
-					var tmpXML:XML = this.$componentList[i].toXML();
-					if($componentList[i].id.indexOf('component') == -1){
-						tmpXML["@var"] = $componentList[i].id;
+			for (var i:int = 0; i < _numComponent; i += 1) {
+				if (_componentList[i].id) {
+					var tmpXML:XML = this._componentList[i].toXML();
+					if(_componentList[i].id.indexOf('component') == -1){
+						tmpXML["@var"] = _componentList[i].id;
 					}
 					xml.appendChild(tmpXML);
 				}
@@ -244,14 +244,14 @@ package org.libra.ui.flash.components {
 		
 		override protected function init():void {
 			super.init();
-			if ($loader) {
-				$loader.unloadAndStop();
-				$loader = null;
+			if (_loader) {
+				_loader.unloadAndStop();
+				_loader = null;
 			}
 		}
 		
 		protected function getBmdFromLoader(bmdName:String):BitmapData {
-			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, $loader) as Class;
+			var c:Class = ReflectUtil.getDefinitionByNameFromLoader(bmdName, _loader) as Class;
 			return c ? new c() : null;
 		}
 		
@@ -274,25 +274,25 @@ package org.libra.ui.flash.components {
 		 * @param	e
 		 */
 		protected function onMouseDown(e:MouseEvent):void {
-			if($autoUp) DepthUtil.bringToTop(this);
+			if(_autoUp) DepthUtil.bringToTop(this);
 		}
 		
 		protected function onResLoadProgress(e:ProgressEvent):void {
-			UIManager.getInstance().setLoadingProgress(e.bytesLoaded / e.bytesTotal);
+			UIManager.instance.setLoadingProgress(e.bytesLoaded / e.bytesTotal);
 		}
 		
 		protected function onResLoaded(e:Event):void {
-			$loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onResLoaded);
-			$loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
-			$loaded = true;
-			UIManager.getInstance().closeLoading();
+			_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onResLoaded);
+			_loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onResLoadProgress);
+			_loaded = true;
+			UIManager.instance.closeLoading();
 			show();
 		}
 		
 		protected function onKeyUp(e:KeyboardEvent):void {
-			if (this.$activated) {
+			if (this._activated) {
 				if (e.keyCode == Keyboard.ENTER) {
-					if (this.$defaultBtn) $defaultBtn.doClick();
+					if (this._defaultBtn) _defaultBtn.doClick();
 				}
 			}
 		}

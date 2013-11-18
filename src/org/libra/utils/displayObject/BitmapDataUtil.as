@@ -4,9 +4,9 @@ package org.libra.utils.displayObject {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
-	
 	import org.libra.log4a.Logger;
 	import org.libra.ui.Constants;
+	
 	
 	/**
 	 * <p>
@@ -187,6 +187,29 @@ package org.libra.utils.displayObject {
 				source.dispose();
 				source = null;
 			}
+			return result;
+		}
+		
+		public static function separateBitmapDataByXML(source:BitmapData, xml:XML, dispose:Boolean = true):Vector.<BitmapData>{
+			const xmlList:XMLList = xml.SubTexture; 
+			const l:int = xmlList.length();
+			const result:Vector.<BitmapData> = new Vector.<BitmapData>(l);
+			var bmd:BitmapData;
+			const p:Point = new Point();
+			const rect:Rectangle = new Rectangle();
+			for(var i:int = 0;i < l;i+=1){
+				if(int(xmlList[i].@frameX) || int(xmlList[i].@frameY) || int(xmlList[i].@frameWidth) || int(xmlList[i].@frameHeight)) {
+					bmd = new BitmapData(xmlList[i].@frameWidth,xmlList[i].@frameHeight,true,0x0);
+					p.x = 0 - xmlList[i].@frameX;p.y = 0 - xmlList[i].@frameY;
+				}else{
+					bmd = new BitmapData(xmlList[i].@width,xmlList[i].@height,true,0x0);
+					p.x = p.y = 0;
+				}
+				rect.x = xmlList[i].@x;rect.y = xmlList[i].@y;rect.width = xmlList[i].@width;rect.height = xmlList[i].@height;
+				bmd.copyPixels(source,rect,p,null,null,true);
+				result[i] = bmd;
+			}
+			if(dispose) source.dispose();
 			return result;
 		}
 		

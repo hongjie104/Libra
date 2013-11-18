@@ -1,44 +1,29 @@
-package org.libra.copGameEngine.view.scene {
-	import org.libra.displayObject.JSprite;
-	import org.libra.tick.ITickable;
+package org.libra.aStar.newAStar {
 	/**
 	 * <p>
 	 * Description
 	 * </p>
 	 *
-	 * @class BaseLayer
+	 * @class Link
 	 * @author 鸿杰
 	 * @qq 32968210
-	 * @date 08/19/2013
+	 * @date 10/17/2013
 	 * @version 1.0
 	 * @see
 	 */
-	public class BaseLayer extends JSprite implements ILayer, ITickable {
+	public final class Link {
 		
-		private var _tickabled:Boolean;
-		
-		public function BaseLayer() {
-			super();
-			_tickabled = true;
+		public var node:Node;
+		public var cost:Number;
+
+		public function Link(node:Node, cost:Number){
+			this.node = node;
+			this.cost = cost;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
-		
-		/* INTERFACE org.libra.tick.ITickable */
-		
-		public function tick(interval:int):void {
-			
-		}
-		
-		public function get tickabled():Boolean {
-			return _tickabled;
-		}
-		
-		public function set tickabled(value:Boolean):void {
-			_tickabled = value;
-		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods

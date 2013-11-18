@@ -26,7 +26,7 @@ package org.libra.ui.starling.managers {
 		
 		private static var helpPoint:Point = new Point();
 		
-		private static var instance:ToolTipManager;
+		private static var _instance:ToolTipManager;
 		
 		/**
 		 * 存放组件对应的提示组件的集合
@@ -98,8 +98,8 @@ package org.libra.ui.starling.managers {
 			}
 		}
 		
-		public static function getInstance():ToolTipManager {
-			return instance ||= new ToolTipManager(new Singleton());
+		public static function get instance():ToolTipManager {
+			return _instance ||= new ToolTipManager(new Singleton());
 		}
 		/*-----------------------------------------------------------------------------------------
 		Private methods
@@ -112,7 +112,7 @@ package org.libra.ui.starling.managers {
 			//当tooltip加入到舞台之后，进行初始化
 			currentToolTip.addEventListener(Event.ADDED_TO_STAGE, onToopTipAddToStage);
 			updateToolTipLocation();
-			UIManager.getInstance().starlingRoot.stage.addChild(currentToolTip as DisplayObject);
+			UIManager.instance.starlingRoot.stage.addChild(currentToolTip as DisplayObject);
 			touchPointID = tmpTouchPointID;
 		}
 		
@@ -127,7 +127,7 @@ package org.libra.ui.starling.managers {
 		}
 		
 		private function updateToolTipLocation():void {
-			var stage:Stage = UIManager.getInstance().starlingRoot.stage;
+			var stage:Stage = UIManager.instance.starlingRoot.stage;
 			touch.getLocation(stage, helpPoint);
 			var x:int = helpPoint.x + 6;
 			var y:int = helpPoint.y + 6;

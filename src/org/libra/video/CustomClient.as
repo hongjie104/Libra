@@ -14,10 +14,10 @@ package org.libra.video {
 	 */
 	public class CustomClient {
 		
-		private var $tar:VideoConnecter;
+		private var _tar:VideoConnecter;
 		
 		public function CustomClient(tar:VideoConnecter) {
-			$tar = tar;
+			_tar = tar;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -25,9 +25,9 @@ package org.libra.video {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function onMetaData(info:Object):void {
-			$tar.videoWidth = info.width;
-			$tar.videoHeight = info.height;
-			$tar.dispatchEvent(new Event("videoInfoGet"));
+			_tar.videoWidth = info.width;
+			_tar.videoHeight = info.height;
+			_tar.dispatchEvent(new Event("videoInfoGet"));
 			// info.duration info.width info.height  info.framerate;
 		}
 		

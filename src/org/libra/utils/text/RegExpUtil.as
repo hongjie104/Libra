@@ -48,7 +48,7 @@ package org.libra.utils.text {
         * @return
         */    
 		public static function trim(str:String):String {
-			return str.replace(/^\s*/, "").replace(/\s*$/, "");
+			return str.replace(/^\s*/, "").replace(/\s*_/, "");
 		}
 		
         /**
@@ -66,7 +66,7 @@ package org.libra.utils.text {
         * @return
         */
 		public static function isEmail(text:String):Boolean {
-			return (/^[\D]([\w-]+)?@[\w-]+\.[\w-]+(\.[\w-]{2,4})?$/).test(text);
+			return (/^[\D]([\w-]+)?@[\w-]+\.[\w-]+(\.[\w-]{2,4})?_/).test(text);
 		}
 		
 		/**
@@ -77,9 +77,9 @@ package org.libra.utils.text {
 		 */
 		public static function isNumber(text:String, digits:int = -1):Boolean { 
 			if (digits > 0)
-				return new RegExp("^-?(\\d|,)*\\.\\d{"+digits.toString()+"}$").test(text);
+				return new RegExp("^-?(\\d|,)*\\.\\d{"+digits.toString()+"}_").test(text);
 			else
-				return (/^-?(\d|,)*[\.]?\d*$/).test(text);
+				return (/^-?(\d|,)*[\.]?\d*_/).test(text);
 		}
 		
 		/**

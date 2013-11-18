@@ -15,7 +15,7 @@ package org.libra.copGameEngine.model.element {
 	 */
 	public class JBagProp extends JBitmapObject {
 		
-		protected var $count:int;
+		protected var _count:int;
 		
 		public function JBagProp() {
 			super(40, 40);
@@ -26,11 +26,11 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get count():int {
-			return $count;
+			return _count;
 		}
 		
 		public function set count(value:int):void {
-			$count = value;
+			_count = value;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -24,7 +24,7 @@ package org.libra.ui.flash.components {
 		 * @default true
 		 * @private
 		 */
-		protected var $editable:Boolean;
+		protected var _editable:Boolean;
 		
 		public function JTextField(x:int = 0, y:int = 0, text:String = null, font:JFont = null, filters:Array = null) { 
 			super(x, y, text, font?font:JFont.FONT_INPUT, filters);
@@ -38,12 +38,12 @@ package org.libra.ui.flash.components {
 		override public function toXML():XML {
 			const xml:XML = super.toXML();
 			if (this.displayAsPassword) xml.@displayAsPassword = true;
-			if (this.$textField.background) xml.@backgroundColor = $textField.backgroundColor;
+			if (this._textField.background) xml.@backgroundColor = _textField.backgroundColor;
 			return xml;
 		}
 		
 		override public function clone():Component {
-			const tf:JTextField = new JTextField(x, y, $text, $font, $filters);
+			const tf:JTextField = new JTextField(x, y, _text, _font, _filters);
 			tf.displayAsPassword = this.displayAsPassword;
 			return tf;
 		}
@@ -53,33 +53,33 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get editable():Boolean {
-			return this.$editable;
+			return this._editable;
 		}
 		
 		public function set editable(val:Boolean):void {
-			$editable = val;
-			$textField.type = val ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
+			_editable = val;
+			_textField.type = val ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
 		}
 		
 		public function set restrict(val:String):void {
-			this.$textField.restrict = val;
+			this._textField.restrict = val;
 		}
 		
 		public function set displayAsPassword(val:Boolean):void {
-			this.$textField.displayAsPassword = val;
+			this._textField.displayAsPassword = val;
 		}
 		
 		public function get displayAsPassword():Boolean {
-			return $textField.displayAsPassword;
+			return _textField.displayAsPassword;
 		}
 		
 		public function get backgroundColor():int {
-			return $textField.background ? $textField.backgroundColor : -1;
+			return _textField.background ? _textField.backgroundColor : -1;
 		}
 		
 		public function set backgroundColor(value:int):void {
-			$textField.background = value >= 0
-			$textField.backgroundColor = MathUtil.max(value, 0);
+			_textField.background = value >= 0
+			_textField.backgroundColor = MathUtil.max(value, 0);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -88,11 +88,11 @@ package org.libra.ui.flash.components {
 		
 		override protected function initTextField(text:String = ''):void {
 			super.initTextField(text);
-			this.setFont($font);
+			this.setFont(_font);
 			this.text = text;
-			$textField.selectable = $textField.mouseEnabled = true;
-			$editable = true;
-			this.$textField.type = TextFieldType.INPUT;
+			_textField.selectable = _textField.mouseEnabled = true;
+			_editable = true;
+			this._textField.type = TextFieldType.INPUT;
 			backgroundColor = Skin.BACKGROUND;
 		}
 		

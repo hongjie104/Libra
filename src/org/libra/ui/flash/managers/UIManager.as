@@ -31,13 +31,13 @@ package org.libra.ui.flash.managers {
 		 * 单例
 		 * @private
 		 */
-		private static var instance:UIManager;
+		private static var _instance:UIManager;
 		
 		/**
 		 * 传统显示列表的舞台
 		 * @private
 		 */
-		private var $stage:Stage;
+		private var _stage:Stage;
 		
 		/**
 		 * 在舞台上的所有面板
@@ -48,19 +48,19 @@ package org.libra.ui.flash.managers {
 		/**
 		 * 默认的皮肤
 		 */
-		private var $skin:Skin;
+		private var _skin:Skin;
 		
-		private var $uiContainer:IContainer;
+		private var _uiContainer:IContainer;
 		
 		/**
 		 * 加载进度面板
 		 */
-		private var $loadingPanel:JLoadingPanel;
+		private var _loadingPanel:JLoadingPanel;
 		
 		/**
 		 * 按键管理器
 		 */
-		private var $keyPoll:KeyPoll;
+		private var _keyPoll:KeyPoll;
 		
 		/**
 		 * 构造函数
@@ -81,22 +81,22 @@ package org.libra.ui.flash.managers {
 		 * @param	stage 传统显示列表中的stage
 		 */
 		public function init(stage:Stage, uiContainer:IContainer, skin:Skin):void {
-			this.$stage = stage;
-			this.$uiContainer = uiContainer;
-			this.$skin = skin;
-			$stage.addChild($uiContainer as DisplayObject);
-			LayoutManager.getInstance().resize(stage.stageWidth, stage.stageHeight);
-			$keyPoll = new KeyPoll(stage);
+			this._stage = stage;
+			this._uiContainer = uiContainer;
+			this._skin = skin;
+			_stage.addChild(_uiContainer as DisplayObject);
+			LayoutManager.instance.resize(stage.stageWidth, stage.stageHeight);
+			_keyPoll = new KeyPoll(stage);
 			
-			this.$loadingPanel = new JLoadingPanel(uiContainer, $skin.panelSkin);
+			this._loadingPanel = new JLoadingPanel(uiContainer, _skin.panelSkin);
 		}
 		
 		public function get skin():Skin {
-			return $skin ||= new Skin();
+			return _skin ||= new Skin();
 		}
 		
 		public function get keyPoll():KeyPoll {
-			return $keyPoll;
+			return _keyPoll;
 		}
 		
 		/**
@@ -104,31 +104,31 @@ package org.libra.ui.flash.managers {
 		 * @return Stage
 		 */
 		public function get stage():Stage {
-			return this.$stage;
+			return this._stage;
 		}
 		
 		public function get uiContainer():IContainer {
-			return $uiContainer;
+			return _uiContainer;
 		}
 		
 		public function showLoading():void {
-			this.$loadingPanel.show();
+			this._loadingPanel.show();
 		}
 		
 		public function setLoadingProgress(val:Number):void {
-			this.$loadingPanel.progress = val;
+			this._loadingPanel.progress = val;
 		}
 		
 		public function closeLoading():void {
-			this.$loadingPanel.close();
+			this._loadingPanel.close();
 		}
 		
 		/**
 		 * 获取单例
 		 * @return UIManager
 		 */
-		public static function getInstance():UIManager {
-			return instance ||= new UIManager(new Singleton());
+		public static function get instance():UIManager {
+			return _instance ||= new UIManager(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

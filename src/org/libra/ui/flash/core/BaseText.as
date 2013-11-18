@@ -27,22 +27,22 @@ package org.libra.ui.flash.core {
 		 * 文本组件，flash自带的
 		 * @private
 		 */
-		protected var $textField:TextField;
+		protected var _textField:TextField;
 		
-		protected var $text:String;
+		protected var _text:String;
 		
-		protected var $htmlText:String;
+		protected var _htmlText:String;
 		
-		protected var $font:JFont;
+		protected var _font:JFont;
 		
-		protected var $filters:Array;
+		protected var _filters:Array;
 		
 		/**
 		 * 是否使用默认的滤镜
 		 * @private
 		 * @default true
 		 */
-		protected var $defaultFilter:Boolean;
+		protected var _defaultFilter:Boolean;
 		
 		/**
 		 * 构造函数
@@ -52,11 +52,11 @@ package org.libra.ui.flash.core {
 		 */
 		public function BaseText(x:int = 0, y:int = 0, text:String = '', font:JFont = null, filters:Array = null) { 
 			super(x, y);
-			this.$font = font;
-			this.$filters = filters;
+			this._font = font;
+			this._filters = filters;
 			this.initTextField(text);
-			$htmlText = '';
-			$defaultFilter = true;
+			_htmlText = '';
+			_defaultFilter = true;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -68,8 +68,8 @@ package org.libra.ui.flash.core {
 		 */
 		override public function setSize(w:int, h:int):void {
 			super.setSize(w, h);
-			this.$textField.width = w - $textField.x;
-			this.$textField.height = h - $textField.y;
+			this._textField.width = w - _textField.x;
+			this._textField.height = h - _textField.y;
 		}
 		
 		/**
@@ -87,10 +87,10 @@ package org.libra.ui.flash.core {
 		 * @param	y 纵坐标
 		 */
 		public function setTextLocation(x:int, y:int):void {
-			this.$textField.x = x;
-			this.$textField.y = y;
-			this.$textField.width = $actualWidth - x;
-			this.$textField.height = $actualHeight - y;
+			this._textField.x = x;
+			this._textField.y = y;
+			this._textField.width = _actualWidth - x;
+			this._textField.height = _actualHeight - y;
 		}
 		
 		/**
@@ -99,7 +99,7 @@ package org.libra.ui.flash.core {
 		 * @param	endIndex选中文本最后一个字符的索引值
 		 */
 		public function setSelection(beginIndex:int, endIndex:int):void {
-			this.$textField.setSelection(beginIndex, endIndex);
+			this._textField.setSelection(beginIndex, endIndex);
 		}
 		
 		/**
@@ -111,8 +111,8 @@ package org.libra.ui.flash.core {
 			if (!font) font = JFont.FONT_LABEL.clone();
 			const newTf:TextFormat = font.getTextFormat();
 			newTf.align = this.textAlign;
-			this.$textField.setTextFormat(newTf);
-			this.$textField.defaultTextFormat = newTf;
+			this._textField.setTextFormat(newTf);
+			this._textField.defaultTextFormat = newTf;
 		}
 		
 		/**
@@ -120,7 +120,7 @@ package org.libra.ui.flash.core {
 		 * @param	value
 		 */
 		//public function setLeading(value:int):void {
-			//var tf:TextFormat = this.$textField.defaultTextFormat;
+			//var tf:TextFormat = this._textField.defaultTextFormat;
 			//var newTf:TextFormat = new TextFormat();
 			//newTf.leading = value;
 			//如果有旧的TextFormat，那么将其对齐方式赋值给新的TextFormat
@@ -128,8 +128,8 @@ package org.libra.ui.flash.core {
 				//newTf.align = tf.align;
 				//newTf.font = tf.font;
 			//}
-			//this.$textField.setTextFormat(newTf);
-			//this.$textField.defaultTextFormat = newTf;
+			//this._textField.setTextFormat(newTf);
+			//this._textField.defaultTextFormat = newTf;
 		//}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -140,8 +140,8 @@ package org.libra.ui.flash.core {
 		 * 设置文本
 		 */
 		public function set text(text:String):void {
-			$text = text;
-			if ($text) $htmlText = '';
+			_text = text;
+			if (_text) _htmlText = '';
 			this.invalidate(InvalidationFlag.TEXT);
 		}
 		
@@ -149,16 +149,16 @@ package org.libra.ui.flash.core {
 		 * 获取文本
 		 */
 		public function get text():String {
-			$text = $textField.text;
-			return $text
+			_text = _textField.text;
+			return _text
 		}
 		
 		/**
 		 * 设置html格式的文本
 		 */
 		public function set htmlText(text:String):void {
-			$htmlText = text;
-			if ($htmlText) $text = '';
+			_htmlText = text;
+			if (_htmlText) _text = '';
 			this.invalidate(InvalidationFlag.TEXT);
 		}
 		
@@ -166,47 +166,47 @@ package org.libra.ui.flash.core {
 		 * 获取html格式的文本
 		 */
 		public function get htmlText():String {
-			return $htmlText;
+			return _htmlText;
 		}
 		
 		/**
 		 * 获取文本长度
 		 */
 		public function get textLength():int {
-			return this.$textField.length;
+			return this._textField.length;
 		}
 		
 		/**
 		 * 设置文本是否自动换行，当文本内容超过文本宽度时
 		 */
 		public function set wordWrap(val:Boolean):void {
-			this.$textField.wordWrap = val;
+			this._textField.wordWrap = val;
 		}
 		
 		public function get wordWrap():Boolean {
-			return $textField.wordWrap;
+			return _textField.wordWrap;
 		}
 		
 		/**
 		 * 设置文本的字体颜色
 		 */
 		public function set textColor(color:uint):void {
-			this.$textField.textColor = color;
+			this._textField.textColor = color;
 		}
 		
 		public function get textColor():uint {
-			return $textField.textColor;
+			return _textField.textColor;
 		}
 		
 		/**
 		 * 设置文本的滤镜
 		 */
 		public function set textFilter(filter:Array):void {
-			this.$textField.filters = filter;
+			this._textField.filters = filter;
 		}
 		
 		public function get textFilter():Array {
-			return $textField.filters;
+			return _textField.filters;
 		}
 		
 		/**
@@ -214,21 +214,21 @@ package org.libra.ui.flash.core {
 		 * 三种:'left','center','right'
 		 */
 		public function set textAlign(val:String):void {
-			var tf:TextFormat = this.$textField.defaultTextFormat;
+			var tf:TextFormat = this._textField.defaultTextFormat;
 			tf.align = val;
-			this.$textField.setTextFormat(tf);
-			this.$textField.defaultTextFormat = tf;
+			this._textField.setTextFormat(tf);
+			this._textField.defaultTextFormat = tf;
 		}
 		
 		public function get textAlign():String {
-			return $textField.defaultTextFormat.align;
+			return _textField.defaultTextFormat.align;
 		}
 		
 		/**
 		 * 设置文本的最大字数
 		 */
 		public function set maxChars(val:int):void {
-			this.$textField.maxChars = val;
+			this._textField.maxChars = val;
 		}
 		
 		/**
@@ -236,7 +236,7 @@ package org.libra.ui.flash.core {
 		 */
 		override public function set width(value:Number):void {
 			super.width = value;
-			this.$textField.width = value - $textField.x;
+			this._textField.width = value - _textField.x;
 		}
 		
 		/**
@@ -244,53 +244,53 @@ package org.libra.ui.flash.core {
 		 */
 		override public function set height(value:Number):void {
 			super.height = value;
-			this.$textField.height = value - $textField.y;
+			this._textField.height = value - _textField.y;
 		}
 		
 		public function get font():String {
-			return this.$textField.defaultTextFormat.font;
+			return this._textField.defaultTextFormat.font;
 		}
 		
 		public function set font(val:String):void {
-			const tf:TextFormat = this.$textField.defaultTextFormat;
+			const tf:TextFormat = this._textField.defaultTextFormat;
 			tf.font = val;
-			this.$textField.defaultTextFormat = tf;
-			this.$textField.setTextFormat(tf);
+			this._textField.defaultTextFormat = tf;
+			this._textField.setTextFormat(tf);
 		}
 		
 		public function get fontSize():int {
-			return int(this.$textField.defaultTextFormat.size);
+			return int(this._textField.defaultTextFormat.size);
 		}
 		
 		public function set fontSize(val:int):void {
-			const tf:TextFormat = this.$textField.defaultTextFormat;
+			const tf:TextFormat = this._textField.defaultTextFormat;
 			tf.size = val;
-			this.$textField.defaultTextFormat = tf;
-			this.$textField.setTextFormat(tf);
+			this._textField.defaultTextFormat = tf;
+			this._textField.setTextFormat(tf);
 		}
 		
 		public function get fontBold():Boolean {
-			return this.$textField.defaultTextFormat.bold;
+			return this._textField.defaultTextFormat.bold;
 		}
 		
 		public function set fontBold(val:Boolean):void {
-			const tf:TextFormat = this.$textField.defaultTextFormat;
+			const tf:TextFormat = this._textField.defaultTextFormat;
 			tf.bold = val;
-			this.$textField.defaultTextFormat = tf;
-			this.$textField.setTextFormat(tf);
+			this._textField.defaultTextFormat = tf;
+			this._textField.setTextFormat(tf);
 		}
 		
 		public function get defaultFilter():Boolean {
-			return $defaultFilter;
+			return _defaultFilter;
 		}
 		
 		public function set defaultFilter(value:Boolean):void {
-			$defaultFilter = value;
-			this.textFilter = $defaultFilter ? Filter.BLACK : null;
+			_defaultFilter = value;
+			this.textFilter = _defaultFilter ? Filter.BLACK : null;
 		}
 		
 		override public function clone():Component {
-			return new BaseText(x, y, $text, $font, $filters);
+			return new BaseText(x, y, _text, _font, _filters);
 		}
 		
 		override public function toXML():XML {
@@ -298,19 +298,19 @@ package org.libra.ui.flash.core {
 			return new XML('<' + tmpAry[tmpAry.length - 1] + ' ' + 
 							(x ? 'x="' + x + '" ' : '') + 
 							(y ? 'y="' + y + '" ' : '') + 
-							($actualWidth ? 'width="' + $actualWidth + '" ' : '') + 
-							($actualHeight ? 'height="' + $actualHeight + '" ' : '') + 
-							($enabled ? '' : 'enabled="false" ') + 
-							($toolTipText ? 'toolTipText="' + $toolTipText + '" ' : '') + 
-							($textField.wordWrap ? 'wordWrap="true" ' : '') + 
-							($text ? 'text="' + $text + '" ' : '') + 
-							($htmlText ? 'htmlText="' + $htmlText + '" ' : '') + 
-							'textColor="' + $textField.textColor + '" ' + 
-							'textAlign="' + $textField.defaultTextFormat.align + '" ' + 
+							(_actualWidth ? 'width="' + _actualWidth + '" ' : '') + 
+							(_actualHeight ? 'height="' + _actualHeight + '" ' : '') + 
+							(_enabled ? '' : 'enabled="false" ') + 
+							(_toolTipText ? 'toolTipText="' + _toolTipText + '" ' : '') + 
+							(_textField.wordWrap ? 'wordWrap="true" ' : '') + 
+							(_text ? 'text="' + _text + '" ' : '') + 
+							(_htmlText ? 'htmlText="' + _htmlText + '" ' : '') + 
+							'textColor="' + _textField.textColor + '" ' + 
+							'textAlign="' + _textField.defaultTextFormat.align + '" ' + 
 							(font != 'simsun' ? 'font="' + font + '" ' : '') + 
 							(fontSize != 12 ? 'fontSize="' + fontSize + '" ' : '') + 
 							(fontBold ? 'fontBold="true" ' : '') + 
-							(!$defaultFilter ? 'defaultFilter="false" ' : '') + 
+							(!_defaultFilter ? 'defaultFilter="false" ' : '') + 
 						   '/>');
 		}
 		
@@ -326,17 +326,17 @@ package org.libra.ui.flash.core {
 		 * @default ''
 		 */
 		protected function initTextField(text:String = ''):void {
-			$textField = new TextField();
-			$textField.selectable = $textField.mouseWheelEnabled = $textField.mouseEnabled = $textField.doubleClickEnabled = false;
-			$textField.multiline = false;
-			this.setFont(this.$font);
-			this.textFilter = $filters;
+			_textField = new TextField();
+			_textField.selectable = _textField.mouseWheelEnabled = _textField.mouseEnabled = _textField.doubleClickEnabled = false;
+			_textField.multiline = false;
+			this.setFont(this._font);
+			this.textFilter = _filters;
 			this.text = text;
-			this.addChild($textField);
+			this.addChild(_textField);
 		}
 		
 		override protected function refreshText():void {
-			$textField.text = $text ? $text : $htmlText;
+			_textField.text = _text ? _text : _htmlText;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -351,7 +351,7 @@ package org.libra.ui.flash.core {
 		 */
 		override protected function onAddToStage(e:Event):void {
 			super.onAddToStage(e);
-			this.$textField.addEventListener(Event.CHANGE, onTextChanged);
+			this._textField.addEventListener(Event.CHANGE, onTextChanged);
 		}
 		
 		/**
@@ -359,7 +359,7 @@ package org.libra.ui.flash.core {
 		 */
 		override protected function onRemoveFromStage(e:Event):void {
 			super.onRemoveFromStage(e);
-			this.$textField.removeEventListener(Event.CHANGE, onTextChanged);
+			this._textField.removeEventListener(Event.CHANGE, onTextChanged);
 		}
 	}
 

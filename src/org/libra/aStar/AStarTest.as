@@ -73,9 +73,9 @@ package org.libra.aStar {
 			player.x = cellSize >> 1;
 			player.y = cellSize >> 1;
 			
-			AStar.getInstance().setSize(cols, rows);
-			AStar.getInstance().setDir(4);
-			handler = AStar.getInstance().getGrid().setWalkable;
+			AStar.instance.setSize(cols, rows);
+			AStar.instance.setDir(4);
+			handler = AStar.instance.getGrid().setWalkable;
 			//随机生成200个障碍点
 			for (var i:int = 0; i < 200; i++) { 
 				handler(MathUtil.floor(Math.random() * cols),
@@ -99,7 +99,7 @@ package org.libra.aStar {
 				g.lineTo(tmp, h);
 				tmp += cellSize;
 			}
-			var handler:Function = AStar.getInstance().getGrid().isWalkable;
+			var handler:Function = AStar.instance.getGrid().isWalkable;
 			for (var row:int = 0; row < rows; row += 1) {
 				for (var col:int = 0; col < cols; col += 1 ) {
 					if (!handler(col, row)) 
@@ -124,7 +124,7 @@ package org.libra.aStar {
 		}
 		
 		private function onClicked(e:MouseEvent):void {
-			var grid:Grid = AStar.getInstance().getGrid();
+			var grid:Grid = AStar.instance.getGrid();
 			var startPosX:int = int(player.x / cellSize);
 			var startPosY:int = int(player.y / cellSize);
 			var startNode:Node = grid.getNode(startPosX, startPosY);
@@ -145,7 +145,7 @@ package org.libra.aStar {
 			grid.setStartNode(startPosX, startPosY);
 			grid.setEndNode(endPosX, endPosY);
 			
-			var aStar:AStar = AStar.getInstance();
+			var aStar:AStar = AStar.instance;
 			if (aStar.findPath()) { 
 				//得到平滑路径
 				aStar.floyd();

@@ -17,7 +17,7 @@ package org.libra.ui.flash.managers {
 	 */
 	public final class LayoutManager {
 		
-		private static var instance:LayoutManager;
+		private static var _instance:LayoutManager;
 		
 		/**
 		 * 游戏舞台的宽度
@@ -29,15 +29,15 @@ package org.libra.ui.flash.managers {
 		 */
 		public static var stageHeight:int;
 		
-		private var $panelList:Vector.<JPanel>;
+		private var _panelList:Vector.<JPanel>;
 		
-		private var $activatedPanel:JPanel;
+		private var _activatedPanel:JPanel;
 		
-		private var $modelSprite:Sprite;
+		private var _modelSprite:Sprite;
 		
 		public function LayoutManager(singleton:Singleton) {
-			$panelList = new Vector.<JPanel>();
-			$modelSprite = new Sprite();
+			_panelList = new Vector.<JPanel>();
+			_modelSprite = new Sprite();
 			resize(800, 600);
 		}
 		
@@ -46,42 +46,42 @@ package org.libra.ui.flash.managers {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function addPanel(p:JPanel):void {
-			if ($panelList.indexOf(p) == -1) {
-				$panelList[$panelList.length] = p;
+			if (_panelList.indexOf(p) == -1) {
+				_panelList[_panelList.length] = p;
 				p.activated = true;
-				if ($activatedPanel) $activatedPanel.activated = false;
-				$activatedPanel = p;
+				if (_activatedPanel) _activatedPanel.activated = false;
+				_activatedPanel = p;
 				if(p.autoCenter)
 					toCenter(p);
 				if (p.model) {
-					if ($modelSprite.parent == p.parent)
-						DepthUtil.bringToTop($modelSprite);
+					if (_modelSprite.parent == p.parent)
+						DepthUtil.bringToTop(_modelSprite);
 					else
-						p.parent.addChild($modelSprite);
+						p.parent.addChild(_modelSprite);
 					DepthUtil.bringToTop(p);
 				}
 			}
 		}
 		
 		public function removePanel(p:JPanel):void {
-			var index:int = $panelList.indexOf(p);
+			var index:int = _panelList.indexOf(p);
 			if (index != -1) {
-				$panelList.splice(index, 1);
+				_panelList.splice(index, 1);
 				if (p.activated) {
 					p.activated = false;
-					const l:int = $panelList.length;
+					const l:int = _panelList.length;
 					if (l) {
-						this.$activatedPanel = $panelList[l - 1];
-						this.$activatedPanel.activated = true;
+						this._activatedPanel = _panelList[l - 1];
+						this._activatedPanel.activated = true;
 					}else {
-						$activatedPanel = null;
+						_activatedPanel = null;
 					}
 				}
 				if (p.model) {
-					if ($panelList.length && $panelList[$panelList.length - 1].model) {
-						DepthUtil.bringToTop($panelList[$panelList.length - 1]);
+					if (_panelList.length && _panelList[_panelList.length - 1].model) {
+						DepthUtil.bringToTop(_panelList[_panelList.length - 1]);
 					}else {
-						$modelSprite.parent.removeChild($modelSprite);	
+						_modelSprite.parent.removeChild(_modelSprite);	
 					}
 				}
 			}
@@ -90,11 +90,11 @@ package org.libra.ui.flash.managers {
 		public function resize(w:int, h:int):void { 
 			stageWidth = w;
 			stageHeight = h;
-			GraphicsUtil.drawRect($modelSprite.graphics, 0, 0, w, h, 0x000000, 0);
+			GraphicsUtil.drawRect(_modelSprite.graphics, 0, 0, w, h, 0x000000, 0);
 		}
 		
-		public static function getInstance():LayoutManager {
-			return instance ||= new LayoutManager(new Singleton());
+		public static function get instance():LayoutManager {
+			return _instance ||= new LayoutManager(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

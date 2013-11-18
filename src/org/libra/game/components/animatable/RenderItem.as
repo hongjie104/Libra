@@ -14,7 +14,7 @@ package org.libra.game.components.animatable {
 	 */
 	public class RenderItem {
 		
-		private var $bitmapData:BitmapData;
+		private var _bitmapData:BitmapData;
 		
 		/**
 		 * 所在的渲染层
@@ -24,17 +24,17 @@ package org.libra.game.components.animatable {
 		/**
 		 * 是否可见
 		 */
-		private var $visible:Boolean;
+		private var _visible:Boolean;
 		
-		private var $x:int;
+		private var _x:int;
 		
-		private var $y:int;
+		private var _y:int;
 		
 		public function RenderItem(bitmapData:BitmapData, renderLayer:RenderLayer = null) { 
 			this.bitmapData = bitmapData;
 			if(renderLayer) renderLayer.addItem(this);
 			visible = true;
-			$x = $y = 0;
+			_x = _y = 0;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ package org.libra.game.components.animatable {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function set bitmapData(bmd:BitmapData):void {
-			this.$bitmapData = bmd;
+			this._bitmapData = bmd;
 			setNeedRender(true);
 		}
 		
@@ -51,7 +51,7 @@ package org.libra.game.components.animatable {
 		 * @return
 		 */
 		public function get bitmapData():BitmapData {
-			return this.$bitmapData;
+			return this._bitmapData;
 		}
 		
 		public function setRenderLayer(renderLayer:RenderLayer):void {
@@ -67,8 +67,8 @@ package org.libra.game.components.animatable {
 		
 		public function dispose():void {
 			if (this.renderLayer) this.renderLayer.removeItem(this);
-			this.$bitmapData.dispose();
-			this.$bitmapData = null;
+			this._bitmapData.dispose();
+			this._bitmapData = null;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -76,36 +76,36 @@ package org.libra.game.components.animatable {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get x():int { 
-			return $x; 
+			return _x; 
 		}
 		
 		public function set x(value:int):void {
-			if ($x != value) {
-				$x = value;
+			if (_x != value) {
+				_x = value;
 				setNeedRender(true);
 			}
 		}
 		
 		public function get y():int { 
-			return $y; 
+			return _y; 
 		}
 		
 		public function set y(value:int):void {
-			if ($y != value) {
-				$y = value;
+			if (_y != value) {
+				_y = value;
 				setNeedRender(true);
 			}
 		}
 		
 		public function set visible(value:Boolean):void {
-			if (this.$visible != value) {
-				this.$visible = value;
+			if (this._visible != value) {
+				this._visible = value;
 				this.setNeedRender(true);
 			}
 		}
 		
 		public function get visible():Boolean {
-			return this.$visible;
+			return this._visible;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

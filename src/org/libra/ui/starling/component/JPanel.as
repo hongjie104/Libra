@@ -96,15 +96,15 @@ package org.libra.ui.starling.component {
 		 */
 		override protected function init():void {
 			super.init();
-			this.setBackground(new JScale9Sprite(DefaultTheme.getInstance().getScale9Texture(theme)));
+			this.setBackground(new JScale9Sprite(DefaultTheme.instance.getScale9Texture(theme)));
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override protected function resize():void {
-			this.$background.width = $actualWidth;
-			this.$background.height = $actualHeight;
+			this._background.width = _actualWidth;
+			this._background.height = _actualHeight;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

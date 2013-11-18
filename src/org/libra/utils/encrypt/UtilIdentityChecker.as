@@ -14,7 +14,7 @@ package org.libra.utils.encrypt {
 		 */
         public static function check(id:String):int { 
 			id = id.toLowerCase();
-			var re:RegExp = new RegExp("^([0-9]{6})([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{3})([0-9]|x)$", "g");
+			var re:RegExp = new RegExp("^([0-9]{6})([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{3})([0-9]|x)_", "g");
 			var ret:Array = re.exec(id);
 			if ( null == ret ) { 
 				return 1;

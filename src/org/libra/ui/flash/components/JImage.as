@@ -18,14 +18,14 @@ package org.libra.ui.flash.components {
 	 */
 	public class JImage extends Component {
 		
-		protected var $bitmap:Bitmap;
+		protected var _bitmap:Bitmap;
 		
-		protected var $bitmapData:BitmapData;
+		protected var _bitmapData:BitmapData;
 		
 		public function JImage(bitmapData:BitmapData = null, x:int = 0, y:int = 0) { 
 			super(x, y);
-			$bitmap = new Bitmap(bitmapData);
-			addChild($bitmap);
+			_bitmap = new Bitmap(bitmapData);
+			addChild(_bitmap);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -33,16 +33,16 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get bitmapData():BitmapData {
-			return $bitmapData;
+			return _bitmapData;
 		}
 		
 		public function set bitmapData(val:BitmapData):void {
-			$bitmapData = val;
+			_bitmapData = val;
 			this.invalidate(InvalidationFlag.DATA);
 		}
 		
 		override public function clone():Component {
-			return new JImage($bitmapData, x, y);
+			return new JImage(_bitmapData, x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function refreshData():void {
-			$bitmap.bitmapData = $bitmapData;
+			_bitmap.bitmapData = _bitmapData;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

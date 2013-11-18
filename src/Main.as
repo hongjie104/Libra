@@ -54,8 +54,8 @@ package {
 		 */
 		private function onLoadUIComplete(evt:flash.events.Event):void {
 			//初始化UI
-			AssetsStorage.getInstance().init(loader);
-			//UIManager.getInstance().init(this.stage, new DefaultTheme());
+			AssetsStorage.instance.init(loader);
+			//UIManager.instance.init(this.stage, new DefaultTheme());
 			//testUI();
 			//testAutoCreateUI();
 			//testBmpEngine();
@@ -88,15 +88,15 @@ package {
 				this.addChild(bitmap.displayObject);
 				bitmap.x = MathUtil.random(0, stage.stageWidth);
 				bitmap.y = MathUtil.random(0, stage.stageHeight);
-				//Tick.getInstance().addItem(bitmap);
-				Tick.getInstance().addItem(sprite);
+				//Tick.instance.addItem(bitmap);
+				Tick.instance.addItem(sprite);
 			}
 		}*/
 		
 		/*private function testCopGame():void {
 			//Security.allowDomain('*');
 			const uiContainer:Container = new Container();
-			UIManager.getInstance().init(stage, uiContainer, new Skin());
+			UIManager.instance.init(stage, uiContainer, new Skin());
 			myContent = new MainContext(this);
 		}*/
 		
@@ -132,8 +132,8 @@ package {
 						//</JPanel>;
 			//var uiContainer:Container = new Container();
 			//uiContainer.setSize(stage.stageWidth, stage.stageHeight);
-			//UIManager.getInstance().init(this.stage, uiContainer, new Skin());
-			//var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().skin.panelSkin);
+			//UIManager.instance.init(this.stage, uiContainer, new Skin());
+			//var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.instance.skin.panelSkin);
 			//panel.createView(xml);
 			//panel.show();
 			//panel.x = panel.y = 50;
@@ -144,7 +144,7 @@ package {
 			starling.start();
 			starling.showStats = true;
 			
-			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.getInstance().init(this.stage); } );
+			starling.addEventListener(starling.events.Event.ROOT_CREATED, function(evt:starling.events.Event):void { UIManager.instance.init(this.stage); } );
 		}
 		
 		//private function testDiamond():void {
@@ -174,8 +174,8 @@ package {
 				//this.addChild(bitmap);
 				//bitmap.x = MathUtil.random(0, stage.stageWidth);
 				//bitmap.y = MathUtil.random(0, stage.stageHeight);
-				//Tick.getInstance().addItem(bitmap);
-				//Tick.getInstance().addItem(sprite);
+				//Tick.instance.addItem(bitmap);
+				//Tick.instance.addItem(sprite);
 			//}
 		//}
 		
@@ -237,47 +237,47 @@ package {
 			var uiContainer:Container = new Container();
 			this.addChild(uiContainer);
 			
-			UIManager.getInstance().init(this.stage, uiContainer, new DefaultTheme());
+			UIManager.instance.init(this.stage, uiContainer, new DefaultTheme());
 			
-			frame = new JFrame(uiContainer, 400, 300, '', false, 25, UIManager.getInstance().theme.frameTheme);
+			frame = new JFrame(uiContainer, 400, 300, '', false, 25, UIManager.instance.theme.frameTheme);
 			//frame.setCloseEnabled(false);
 			//frame.setDragBarEnabled(false);
 			frame.show();
 			
-			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.getInstance().theme.panelTheme);
+			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.instance.theme.panelTheme);
 			panel.show();
 			
 			
-			var label:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 40, 32, 'hello world!');
-			var tf:JTextField = new JTextField(UIManager.getInstance().theme.textFieldTheme, 40, 50, '输入框');
-			var pw:JTextField = new JTextField(UIManager.getInstance().theme.textFieldTheme, 40, 80, '密码输入框');
+			var label:JLabel = new JLabel(UIManager.instance.theme.labelTheme, 40, 32, 'hello world!');
+			var tf:JTextField = new JTextField(UIManager.instance.theme.textFieldTheme, 40, 50, '输入框');
+			var pw:JTextField = new JTextField(UIManager.instance.theme.textFieldTheme, 40, 80, '密码输入框');
 			pw.displayAsPassword = true;
 			panel.appendAll(label, tf, pw);
-			var btn0:JButton = new JButton(UIManager.getInstance().theme.btnTheme, 250, 50, '开关');
+			var btn0:JButton = new JButton(UIManager.instance.theme.btnTheme, 250, 50, '开关');
 			btn0.toolTipText = '开关';
 			panel.append(btn0);
 			btn0.addEventListener(MouseEvent.CLICK, onCliked);
 			
-			var btn:JButton = new JButton(UIManager.getInstance().theme.btnTheme, 30, 60, '按钮');
+			var btn:JButton = new JButton(UIManager.instance.theme.btnTheme, 30, 60, '按钮');
 			frame.append(btn);
 			
 			var checkBoxGroup:JCheckBoxGroup = new JCheckBoxGroup(30, 120, 0);
-			checkBoxGroup.appendAllCheckBox(new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 0, 0, '按钮0'), 
-				new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 30, 90, '按钮1'), new JCheckBox(UIManager.getInstance().theme.checkBoxTheme, 30, 90, '按钮2'));
+			checkBoxGroup.appendAllCheckBox(new JCheckBox(UIManager.instance.theme.checkBoxTheme, 0, 0, '按钮0'), 
+				new JCheckBox(UIManager.instance.theme.checkBoxTheme, 30, 90, '按钮1'), new JCheckBox(UIManager.instance.theme.checkBoxTheme, 30, 90, '按钮2'));
 			frame.append(checkBoxGroup);
 			
 			btn.toolTipText = '我是按钮ToolTip';
 			
-			var progressBar:JProgressBar = new JProgressBar(UIManager.getInstance().theme.progressBarTheme);
+			var progressBar:JProgressBar = new JProgressBar(UIManager.instance.theme.progressBarTheme);
 			frame.append(progressBar);
 			
 			var slider:JSlider = new JSlider(0, 280, 200);
 			frame.append(slider);
-			var sliderLabel:JLabel = new JLabel(UIManager.getInstance().theme.labelTheme, 330, 240, '0');
+			var sliderLabel:JLabel = new JLabel(UIManager.instance.theme.labelTheme, 330, 240, '0');
 			frame.append(sliderLabel);
 			slider.addEventListener(flash.events.Event.CHANGE, function(evt:flash.events.Event):void { sliderLabel.text = slider.value.toFixed(2); progressBar.setProgress(slider.value / 100); } );
 			
-			var textArea:JTextArea = new JTextArea(UIManager.getInstance().theme.textAreaTheme, 50, 160, '请输入：');
+			var textArea:JTextArea = new JTextArea(UIManager.instance.theme.textAreaTheme, 50, 160, '请输入：');
 			frame.append(textArea);
 			var list:JList = new JList(240, 60);
 			list.setSize(60, 100);
@@ -288,14 +288,14 @@ package {
 				data[i] = 'item' + i;
 			list.dataList = data;
 			
-			var comboBox:JComboBox = new JComboBox(UIManager.getInstance().theme.comboBoxTheme, Constants.DOWN, '下拉框', 50, 100);
+			var comboBox:JComboBox = new JComboBox(UIManager.instance.theme.comboBoxTheme, Constants.DOWN, '下拉框', 50, 100);
 			panel.append(comboBox);
 			comboBox.dataList = data;
 			
-			var pageCounter:JPageCounter = new JPageCounter(UIManager.getInstance().theme.pageCountTheme, 10, 3, 50, 50);
+			var pageCounter:JPageCounter = new JPageCounter(UIManager.instance.theme.pageCountTheme, 10, 3, 50, 50);
 			frame.append(pageCounter);
 			
-			var cd:JCountDown = new JCountDown(UIManager.getInstance().theme.labelTheme, 100, 100, '剩余时间: ');
+			var cd:JCountDown = new JCountDown(UIManager.instance.theme.labelTheme, 100, 100, '剩余时间: ');
 			frame.append(cd);
 			cd.setLeftSecond(528);
 		}
@@ -303,7 +303,7 @@ package {
 		private function onCliked(e:MouseEvent):void {
 			//frame.showSwitch();
 			JAlert.show('测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗测试弹窗', function(r:int):void { trace(r); }, JAlert.OK | JAlert.CANCEL | JAlert.YES );
-			//trace(UIManager.getInstance().keyPoll.isUp(Keyboard.D));
+			//trace(UIManager.instance.keyPoll.isUp(Keyboard.D));
 		}*/
 		
 	}

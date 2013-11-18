@@ -15,11 +15,11 @@ package org.libra.copGameEngine.model.basic {
 	 */
 	public class GameObject extends Entity {
 		
-		protected var $id:String;
+		protected var _id:String;
 		
-		protected var $type:int;
+		protected var _type:int;
 		
-		protected var $des:String;
+		protected var _des:String;
 		
 		public function GameObject() {
 			super(null);
@@ -30,27 +30,27 @@ package org.libra.copGameEngine.model.basic {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get id():String {
-			return $id;
+			return _id;
 		}
 		
 		public function set id(value:String):void {
-			$id = value;
+			_id = value;
 		}
 		
 		public function get type():int {
-			return $type;
+			return _type;
 		}
 		
 		public function set type(value:int):void {
-			$type = value;
+			_type = value;
 		}
 		
 		public function get des():String {
-			return $des;
+			return _des;
 		}
 		
 		public function set des(value:String):void {
-			$des = value;
+			_des = value;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

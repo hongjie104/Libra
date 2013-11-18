@@ -27,7 +27,7 @@ package org.libra.utils {
 		private var timer:Timer;
 		private var statFrame:int;
 		private var tf:TextField;
-		private static var instance:SystemStatus;
+		private static var _instance:SystemStatus;
 		
 		public function SystemStatus(){
 			super();
@@ -54,8 +54,8 @@ package org.libra.utils {
 		/*-----------------------------------------------------------------------------------------
 		   Public methods
 		 -------------------------------------------------------------------------------------------*/
-		public static function getInstance():SystemStatus {
-			return instance ||= new SystemStatus();
+		public static function get instance():SystemStatus {
+			return _instance ||= new SystemStatus();
 		}
 		
 		/*-----------------------------------------------------------------------------------------

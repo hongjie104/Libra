@@ -14,6 +14,9 @@ package org.libra.utils {
 	 */
 	public final class MathUtil {
 		
+		public static const A:Number = 180 / Math.PI;
+		public static const B:Number = Math.PI / 180;
+		
 		public function MathUtil() {
 			throw new Error('MathUtil不能实例化!');
 		}
@@ -21,6 +24,36 @@ package org.libra.utils {
 		/*-----------------------------------------------------------------------------------------
 		Public methods
 		-------------------------------------------------------------------------------------------*/
+		
+		/**
+		 * 获取某点的夹角
+		 * 返回为弧度值
+		 */
+		public static function getPointAngle(x:Number, y:Number):Number {
+			return Math.atan2(y, x);
+		}
+		
+		/**
+		 * 弧度转角度
+		 */
+		public static function R2A(r:Number):int {
+			return int(r * A);
+		}
+		
+		/**
+		 * 角度转弧度
+		 */
+		public static function A2R(a:int):Number {
+			return a * B;
+		}
+		
+		/**
+		 * 是否约等于0
+		 * @return
+		 */
+		public static function isApproximateZero(num:Number):Boolean {
+			return abs(num) < .001;
+		}
 		
 		public static function min(a:Number, b:Number):Number {
 			return a > b ? b : a;
@@ -32,6 +65,7 @@ package org.libra.utils {
 		
 		static public function abs(a:Number):Number {
 			return a > 0 ? a : 0 - a;
+			//(i + (i >> 31)) ^ (i >> 31);
 		}
 		
 		public static function confine(value:Number, min:Number, max:Number):Number { 
@@ -73,6 +107,15 @@ package org.libra.utils {
 		 */
 		public static function ceil(val:Number):int {
 			return (val << 0) == val ? val : (val + 1) << 0;
+		}
+		
+		/**
+		 * 是不是偶数
+		 * @param	val
+		 * @return
+		 */
+		public static function isEven(val:int):Boolean {
+			return (val & 1) == 1;
 		}
 		
 		/**

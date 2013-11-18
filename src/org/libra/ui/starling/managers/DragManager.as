@@ -66,7 +66,7 @@ package org.libra.ui.starling.managers {
 				dragImage = new Image(dragComponent.getDragTexture());
 				dragImage.touchable = false;
 			}
-			stage = UIManager.getInstance().starlingRoot.stage;
+			stage = UIManager.instance.starlingRoot.stage;
 			dragComponent.parent.localToGlobal(new Point(dragComponent.x, dragComponent.y), startPoint);
 			dragImage.x = startPoint.x;
 			dragImage.y = startPoint.y;

@@ -21,7 +21,7 @@ package org.libra.utils.externall {
 		private var _minimumStorage:int;
 		private var keyDict:Array;
 		
-		private static var instance:LocalDump;
+		private static var _instance:LocalDump;
 		
 	   /**
 		* 堆名
@@ -137,7 +137,7 @@ package org.libra.utils.externall {
 		} 
 		
 		public static function getLocalDump():LocalDump {
-			return instance ||= new LocalDump();
+			return _instance ||= new LocalDump();
 		}
 	}
 }

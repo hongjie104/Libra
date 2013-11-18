@@ -19,12 +19,12 @@ package org.libra.ui.flash.components {
 	 */
 	public class JLoadingPanel extends JPanel {
 		
-		protected var $progressBar:JProgressBar;
+		protected var _progressBar:JProgressBar;
 		
-		protected var $progress:Number;
+		protected var _progress:Number;
 		
 		public function JLoadingPanel(owner:IContainer, skin:ContainerSkin = null, w:int = 300, h:int = 200) { 
-			super(owner, w, h, '', true, skin ? skin : UIManager.getInstance().skin.panelSkin);
+			super(owner, w, h, '', true, skin ? skin : UIManager.instance.skin.panelSkin);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -33,19 +33,19 @@ package org.libra.ui.flash.components {
 		
 		override protected function init():void {
 			super.init();
-			$progressBar = new JProgressBar(0, 0, UIManager.getInstance().skin.progressBarSkin);
-			this.append($progressBar);
+			_progressBar = new JProgressBar(0, 0, UIManager.instance.skin.progressBarSkin);
+			this.append(_progressBar);
 		}
 		
 		override public function show():void {
 			if (showing) return;
-			this.$owner.append(this);
-			$showing = true;
-			LayoutManager.getInstance().addPanel(this);
+			this._owner.append(this);
+			_showing = true;
+			LayoutManager.instance.addPanel(this);
 		}
 		
 		public function set progress(val:Number):void {
-			$progress = val;
+			_progress = val;
 			invalidate(InvalidationFlag.DATA);
 		}
 		
@@ -54,7 +54,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override protected function refreshData():void {
-			$progressBar.progress = $progress;
+			_progressBar.progress = _progress;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

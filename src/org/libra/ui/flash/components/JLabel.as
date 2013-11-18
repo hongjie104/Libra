@@ -39,7 +39,7 @@ package org.libra.ui.flash.components {
 		}
 		
 		override public function clone():Component {
-			return new JLabel(x, y, $text, $font, $filters);
+			return new JLabel(x, y, _text, _font, _filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ package org.libra.ui.flash.components {
 		 * @param	text
 		 */
 		public function JButton(x:int = 0, y:int = 0, skin:BtnSkin = null, text:String = null, font:JFont = null, filters:Array = null) { 
-			super(x, y, skin ? skin : UIManager.getInstance().skin.btnSkin, text, font, filters);
+			super(x, y, skin ? skin : UIManager.instance.skin.btnSkin, text, font, filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ package org.libra.ui.flash.components {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function clone():Component {
-			return new JButton(x, y, $skin as BtnSkin, $text, $font, $filters);
+			return new JButton(x, y, _skin as BtnSkin, _text, _font, _filters);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

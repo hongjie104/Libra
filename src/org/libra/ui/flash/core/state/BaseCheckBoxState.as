@@ -17,9 +17,9 @@ package org.libra.ui.flash.core.state {
 	 */
 	public class BaseCheckBoxState extends BaseButtonState implements ISelectState {
 		
-		protected var $selected:Boolean;
+		protected var _selected:Boolean;
 		
-		protected var $checkBoxStateCtrl:BaseCheckBoxStateCtrl;
+		protected var _checkBoxStateCtrl:BaseCheckBoxStateCtrl;
 		
 		public function BaseCheckBoxState(loader:Loader) {
 			super(loader);
@@ -30,30 +30,30 @@ package org.libra.ui.flash.core.state {
 		-------------------------------------------------------------------------------------------*/
 		
 		override public function toNormal():void {
-			this.bitmapData = $selected ? $checkBoxStateCtrl.normalSelectedBmd : $checkBoxStateCtrl.normalBmd;
+			this.bitmapData = _selected ? _checkBoxStateCtrl.normalSelectedBmd : _checkBoxStateCtrl.normalBmd;
 		}
 		
 		override public function toMouseOver():void {
-			this.bitmapData = $selected ? $checkBoxStateCtrl.overSelectedBmd : $checkBoxStateCtrl.overBmd;
+			this.bitmapData = _selected ? _checkBoxStateCtrl.overSelectedBmd : _checkBoxStateCtrl.overBmd;
 		}
 		
 		override public function toMouseDown():void {
-			this.bitmapData = $selected ? $checkBoxStateCtrl.downSelectedBmd : $checkBoxStateCtrl.downBmd;
+			this.bitmapData = _selected ? _checkBoxStateCtrl.downSelectedBmd : _checkBoxStateCtrl.downBmd;
 		}
 		
 		/* INTERFACE org.libra.ui.base.stateus.interfaces.ISelectStatus */
 		
 		public function set selected(val:Boolean):void {
-			$selected = val;
+			_selected = val;
 		}
 		
 		override public function set skin(value:String):void {
-			this.$skin = value;
-			$checkBoxStateCtrl = AssetsStorage.getInstance().getObj(value) as BaseCheckBoxStateCtrl;
-			if (!$checkBoxStateCtrl) {
-				$checkBoxStateCtrl = new BaseCheckBoxStateCtrl($loader);
-				$checkBoxStateCtrl.skin = value;
-				AssetsStorage.getInstance().putObj(value, $checkBoxStateCtrl);
+			this._skin = value;
+			_checkBoxStateCtrl = AssetsStorage.instance.getObj(value) as BaseCheckBoxStateCtrl;
+			if (!_checkBoxStateCtrl) {
+				_checkBoxStateCtrl = new BaseCheckBoxStateCtrl(_loader);
+				_checkBoxStateCtrl.skin = value;
+				AssetsStorage.instance.putObj(value, _checkBoxStateCtrl);
 			}
 			toNormal();
 		}

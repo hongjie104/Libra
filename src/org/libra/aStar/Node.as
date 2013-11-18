@@ -14,7 +14,7 @@ package org.libra.aStar {
 		internal var f:Number;
 		internal var g:Number;
 		internal var h:Number;
-		internal var walkable:Boolean = true;
+		public var walkable:Boolean = true;
 		internal var parent:Node;
 		internal var costMultiplier:Number = 1.0;
 		

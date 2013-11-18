@@ -14,7 +14,7 @@ package org.libra.ui.utils {
 	 */
 	public final class LangUtil {
 		
-		private static var instance:LangUtil;
+		private static var _instance:LangUtil;
 		
 		private var langMap:HashMap;
 		
@@ -51,8 +51,8 @@ package org.libra.ui.utils {
 			return key + "不在多语言中";
 		}
 		
-		public static function getInstance():LangUtil {
-			return instance ||= new LangUtil(new Singleton());
+		public static function get instance():LangUtil {
+			return _instance ||= new LangUtil(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

@@ -8,8 +8,8 @@ package  {
 		
 		static public const Major:int = 1;
 		static public const Minor:int = 0;
-		static public const Build:int = 109;
-		static public const Revision:int = 266;
+		static public const Build:int = 1118;
+		static public const Revision:int = 278;
 		
 	}
 	

@@ -18,7 +18,7 @@ package org.libra.tick {
 		 * 单例
 		 * @private
 		 */
-		private static var instance:MultiTimer;
+		private static var _instance:MultiTimer;
 		
 		/**
 		 * ITimerable对象集合
@@ -141,8 +141,8 @@ package org.libra.tick {
 		 * @private
 		 * @return
 		 */
-		public static function getInstance():MultiTimer {
-			return instance ||= new MultiTimer(new Singleton());
+		public static function get instance():MultiTimer {
+			return _instance ||= new MultiTimer(new Singleton());
 		}
 		
 	}

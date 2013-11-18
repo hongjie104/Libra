@@ -15,14 +15,14 @@ package org.libra.copGameEngine.model.element {
 	 */
 	public class JEventData extends GameObject {
 		
-		private var $eventType:String;
+		private var _eventType:String;
 		
-		private var $eventValue:String;
+		private var _eventValue:String;
 		
 		public function JEventData(eventType:String, eventValue:String = null) {
 			super();
-			$eventType = eventType;
-			$eventValue = eventValue;
+			_eventType = eventType;
+			_eventValue = eventValue;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -30,11 +30,11 @@ package org.libra.copGameEngine.model.element {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get eventType():String {
-			return $eventType;
+			return _eventType;
 		}
 		
 		public function get eventValue():String {
-			return $eventValue;
+			return _eventValue;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

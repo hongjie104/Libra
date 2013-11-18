@@ -18,12 +18,12 @@ package org.libra.copGameEngine.model.basic {
 	 */
 	public class JContainerObject extends JBitmapObject {
 		
-		protected var $container:JSprite;
+		protected var _container:JSprite;
 		
 		public function JContainerObject(bitmapDataRender:IBitmapDataRender = null) {
 			super(bitmapDataRender);
-			$container = new JSprite();
-			$container.mouseChildren = $container.mouseEnabled = false;
+			_container = new JSprite();
+			_container.mouseChildren = _container.mouseEnabled = false;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -31,27 +31,27 @@ package org.libra.copGameEngine.model.basic {
 		-------------------------------------------------------------------------------------------*/
 		
 		public function get container():Sprite {
-			return $container;
+			return _container;
 		}
 		
 		public function addChild(child:DisplayObject):DisplayObject {
-			return $container.addChild(child);
+			return _container.addChild(child);
 		}
 		
 		public function addChildAt(child:DisplayObject, index:int):DisplayObject {
-			return $container.addChildAt(child, index);
+			return _container.addChildAt(child, index);
 		}
 		
 		public function removeChild(child:DisplayObject):DisplayObject {
-			return $container.removeChild(child);
+			return _container.removeChild(child);
 		}
 		
 		public function removeChildAt(index:int):DisplayObject {
-			return $container.removeChildAt(index);
+			return _container.removeChildAt(index);
 		}
 		
 		public function removeChildren(beginIndex:int = 0, endIndex:int = 2147483647):void {
-			$container.removeChildren(beginIndex, endIndex);
+			_container.removeChildren(beginIndex, endIndex);
 		}
 		
 		/*-----------------------------------------------------------------------------------------

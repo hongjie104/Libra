@@ -15,14 +15,14 @@ package org.libra.ui.flash.components {
 	 */
 	public class JRichLabel extends Component {
 		
-		protected var $maxNum:int;
+		protected var _maxNum:int;
 		
-		private var $strList:Vector.<String>;
+		private var _strList:Vector.<String>;
 		
 		public function JRichLabel() {
 			super();
-			$strList = new Vector.<String>();
-			$maxNum = 20;
+			_strList = new Vector.<String>();
+			_maxNum = 20;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ package org.libra.ui.flash.components {
 		
 		//override protected function initTextField(text:String = ''):void {
 			//super.initTextField(text);
-			//$textField.wordWrap = true;
+			//_textField.wordWrap = true;
 		//}
 		
 		//override protected function refreshText():void {

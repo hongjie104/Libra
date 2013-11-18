@@ -21,19 +21,19 @@ package org.libra.ui.starling.core {
 	 */
 	public class Container extends Component implements IDisplayObjectWithScrollRect, IDropable {
 		
-		private static var $helpPoint:Point = new Point();
+		private static var _helpPoint:Point = new Point();
 		
-		private static var $helpMatrix:Matrix = new Matrix();
+		private static var _helpMatrix:Matrix = new Matrix();
 		
-		private static var $helpRect:Rectangle = new Rectangle();
+		private static var _helpRect:Rectangle = new Rectangle();
 		
-		protected var $scrollRect:Rectangle;
+		protected var _scrollRect:Rectangle;
 		
-		private var $scaledScrollRectXY:Point;
+		private var _scaledScrollRectXY:Point;
 		
-		private var $scissorRect:Rectangle;
+		private var _scissorRect:Rectangle;
 		
-		private var $dropAcceptList:Vector.<IDragable>;
+		private var _dropAcceptList:Vector.<IDragable>;
 		
 		public function Container(width:int, height:int, x:int = 0, y:int = 0) { 
 			super(width, height, x, y);
@@ -66,8 +66,8 @@ package org.libra.ui.starling.core {
 		public function bringToBottom(child:DisplayObject):void {
 			if (this.contains(child)) {
 				var index:int = 0;
-				if($background){
-					if($background != child){
+				if(_background){
+					if(_background != child){
 						index = 1;
 					}
 				}
@@ -76,35 +76,35 @@ package org.libra.ui.starling.core {
 		}
 		
 		public function get scrollRect():Rectangle {
-			return this.$scrollRect;
+			return this._scrollRect;
 		}
 		
 		public function set scrollRect(value:Rectangle):void {
-			this.$scrollRect = value;
-			if (this.$scrollRect) { 
-				if(!this.$scaledScrollRectXY) this.$scaledScrollRectXY = new Point();
-				if (!this.$scissorRect) this.$scissorRect = new Rectangle();
+			this._scrollRect = value;
+			if (this._scrollRect) { 
+				if(!this._scaledScrollRectXY) this._scaledScrollRectXY = new Point();
+				if (!this._scissorRect) this._scissorRect = new Rectangle();
 			}else { 
-				this.$scaledScrollRectXY = null;
-				this.$scissorRect = null;
+				this._scaledScrollRectXY = null;
+				this._scissorRect = null;
 			}
 		}
 		
 		override public function getBounds(targetSpace:DisplayObject, resultRect:Rectangle = null):Rectangle {
-			if (this.$scrollRect) {
+			if (this._scrollRect) {
 				if (!resultRect) resultRect = new Rectangle();
 				if (targetSpace == this) { 
 					resultRect.x = 0;
 					resultRect.y = 0;
-					resultRect.width = this.$scrollRect.width;
-					resultRect.height = this.$scrollRect.height;
+					resultRect.width = this._scrollRect.width;
+					resultRect.height = this._scrollRect.height;
 				}else { 
-					this.getTransformationMatrix(targetSpace, $helpMatrix);
-					MatrixUtil.transformCoords($helpMatrix, 0, 0, $helpPoint);
-					resultRect.x = $helpPoint.x;
-					resultRect.y = $helpPoint.y;
-					resultRect.width = $helpMatrix.a * this.$scrollRect.width + $helpMatrix.c * this.$scrollRect.height;
-					resultRect.height = $helpMatrix.d * this.$scrollRect.height + $helpMatrix.b * this.$scrollRect.width;
+					this.getTransformationMatrix(targetSpace, _helpMatrix);
+					MatrixUtil.transformCoords(_helpMatrix, 0, 0, _helpPoint);
+					resultRect.x = _helpPoint.x;
+					resultRect.y = _helpPoint.y;
+					resultRect.width = _helpMatrix.a * this._scrollRect.width + _helpMatrix.c * this._scrollRect.height;
+					resultRect.height = _helpMatrix.d * this._scrollRect.height + _helpMatrix.b * this._scrollRect.width;
 				}
 				return resultRect;
 			}
@@ -112,59 +112,59 @@ package org.libra.ui.starling.core {
 		}
 		
 		override public function render(support:RenderSupport, alpha:Number):void { 
-			if (this.$scrollRect) { 
+			if (this._scrollRect) { 
 				const scale:Number = Starling.contentScaleFactor;
-				this.getBounds(this.stage, this.$scissorRect);
-				this.$scissorRect.x *= scale;
-				this.$scissorRect.y *= scale;
-				this.$scissorRect.width *= scale;
-				this.$scissorRect.height *= scale;
+				this.getBounds(this.stage, this._scissorRect);
+				this._scissorRect.x *= scale;
+				this._scissorRect.y *= scale;
+				this._scissorRect.width *= scale;
+				this._scissorRect.height *= scale;
 				
-				this.getTransformationMatrix(this.stage, $helpMatrix);
-				this.$scaledScrollRectXY.x = this.$scrollRect.x * $helpMatrix.a;
-				this.$scaledScrollRectXY.y = this.$scrollRect.y * $helpMatrix.d;
+				this.getTransformationMatrix(this.stage, _helpMatrix);
+				this._scaledScrollRectXY.x = this._scrollRect.x * _helpMatrix.a;
+				this._scaledScrollRectXY.y = this._scrollRect.y * _helpMatrix.d;
 				
 				const oldRect:Rectangle = ScrollRectManager.currentScissorRect;
 				if (oldRect) { 
-					this.$scissorRect.x += ScrollRectManager.scrollRectOffsetX * scale;
-					this.$scissorRect.y += ScrollRectManager.scrollRectOffsetY * scale;
-					this.$scissorRect = this.$scissorRect.intersection(oldRect);
+					this._scissorRect.x += ScrollRectManager.scrollRectOffsetX * scale;
+					this._scissorRect.y += ScrollRectManager.scrollRectOffsetY * scale;
+					this._scissorRect = this._scissorRect.intersection(oldRect);
 				}
 				//isEmpty() && <= 0 don't work here for some reason
-				if(this.$scissorRect.width < 1 || this.$scissorRect.height < 1 ||
-					this.$scissorRect.x >= Starling.current.nativeStage.stageWidth ||
-					this.$scissorRect.y >= Starling.current.nativeStage.stageHeight ||
-					(this.$scissorRect.x + this.$scissorRect.width) <= 0 ||
-					(this.$scissorRect.y + this.$scissorRect.height) <= 0) { 
+				if(this._scissorRect.width < 1 || this._scissorRect.height < 1 ||
+					this._scissorRect.x >= Starling.current.nativeStage.stageWidth ||
+					this._scissorRect.y >= Starling.current.nativeStage.stageHeight ||
+					(this._scissorRect.x + this._scissorRect.width) <= 0 ||
+					(this._scissorRect.y + this._scissorRect.height) <= 0) { 
 					return;
 				}
 				support.finishQuadBatch();
-				Starling.context.setScissorRectangle(this.$scissorRect);
-				ScrollRectManager.currentScissorRect = this.$scissorRect;
-				ScrollRectManager.scrollRectOffsetX -= this.$scaledScrollRectXY.x;
-				ScrollRectManager.scrollRectOffsetY -= this.$scaledScrollRectXY.y;
-				support.translateMatrix(-this.$scrollRect.x, -this.$scrollRect.y);
+				Starling.context.setScissorRectangle(this._scissorRect);
+				ScrollRectManager.currentScissorRect = this._scissorRect;
+				ScrollRectManager.scrollRectOffsetX -= this._scaledScrollRectXY.x;
+				ScrollRectManager.scrollRectOffsetY -= this._scaledScrollRectXY.y;
+				support.translateMatrix(-this._scrollRect.x, -this._scrollRect.y);
 			}
 			super.render(support, alpha);
-			if(this.$scrollRect) {
+			if(this._scrollRect) {
 				support.finishQuadBatch();
-				support.translateMatrix(this.$scrollRect.x, this.$scrollRect.y);
-				ScrollRectManager.scrollRectOffsetX += this.$scaledScrollRectXY.x;
-				ScrollRectManager.scrollRectOffsetY += this.$scaledScrollRectXY.y;
+				support.translateMatrix(this._scrollRect.x, this._scrollRect.y);
+				ScrollRectManager.scrollRectOffsetX += this._scaledScrollRectXY.x;
+				ScrollRectManager.scrollRectOffsetY += this._scaledScrollRectXY.y;
 				ScrollRectManager.currentScissorRect = oldRect;
 				Starling.context.setScissorRectangle(oldRect);
 			}
 		}
 		
 		override public function hitTest(localPoint:Point, forTouch:Boolean = false):DisplayObject {
-			if(this.$scrollRect) {
+			if(this._scrollRect) {
 				//make sure we're in the bounds of this sprite first
-				if(this.getBounds(this, $helpRect).containsPoint(localPoint)) {
-					localPoint.x += this.$scrollRect.x;
-					localPoint.y += this.$scrollRect.y;
+				if(this.getBounds(this, _helpRect).containsPoint(localPoint)) {
+					localPoint.x += this._scrollRect.x;
+					localPoint.y += this._scrollRect.y;
 					var result:DisplayObject = super.hitTest(localPoint, forTouch);
-					localPoint.x -= this.$scrollRect.x;
-					localPoint.y -= this.$scrollRect.y;
+					localPoint.x -= this._scrollRect.x;
+					localPoint.y -= this._scrollRect.y;
 					return result;
 				}
 				return null;
@@ -175,20 +175,20 @@ package org.libra.ui.starling.core {
 		/* INTERFACE org.libra.ui.starling.core.IDropable */
 		
 		public function addDropAccept(dragable:IDragable):void {
-			if (!$dropAcceptList) $dropAcceptList = new Vector.<IDragable>();
-			if(this.$dropAcceptList.indexOf(dragable) == -1)
-				$dropAcceptList.push(dragable);
+			if (!_dropAcceptList) _dropAcceptList = new Vector.<IDragable>();
+			if(this._dropAcceptList.indexOf(dragable) == -1)
+				_dropAcceptList.push(dragable);
 		}
 		
 		public function removeDropAccept(dragable:IDragable):void {
-			if (this.$dropAcceptList) {
-				var index:int = this.$dropAcceptList.indexOf(dragable);
-				if (index != -1) this.$dropAcceptList.splice(index, 1);
+			if (this._dropAcceptList) {
+				var index:int = this._dropAcceptList.indexOf(dragable);
+				if (index != -1) this._dropAcceptList.splice(index, 1);
 			}
 		}
 		
 		public function isDropAccept(dragable:IDragable):Boolean {
-			return this.$dropAcceptList ? this.$dropAcceptList.indexOf(dragable) != -1 : false;
+			return this._dropAcceptList ? this._dropAcceptList.indexOf(dragable) != -1 : false;
 		}
 		
 		public function addDragComponent(dragable:IDragable):void {

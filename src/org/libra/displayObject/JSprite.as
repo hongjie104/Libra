@@ -22,7 +22,7 @@ package org.libra.displayObject {
 		 * 记录所有事件侦听器
 		 * @private
 		 */
-		private var $eventListeners:Dictionary;
+		private var _eventListeners:Dictionary;
 		
 		/**
 		 * 构造函数
@@ -41,15 +41,15 @@ package org.libra.displayObject {
 		 */
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void { 
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
-			if(!$eventListeners)
-				$eventListeners = new Dictionary();
+			if(!_eventListeners)
+				_eventListeners = new Dictionary();
 			//将添加的事件侦听器侦听事件类型以及事件处理函数保存起来全部事件侦听函数
-			//都保存在一个数组中，这个数组可以通过$eventListeners[事件类型]来访问
-			if (!$eventListeners[type]) 
-				$eventListeners[type] = new Vector.<Function>();
+			//都保存在一个数组中，这个数组可以通过_eventListeners[事件类型]来访问
+			if (!_eventListeners[type]) 
+				_eventListeners[type] = new Vector.<Function>();
 			//防止重复
-			if($eventListeners[type].indexOf(listener) == -1)
-				$eventListeners[type].push(listener);
+			if(_eventListeners[type].indexOf(listener) == -1)
+				_eventListeners[type].push(listener);
 		}
 		
 		/**
@@ -58,14 +58,14 @@ package org.libra.displayObject {
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void { 
 			super.removeEventListener(type, listener, useCapture);
 			//查询需要移除的事件类型对应侦听器是否存在，若存在则从记录中移除
-			if ($eventListeners[type]) { 
+			if (_eventListeners[type]) { 
 				//查询欲移除的侦听函数是否存在于记录中，若存在则移除
-				var index:int = $eventListeners[type].indexOf(listener);
+				var index:int = _eventListeners[type].indexOf(listener);
 				if (index != -1) { 
-					$eventListeners[type].splice(index, 1);
+					_eventListeners[type].splice(index, 1);
 					//若一个事件的全部侦听器都移除完毕，则在记录本中将记录该事件的数组移去
-					if(!$eventListeners[type].length)
-						delete $eventListeners[type];
+					if(!_eventListeners[type].length)
+						delete _eventListeners[type];
 				}
 			}
 		}
@@ -74,12 +74,12 @@ package org.libra.displayObject {
 		 * 移除全部事件侦听器
 		 */
 		public function removeAllEventListener():void { 
-			for (var event:String in $eventListeners) { 
-				for each(var listener:Function in $eventListeners[event]) { 
+			for (var event:String in _eventListeners) { 
+				for each(var listener:Function in _eventListeners[event]) { 
 					removeEventListener(event, listener);
 				}
 			}
-			$eventListeners = new Dictionary();
+			_eventListeners = new Dictionary();
 		}
 		
 		/* INTERFACE org.libra.displayObject.interfaces.ISprite */

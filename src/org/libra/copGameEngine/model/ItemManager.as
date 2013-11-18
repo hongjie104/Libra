@@ -17,11 +17,11 @@ package org.libra.copGameEngine.model {
 	 */
 	public class ItemManager extends Actor {
 		
-		protected var $itemList:Vector.<JItem>;
+		protected var _itemList:Vector.<JItem>;
 		
 		public function ItemManager() {
 			super();
-			$itemList = JUserInfo.getInstance().itemList;
+			_itemList = JUserInfo.instance.itemList;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ package org.libra.copGameEngine.model {
 		
 		public function addItem(val:JItem):JItem {
 			if (getItemIndex(val) == -1) {
-				this.$itemList[$itemList.length] = val;
+				this._itemList[_itemList.length] = val;
 				return val;
 			}
 			return null;
@@ -43,25 +43,25 @@ package org.libra.copGameEngine.model {
 		public function removeItem(val:JItem):JItem {
 			const index:int = getItemIndex(val);
 			if (index == -1) return null;
-			return $itemList.splice(index, 1)[0];
+			return _itemList.splice(index, 1)[0];
 		}
 		
 		public function getItemCount(type:int):int {
 			var count:int = 0;
-			var i:int = $itemList.length;
+			var i:int = _itemList.length;
 			while (--i > -1) {
-				if ($itemList[i].type == type) {
-					count += $itemList[i].count;
+				if (_itemList[i].type == type) {
+					count += _itemList[i].count;
 				}
 			}
 			return count;
 		}
 		
 		public function getItem(id:String):JItem {
-			var i:int = $itemList.length;
+			var i:int = _itemList.length;
 			while (--i > -1) {
-				if ($itemList[i].id == id) {
-					return $itemList[i];
+				if (_itemList[i].id == id) {
+					return _itemList[i];
 				}
 			}
 			return null;
@@ -72,9 +72,9 @@ package org.libra.copGameEngine.model {
 		-------------------------------------------------------------------------------------------*/
 		
 		protected function getItemIndex(val:JItem):int {
-			var i:int = this.$itemList.length;
+			var i:int = this._itemList.length;
 			while (--i > -1) {
-				if ($itemList[i] == val) return i;
+				if (_itemList[i] == val) return i;
 			}
 			return -1;
 		}

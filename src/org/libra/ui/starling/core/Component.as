@@ -43,70 +43,70 @@ package org.libra.ui.starling.core {
 		 * 如果有背景的话，背景永远在最下一层
 		 * @private
 		 */
-		protected var $background:DisplayObject;
+		protected var _background:DisplayObject;
 		
 		/**
 		 * 组件是否可用
 		 * @private
 		 */
-		protected var $enabled:Boolean;
+		protected var _enabled:Boolean;
 		
 		/**
 		 * 提示框里的文本内容
 		 * @private
 		 */
-		protected var $toolTipText:String;
+		protected var _toolTipText:String;
 		
 		/**
 		 * 是否初始化过了
 		 * 只在组件第一次被添加到舞台上时进行初始化
 		 * @private
 		 */
-		protected var $inited:Boolean;
+		protected var _inited:Boolean;
 		
 		/**
 		 * 是否可以被拖拽
 		 * @private
 		 * @default false
 		 */
-		protected var $dragEnabled:Boolean;
+		protected var _dragEnabled:Boolean;
 		
 		/**
 		 * 渲染队列的引用
 		 * 渲染队列是单例
 		 * @private
 		 */
-		protected var $validationQueue:ValidationQueue;
+		protected var _validationQueue:ValidationQueue;
 		
 		/**
 		 * 需要被渲染的标签
 		 * @private
 		 */
-		protected var $invalidationFlag:InvalidationFlag;
+		protected var _invalidationFlag:InvalidationFlag;
 		
 		/**
 		 * 碰撞范围
 		 * @private
 		 */
-		protected var $hitArea:Rectangle;
+		protected var _hitArea:Rectangle;
 		
 		/**
 		 * 组件真实的宽度
 		 * @private
 		 */
-		protected var $actualWidth:Number;
+		protected var _actualWidth:Number;
 		
 		/**
 		 * 组件真实的高度
 		 * @private
 		 */
-		protected var $actualHeight:Number;
+		protected var _actualHeight:Number;
 		
 		/**
 		 * 像传统列表的mouseChildren，如果为true，那么子对象将不接受碰撞检测。
 		 * @private false
 		 */
-		protected var $quickHitAreaEnabled:Boolean;
+		protected var _quickHitAreaEnabled:Boolean;
 		
 		/**
 		 * 构造函数
@@ -119,10 +119,10 @@ package org.libra.ui.starling.core {
 			super();
 			this.x = x;
 			this.y = y;
-			$invalidationFlag = new InvalidationFlag();
-			$hitArea = new Rectangle();
+			_invalidationFlag = new InvalidationFlag();
+			_hitArea = new Rectangle();
 			this.setSize(width, height);
-			$enabled = true;
+			_enabled = true;
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
@@ -136,11 +136,11 @@ package org.libra.ui.starling.core {
 		 * @param	height 高度
 		 */
 		public function setSize(width:Number, height:Number):void {
-			if ($actualHeight != height  || $actualWidth != width) {
-				this.$actualWidth = width;
-				this.$actualHeight = height;
-				$hitArea.width = width;
-				$hitArea.height = height;
+			if (_actualHeight != height  || _actualWidth != width) {
+				this._actualWidth = width;
+				this._actualHeight = height;
+				_hitArea.width = width;
+				_hitArea.height = height;
 				this.invalidate(InvalidationFlag.SIZE);
 			}
 		}
@@ -149,28 +149,28 @@ package org.libra.ui.starling.core {
 		 * @inheritDoc
 		 */
 		override public function get width():Number {
-			return $actualWidth;
+			return _actualWidth;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override public function set width(value:Number):void {
-			setSize(value, $actualHeight);
+			setSize(value, _actualHeight);
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override public function get height():Number {
-			return $actualHeight;
+			return _actualHeight;
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
 		override public function set height(value:Number):void {
-			setSize($actualWidth, value);
+			setSize(_actualWidth, value);
 		}
 		
 		/**
@@ -188,8 +188,8 @@ package org.libra.ui.starling.core {
 		 * @param	val
 		 */
 		public function set enabled(val:Boolean):void {
-			if ($enabled == val) return;
-			this.$enabled = val;
+			if (_enabled == val) return;
+			this._enabled = val;
 			this.touchable = val;				
 			this.invalidate(InvalidationFlag.STATE);
 		}
@@ -199,7 +199,7 @@ package org.libra.ui.starling.core {
 		 * @return 布尔值
 		 */
 		public function get enabled():Boolean {
-			return this.$enabled;
+			return this._enabled;
 		}
 		
 		/**
@@ -207,7 +207,7 @@ package org.libra.ui.starling.core {
 		 * @param	val
 		 */
 		public function set quickHitAreaEnabled(val:Boolean):void {
-			this.$quickHitAreaEnabled = val;
+			this._quickHitAreaEnabled = val;
 		}
 		
 		/**
@@ -215,7 +215,7 @@ package org.libra.ui.starling.core {
 		 * @return
 		 */
 		public function get quickHitAreaEnabled():Boolean {
-			return this.$quickHitAreaEnabled;
+			return this._quickHitAreaEnabled;
 		}
 		
 		/**
@@ -224,11 +224,11 @@ package org.libra.ui.starling.core {
 		 * @param	disposeOld 如果之前已经有背景了，是否将之前的背景dispose掉
 		 */
 		public function setBackground(val:DisplayObject, disposeOld:Boolean = false):void { 
-			if (this.$background) this.$background.removeFromParent(disposeOld);
+			if (this._background) this._background.removeFromParent(disposeOld);
 			if (val) {
 				this.addChildAt(val, 0);
 			}
-			this.$background = val;
+			this._background = val;
 		}
 		
 		/**
@@ -238,7 +238,7 @@ package org.libra.ui.starling.core {
 		 * @return 被添加的对象
 		 */
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject {
-			if (this.$background) {
+			if (this._background) {
 				index = MathUtil.max(1, index);
 			}
 			return super.addChildAt(child, index);
@@ -255,32 +255,32 @@ package org.libra.ui.starling.core {
 			
 			var minX:int, maxX:int, minY:int, maxY:int;
 			if (targetSpace == this) {
-				minX = this.$hitArea.x;
-				minY = this.$hitArea.y;
-				maxX = this.$hitArea.x + this.$hitArea.width;
-				maxY = this.$hitArea.y + this.$hitArea.height;
+				minX = this._hitArea.x;
+				minY = this._hitArea.y;
+				maxX = this._hitArea.x + this._hitArea.width;
+				maxY = this._hitArea.y + this._hitArea.height;
 			}else {
 				this.getTransformationMatrix(targetSpace, helperMatrix);
 				
-				MatrixUtil.transformCoords(helperMatrix, this.$hitArea.x, this.$hitArea.y, helperPoint);
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x, this._hitArea.y, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
 				maxY = maxY > helperPoint.y ? maxY : helperPoint.y;
 				
-				MatrixUtil.transformCoords(helperMatrix, this.$hitArea.x, this.$hitArea.y + this.$hitArea.height, helperPoint);
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x, this._hitArea.y + this._hitArea.height, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
 				maxY = maxY > helperPoint.y ? maxY : helperPoint.y;
 				
-				MatrixUtil.transformCoords(helperMatrix, this.$hitArea.x + this.$hitArea.width, this.$hitArea.y, helperPoint);
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x + this._hitArea.width, this._hitArea.y, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
 				maxY = maxY > helperPoint.y ? maxY : helperPoint.y;
 				
-				MatrixUtil.transformCoords(helperMatrix, this.$hitArea.x + this.$hitArea.width, this.$hitArea.y + this.$hitArea.height, helperPoint);
+				MatrixUtil.transformCoords(helperMatrix, this._hitArea.x + this._hitArea.width, this._hitArea.y + this._hitArea.height, helperPoint);
 				minX = minX < helperPoint.x ? minX : helperPoint.x;
 				maxX = maxX > helperPoint.x ? maxX : helperPoint.x;
 				minY = minY < helperPoint.y ? minY : helperPoint.y;
@@ -299,11 +299,11 @@ package org.libra.ui.starling.core {
 		 * @inheritDoc
 		 */
 		override public function hitTest(localPoint:Point, forTouch:Boolean = false):DisplayObject { 
-			if(this.$quickHitAreaEnabled) {
+			if(this._quickHitAreaEnabled) {
 				if(forTouch && (!this.visible || !this.touchable)) {
 					return null;
 				}
-				return this.$hitArea.containsPoint(localPoint) ? this : null;
+				return this._hitArea.containsPoint(localPoint) ? this : null;
 			}
 			return super.hitTest(localPoint, forTouch);
 		}
@@ -313,8 +313,8 @@ package org.libra.ui.starling.core {
 		 * @param	text 文本
 		 */
 		public function set toolTipText(text:String):void {
-			this.$toolTipText = text;
-			ToolTipManager.getInstance().setToolTip(this, text ? JToolTip.getInstance() : null);
+			this._toolTipText = text;
+			ToolTipManager.instance.setToolTip(this, text ? JToolTip.instance : null);
 		}
 		
 		/**
@@ -323,7 +323,7 @@ package org.libra.ui.starling.core {
 		 * 所以当被提示组件更换时，都需要将文本提示框里的文本进行更新
 		 */
 		public function initToolTip():void {
-			JToolTip.getInstance().text = this.$toolTipText;
+			JToolTip.instance.text = this._toolTipText;
 		}
 		
 		/**
@@ -332,9 +332,9 @@ package org.libra.ui.starling.core {
 		 * @see org.libra.ui.invalidation.InvalidationFlag
 		 */
 		public function invalidate(flag:int = -1):void {
-			this.$invalidationFlag.setInvalid(flag);
+			this._invalidationFlag.setInvalid(flag);
 			if(this.stage)
-				$validationQueue.addControl(this, false);
+				_validationQueue.addControl(this, false);
 		}
 		
 		/**
@@ -343,7 +343,7 @@ package org.libra.ui.starling.core {
 		 */
 		public function validate():void {
 			draw();
-			this.$invalidationFlag.reset();
+			this._invalidationFlag.reset();
 		}
 		
 		/**
@@ -351,9 +351,9 @@ package org.libra.ui.starling.core {
 		 * @param	val
 		 */
 		public function set dragEnabled(val:Boolean):void {
-			if (this.$dragEnabled != val) {
-				this.$dragEnabled = val;
-				$dragEnabled ? addEventListener(TouchEvent.TOUCH, onDragStart) : removeEventListener(TouchEvent.TOUCH, onDragStart);
+			if (this._dragEnabled != val) {
+				this._dragEnabled = val;
+				_dragEnabled ? addEventListener(TouchEvent.TOUCH, onDragStart) : removeEventListener(TouchEvent.TOUCH, onDragStart);
 			}
 		}
 		
@@ -373,7 +373,7 @@ package org.libra.ui.starling.core {
 		 */
 		public function getDragTexture():Texture {
 			//TODO 暂时用按钮的纹理代替拖拽时的纹理
-			return DefaultTheme.getInstance().getTexture(DefaultTheme.BTN.normal);
+			return DefaultTheme.instance.getTexture(DefaultTheme.BTN.normal);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -386,8 +386,8 @@ package org.libra.ui.starling.core {
 		 * @private
 		 */
 		protected function init():void {
-			$inited = true;
-			$validationQueue = ValidationQueue.getInstance();
+			_inited = true;
+			_validationQueue = ValidationQueue.instance;
 			this.invalidate();
 		}
 		
@@ -397,15 +397,15 @@ package org.libra.ui.starling.core {
 		 * @private
 		 */
 		protected function draw():void {
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.SIZE))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.SIZE))
 				resize();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.DATA))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.DATA))
 				refreshData();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.STATE))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.STATE))
 				refreshState();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.STYLE))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.STYLE))
 				refreshStyle();
-			if (this.$invalidationFlag.isInvalid(InvalidationFlag.TEXT))
+			if (this._invalidationFlag.isInvalid(InvalidationFlag.TEXT))
 				refreshText();
 		}
 		
@@ -453,7 +453,7 @@ package org.libra.ui.starling.core {
 				removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 				this.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 				
-				if (!$inited) {
+				if (!_inited) {
 					init();
 				}
 			}

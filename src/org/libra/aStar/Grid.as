@@ -332,7 +332,7 @@ package org.libra.aStar {
 		 * @return
 		 *
 		 */
-		private function concatArrys(array1:Array, array2:Array):Array {
+		/*private function concatArrys(array1:Array, array2:Array):Array {
 			var index:int;
 			for (var i:int = 0; i < array2.length; i++) {
 				index = array1.indexOf(array2[i]);
@@ -341,7 +341,7 @@ package org.libra.aStar {
 				}
 			}
 			return array1;
-		}
+		}*/
 		
 		////////////////////////////////////////
 		// getters / setters

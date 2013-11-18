@@ -21,7 +21,7 @@ package org.libra.bmpEngine.utils {
 	 */
 	public final class JBitmapUtil {
 		
-		private static var instance:JBitmapUtil;
+		private static var _instance:JBitmapUtil;
 		
 		private var bitmapFramePool:HashMap;
 		
@@ -51,7 +51,7 @@ package org.libra.bmpEngine.utils {
 		 */
 		public static function createFromBitmap(cols:int, frame:int, source:BitmapData, frameRate:int = 10, autoPlay:Boolean = true):JBitmap { 
 			var bitmap:JBitmap = new JBitmap(frameRate);
-			var frameList:Vector.<BitmapFrame> = JBitmapUtil.getInstance().getBitmapFrameList(source);
+			var frameList:Vector.<BitmapFrame> = JBitmapUtil.instance.getBitmapFrameList(source);
 			if (!frameList) {
 				frameList = new Vector.<BitmapFrame>();
 				var rows:int = Math.ceil(frame / cols);
@@ -61,7 +61,7 @@ package org.libra.bmpEngine.utils {
 					for each(var bmd:BitmapData in list)
 						frameList[count] = new BitmapFrame(count++, bmd);
 				}
-				JBitmapUtil.getInstance().putBitmapFrameList(source, frameList);
+				JBitmapUtil.instance.putBitmapFrameList(source, frameList);
 			}
 			bitmap.setFrameList(frameList);
 			if (autoPlay) bitmap.play();
@@ -76,7 +76,7 @@ package org.libra.bmpEngine.utils {
 		public static function createFromMC(mc:MovieClip, frameRate:int = 10, autoPlay:Boolean = true):JBitmap { 
 			var bitmap:JBitmap = new JBitmap(frameRate);
 			bitmap.name = mc.name;
-			var frameList:Vector.<BitmapFrame> = JBitmapUtil.getInstance().getBitmapFrameList(mc);
+			var frameList:Vector.<BitmapFrame> = JBitmapUtil.instance.getBitmapFrameList(mc);
 			if (!frameList) {
 				frameList = new Vector.<BitmapFrame>();
 				var i:int = 0;
@@ -107,15 +107,15 @@ package org.libra.bmpEngine.utils {
 					frame = new BitmapFrame(i, bmd, rect.x, rect.y, lb);
 					frameList[i - 1] = frame;
 				}
-				JBitmapUtil.getInstance().putBitmapFrameList(mc, frameList);
+				JBitmapUtil.instance.putBitmapFrameList(mc, frameList);
 			}
 			bitmap.setFrameList(frameList);
 			if (autoPlay) bitmap.play();
 			return bitmap;
 		}
 		
-		public static function getInstance():JBitmapUtil {
-			return instance ||= new JBitmapUtil(new Singleton());
+		public static function get instance():JBitmapUtil {
+			return _instance ||= new JBitmapUtil(new Singleton());
 		}
 		
 		/*-----------------------------------------------------------------------------------------

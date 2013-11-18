@@ -24,21 +24,21 @@ package org.libra.ui.flash.components {
 		/**
 		 * 背景层
 		 */
-		private var $back:Bitmap;
+		private var _back:Bitmap;
 		
 		/**
 		 * 前景层
 		 */
-		private var $fore:Bitmap;
+		private var _fore:Bitmap;
 		
 		/**
 		 * 方向。水平的还是垂直的
 		 */
-		private var $orientation:int;
+		private var _orientation:int;
 		
 		public function JScrollBlock(orientation:int = 1, x:int = 0, y:int = 0) {
 			super(x, y);
-			this.$orientation = orientation;
+			this._orientation = orientation;
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ package org.libra.ui.flash.components {
 		 * @inheritDoc
 		 */
 		override public function clone():Component {
-			return new JScrollBlock($orientation, x, y);
+			return new JScrollBlock(_orientation, x, y);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -59,23 +59,23 @@ package org.libra.ui.flash.components {
 		override protected function init():void {
 			super.init();
 			
-			$back = new Bitmap();
-			this.addChild($back);
-			$fore = new Bitmap(AssetsStorage.getInstance().getBitmapData($orientation == Constants.HORIZONTAL ? UIManager.getInstance().skin.scrollBlockSkin.hScrollThumb : UIManager.getInstance().skin.scrollBlockSkin.vScrollThumb));
-			this.addChild($fore);
+			_back = new Bitmap();
+			this.addChild(_back);
+			_fore = new Bitmap(AssetsStorage.instance.getBitmapData(_orientation == Constants.HORIZONTAL ? UIManager.instance.skin.scrollBlockSkin.hScrollThumb : UIManager.instance.skin.scrollBlockSkin.vScrollThumb));
+			this.addChild(_fore);
 		}
 		
 		override protected function resize():void {
-			if ($back.bitmapData) $back.bitmapData.dispose();
-			if ($orientation == Constants.HORIZONTAL) {
-				var source:BitmapData = AssetsStorage.getInstance().getBitmapData(UIManager.getInstance().skin.scrollBlockSkin.hScrollBtnBg);
-				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().skin.scrollBlockSkin.hScrollBtnScale9Rect);
+			if (_back.bitmapData) _back.bitmapData.dispose();
+			if (_orientation == Constants.HORIZONTAL) {
+				var source:BitmapData = AssetsStorage.instance.getBitmapData(UIManager.instance.skin.scrollBlockSkin.hScrollBtnBg);
+				_back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, _actualWidth, _actualHeight, UIManager.instance.skin.scrollBlockSkin.hScrollBtnScale9Rect);
 			}else {
-				source = AssetsStorage.getInstance().getBitmapData(UIManager.getInstance().skin.scrollBlockSkin.vScrollBtnBg);
-				$back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, $actualWidth, $actualHeight, UIManager.getInstance().skin.scrollBlockSkin.vScrollBtnScale9Rect);
+				source = AssetsStorage.instance.getBitmapData(UIManager.instance.skin.scrollBlockSkin.vScrollBtnBg);
+				_back.bitmapData = BitmapDataUtil.getScale9BitmapData(source, _actualWidth, _actualHeight, UIManager.instance.skin.scrollBlockSkin.vScrollBtnScale9Rect);
 			}
-			$fore.x = ($actualWidth - $fore.width) >> 1;
-			$fore.y = ($actualHeight - $fore.height) >> 1;
+			_fore.x = (_actualWidth - _fore.width) >> 1;
+			_fore.y = (_actualHeight - _fore.height) >> 1;
 		}
 		
 		/*-----------------------------------------------------------------------------------------

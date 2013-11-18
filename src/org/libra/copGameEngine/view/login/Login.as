@@ -51,7 +51,7 @@ package org.libra.copGameEngine.view.login {
 		
 		override public function show():void {
 			super.show();
-			if ($showing) {
+			if (_showing) {
 				loginBtn.addEventListener(MouseEvent.CLICK, onLogin);
 			}
 		}
