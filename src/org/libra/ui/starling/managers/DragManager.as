@@ -62,6 +62,8 @@ package org.libra.ui.starling.managers {
 			DragManager.dragComponent = dragComponent;
 			if (dragImage) {
 				dragImage.texture = dragComponent.getDragTexture();
+				//纹理重置后，image大小也要改变
+				dragImage.readjustSize();
 			}else {
 				dragImage = new Image(dragComponent.getDragTexture());
 				dragImage.touchable = false;

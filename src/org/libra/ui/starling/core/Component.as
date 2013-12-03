@@ -104,7 +104,7 @@ package org.libra.ui.starling.core {
 		
 		/**
 		 * 像传统列表的mouseChildren，如果为true，那么子对象将不接受碰撞检测。
-		 * @private false
+		 * @private
 		 */
 		protected var _quickHitAreaEnabled:Boolean;
 		

@@ -112,7 +112,7 @@ package org.libra.utils.displayObject {
 						matrix.ty = h - sourceImgHeight;
 						break;
 				}
-				bmpData.draw(source, matrix, null, null, rect, true);
+				bmpData.draw(source, matrix, null, null, rect);
 				matrix.identity();
 			}
 			return bmpData;
@@ -130,34 +130,34 @@ package org.libra.utils.displayObject {
 				var bmpData:BitmapData = new BitmapData(w, h, true, 0x000000);
 				//绘制左边
 				rect.width = scaleInfo.left; rect.height = h;
-				bmpData.draw(source, matrix, null, null, rect, true);
+				bmpData.draw(source, matrix, null, null, rect);
 				//绘制中间
 				rect.x = scaleInfo.left; rect.width = w - scaleInfo.left - sourceImgWidth + scaleInfo.right;
 				matrix.a = rect.width / scaleInfo.width;
 				matrix.tx = rect.x - rect.x * matrix.a;
-				bmpData.draw(source, matrix, null, null, rect, true);
+				bmpData.draw(source, matrix, null, null, rect);
 				//绘制右边
 				matrix.identity();
 				rect.x = w - sourceImgWidth + scaleInfo.right; rect.width = sourceImgWidth - scaleInfo.right;
 				matrix.tx = w - sourceImgWidth;
-				bmpData.draw(source, matrix, null, null, rect, true);
+				bmpData.draw(source, matrix, null, null, rect);
 			}else {
 				//垂直的
 				w = source.width; h = length;
 				bmpData = new BitmapData(w, h, true, 0x000000);
 				//绘制上边
 				rect.width = w; rect.height = scaleInfo.top;
-				bmpData.draw(source, matrix, null, null, rect, true);
+				bmpData.draw(source, matrix, null, null, rect);
 				//绘制中间
 				rect.y = scaleInfo.top; rect.height = h - scaleInfo.top + scaleInfo.bottom - sourceImgHeight;
 				matrix.d = rect.height / scaleInfo.height;
 				matrix.ty = rect.y - rect.y * matrix.d;
-				bmpData.draw(source, matrix, null, null, rect, true);
+				bmpData.draw(source, matrix, null, null, rect);
 				//绘制下边
 				matrix.identity();
 				rect.y = h + scaleInfo.bottom - sourceImgHeight; rect.height = sourceImgHeight - scaleInfo.bottom;
 				matrix.ty = h - sourceImgHeight;
-				bmpData.draw(source, matrix, null, null, rect, true);
+				bmpData.draw(source, matrix, null, null, rect);
 			}
 			return bmpData;
 		}

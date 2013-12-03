@@ -332,7 +332,9 @@ package org.libra.ui.flash.core {
 		
 		override public function toXML():XML {
 			const xml:XML = super.toXML();
-			xml.@skinStr = this._skin.skin + '&' + this._skin.scale9Rect.x + '&' + this._skin.scale9Rect.y + '&' + this._skin.scale9Rect.width + '&' + this._skin.scale9Rect.height;
+			if (_skin) {
+				xml.@skinStr = this._skin.skin + '&' + this._skin.scale9Rect.x + '&' + this._skin.scale9Rect.y + '&' + this._skin.scale9Rect.width + '&' + this._skin.scale9Rect.height;
+			}
 			return xml;
 		}
 		
@@ -350,7 +352,7 @@ package org.libra.ui.flash.core {
 		}
 		
 		protected function initBackground():void {
-			if (_skin.skin) {
+			if (_skin && _skin.skin) {
 				var bmd:BitmapData = BitmapDataUtil.getScale9BitmapData(AssetsStorage.instance.getBitmapData(_skin.skin), 
 					_actualWidth, _actualHeight, _skin.scale9Rect);
 				if (this._background && this._background is Bitmap) {

@@ -13,6 +13,8 @@ package org.libra.ui {
 	 */
 	public final class Constants {
 		
+		//{ region 水平垂直
+		
 		/** 
          * 水平
          */
@@ -21,7 +23,11 @@ package org.libra.ui {
         /** 
          * 垂直
          */
-        public static const VERTICAL:int   = 1;
+        public static const VERTICAL:int = 1;
+		
+		//} endregion
+		
+		//{ region 八个方向
 		
 		public static const UP:int = 0;
 		
@@ -39,7 +45,19 @@ package org.libra.ui {
 		
 		public static const LEFT_UP:int = 7;
 		
+		//} endregion
+		
 		public static const CENTER:int = 8;
+		
+		//{ region 上中下
+		
+		public static const TOP:int = 0;
+		
+		public static const MIDDLE:int = 1;
+		
+		public static const BOTTOM:int = 2;
+		
+		//} endregion
 		
 		public function Constants() {
 			throw new Error('Constants类不允许被实例化');
