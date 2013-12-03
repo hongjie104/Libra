@@ -165,13 +165,13 @@ package org.libra.ui.flash.core {
 		/**
 		 * @inheritDoc
 		 */
-		override public function removeFromParent(destroy:Boolean = false):void { 
+		override public function removeFromParent(dispose:Boolean = false):void { 
             if (parent) {
 				if (parent is Container) {
-					(parent as Container).remove(this, destroy);
+					(parent as Container).remove(this, dispose);
 				}else {
 					parent.removeChild(this);
-					if(destroy)
+					if(dispose)
 						this.dispose();	
 				}
 			}
@@ -314,7 +314,7 @@ package org.libra.ui.flash.core {
 		 * @return
 		 */
 		public function clone():Component {
-			return new Component();
+			return new Component(this.x, this.y);
 		}
 		
 		/**

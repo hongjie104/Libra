@@ -126,26 +126,26 @@ package org.libra.ui.flash.components {
 			}
 		}
 		
-		public function close(tween:Boolean = true, destroy:Boolean = false):void {
+		public function close(tween:Boolean = true, dispose:Boolean = false):void {
 			if (_showing) {
 				if (tween) {
 					if (!_closeTweening) {
 						if (_closeTween) _closeTween.restart();
 						else _closeTween = TweenLite.to(this, .5, { alpha:.0, onStart:function():void { _closeTweening = true; }, 
-							onComplete:function():void { _closeTweening = false; close(false, destroy); } } );
+							onComplete:function():void { _closeTweening = false; close(false, dispose); } } );
 					}
 				}else {
 					LayoutManager.instance.removePanel(this);
-					removeFromParent(destroy);
+					removeFromParent(dispose);
 					UIManager.instance.keyPoll.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 				}
 			}
 		}
 		
-		override public function removeFromParent(destroy:Boolean = false):void {
+		override public function removeFromParent(dispose:Boolean = false):void {
 			alpha = 1.0;
 			_showing = false;
-			super.removeFromParent(destroy);
+			super.removeFromParent(dispose);
 		}
 		
 		public function showSwitch():void {

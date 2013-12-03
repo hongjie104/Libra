@@ -127,29 +127,27 @@ package {
 			</Container>
 			</View>;*/
 			
-			/*var xml:XML = <JPanel x="159" y="94" width="300" height="200">
-						   <JCheckBoxGroup x="27" y="98" width="200" height="20" gap="60">
-							<JCheckBox width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
-							<JCheckBox x="60" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox" selected="true"/>
-							<JCheckBox x="120" width="60" height="20" text="勾选框" textColor="16777215" textAlign="center" skinStr="54&amp;20&amp;checkBox"/>
-						  </JCheckBoxGroup>
-						  <JButton x="56" y="35" width="76" height="28" text="按钮" textColor="16759090" textAlign="center" skinStr="76&amp;28&amp;btnRed"/>
-						  <JButton x="200" y="41" width="43" height="26" text="按钮" textColor="16759090" textAlign="center" skinStr="43&amp;26&amp;btn"/>
-						</JPanel>;
+			var xml:XML = <JPanel x="51" y="21" width="300" height="200" skinStr="PanelBg&amp;3&amp;3&amp;11&amp;6">
+  <JGroup width="276" height="100" gap="5" orientation="1" paddingBottom="5" verticalAlign="2">
+    <JButton y="21" width="43" height="26" text="按钮" textColor="16759090" textAlign="center" skinStr="43&amp;26&amp;btn"/>
+    <JProgressBar y="52" width="200" height="18"/>
+    <JLabel y="75" width="100" height="20" text="标签" textColor="16777215" textAlign="left" font="Times New Roman"/>
+  </JGroup>
+</JPanel>;
 			var uiContainer:Container = new Container();
 			uiContainer.setSize(stage.stageWidth, stage.stageHeight);
 			UIManager.instance.init(this.stage, uiContainer, new Skin());
 			var panel:JPanel = new JPanel(uiContainer, 300, 200, '', false, UIManager.instance.skin.panelSkin);
 			panel.createView(xml);
 			panel.show();
-			panel.x = panel.y = 50;*/
+			panel.x = panel.y = 50;
 			
-			var group:JGroup = new JGroup(50, 50, 10, Constants.VERTICAL);
+			/*var group:JGroup = new JGroup(50, 50, 10, Constants.VERTICAL);
 			group.setSize(200, 400);
 			group.verticalAlign = Constants.MIDDLE;
 			group.horizontalAlign = Constants.RIGHT;
 			group.appendAll(new JButton(0, 0, UIManager.instance.skin.closeBtnSkin), new JButton(0, 0, null, "第2个按钮"), new JButton(0, 0, null, "第3个按钮"));
-			this.addChild(group);
+			this.addChild(group);*/
 		}
 		
 		/*private function testStarlingUI():void {

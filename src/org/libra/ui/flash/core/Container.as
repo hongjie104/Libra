@@ -119,17 +119,17 @@ package org.libra.ui.flash.core {
 		/**
 		 * 移除某个控件
 		 * @param	child 将要被移除的控件
-		 * @param	destroy 移除后是否将控件销毁
+		 * @param	dispose 移除后是否将控件销毁
 		 * @default false
 		 * @return 移除成功,返回被添加的控件;移除失败,返回null
 		 */
-		public function remove(child:IComponent, destroy:Boolean = false):IComponent {
+		public function remove(child:IComponent, dispose:Boolean = false):IComponent {
 			var index:int = this._componentList.indexOf(child);
 			if (index == -1) return null;
 			this._componentList.splice(index, 1);
 			_numComponent--;
 			super.removeChild(child as DisplayObject);
-			if(destroy)
+			if(dispose)
 				child.dispose();
 			return child;
 		}
@@ -137,21 +137,21 @@ package org.libra.ui.flash.core {
 		/**
 		 * 移除某一特定显示层上的控件
 		 * @param	index 显示层索引值
-		 * @param	destroy 移除后是否将控件销毁
+		 * @param	dispose 移除后是否将控件销毁
 		 * @default false
 		 * @return 移除成功,返回被添加的控件;移除失败,返回null
 		 */
-		public function removeAt(index:int, destroy:Boolean = false):IComponent {
-			return index > -1 && index < numChildren ? this.remove(this._componentList[index], destroy) : null;
+		public function removeAt(index:int, dispose:Boolean = false):IComponent {
+			return index > -1 && index < numChildren ? this.remove(this._componentList[index], dispose) : null;
 		}
 		
 		/**
 		 * 移除n个控件
-		 * @param	destroy 移除后是否将控件销毁
+		 * @param	dispose 移除后是否将控件销毁
 		 * @param	...rest n个将要被移除的控件
 		 */
-		public function removeAll(destroy:Boolean, ...rest):void { 
-			for each(var i:IComponent in rest) this.remove(i, destroy);
+		public function removeAll(dispose:Boolean, ...rest):void { 
+			for each(var i:IComponent in rest) this.remove(i, dispose);
 		}
 		
 		/**
@@ -332,7 +332,7 @@ package org.libra.ui.flash.core {
 		
 		override public function toXML():XML {
 			const xml:XML = super.toXML();
-			if (_skin) {
+			if (_skin.skin) {
 				xml.@skinStr = this._skin.skin + '&' + this._skin.scale9Rect.x + '&' + this._skin.scale9Rect.y + '&' + this._skin.scale9Rect.width + '&' + this._skin.scale9Rect.height;
 			}
 			return xml;

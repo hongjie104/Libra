@@ -18,7 +18,7 @@ package org.libra.ui.flash {
 		public static const UI_CLASS_MAP:Object = { "JButton": JButton, 'JCheckBox':JCheckBox, 'JCheckBoxGroup':JCheckBoxGroup, 'JComboBox':JComboBox, 
 			'JCountDown':JCountDown, 'JFrame':JFrame, 'JImage':JImage, 'JLabel':JLabel, 'JList':JList, 'JListItem':JListItem, 'JPageCounter':JPageCounter, 'JPanel:':JPanel, 
 			'JProgressBar':JProgressBar, 'JScrollBar':JScrollBar, 'JScrollBlock':JScrollBlock, 'JScrollSlider':JScrollSlider, 'JSlider':JSlider, 'JTextArea':JTextArea, 
-			'JTextField':JTextField, 'Container':Container };
+			'JTextField':JTextField, 'Container':Container, 'JGroup':JGroup };
 		
 		public function UIClassMap() {
 			throw new Error('UIClassMap无法实例化');

@@ -118,8 +118,8 @@ package org.libra.ui.flash.components {
 			alert.show();
 		}
 		
-		override public function close(tween:Boolean = true, destroy:Boolean = false):void {
-			super.close(tween, destroy);
+		override public function close(tween:Boolean = true, dispose:Boolean = false):void {
+			super.close(tween, dispose);
 			_clickedHandler = null;
 		}
 		

@@ -76,13 +76,14 @@ package org.libra.ui.flash.components {
 		 */
 		protected var _paddingBottom:int;
 		
-		public function JGroup(x:int = 0, y:int = 0, gap:int = 5, orientation:int = 0) {
+		public function JGroup(x:int = 0, y:int = 0, width:int = 100, height:int = 100, gap:int = 5, orientation:int = 0) {
 			super(x, y, null);
 			_gap = gap;
 			_orientation = orientation;
 			_verticalAlign = Constants.MIDDLE;
 			_horizontalAlign = Constants.LEFT;
 			this.mouseEnabled = false;
+			setSize(width, height);
 		}
 		
 		/*-----------------------------------------------------------------------------------------
@@ -103,11 +104,11 @@ package org.libra.ui.flash.components {
 		/**
 		 * @inheritDoc
 		 * @param	child
-		 * @param	destroy
+		 * @param	dispose
 		 * @return
 		 */
-		override public function remove(child:IComponent, destroy:Boolean = false):IComponent {
-			super.remove(child, destroy);
+		override public function remove(child:IComponent, dispose:Boolean = false):IComponent {
+			super.remove(child, dispose);
 			this.invalidate(InvalidationFlag.STATE);
 			return child;
 		}
@@ -118,7 +119,7 @@ package org.libra.ui.flash.components {
 		 * @param	h
 		 */
 		override public function setSize(w:int, h:int):void {
-			if (_actualWidth != w && _actualHeight != h) {
+			if (_actualWidth != w || _actualHeight != h) {
 				super.setSize(w, h);
 				this.invalidate(InvalidationFlag.STATE);
 			}
@@ -225,7 +226,7 @@ package org.libra.ui.flash.components {
 					i = _numComponent;
 					while (--i > -1) {
 						c = _componentList[i];
-						c.y = tmp = c.height;
+						c.y = tmp - c.height;
 						tmp -= c.height + _gap;
 					}
 				}
@@ -237,7 +238,7 @@ package org.libra.ui.flash.components {
 		 * @return
 		 */
 		override public function clone():Component {
-			const group:JGroup = new JGroup(this.x, this.y, this._gap, this._orientation);
+			const group:JGroup = new JGroup(this.x, this.y, _actualWidth, _actualHeight, this._gap, this._orientation);
 			group.paddingLeft = this._paddingLeft;
 			group.paddingTop = this._paddingTop;
 			group.paddingRight = this._paddingRight;
@@ -257,10 +258,18 @@ package org.libra.ui.flash.components {
 			if (_orientation != Constants.HORIZONTAL) xml.@orientation = this._orientation;
 			if (_paddingLeft != 0) xml.@paddingLeft = this._paddingLeft;
 			if (_paddingRight != 0) xml.@paddingRight = this._paddingRight;
-			if (_paddingTOp != 0) xml.@paddingTop = this._paddingTop;
+			if (_paddingTop != 0) xml.@paddingTop = this._paddingTop;
 			if (_paddingBottom != 0) xml.@paddingBottom = this._paddingBottom;
-			if (_horizontalAlign != Constants.LEFT) xml.horizontalAlign = this._horizontalAlign;
-			if (_verticalAlign != Constants.MIDDLE) xml.verticalAlign = this._verticalAlign;
+			if (_horizontalAlign != Constants.LEFT) xml.@horizontalAlign = this._horizontalAlign;
+			if (_verticalAlign != Constants.MIDDLE) xml.@verticalAlign = this._verticalAlign;
+			
+			for (var i:int = 0; i < _numComponent; i += 1) {
+				var tmpXML:XML = this._componentList[i].toXML();
+				if(_componentList[i].id.indexOf('component') == -1){
+					tmpXML["@var"] = _componentList[i].id;
+				}
+				xml.appendChild(tmpXML);
+			}
 			return xml;
 		}
 		

@@ -102,8 +102,8 @@ package org.libra.ui.flash.components {
 			return null;
 		}
 		
-		override public function remove(child:IComponent, destroy:Boolean = false):IComponent {
-			return child is JCheckBox ? removeCheckBox(child as JCheckBox) : super.remove(child, destroy);
+		override public function remove(child:IComponent, dispose:Boolean = false):IComponent {
+			return child is JCheckBox ? removeCheckBox(child as JCheckBox) : super.remove(child, dispose);
 		}
 		
 		/**

@@ -17,7 +17,7 @@ package org.libra.ui.flash.interfaces {
 		
 		function show():void;
 		
-		function close(tween:Boolean = true, destroy:Boolean = false):void;
+		function close(tween:Boolean = true, dispose:Boolean = false):void;
 		
 		function showSwitch():void;
 		

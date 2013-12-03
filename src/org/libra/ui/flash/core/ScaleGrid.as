@@ -4,6 +4,7 @@ package org.libra.ui.flash.core {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import org.libra.ui.flash.components.JGroup;
 	
 	/**
 	 * <p>
@@ -21,25 +22,25 @@ package org.libra.ui.flash.core {
 		
 		protected var _rect:Rectangle; 
 		
-		protected var _leftTopCell:Cell;
+		protected var _leftTopCell:ScaleGridCell;
 		
-		protected var _topCell:Cell;
+		protected var _topCell:ScaleGridCell;
 		
-		protected var _rightTopCell:Cell;
+		protected var _rightTopCell:ScaleGridCell;
 		
-		protected var _rightCell:Cell;
+		protected var _rightCell:ScaleGridCell;
 		
-		protected var _rightBottomCell:Cell;
+		protected var _rightBottomCell:ScaleGridCell;
 		
-		protected var _bottomCell:Cell;
+		protected var _bottomCell:ScaleGridCell;
 		
-		protected var _leftBottomCell:Cell;
+		protected var _leftBottomCell:ScaleGridCell;
 		
-		protected var _leftCell:Cell;
+		protected var _leftCell:ScaleGridCell;
 		
-		protected var _centerCell:Cell;
+		protected var _centerCell:ScaleGridCell;
 		
-		protected var _dragCell:Cell;
+		protected var _dragCell:ScaleGridCell;
 		
 		protected var _component:Component;
 		
@@ -47,15 +48,15 @@ package org.libra.ui.flash.core {
 			super();
 			mouseEnabled = false;
 			_rect = new Rectangle();
-			_leftTopCell = new Cell();
-			_topCell = new Cell();
-			_rightTopCell = new Cell();
-			_rightCell = new Cell();
-			_rightBottomCell = new Cell();
-			_bottomCell = new Cell();
-			_leftBottomCell = new Cell();
-			_leftCell = new Cell();
-			_centerCell = new Cell(12, 12);
+			_leftTopCell = new ScaleGridCell();
+			_topCell = new ScaleGridCell();
+			_rightTopCell = new ScaleGridCell();
+			_rightCell = new ScaleGridCell();
+			_rightBottomCell = new ScaleGridCell();
+			_bottomCell = new ScaleGridCell();
+			_leftBottomCell = new ScaleGridCell();
+			_leftCell = new ScaleGridCell();
+			_centerCell = new ScaleGridCell(12, 12);
 			
 			this.addChild(_leftTopCell);
 			this.addChild(_topCell);
@@ -136,10 +137,12 @@ package org.libra.ui.flash.core {
 			switch(e.target) {
 				case _centerCell:
 					this._dragCell = null;
+					//如果父容器是布局容器，直接return掉
+					if (_component.parent is JGroup) return;
 					_component.startDrag(false, new Rectangle(0, 0, _component.parent.width - _component.width, _component.parent.height - _component.height));
 					break;
 				default:
-					this._dragCell = e.target as Cell;
+					this._dragCell = e.target as ScaleGridCell;
 					this.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 					break;
 			}
@@ -185,7 +188,8 @@ package org.libra.ui.flash.core {
 			}
 		}
 		
-		private function onMouseUp(evt:MouseEvent):void{
+		private function onMouseUp(evt:MouseEvent):void {
+			evt.stopImmediatePropagation();
 			this.stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			this.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			if(this._dragCell) {
@@ -230,29 +234,5 @@ package org.libra.ui.flash.core {
 			_centerCell.removeEventListener(MouseEvent.MOUSE_DOWN, onCellMouseDown);
 		}
 		
-	}
-
-}
-import flash.display.Sprite;
-import org.libra.utils.displayObject.GraphicsUtil;
-
-final class Cell extends Sprite{
-	
-	private var _w:int;
-	
-	private var _h:int;
-	
-	public function Cell(w:int = 6, h:int = 6, color:int = 0x00ff00) {
-		_w = w;
-		_h = h;
-		GraphicsUtil.drawRect(this.graphics, 0, 0, w, h, color);
-	}
-	
-	override public function get width():Number {
-		return _w;
-	}
-	
-	override public function get height():Number {
-		return _h;
 	}
 }
