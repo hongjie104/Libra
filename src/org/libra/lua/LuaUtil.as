@@ -34,6 +34,9 @@ package org.libra.lua
 						}
 						break;
 					case ",":
+						if(tableStr.charAt(i - 1) != '}'){
+							strAry.splice(i + counter++, 0, '"');	
+						}
 						if(tableStr.charAt(i + 1) != '{'){
 							strAry.splice(i + counter++ + 1, 0, '"');
 						}
