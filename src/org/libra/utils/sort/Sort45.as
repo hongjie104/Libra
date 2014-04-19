@@ -56,10 +56,10 @@ package org.libra.utils.sort {
 		 * 每帧排序
 		 */
 		public function sortPerFrame():void {
-			if (++_curFrame > _interval) {
-				_curFrame = 0
+			if (++_curFrame < _interval) {
 				return;
 			}
+			_curFrame = 0
 			var list:Vector.<ISprite45> = _itemList.slice(0);
 			var l:int = 0;
 			var counter:int = 0;

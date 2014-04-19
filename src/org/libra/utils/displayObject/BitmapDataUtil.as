@@ -1,9 +1,12 @@
 package org.libra.utils.displayObject {
 	import flash.display.BitmapData;
+	import flash.display.Graphics;
+	import flash.display.Shape;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	
 	import org.libra.log4a.Logger;
 	import org.libra.ui.Constants;
 	
@@ -398,6 +401,29 @@ package org.libra.utils.displayObject {
 			//data.draw(shape);
 			//return data;
 		//}
+		
+		public static function getDiamondBitmapData(width:int, color:int = 0xff0000):BitmapData {
+			var height:int = width >> 1;
+			var bmd:BitmapData = new BitmapData(width, height, true, 0x0);
+			var shape:Shape = new Shape();
+			var g:Graphics = shape.graphics;
+			g.lineStyle(1, color);
+			var x:int = (width >> 1) - 1;
+			var y:int = 0;
+			var vx:int = 1;
+			g.moveTo(x, y);
+			for(var i:int = 0; i < height >> 1; i+=1){
+				g.lineTo(x + vx++, y++);
+				g.moveTo(x - vx++ ,y);
+			}
+			vx -= 1;
+			for(i = height >> 1; i < height; i+=1){
+				g.lineTo(x + vx--, y++);
+				g.moveTo(x - vx-- ,y);
+			}
+			bmd.draw(shape);
+			return bmd;
+		}
 		
 		/*-----------------------------------------------------------------------------------------
 		Private methods
