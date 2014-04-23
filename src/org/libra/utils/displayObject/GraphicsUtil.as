@@ -60,7 +60,11 @@ package org.libra.utils.displayObject {
 		 * @param	tileWidth 小菱形的宽度
 		 * @param	color
 		 */
+<<<<<<< HEAD
+		public static function drawDiamondNet(g:Graphics, topPoint:Point, row:int = 0, col:int = 0,  rows:int = 10, cols:int = 10, tileWidth:int = 32, color:int = 0xff0000, clear:Boolean = false):void { 
+=======
 		public static function drawDiamondNet(g:Graphics, topPoint:Point, row:int = 0, col:int = 0,  rows:int = 10, cols:int = 10, tileWidth:int = 32, color:int = 0xff0000, clear:Boolean = true):void { 
+>>>>>>> 92279ec5ac3655d7dd1236c11b3fdeb28ac01a4a
 			const tileHeight:int = tileWidth >> 1;
 			const p:Point = new Point();
 			const tmpTopPoint:Point = Display45Util.getItemPos(row,col);
