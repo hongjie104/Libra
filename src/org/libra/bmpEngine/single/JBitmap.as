@@ -113,6 +113,11 @@ package org.libra.bmpEngine.single {
 		}
 		
 		public function stop():void {
+			pause();
+			this.setCurFrame(0);
+		}
+		
+		public function pause():void {
 			frameTimer = 0;
 			playing = false;
 		}
@@ -207,9 +212,15 @@ package org.libra.bmpEngine.single {
 		override public function dispose():void {
 			super.dispose();
 			this.baseBitmap.bitmapData = null;
-			var l:int = frameList.length;
-			for (var i:int = 0; i < l; i += 1)
-				frameList[i].dispose();
+			disposeFrameList()
+		}
+		
+		public function disposeFrameList():void {
+			if(frameList){
+				var l:int = frameList.length;
+				for (var i:int = 0; i < l; i += 1)
+					frameList[i].dispose();	
+			}
 		}
 		
 		public function setFrameList(frameList:Vector.<BitmapFrame>):void {
