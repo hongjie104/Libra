@@ -34,7 +34,7 @@ package org.libra.flex.utils {
 		public function addPopUp(win:IFlexDisplayObject, parent:DisplayObject, modal:Boolean=false, type:*=0, position:*="center", childList:String=null):void {
 
 			//创建一个PopUpEffector实例，使用type类型的动画在show（弹出）时修饰win
-			this.effector=new PopUpEffector(win, true, type);
+			this.effector = new PopUpEffector(win, true, type);
 
 			//在parent上弹出win
 			PopUpManager.addPopUp(win, parent, modal, childList);

@@ -8,8 +8,12 @@ package org.libra.utils.displayObject {
 	public final class Display45Util {
 		
 		private static var _wh:Number;
+		
 		private static var _width:Number;
+		
 		private static var _height:Number;
+		
+		private static var _topPoint:Point = new Point();
 		
 		/**
 		 * 格子长宽比
@@ -30,6 +34,11 @@ package org.libra.utils.displayObject {
 		 */
 		public static function get height():Number {
 			return _height;
+		}
+		
+		public static function setTopPoint(value:Point):void {
+			_topPoint.x = value.x;
+			_topPoint.y = value.y;
 		}
 		
 		public function Display45Util() {
@@ -63,6 +72,7 @@ package org.libra.utils.displayObject {
 		 * @return
 		 */
 		public static function getItemIndex(mouseP:Point):Point {
+			mouseP = mouseP.subtract(_topPoint);
 			var row:Number = mouseP.y / height - mouseP.x / width;
 			var col:Number = mouseP.x / width + mouseP.y / height;
 			//row = row < 0 ? -1 : row;
@@ -78,7 +88,7 @@ package org.libra.utils.displayObject {
 		 * @return
 		 */
 		public static function getItemPos(row:int, col:int):Point { 
-			return new Point((col - row) * (width * .5), (col + row) * (height * .5));
+			return new Point((col - row) * (width * .5) + _topPoint.x, (col + row) * (height * .5) + _topPoint.y);
 		}
 		
 		/**
@@ -99,6 +109,7 @@ package org.libra.utils.displayObject {
 		public static function trans90To45(p:Point):Point {
 			return new Point((p.x - p.y * wh) * .5, (p.x / wh + p.y) * .5);
 		}
+
 		
 	}
 
