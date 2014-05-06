@@ -160,22 +160,24 @@ package org.libra.bmpEngine.single {
 		 */
 		public function tick(interval:int):void {
 			if (playing) {
-				if (loops == 0) return;
-				frameTimer -= interval;
-				while (frameTimer < 0) {
-					if (this.curFrame >= numFrame - 1) {
-						if (loops > 0) loops--;
-						if (loops == 0) {
-							this.frameTimer = 0;
-							dispatchEvent(new Event(Event.COMPLETE));
-							return;
+				if(numFrame > 0){
+					if (loops == 0) return;
+					frameTimer -= interval;
+					while (frameTimer < 0) {
+						if (this.curFrame >= numFrame - 1) {
+							if (loops > 0) loops--;
+							if (loops == 0) {
+								this.frameTimer = 0;
+								dispatchEvent(new Event(Event.COMPLETE));
+								return;
+							}else {
+								this.setCurFrame(0);
+							}
 						}else {
-							this.setCurFrame(0);
+							this.setCurFrame(curFrame + 1);
 						}
-					}else {
-						this.setCurFrame(curFrame + 1);
+						frameTimer += rateTimer;
 					}
-					frameTimer += rateTimer;
 				}
 			}
 		}
@@ -226,7 +228,8 @@ package org.libra.bmpEngine.single {
 		public function setFrameList(frameList:Vector.<BitmapFrame>):void {
 			this.frameList = frameList;
 			this.numFrame = this.frameList.length;
-			setCurFrame(0);
+			if(numFrame > 0)
+				setCurFrame(0);
 		}
 		
 		public function setLoops(val:int):void {
