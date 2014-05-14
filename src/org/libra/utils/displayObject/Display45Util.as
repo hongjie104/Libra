@@ -75,10 +75,10 @@ package org.libra.utils.displayObject {
 			mouseP = mouseP.subtract(_topPoint);
 			var row:Number = mouseP.y / height - mouseP.x / width;
 			var col:Number = mouseP.x / width + mouseP.y / height;
-			//row = row < 0 ? -1 : row;
-			//col = col < 0 ? -1 : col;
-			row = row < 0 ? 0 : row;
-			col = col < 0 ? 0 : col;
+			row = row < 0 ? -1 : row;
+			col = col < 0 ? -1 : col;
+//			row = row < 0 ? 0 : row;
+//			col = col < 0 ? 0 : col;
 			return new Point(int(col), int(row));
 		}
 		
@@ -89,6 +89,22 @@ package org.libra.utils.displayObject {
 		 */
 		public static function getItemPos(row:int, col:int):Point { 
 			return new Point((col - row) * (width * .5) + _topPoint.x, (col + row) * (height * .5) + _topPoint.y);
+		}
+		
+		/**
+		 * 获得鼠标位置所在墙面方块的索引值
+		 * @param	mouseP
+		 * @return
+		 */
+		public static function getItemIndexOnWall(mouseP:Point, topPoint:Point):Point{
+			mouseP = mouseP.subtract(topPoint);
+			var col:Number = mouseP.x / height;
+			var row:Number = mouseP.y / height - mouseP.x / width;
+			return new Point(int(col), int(row));
+		}
+		
+		public static function getItemPosOnWall(row:int, col:int):Point{
+			return new Point(height * col, height * row + height * .5 * col);
 		}
 		
 		/**

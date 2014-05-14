@@ -63,7 +63,7 @@ package org.libra.utils.displayObject {
 		public static function drawDiamondNet(g:Graphics, topPoint:Point, row:int = 0, col:int = 0,  rows:int = 10, cols:int = 10, tileWidth:int = 32, color:int = 0xff0000, clear:Boolean = true):void { 
 			const tileHeight:int = tileWidth >> 1;
 			const p:Point = new Point();
-			const tmpTopPoint:Point = Display45Util.getItemPos(row,col);
+			const tmpTopPoint:Point = Display45Util.getItemPos(row, col);
 			var endX:Number = cols * tileWidth / 2;
 			var endY:Number = endX / 2;
 			if(clear) g.clear();
@@ -81,6 +81,48 @@ package org.libra.utils.displayObject {
 				p.y = topPoint.y + tileHeight / 2 * i + tmpTopPoint.y;
 				g.moveTo(p.x, p.y);
 				g.lineTo(p.x - endX, p.y + endY);
+			}
+		}
+		
+		/**
+		 * 绘制墙面上的菱形格子
+		 */
+		public static function drawWallDiamondNet(g:Graphics, topPoint:Point, row:int, col:int, rows:int, cols:int, tileWidth:int, color:Number, clear:Boolean, symmetric:Boolean = true):void
+		{
+			//地板的高度，也就是墙面菱形格子垂直和斜着的线条长度
+			var tileHeight:int = tileWidth >> 1;
+			var origionPoint:Point = new Point(topPoint.x, topPoint.y - tileHeight * rows);
+			
+			const tmpTopPoint:Point = Display45Util.getItemPosOnWall(row, col);
+				
+			if(clear) g.clear();
+			g.lineStyle(1, color);
+			//先绘制垂直的线
+			var p:Point = new Point();
+			for(var i:int = 0; i <= cols;i++){
+				//横坐标应该是列数个地板格子宽度的一半，也就是列数个地板高度
+				p.x = origionPoint.x + i * tileHeight + tmpTopPoint.x;
+				p.y = origionPoint.y + i * (tileHeight >> 1) + tmpTopPoint.y;
+				g.moveTo(p.x, p.y);
+				g.lineTo(p.x, p.y + tileHeight * rows);
+				
+				if(symmetric){
+					p.x = origionPoint.x - i * tileHeight + tmpTopPoint.x;
+					g.moveTo(p.x, p.y);
+					g.lineTo(p.x, p.y + tileHeight * rows);	
+				}
+			}
+			//再绘制斜线
+			for(i = 0;i <= rows;i++){
+				p.x = origionPoint.x + tmpTopPoint.x;
+				p.y = origionPoint.y + tileHeight * i + tmpTopPoint.y;
+				g.moveTo(p.x, p.y);
+				g.lineTo(p.x + tileHeight * cols, p.y + (tileHeight >> 1) * cols);
+				
+				if(symmetric){
+					g.moveTo(p.x, p.y);
+					g.lineTo(p.x - tileHeight * cols, p.y + (tileHeight >> 1) * cols);	
+				}
 			}
 		}
 		
@@ -249,7 +291,6 @@ package org.libra.utils.displayObject {
 		/*-----------------------------------------------------------------------------------------
 		Event Handlers
 		-------------------------------------------------------------------------------------------*/
-		
 	}
 
 }
