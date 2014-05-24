@@ -60,7 +60,7 @@ package org.libra.utils.displayObject {
 		 * @param	tileWidth 小菱形的宽度
 		 * @param	color
 		 */
-		public static function drawDiamondNet(g:Graphics, topPoint:Point, row:int = 0, col:int = 0,  rows:int = 10, cols:int = 10, tileWidth:int = 32, color:int = 0xff0000, clear:Boolean = true):void { 
+		public static function drawDiamondNet(g:Graphics, topPoint:Point, row:int = 0, col:int = 0,  rows:int = 10, cols:int = 10, tileWidth:int = 32, color:int = 0xff0000, clear:Boolean = true, X:Boolean = false):void { 
 			const tileHeight:int = tileWidth >> 1;
 			const p:Point = new Point();
 			const tmpTopPoint:Point = Display45Util.getItemPos(row, col);
@@ -68,12 +68,25 @@ package org.libra.utils.displayObject {
 			var endY:Number = endX / 2;
 			if(clear) g.clear();
 			g.lineStyle(1, color);
+			var XStartX:int, XStartY:int, XEndX:int, XEndY:int;
 			for (var i:int = 0; i < rows + 1; i++ ) {
 				p.x = topPoint.x - tileWidth / 2 * i + tmpTopPoint.x;
 				p.y = topPoint.y + tileHeight / 2 * i + tmpTopPoint.y;
 				g.moveTo(p.x, p.y);
 				g.lineTo(endX + p.x, endY + p.y);
+				if(i == 0){
+					XStartX = p.x;
+					XStartY = p.y;
+				}else if(i == rows){
+					XEndX = endX + p.x;
+					XEndY = endY + p.y;
+				}
 			}
+			if(X){
+				g.moveTo(XStartX, XStartY);
+				g.lineTo(XEndX, XEndY);	
+			}
+			
 			endX = rows * tileWidth / 2;
 			endY = endX / 2;
 			for (i = 0; i < cols + 1; i += 1) {
@@ -81,13 +94,24 @@ package org.libra.utils.displayObject {
 				p.y = topPoint.y + tileHeight / 2 * i + tmpTopPoint.y;
 				g.moveTo(p.x, p.y);
 				g.lineTo(p.x - endX, p.y + endY);
+				if(i == 0){
+					XStartX = p.x - endX;
+					XStartY = p.y + endY;
+				}else if(i == cols){
+					XEndX = p.x;
+					XEndY = p.y;
+				}
+			}
+			if(X){
+				g.moveTo(XStartX, XStartY);
+				g.lineTo(XEndX, XEndY);	
 			}
 		}
 		
 		/**
 		 * 绘制墙面上的菱形格子
 		 */
-		public static function drawWallDiamondNet(g:Graphics, topPoint:Point, row:int, col:int, rows:int, cols:int, tileWidth:int, color:Number, clear:Boolean, symmetric:Boolean = true):void
+		public static function drawWallDiamondNet(g:Graphics, topPoint:Point, row:int, col:int, rows:int, cols:int, tileWidth:int, color:Number, clear:Boolean, symmetric:Boolean = true, X:Boolean = false):void
 		{
 			//地板的高度，也就是墙面菱形格子垂直和斜着的线条长度
 			var tileHeight:int = tileWidth >> 1;
@@ -99,6 +123,7 @@ package org.libra.utils.displayObject {
 			g.lineStyle(1, color);
 			//先绘制垂直的线
 			var p:Point = new Point();
+			var XStartX:int, XStartY:int, XEndX:int, XEndY:int;
 			for(var i:int = 0; i <= cols;i++){
 				//横坐标应该是列数个地板格子宽度的一半，也就是列数个地板高度
 				p.x = origionPoint.x + i * tileHeight + tmpTopPoint.x;
@@ -111,6 +136,17 @@ package org.libra.utils.displayObject {
 					g.moveTo(p.x, p.y);
 					g.lineTo(p.x, p.y + tileHeight * rows);	
 				}
+				if(i == 0){
+					XStartX = p.x;
+					XStartY = p.y;
+				}else if(i == cols){
+					XEndX = p.x;
+					XEndY = p.y + tileHeight * rows;
+				}
+			}
+			if(X){
+				g.moveTo(XStartX, XStartY);
+				g.lineTo(XEndX, XEndY);	
 			}
 			//再绘制斜线
 			for(i = 0;i <= rows;i++){
@@ -123,6 +159,18 @@ package org.libra.utils.displayObject {
 					g.moveTo(p.x, p.y);
 					g.lineTo(p.x - tileHeight * cols, p.y + (tileHeight >> 1) * cols);	
 				}
+				
+				if(i == 0){
+					XStartX = p.x + tileHeight * cols;
+					XStartY = p.y + (tileHeight >> 1) * cols;
+				}else if(i == rows){
+					XEndX = p.x;
+					XEndY = p.y;
+				}
+			}
+			if(X){
+				g.moveTo(XStartX, XStartY);
+				g.lineTo(XEndX, XEndY);	
 			}
 		}
 		

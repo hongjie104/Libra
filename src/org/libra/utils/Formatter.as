@@ -22,7 +22,8 @@ package org.libra.utils
 			var _hb:String = _h<10?"0"+_h:_h.toString();
 			var _n:Number = o.getMinutes();
 			var _nb:String = _n<10?"0"+_n:_n.toString();
-			var _s:String = o.getSeconds().toString();
+			var _s:Number = o.getSeconds();
+			var _sb:String = _s < 10 ? '0' + _s : _s.toString();
 			var _e:Number = o.getDay();
 			var _eb:String = "0"+(_e+1);
 			reStr = format;
@@ -35,10 +36,10 @@ package org.libra.utils
 			reStr = reStr.replace(/DD/g,_db);
 			reStr = reStr.replace(/D/g,_d);
 			reStr = reStr.replace(/A/g,_h<12?"AM":"PM");
-			reStr = reStr.replace(/HH/g,_h);
+			reStr = reStr.replace(/HH/g,_hb);
 			reStr = reStr.replace(/L/g,_h%12);
 			reStr = reStr.replace(/NN/g,_nb);
-			reStr = reStr.replace(/SS/g,_s);
+			reStr = reStr.replace(/SS/g,_sb);
 			reStr = reStr.replace(/EEEE/g,weeks[_e]);
 			reStr = reStr.replace(/EEE/g,weeks[_e].substr(0,3));
 			reStr = reStr.replace(/EE/g,_eb);
