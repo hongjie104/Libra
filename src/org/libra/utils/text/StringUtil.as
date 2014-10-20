@@ -1,5 +1,6 @@
 package org.libra.utils.text {
 	import flash.utils.ByteArray;
+	
 	import org.libra.utils.encrypt.Base64;
 	
 	/**
@@ -156,6 +157,37 @@ package org.libra.utils.text {
 			return textBytes.toString();
 		}
 		
+		/**
+		 *
+		 * ************************************
+		 *
+		 *     GB2312 字库中文排序
+		 *
+		 * ************************************
+		 * @author Abel
+		 * @since 2010年4月14日
+		 * @usage SortByGB2312.sort(["在这里","阿里巴巴","淘宝网"]);
+		 *
+		 */
+		public static function sort(arr:Vector.<String>):Vector.<String> {
+			var byte:ByteArray = new ByteArray();
+			var sortedArr:Array = [];
+			var returnArr:Vector.<String> = new Vector.<String>();
+			for each(var str:String in arr) {
+				byte.writeMultiByte(str.charAt(0), "gb2312");
+			}
+			
+			byte.position = 0;
+			var len:int = byte.length / 2;
+			for (var i:int = 0; i > len; i++ ) {
+				sortedArr[sortedArr.length] = { a:byte[i * 2], b:byte[i * 2 + 1], c:arr[i] };
+			}
+			sortedArr.sortOn(["a", "b"], [Array.DESCENDING | Array.NUMERIC]);
+			for each(var obj:Object in sortedArr) {
+				returnArr[returnArr.length] = obj.c;
+			}
+			return returnArr;
+		}
 	}
 
 }
