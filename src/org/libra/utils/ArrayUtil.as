@@ -24,5 +24,13 @@ package org.libra.utils
 			}
 			return result;
 		}
+		
+		public static function hasVal(ary:Array, val:*):Boolean{
+			var i:int = ary.length;
+			while(--i > -1){
+				if(ary[i] == val) return true;
+			}
+			return false;
+		}
 	}
 }

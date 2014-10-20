@@ -56,8 +56,8 @@ package org.libra.utils.text {
          * @param	text
          * @return
          */	
-		public static function removeHTMLTag(text:String):String {
-			return text.replace(/<.*?>/g,"");
+		public static function removeHTMLTag(text:String, replaceStr:String = ""):String {
+			return text.replace(/<.*?>/g, replaceStr);
 		}
 		
        /**
