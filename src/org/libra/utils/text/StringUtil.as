@@ -169,17 +169,17 @@ package org.libra.utils.text {
 		 * @usage SortByGB2312.sort(["在这里","阿里巴巴","淘宝网"]);
 		 *
 		 */
-		public static function sort(arr:Vector.<String>):Vector.<String> {
+		public static function sort(arr:Array):Array {
 			var byte:ByteArray = new ByteArray();
 			var sortedArr:Array = [];
-			var returnArr:Vector.<String> = new Vector.<String>();
+			var returnArr:Array = []
 			for each(var str:String in arr) {
 				byte.writeMultiByte(str.charAt(0), "gb2312");
 			}
 			
 			byte.position = 0;
 			var len:int = byte.length / 2;
-			for (var i:int = 0; i > len; i++ ) {
+			for (var i:int = 0; i < len; i++ ) {
 				sortedArr[sortedArr.length] = { a:byte[i * 2], b:byte[i * 2 + 1], c:arr[i] };
 			}
 			sortedArr.sortOn(["a", "b"], [Array.DESCENDING | Array.NUMERIC]);
