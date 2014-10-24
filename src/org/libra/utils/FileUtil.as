@@ -8,7 +8,10 @@ package org.libra.utils
 		{
 		}
 		
-		public static function getFileArr(nativePath:String, extension:Array = null, filter:Boolean = false):Vector.<File>{
+		/**
+		 * 
+		 */
+		public static function getFileArr(nativePath:String, extension:Array = null, except:String = null, filter:Boolean = false):Vector.<File>{
 			var result:Vector.<File> = new Vector.<File>();
 			//获取指定路径下的所有文件名
 			var directory:File = new File(nativePath); 
@@ -16,7 +19,11 @@ package org.libra.utils
 			for (var i:uint = 0; i < contents.length; i++) { 
 				var file:File = contents[i] as File;
 				if(file.isDirectory){
-					result = result.concat(getFileArr(file.nativePath, extension));
+					if(except && file.name.indexOf(except) != -1){
+						continue;
+					}else{
+						result = result.concat(getFileArr(file.nativePath, extension, except));	
+					}
 				}else{
 					if(extension && ArrayUtil.hasVal(extension, file.extension)){
 						if(!filter || !isInList(file, result)){
