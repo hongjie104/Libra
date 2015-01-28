@@ -40,7 +40,7 @@ package org.libra.utils.bytes {
 				}
 			}
 			*/
-			copyBmp.setPixels(new Rectangle(0, 0, imageWidth, imageHeight), bmd);
+			copyBmp.setPixels(copyBmp.rect, bmd);
 			return copyBmp;    
 		}
 	}
