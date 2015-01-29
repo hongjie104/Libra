@@ -8,13 +8,16 @@ package org.libra.utils.bytes {
 			
 		}
 		
-		public static function bitmapDataToByteArray(bmd:BitmapData):ByteArray {    
-			//getPixels方法用于读取指定像素区域生成一个ByteArray，Rectangle是一个区域框，就是起始坐标     
-			var pixels:ByteArray = bmd.getPixels(bmd.rect); 			
-			//下面俩行将数据源的高和宽一起存储到数组中,为翻转的时候提供高度和宽度     
-			pixels.writeShort(bmd.width);    
-			pixels.writeShort(bmd.height);    
-			return pixels;    
+		public static function bitmapDataToByteArray(bmd:BitmapData):ByteArray {
+			if(bmd){
+				//getPixels方法用于读取指定像素区域生成一个ByteArray，Rectangle是一个区域框，就是起始坐标     
+				var pixels:ByteArray = bmd.getPixels(bmd.rect); 			
+				//下面俩行将数据源的高和宽一起存储到数组中,为翻转的时候提供高度和宽度     
+				pixels.writeShort(bmd.width);    
+				pixels.writeShort(bmd.height);    
+				return pixels;				
+			}
+			return null;   
 		}    
 		//次方法的参数必须是像上面的ByteArray形式一样的,即需要对象的大小;     
 		//此方法返回的Bitmap可以直接赋值给Image的source属性     
