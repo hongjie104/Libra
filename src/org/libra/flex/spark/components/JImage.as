@@ -9,10 +9,10 @@ package org.libra.flex.spark.components {
 			super();
 		}
 		
-		override mx_internal function contentLoaderInfo_completeEventHandler(event:Event):void {
-			super.contentLoaderInfo_completeEventHandler(event);
-			//this.dispatchEvent(new Event(Event.COMPLETE));
-		}
+//		override mx_internal function contentLoaderInfo_completeEventHandler(event:Event):void {
+//			super.contentLoaderInfo_completeEventHandler(event);
+//			//this.dispatchEvent(new Event(Event.COMPLETE));
+//		}
 		
 		override protected function contentLoaded():void {
 			super.contentLoaded();

@@ -2,6 +2,8 @@ package org.libra.utils.bytes {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	
+	import org.libra.log4a.Logger;
 
 	public final class BitmapBytes {
 		public function BitmapBytes() {
@@ -27,11 +29,18 @@ package org.libra.utils.bytes {
 			}    
 			//读取出存入时图片的高和宽,因为是最后存入的数据,所以需要到尾部读取     
 			var bmd:ByteArray = byArr;    
-			bmd.position = bmd.length-2;    
+			bmd.position = bmd.length - 2;    
 			var imageHeight:int = bmd.readShort();    
-			bmd.position = bmd.length-4;    
+			bmd.position = bmd.length - 4;    
 			var imageWidth:int = bmd.readShort(); 
-			var copyBmp:BitmapData = new BitmapData(imageWidth, imageHeight, true, 0x0);
+			var copyBmp:BitmapData = null;
+			try{
+				copyBmp = new BitmapData(imageWidth, imageHeight, true, 0x0);
+			}catch(e:Error){
+				Logger.error(e.message.toString());
+				return null;
+			}
+			
 			bmd.position = 0;
 			/*
 			//利用setPixel方法给图片中的每一个像素赋值,做逆操作     
