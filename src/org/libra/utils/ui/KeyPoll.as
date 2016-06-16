@@ -26,6 +26,7 @@
 
 package org.libra.utils.ui {
 	import flash.display.DisplayObject;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
@@ -46,14 +47,13 @@ package org.libra.utils.ui {
 	public class KeyPoll extends EventDispatcher {
 		
 		private var states:ByteArray;
-		private var dispObj:DisplayObject;
 		
 		/**
 		 * Constructor
 		 *
 		 * @param displayObj a display object on which to test listen for keyboard events. To catch all key events use the stage.
 		 */
-		public function KeyPoll(displayObj:DisplayObject){
+		public function KeyPoll(stage:Stage){
 			states = new ByteArray();
 			states.writeUnsignedInt(0);
 			states.writeUnsignedInt(0);
@@ -63,11 +63,11 @@ package org.libra.utils.ui {
 			states.writeUnsignedInt(0);
 			states.writeUnsignedInt(0);
 			states.writeUnsignedInt(0);
-			dispObj = displayObj;
-			dispObj.addEventListener(KeyboardEvent.KEY_DOWN, keyDownListener, false, 0, true);
-			dispObj.addEventListener(KeyboardEvent.KEY_UP, keyUpListener, false, 0, true);
-			dispObj.addEventListener(Event.ACTIVATE, activateListener, false, 0, true);
-			dispObj.addEventListener(Event.DEACTIVATE, deactivateListener, false, 0, true);
+			
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownListener, false, 0, true);
+			stage.addEventListener(KeyboardEvent.KEY_UP, keyUpListener, false, 0, true);
+			stage.addEventListener(Event.ACTIVATE, activateListener, false, 0, true);
+			stage.addEventListener(Event.DEACTIVATE, deactivateListener, false, 0, true);
 		}
 		
 		override public function dispatchEvent(event:Event):Boolean {
