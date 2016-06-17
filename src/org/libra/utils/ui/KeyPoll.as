@@ -46,6 +46,8 @@ package org.libra.utils.ui {
 	 */
 	public class KeyPoll extends EventDispatcher {
 		
+		private static var _instance:KeyPoll;
+		
 		private var states:ByteArray;
 		
 		/**
@@ -120,6 +122,13 @@ package org.libra.utils.ui {
 		 */
 		public function isUp(keyCode:uint):Boolean {
 			return (states[keyCode >>> 3] & (1 << (keyCode & 7))) == 0;
+		}
+		
+		public static function getInstance(stage:Stage):KeyPoll{
+			if(!_instance){
+				_instance = new KeyPoll(stage);
+			}
+			return _instance;
 		}
 	}
 }
