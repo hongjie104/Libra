@@ -53,6 +53,34 @@ package org.libra.utils.displayObject {
 		}
 		
 		/**
+		 * 填充一个菱形
+		 * 其实就是从自上而下地画水平线
+		 */
+		public static function fillDiamond(g:Graphics, width:int, color:int = 0xff0000, alpha:Number = 1.0, clear:Boolean = true):void{
+			if(clear) g.clear();
+			g.lineStyle(1, color, alpha);
+			
+			var startX:int = (width >> 1) - 2;
+			var startY:int = 1;
+			var endX:int = (width >> 1) + 2;
+			var endY:int = 1;
+			var targetY:int = (width >> 2) - 1;
+			while(endY <= targetY){
+				g.moveTo(startX, startY++);
+				g.lineTo(endX, endY++);
+				startX -= 2;
+				endX += 2;
+			}
+			targetY = (width >> 1) - 1;
+			while(endY <= targetY){
+				g.moveTo(startX, startY++);
+				g.lineTo(endX, endY++);
+				startX += 2;
+				endX -= 2;
+			}
+		}
+		
+		/**
 		 * 绘制菱形网格
 		 * @param	g
 		 * @param	topPoint 菱形最上方的点的坐标，这个点控制着整个菱形绘制的坐标
