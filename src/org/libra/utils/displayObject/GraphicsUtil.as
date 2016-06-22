@@ -174,14 +174,15 @@ package org.libra.utils.displayObject {
 			}
 		}
 		
-		public static function lineRect(g:Graphics, x:int, y:int, width:int, height:int, color:int = 0xff0000):void {
-			g.clear();
+		public static function lineRect(g:Graphics, x:int, y:int, width:int, height:int, color:int = 0xff0000, clear:Boolean = true):void {
+			if(clear)
+				g.clear();
 			g.lineStyle(1, color);
 			g.moveTo(x, y);
-			g.lineTo(width, y);
-			g.lineTo(width, height);
-			g.lineTo(0, height);
-			g.lineTo(0, 0);
+			g.lineTo(width + x, y);
+			g.lineTo(width + x, height + y);
+			g.lineTo(x, height + y);
+			g.lineTo(x, y);
 		}
 		
 		/**

@@ -41,6 +41,10 @@ package org.libra.utils.displayObject {
 			_topPoint.y = value.y;
 		}
 		
+		public static function getTopPoint():Point{
+			return _topPoint;
+		}
+		
 		public function Display45Util() {
 			throw new Error("Display45Util can't be instance");
 		}
