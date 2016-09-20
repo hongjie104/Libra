@@ -14,7 +14,7 @@ package org.libra.flex.utils
 		{
 		}
 		
-		public static function runCMD(...args) {
+		public static function runCMD(...args):void {
 			//exe路径，经过测试，直接从system32下复制到程序的目录下也是没有问题的，前提是你的程序都是默认安装的。环境变量也没变
 			var exePath:String = "C:/Windows/system32/cmd.exe";
 			//启动参数
