@@ -84,6 +84,10 @@ package org.libra.utils.text {
 			return true;
 		}
 		
+		public static function isNullOrEmpty(str:String):Boolean {
+			return str == null || str == "";
+		}
+		
 		public static function unmarshalMsg(line:String):Array { 
 			var vars:Array = line.split(" ");
 			var l:int = vars.length;
