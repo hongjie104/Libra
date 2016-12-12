@@ -31,7 +31,7 @@ package org.libra.flex.utils {
 		 * @param {Point|String} position 弹出位置，可以是一个Point类的坐标，假如传入字符串"center"则在中央显示
 		 * @param {String} childList 同PopUpManager.addPopUp()
 		 */
-		public function addPopUp(win:IFlexDisplayObject, parent:DisplayObject, modal:Boolean=false, type:*=0, position:*="center", childList:String=null):void {
+		public function addPopUp(win:IFlexDisplayObject, parent:DisplayObject, modal:Boolean = false, type:* = 0, position:* = "center", childList:String =null):void {
 
 			//创建一个PopUpEffector实例，使用type类型的动画在show（弹出）时修饰win
 			this.effector = new PopUpEffector(win, true, type);
