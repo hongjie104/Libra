@@ -25,9 +25,13 @@ package org.libra.flex.spark.components
 			PopUpUtil.instance.addPopUp(this, parent, modal, 1);
 		}
 		
-		protected function onClosed(evt:CloseEvent):void{
+		public function close():void {
 			this.removeEventListener(CloseEvent.CLOSE, onClosed);
 			PopUpUtil.instance.removePopUp(this, 1);
+		}
+		
+		protected function onClosed(evt:CloseEvent = null):void{
+			close();
 		}
 	}
 }
