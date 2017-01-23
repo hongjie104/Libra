@@ -19,10 +19,10 @@ package org.libra.flex.spark.components
 		}
 		
 		public function show(parent:DisplayObject, modal:Boolean = false):void{
+//			this.height = Capabilities.screenResolutionY - 100;
+//			this.width = Capabilities.screenResolutionX;
+//			this.move(0, 0);
 			PopUpUtil.instance.addPopUp(this, parent, modal, 1);
-			var Stageheight:Number = Capabilities.screenResolutionY;
-			var Stagewidth:Number = Capabilities.screenResolutionX;
-			this.move((Stagewidth - this.width) / 2, (Stageheight - this.height) / 2);
 		}
 		
 		protected function onClosed(evt:CloseEvent):void{
